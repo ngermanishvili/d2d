@@ -44,7 +44,6 @@ export const RegisterForm = () => {
     const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
         setError("");
         setSuccess("");
-
         startTransition(() => {
             register(values)
                 .then((data) => {
@@ -110,7 +109,7 @@ export const RegisterForm = () => {
                             disabled={isPending}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
+                                    <FormLabel htmlFor="email">password</FormLabel>
                                     <FormControl>
                                         <Input {...field} type="password" placeholder="********" />
                                     </FormControl>

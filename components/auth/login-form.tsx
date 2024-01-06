@@ -1,5 +1,4 @@
 "use client"
-
 import * as z from "zod"
 
 import { useTransition, useState } from "react"
@@ -28,7 +27,8 @@ import { login } from "@/actions/login"
 export const LoginForm = () => {
     const searchParams = useSearchParams();
     const urlError = searchParams.get("error")
-        === "OAuthAccountNotLinked"
+        ===
+        "OAuthAccountNotLinked"
         ? "Email Already in use  with different provider" :
         "";
 
@@ -46,7 +46,6 @@ export const LoginForm = () => {
     });
 
 
-
     // aq shegvidzlia gamovikenot axios axla vikenebt next servers logebistvis da shenaxvistvis infosi.
     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
         setError("");
@@ -55,16 +54,12 @@ export const LoginForm = () => {
         startTransition(() => {
             login(values)
                 .then((data) => {
-                    if (data?.error) {
-                        form.reset();
-                        setError(data.error);
-                    }
+                    setError(data?.error)
+                    setSuccess(data?.success)
 
                 })
-                .catch(() => setError("Something went wrong"));
-        });
+        })
     };
-
 
     return (
         <CardWrapper
@@ -81,12 +76,16 @@ export const LoginForm = () => {
                         <FormField
                             control={form.control}
                             name="email"
-                            disabled={isPending}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
+                                    <FormLabel>Email</FormLabel>
                                     <FormControl>
-                                        <Input {...field} type="email" placeholder="jhon.doe@gmail.com" />
+                                        <Input
+                                            {...field}
+                                            disabled={isPending}
+                                            placeholder="john.doe@example.com"
+                                            type="email"
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -98,9 +97,14 @@ export const LoginForm = () => {
                             disabled={isPending}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="password">Password</FormLabel> {/* Change htmlFor to "password" */}
+                                    <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input {...field} type="password" placeholder="********" />
+                                        <Input
+                                            {...field}
+                                            disabled={isPending}
+                                            placeholder="******"
+                                            type="password"
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
