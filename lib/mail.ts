@@ -13,7 +13,7 @@ export const sendVerificationEmail = async (
         from: 'D2D GEORGIA <noreply@resend.dev>',
         to: email,
         subject: 'დაადასტურეთ ელ.ფოსტა',
-        html: `<p>Click <a href="${confirmLink}">here</a> to confirm email.</p>`
+        html: `<div><p>Click <a href="${confirmLink}">here</a> to confirm email.</p></div>`
     });
 
 };
