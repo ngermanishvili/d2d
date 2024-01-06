@@ -5,6 +5,8 @@ import * as z from "zod"
 import { useTransition, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useSearchParams } from "next/navigation"
+
 
 import { CardWrapper } from "./card-wrapper"
 import { Input } from "../ui/input"
@@ -24,6 +26,12 @@ import { login } from "@/actions/login"
 
 
 export const LoginForm = () => {
+    const searchParams = useSearchParams();
+    const urlError = searchParams.get("error")
+        === "OAuthAccountNotLinked"
+        ? "Email Already in use  with different provider" :
+        "";
+
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
 
@@ -50,11 +58,6 @@ export const LoginForm = () => {
                     if (data?.error) {
                         form.reset();
                         setError(data.error);
-                    }
-
-                    if (data?.success) {
-                        form.reset();
-                        setSuccess(data.success);
                     }
 
                 })
@@ -95,7 +98,7 @@ export const LoginForm = () => {
                             disabled={isPending}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel htmlFor="email">Email</FormLabel>
+                                    <FormLabel htmlFor="password">Password</FormLabel> {/* Change htmlFor to "password" */}
                                     <FormControl>
                                         <Input {...field} type="password" placeholder="********" />
                                     </FormControl>
@@ -103,8 +106,9 @@ export const LoginForm = () => {
                                 </FormItem>
                             )}
                         />
+
                     </div>
-                    <FormError message={error} />
+                    <FormError message={error || urlError} />
                     <FormSuccess message={success} />
 
                     <Button
