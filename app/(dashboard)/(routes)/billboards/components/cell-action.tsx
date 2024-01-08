@@ -1,12 +1,12 @@
 "use client";
 import axios from "axios";
-import {useState} from "react";
+import { useState } from "react";
 
-import {Copy, Edit, MoreHorizontal, Trash} from "lucide-react";
+import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-import {useParams, useRouter} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,16 +14,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {BillboardColumn} from "./columns";
-import {AlertModal} from "@/components/modals/alert-modal";
+import { BillboardColumn } from "./columns";
+import { AlertModal } from "@/components/modals/alert-modal";
 
 interface CellActionProps {
   data: BillboardColumn;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({data}) => {
+export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
-  // we are using params for the storeId in the url and its get id from the url for example if the url is /dashboard/1/billboards then the storeId is 1 and we are using it to get the id of the billboard
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);

@@ -3,6 +3,9 @@ import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import { Toaster } from '@/components/ui/sonner'
+import { RoleGate } from '@/components/auth/role-gate'
+import { AdminNavbar } from './(protected)/_components/admin-navbar'
+import { UserNavbar } from './(protected)/_components/user-navbar'
 
 import './globals.css'
 
@@ -25,6 +28,12 @@ export default async function RootLayout({
       <html lang="en">
         <body
           className={inter.className}>
+          <RoleGate allowedRole="ADMIN">
+            <AdminNavbar />
+          </RoleGate>
+          <RoleGate allowedRole="USER">
+            <UserNavbar />
+          </RoleGate>
           <Toaster />
           {children}
         </body>

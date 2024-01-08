@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
-import {RoleGate} from "@/components/auth/role-gate";
-import {Button} from "@/components/ui/button";
-import {UserButton} from "@/components/auth/user-button";
-import {UserRole} from "@prisma/client";
+import { RoleGate } from "@/components/auth/role-gate";
+import { Button } from "@/components/ui/button";
+import { UserButton } from "@/components/auth/user-button";
+import { UserRole } from "@prisma/client";
 
 export const Navbar = () => {
   const pathname = usePathname();

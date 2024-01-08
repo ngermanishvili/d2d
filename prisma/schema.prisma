@@ -69,3 +69,17 @@ model Billboard {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Shipment {
+  id              String   @id @default(uuid())
+  name            String
+  lastName        String
+  phoneNumber     String
+  address         String // 
+  city            String // 
+  brittle         Boolean  @default(false) // New field for the courier to mark true or false
+  price           String
+  markedByCourier Boolean  @default(false) // New field for the courier to mark true or false
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

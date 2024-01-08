@@ -12,8 +12,10 @@ export const publicRoutes = [
 
 export const privateRoutes =
     ["/billboards",
-        "/billboards/new"];
-
+        "/billboards/new",
+        "/shipments",
+        'shipments/new',
+        'shipments/:id'];
 /**
  * An array of routes that require authentication
  * These routes redirect logged users to /settings page
