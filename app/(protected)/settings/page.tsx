@@ -75,7 +75,7 @@ const SettingsPage = () => {
         <Card className="w-[600px]">
             <CardHeader>
                 <p className="text-2xl font-semibold text-center">
-                    ⚙️ Settings
+                    ⚙️ კაბინეტი
                 </p>
             </CardHeader>
             <CardContent>
@@ -90,7 +90,7 @@ const SettingsPage = () => {
                                 name="name"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Name</FormLabel>
+                                        <FormLabel>სახელი</FormLabel>
                                         <FormControl>
                                             <Input
                                                 {...field}
@@ -109,7 +109,7 @@ const SettingsPage = () => {
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Email</FormLabel>
+                                            <FormLabel>ელ-ფოსტა</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
@@ -127,7 +127,7 @@ const SettingsPage = () => {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>Password</FormLabel>
+                                            <FormLabel>თქვენი პაროლი</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
@@ -145,7 +145,7 @@ const SettingsPage = () => {
                                     name="newPassword"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel>New Password</FormLabel>
+                                            <FormLabel>ახალი პაროლი</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     {...field}
@@ -165,7 +165,7 @@ const SettingsPage = () => {
                                 name="role"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Role</FormLabel>
+                                        <FormLabel>სტატუსი</FormLabel>
                                         <Select
                                             disabled={isPending}
                                             onValueChange={field.onChange}
@@ -173,7 +173,7 @@ const SettingsPage = () => {
                                         >
                                             <FormControl>
                                                 <SelectTrigger>
-                                                    <SelectValue placeholder="Select a role" />
+                                                    <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
                                                 </SelectTrigger>
                                             </FormControl>
                                             <SelectContent>

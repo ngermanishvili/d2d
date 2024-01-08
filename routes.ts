@@ -4,10 +4,7 @@
  * @type {string[]}
  */
 
-export const publicRoutes = [
-    "/",
-    "/auth/new-verification",
-]
+export const publicRoutes = ["/", "/auth/new-verification", "/alo"];
 
 /**
  * An array of routes that require authentication
@@ -20,21 +17,21 @@ export const authRoutes = [
     "/auth/register",
     "/auth/error",
     "/auth/reset",
-    "/auth/new-password"
-]
+    "/auth/new-password",
+];
 
 /**
-* The prefix for all API routes
-* Routes that start with this prefix are treated as API routes 
+ * The prefix for all API routes
+ * Routes that start with this prefix are treated as API routes
  * @type {string[]}
  */
 
-export const apiAuthPrefix = "/api/auth"
+export const apiAuthPrefix = "/api/auth";
 
-
+export const adminRoutes = ["/billboards", "/billboards/new"];
 /**
  * The default redirect URL after login
  * @type {string}
  */
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings"
+export const DEFAULT_LOGIN_REDIRECT = "/settings";
