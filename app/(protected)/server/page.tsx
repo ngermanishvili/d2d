@@ -1,14 +1,17 @@
 import { currentUser } from "@/lib/auth";
 import { UserInfo } from "@/components/user-info";
+import { RoleGate } from "@/components/auth/role-gate";
 
 const ServerPage = async () => {
     const user = await currentUser();
 
     return (
-        <UserInfo
-            label="💻 Server component"
-            user={user}
-        />
+        <RoleGate allowedRole="ADMIN">
+            <UserInfo
+                label="💻 Server component"
+                user={user}
+            />
+        </RoleGate>
     );
 }
 
