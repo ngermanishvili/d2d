@@ -73,10 +73,7 @@ const AdminPage = () => {
                     </CardContent>
                 </Card>
                 <AdminUserTable />
-
             </RoleGate>
-
-
         </>
     );
 };
