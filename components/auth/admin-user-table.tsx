@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
 import { Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -6,6 +6,8 @@ import { Button } from '../ui/button';
 import { fetchAllUserData } from '@/hooks/use-global-user';
 import { UserRole } from '@prisma/client';
 import Link from 'next/link';
+import { settings } from '@/actions/settings';
+import { MakeUserIntoCourier } from '@/actions/make-courier';
 
 
 interface UserData {
@@ -17,6 +19,9 @@ interface UserData {
     password: string | null;
     role: UserRole; // Replace with the actual type for 'UserRole'
 }
+
+
+
 
 const columns: ColumnsType<any> = [
     {
@@ -60,18 +65,24 @@ const columns: ColumnsType<any> = [
         fixed: 'right',
         width: 100,
         render: (text, record) => (
-            <Button>
-                <Link href={`/admin/user/${record.id}`}>
-                    View
-                </Link>
-            </Button>
+
+            <Button onClick={async () => await MakeUserIntoCourier(record.email)}>change courier </Button>
+
         ),
     }
 ];
 
 const AdminUserTable: React.FC = () => {
-
     const [userData, setUserData] = useState<UserData[]>([]);
+    const [pending, startTransation] = useTransition();
+
+    const onClick = () => {
+        startTransation(() => {
+            settings({
+                role: UserRole.COURIER
+            });
+        });
+    };
 
     useEffect(() => {
         // Fetch all user data when the component mounts
@@ -87,8 +98,14 @@ const AdminUserTable: React.FC = () => {
     return (
         <>
             <Table columns={columns} dataSource={userData} scroll={{ x: 1500, y: 300 }} />
+            {/* <Button disabled={pending} onClick={onClick}>
+                Change role
+            </Button> */}
         </>
     );
 };
 
 export default AdminUserTable;
+
+
+

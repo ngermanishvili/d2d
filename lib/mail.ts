@@ -11,7 +11,7 @@ export const sendPasswordResetEmail = async (
     const resetLink = `${domain}/auth/new-password?token=${token}`;
 
     await resend.emails.send({
-        from: 'D2D GEORGIA <noreply@resend.dev>',
+        from: 'D2D GEORGIA <info@d2d.ge>',
         to: email,
         subject: 'აღადგინეთ პაროლი',
         html: `<div><p>Click <a href="${resetLink}">here</a> to reset password.</p></div>`
@@ -28,7 +28,7 @@ export const sendVerificationEmail = async (
 
 
     await resend.emails.send({
-        from: 'D2D GEORGIA <noreply@resend.dev>',
+        from: 'D2D GEORGIA <info@d2d.ge>',
         to: email,
         subject: 'დაადასტურეთ ელ.ფოსტა',
         html: `<div><p>Click <a href="${confirmLink}">here</a> to confirm email.</p></div>`
