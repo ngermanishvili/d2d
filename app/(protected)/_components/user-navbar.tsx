@@ -43,7 +43,7 @@ export const UserNavbar = () => {
                         : "outline"}>
                     <Link
                         href='/billboards'>
-                        billboards for only user                    </Link>
+                        billboards for only admin                    </Link>
                 </Button>
                 <Button
                     asChild

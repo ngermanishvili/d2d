@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { UserNavbar } from "../(protected)/_components/user-navbar";
+import { RoleGate } from "@/components/auth/role-gate";
 
 
 export default async function DashboardLayout({
@@ -11,10 +12,12 @@ export default async function DashboardLayout({
 }) {
   return (
     <>
-      <div>
-        <UserNavbar />
-        {children}
-      </div>
+      <RoleGate allowedRole="ADMIN">
+        <div>
+          <UserNavbar />
+          {children}
+        </div>
+      </RoleGate>
     </>
   );
 }

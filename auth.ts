@@ -41,12 +41,12 @@ export const {
             return true;
         },
         async session({ token, session }) {
-            if (token.sub && session.user) {
-                session.user.id = token.sub;
-            }
-
             if (token.role && session.user) {
                 session.user.role = token.role as UserRole;
+            }
+
+            if (token.sub && session.user) {
+                session.user.id = token.sub;
             }
 
 
