@@ -30,7 +30,6 @@ export const sendVerificationEmail = async (
 ) => {
     const confirmLink = `${domain}/auth/new-verification?token=${token}`;
 
-
     await resend.emails.send({
         from: 'D2D GEORGIA <info@d2d.ge>',
         to: email,

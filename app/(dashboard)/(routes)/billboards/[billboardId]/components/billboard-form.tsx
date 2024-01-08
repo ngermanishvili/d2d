@@ -3,12 +3,12 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useState} from "react";
-import {Billboard} from "@prisma/client";
-import {TrashIcon} from "@radix-ui/react-icons";
-import {useForm} from "react-hook-form";
-import {useParams, useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Billboard } from "@prisma/client";
+import { TrashIcon } from "@radix-ui/react-icons";
+import { useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
   Form,
@@ -18,11 +18,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {Heading} from "@/components/ui/heading";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {Input} from "@/components/ui/input";
-import {AlertModal} from "@/components/modals/alert-modal";
+import { Heading } from "@/components/ui/heading";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -37,7 +37,7 @@ interface BillBoardFormProps {
   initialData: Billboard | null;
 }
 
-export const BillBoardForm: React.FC<BillBoardFormProps> = ({initialData}) => {
+export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -125,7 +125,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="imageUrl"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>Background Image</FormLabel>
                 <FormControl>
@@ -144,7 +144,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="label"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Label</FormLabel>
                   <FormControl>

@@ -8,3 +8,8 @@ declare module "next-auth" {
         }
     }
 }
+
+// types/index.ts
+export interface BillboardData {
+    imageUrl: string;
+}
