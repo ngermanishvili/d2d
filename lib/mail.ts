@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-const domain = 'https://auth-ts-sigma.vercel.app/'
+const domain = 'https://d2d.ge/'
 
 export const sendPasswordResetEmail = async (
     email: string,
