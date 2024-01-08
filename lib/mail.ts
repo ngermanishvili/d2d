@@ -6,17 +6,16 @@ const domain = process.env.NEXT_PUBLIC_APP_URL;
 
 export const sendPasswordResetEmail = async (
     email: string,
-    token: string
+    token: string,
 ) => {
-    const resetLink = `${domain}/auth/new-password?token=${token}`;
+    const resetLink = `${domain}/auth/new-password?token=${token}`
 
     await resend.emails.send({
         from: 'D2D GEORGIA <info@d2d.ge>',
         to: email,
-        subject: 'აღადგინეთ პაროლი',
-        html: `<div><p>Click <a href="${resetLink}">here</a> to reset password.</p></div>`
+        subject: "Reset your password",
+        html: `<p>Click <a href="${resetLink}">here</a> to reset password.</p>`
     });
-
 };
 
 
