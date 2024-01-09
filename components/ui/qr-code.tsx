@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useRef } from "react";
+import {useEffect, useRef} from "react";
 import QRCode from "qrcode";
 
 interface QRCodeGeneratorProps {
   text: string;
 }
 
-const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ text }) => {
+const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({text}) => {
   const qrCodeRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
