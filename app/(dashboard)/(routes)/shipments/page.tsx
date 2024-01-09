@@ -3,7 +3,8 @@ import {format} from "date-fns";
 
 import {ShipmentClientlient} from "./components/client";
 import {ShipmentColumn} from "./components/columns";
-import {currentRole, currentUserId} from "@/lib/auth";
+import {currentRole, currentUser, currentUserId} from "@/lib/auth";
+import {getUserByEmail} from "@/data/user";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -11,6 +12,8 @@ const ShipmentPage = async () => {
       createdAt: "desc",
     },
   });
+  const user = await getUserByEmail("samxara77@yahoo.com");
+  console.log("🚀 ~ ShipmentPage ~ user:", user);
   const userRole = await currentRole();
   const userId = await currentUserId();
   const filteredShipments =
