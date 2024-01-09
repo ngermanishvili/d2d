@@ -7,7 +7,10 @@ export const currentUser = async () => {
 };
 
 
-
+export const currentUserId = async () => {
+    const session = await auth();
+    return session?.user?.id; // Assuming the user's ID is stored under the 'id' field
+};
 
 export const currentRole = async () => {
     const session = await auth();

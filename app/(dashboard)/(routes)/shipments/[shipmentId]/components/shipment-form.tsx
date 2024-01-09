@@ -322,7 +322,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({
                             <CardDescription>ყველა შეკვეთას გააჩნია უნიკალური QR </CardDescription>
                         </CardHeader>
                         <CardContent>
-                            <QRCodeGenerator text={`${window.location.origin}/shipments/${params.shipmentId}`} />
+                            {/* <QRCodeGenerator text={`${window.location.origin}/shipments/${params.shipmentId}`} /> */}
                         </CardContent>
                     </Card>
                 </form>

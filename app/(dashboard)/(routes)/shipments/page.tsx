@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 
 import { ShipmentClientlient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
+import { currentUserId } from "@/lib/auth";
 
 const ShipmentPage = async () => {
 
@@ -12,7 +13,11 @@ const ShipmentPage = async () => {
         }
     })
 
-    const formattedShipments: ShipmentColumn[] = shipments.map((item) => ({
+    const userId = await currentUserId();
+    const filteredShipments = shipments.filter((item) => item.userId === userId);
+
+
+    const formattedShipments: ShipmentColumn[] = filteredShipments.map((item) => ({
         id: item.id,
         name: item.name,
         lastName: item.lastName,
@@ -22,9 +27,7 @@ const ShipmentPage = async () => {
         price: item.price,
         phoneNumber: item.phoneNumber,
         address: item.address,
-
         createdAt: format(item.createdAt, 'MMMM do, yyyy')
-
     }))
 
     return (

@@ -9,7 +9,6 @@ const ShipmentPage = async ({
     params: { shipmentId: string }
 },
 ) => {
-
     const shipment = await db.shipment.findUnique({
         where: {
             id: params.shipmentId

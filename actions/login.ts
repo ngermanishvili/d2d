@@ -1,4 +1,3 @@
-import { VerificationToken } from './../node_modules/.prisma/client/index.d';
 "use server";
 
 import * as z from "zod";
