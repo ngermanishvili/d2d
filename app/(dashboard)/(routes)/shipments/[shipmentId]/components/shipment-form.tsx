@@ -2,13 +2,14 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Shipment} from "@prisma/client";
 import {Trash} from "lucide-react";
 import {useForm} from "react-hook-form";
 import {useParams, useRouter} from "next/navigation";
 import {zodResolver} from "@hookform/resolvers/zod";
 import QRCodeGenerator from "@/components/ui/qr-code";
+import useCalculatorStore from "@/hooks/calculate-price";
 
 import {
   Form,
@@ -66,6 +67,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
   const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
   const toastMessage = initialData ? "Shipment updated." : "Shipment created";
   const action = initialData ? "Save changes" : "Create";
+  const {calculatedPrice} = useCalculatorStore();
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
@@ -74,7 +76,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       city: "",
       address: "",
       phoneNumber: "",
-      price: "",
+      price: "0",
       brittle: false,
       markedByCourier: false,
     },
@@ -82,6 +84,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
 
   const onSubmit = async (data: ShipmentFormValues) => {
     try {
+      data.price = calculatedPrice;
       setLoading(true);
       console.log("Submitted Data:", data);
 
@@ -283,24 +286,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                       type="number"
                       disabled={loading}
                       placeholder="ტელეფონის ნომერი "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="price"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>ფასი</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="ფასი"
                       {...field}
                     />
                   </FormControl>

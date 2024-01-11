@@ -11,12 +11,12 @@ import { ShipmentColumn, columns } from "./columns"
 import { DataTable } from "@/components/ui/date-table"
 import { ApiList } from "@/components/ui/api-list"
 
-interface ShipmentClientlientProps {
+interface ShipmentClientProps {
     data: ShipmentColumn[];
 
 }
 
-export const ShipmentClientlient: React.FC<ShipmentClientlientProps> = ({
+export const ShipmentClient: React.FC<ShipmentClientProps> = ({
     data
 }) => {
     const router = useRouter();

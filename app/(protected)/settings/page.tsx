@@ -30,6 +30,8 @@ import {useCurrentUser} from "@/hooks/use-current-user";
 import {FormError} from "@/components/form-error";
 import {FormSuccess} from "@/components/form-success";
 import {UserRole} from "@prisma/client";
+// import {UserListForMakingCourierClient} from "../_components/user-list-for-admin-client";
+// import {RoleGate} from "@/components/auth/role-gate";
 
 const SettingsPage = () => {
   const user = useCurrentUser();
@@ -69,144 +71,149 @@ const SettingsPage = () => {
   };
 
   return (
-    <Card className="w-[600px]">
-      <CardHeader>
-        <p className="text-2xl font-semibold text-center">⚙️ კაბინეტი</p>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>სახელი</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="John Doe"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="number"
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>nomeri</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="tqveni nom"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <>
+      <Card className="w-[600px]">
+        <CardHeader>
+          <p className="text-2xl font-semibold text-center">⚙️ კაბინეტი</p>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>სახელი</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="John Doe"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="number"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>nomeri</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          placeholder="tqveni nom"
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>ელ-ფოსტა</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="john.doe@example.com"
-                          type="email"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>თქვენი პაროლი</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="******"
-                          type="password"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="newPassword"
-                  render={({field}) => (
-                    <FormItem>
-                      <FormLabel>ახალი პაროლი</FormLabel>
-                      <FormControl>
-                        <Input
-                          {...field}
-                          placeholder="******"
-                          type="password"
-                          disabled={isPending}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </>
+                <>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>ელ-ფოსტა</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="john.doe@example.com"
+                            type="email"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>თქვენი პაროლი</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="******"
+                            type="password"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="newPassword"
+                    render={({field}) => (
+                      <FormItem>
+                        <FormLabel>ახალი პაროლი</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="******"
+                            type="password"
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </>
 
-              <FormField
-                control={form.control}
-                name="role"
-                render={({field}) => (
-                  <FormItem>
-                    <FormLabel>სტატუსი</FormLabel>
-                    <Select
-                      disabled={isPending}
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
-                        <SelectItem value={UserRole.USER}>User</SelectItem>
-                        <SelectItem value={UserRole.COURIER}>
-                          Courier
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormError message={error} />
-            <FormSuccess message={success} />
-            <Button disabled={isPending} type="submit">
-              Save
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+                <FormField
+                  control={form.control}
+                  name="role"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>სტატუსი</FormLabel>
+                      <Select
+                        disabled={isPending}
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+                          <SelectItem value={UserRole.USER}>User</SelectItem>
+                          <SelectItem value={UserRole.COURIER}>
+                            Courier
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormError message={error} />
+              <FormSuccess message={success} />
+              <Button disabled={isPending} type="submit">
+                Save
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+      {/* <RoleGate allowedRole="ADMIN">
+          <UserListForMakingCourierClient />
+      </RoleGate> */}
+    </>
   );
 };
 

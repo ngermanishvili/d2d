@@ -1,7 +1,7 @@
 import {db} from "@/lib/db";
 import {format} from "date-fns";
 
-import {ShipmentClientlient} from "./components/client";
+import {ShipmentClient} from "./components/client";
 import {ShipmentColumn} from "./components/columns";
 import {currentRole, currentUser, currentUserId} from "@/lib/auth";
 import {getUserByEmail} from "@/data/user";
@@ -39,7 +39,7 @@ const ShipmentPage = async () => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <ShipmentClientlient data={formattedShipments} />
+        <ShipmentClient data={formattedShipments} />
       </div>
     </div>
   );
