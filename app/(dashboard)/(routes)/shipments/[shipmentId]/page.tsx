@@ -2,7 +2,6 @@ import {db} from "@/lib/db";
 
 import {ShipmentForm} from "./components/shipment-form";
 import ShippingCostGraph from "../components/calculate";
-import {UserListForMakingCourierClient} from "@/app/(protected)/_components/user-list-for-admin-client";
 
 const ShipmentPage = async ({params}: {params: {shipmentId: string}}) => {
   const shipment = await db.shipment.findUnique({

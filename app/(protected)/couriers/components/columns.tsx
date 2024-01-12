@@ -2,11 +2,15 @@
 
 import {ColumnDef} from "@tanstack/react-table";
 import {CellAction} from "./cell-action";
+import {UserRole} from "@prisma/client";
 
 export type UsersColumn = {
-  id: string | null;
-  name: string | null;
-  email: string | null;
+  id: string;
+  name: string | undefined;
+  number: string | undefined;
+  image: string | undefined;
+  role: UserRole;
+  email: string | undefined;
 };
 
 export const columns: ColumnDef<UsersColumn>[] = [
@@ -16,6 +20,22 @@ export const columns: ColumnDef<UsersColumn>[] = [
   },
   {
     accessorKey: "email",
+    header: "Email",
+  },
+  {
+    accessorKey: "number",
+    header: "Email",
+  },
+  {
+    accessorKey: "image",
+    header: "Email",
+  },
+  {
+    accessorKey: "role",
+    header: "Email",
+  },
+  {
+    accessorKey: "id",
     header: "Email",
   },
 

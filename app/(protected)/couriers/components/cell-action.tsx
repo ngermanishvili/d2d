@@ -1,4 +1,3 @@
-"use client";
 import axios from "axios";
 import {useEffect, useState} from "react";
 
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {UsersColumn} from "./columns";
 import {AlertModal} from "@/components/modals/alert-modal";
+import {DeleteUser} from "@/actions/delete-user";
 
 interface CellActionProps {
   data: UsersColumn;
@@ -26,32 +26,40 @@ export const CellAction: React.FC<CellActionProps> = ({data}) => {
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
-  const onDelete = async () => {
-    try {
-      setLoading(true);
-      await axios.delete(`/api/billboards/${data.id}`);
-      router.refresh();
-      toast.success("Billboard deleted.");
-    } catch (error) {
-      toast.error(
-        "Make sure you removed all categories using this billboard first."
-      );
-    } finally {
-      setLoading(false);
-      setOpen(false);
-    }
+  const [open2, set2Open] = useState(false);
+  const onUpdate = async (id: string | null) => {
+    router.push(`/couriers/${id}`);
   };
-  useEffect(() => {
-    console.log(data);
-  }, [open]);
 
+  const onDelete = async (id: string) => {
+    await DeleteUser(id);
+    setOpen(false);
+    router.refresh();
+  };
   return (
     <>
       <AlertModal
         isOpen={open}
         onClose={() => setOpen(false)}
-        onConfirm={onDelete}
+        onConfirm={() => {
+          if (!data.id) {
+            console.log("araris id");
+            return;
+          }
+          onDelete(data.id);
+        }}
+        loading={loading}
+      />
+      <AlertModal
+        isOpen={open2}
+        onClose={() => set2Open(false)}
+        onConfirm={() => {
+          if (!data.id) {
+            console.log("araris id");
+            return;
+          }
+          onUpdate(data.id);
+        }}
         loading={loading}
       />
       <DropdownMenu>
@@ -64,7 +72,7 @@ export const CellAction: React.FC<CellActionProps> = ({data}) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-          <DropdownMenuItem onClick={() => router.push(`/couriers/${data.id}`)}>
+          <DropdownMenuItem onClick={() => set2Open(true)}>
             <Edit className="mr-2 h-4 w-4" />
             Update
           </DropdownMenuItem>
