@@ -3,6 +3,14 @@ import { NextResponse } from "next/server"
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 
+
+function generateTrackingNumber(): string {
+    const timestamp = new Date().getTime();
+
+    const randomNumber = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    return `GE-${timestamp.toString().slice(-8)}-${randomNumber}`;
+}
+
 export async function POST(
     req: Request,
     { params }: { params: {} }
@@ -64,10 +72,11 @@ export async function POST(
         }
 
 
+        const trackingId = generateTrackingNumber();
 
 
         const shipment = await db.shipment.create({
-            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress, mimgebiQalaqi },
+            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress, mimgebiQalaqi, trackingId },
         });
 
         return NextResponse.json(shipment)

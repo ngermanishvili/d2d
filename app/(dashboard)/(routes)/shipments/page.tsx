@@ -14,14 +14,12 @@ const ShipmentPage = async () => {
     },
   });
   const user = await getUserByEmail("samxara77@yahoo.com");
-  console.log("🚀 ~ ShipmentPage ~ user:", user);
   const userRole = await currentRole();
   const userId = await currentUserId();
 
 
   const filteredShipments = userRole !== "ADMIN"
     ? shipments.filter((item) => {
-      console.log("Unformatted Date:", item.createdAt);
       return item.userId === userId;
     })
     : shipments;
@@ -43,6 +41,7 @@ const ShipmentPage = async () => {
       mimgebisAddress: item.mimgebisAddress,
       mimgebiQalaqi: item.mimgebiQalaqi,
       createdAt: item.createdAt.toISOString(), // Convert Date to string
+      trackingId: item.trackingId,
     })
   );
 

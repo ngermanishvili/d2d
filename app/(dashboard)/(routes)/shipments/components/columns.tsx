@@ -20,11 +20,17 @@ export type ShipmentColumn = {
     mimgebisAddress: string
     markedByCourier: string
     mimgebiQalaqi: string
+    trackingId: string
 
 
 }
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
+
+    {
+        accessorKey: "trackingId",
+        header: "ტრეკინგ ნომერი",
+    },
     {
         accessorKey: "name",
         header: "სახელი",
@@ -74,22 +80,18 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         accessorKey: "mimgebisAddress",
         header: "მიმღების მისამართი",
     },
-    {
-        accessorKey: "markedByCourier",
-        header: "markedByCourier",
-    },
+
 
     {
         accessorKey: "mimgebiQalaqi",
         header: "მიმღების ქალაქი",
     },
-
-
-
     {
-        accessorKey: "id",
-        header: "id",
+        accessorKey: "markedByCourier",
+        header: "markedByCourier",
+
     },
+
     {
         id: 'actions',
         cell: ({ row }) => <CellAction data={row.original} />

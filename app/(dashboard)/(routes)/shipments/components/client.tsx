@@ -13,7 +13,6 @@ import { DataTable } from "@/components/ui/date-table"
 import { ApiList } from "@/components/ui/api-list"
 import { DatePickerWithRange } from "@/components/ui/date-picker"
 import { DateRange } from "react-day-picker"
-import { log } from "console"
 
 interface ShipmentClientProps {
     data: ShipmentColumn[];
@@ -29,20 +28,14 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({
     const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
 
     const handleDateRangeChange = (dateRange: DateRange) => {
-        console.log("Original Data:", data);
-        console.log("Selected Date Range:", dateRange);
-
         const filteredData = data.filter((shipment) => {
             const shipmentDate = new Date(shipment.createdAt);
-            console.log("Shipment Date:", shipmentDate.toUTCString(), "Raw createdAt:", shipment.createdAt);
 
             return (
                 (!dateRange.from || shipmentDate >= dateRange.from) &&
                 (!dateRange.to || shipmentDate <= dateRange.to)
             );
         });
-
-        console.log("Filtered Data:", filteredData);
 
         setFilteredData(filteredData);
     };
