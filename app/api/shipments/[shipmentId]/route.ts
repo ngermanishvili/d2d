@@ -103,7 +103,7 @@ export async function PATCH(
                 mimgebisName,
                 mimgebisLastname,
                 mimgebisNumber,
-                mimgebisAddress
+                mimgebisAddress,
                 mimgebiQalaqi
             }
         });
