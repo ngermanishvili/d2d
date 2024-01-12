@@ -33,7 +33,7 @@ export async function PATCH(
 
         const body = await req.json();
 
-        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress } = body;
+        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress, mimgebiQalaqi } = body;
 
 
 
@@ -104,7 +104,7 @@ export async function PATCH(
                 mimgebisLastname,
                 mimgebisNumber,
                 mimgebisAddress
-
+                mimgebiQalaqi
             }
         });
 

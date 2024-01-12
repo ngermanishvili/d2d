@@ -19,6 +19,7 @@ export type ShipmentColumn = {
     mimgebisNumber: string
     mimgebisAddress: string
     markedByCourier: string
+    mimgebiQalaqi: string
 
 
 }
@@ -77,6 +78,12 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         accessorKey: "markedByCourier",
         header: "markedByCourier",
     },
+
+    {
+        accessorKey: "mimgebiQalaqi",
+        header: "მიმღების ქალაქი",
+    },
+    
 
 
     {

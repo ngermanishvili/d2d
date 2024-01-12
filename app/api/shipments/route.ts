@@ -10,7 +10,7 @@ export async function POST(
     try {
         const body = await req.json()
 
-        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress } = body;
+        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress, mimgebiQalaqi } = body;
 
         const userId = await currentUserId();
 
@@ -32,6 +32,10 @@ export async function POST(
 
         if (!price) {
             return new NextResponse("Price is required", { status: 400 })
+        }
+
+        if (!mimgebiQalaqi) {
+            return new NextResponse("mimgebiQalaqi is required", { status: 400 })
         }
 
 
@@ -63,7 +67,7 @@ export async function POST(
 
 
         const shipment = await db.shipment.create({
-            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress },
+            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress, mimgebiQalaqi },
         });
 
         return NextResponse.json(shipment)

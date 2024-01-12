@@ -36,7 +36,7 @@ const ShipmentPage = async () => {
       mimgebisLastname: item.mimgebisLastname,
       mimgebisNumber: item.mimgebisNumber,
       mimgebisAddress: item.mimgebisAddress,
-
+      mimgebiQalaqi: item.mimgebiQalaqi,
       createdAt: format(item.createdAt, "MMMM do, yyyy"),
     })
   );

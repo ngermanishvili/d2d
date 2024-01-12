@@ -55,6 +55,7 @@ const formSchema = z.object({
   mimgebisLastname: z.string().min(1),
   mimgebisNumber: z.string().min(5),
   mimgebisAddress: z.string().min(1),
+  mimgebiQalaqi: z.string().min(1),
 
 });
 
@@ -88,7 +89,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       mimgebisLastname: "",
       mimgebisNumber: "",
       mimgebisAddress: "",
-
+      mimgebiQalaqi: "",
       brittle: false,
       markedByCourier: false,
     },
@@ -358,6 +359,23 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   <Input
                     disabled={loading}
                     placeholder="მისამართი "
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="mimgebiQalaqi"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>mimgebiQalaqi</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="mimgebiQalaqi "
                     {...field}
                   />
                 </FormControl>
