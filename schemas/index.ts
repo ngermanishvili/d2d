@@ -38,6 +38,15 @@ export const RegisterSchema = z.object({
 
 });
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
@@ -47,7 +56,7 @@ export const SettingsSchema = z
     number: z.optional(z.string()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
-    image: z.optional(z.string().url()),
+    image: z.optional(z.string().refine((url) => url === "" || isValidUrl(url), { message: "Invalid URL" })),
   })
   .refine(
     (data) => {

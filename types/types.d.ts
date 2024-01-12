@@ -5,6 +5,7 @@ declare module "next-auth" {
         user?: {
             // Add any other user fields you're expecting
             role?: UserRole;
+
         }
     }
 }

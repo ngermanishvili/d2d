@@ -68,7 +68,6 @@ const SettingsPage = () => {
             setError(data.error);
           }
 
-
           if (data.success) {
             update();
             setSuccess(data.success);

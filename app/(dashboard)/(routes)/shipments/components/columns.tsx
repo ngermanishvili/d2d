@@ -13,7 +13,7 @@ export type ShipmentColumn = {
     city: string
     price: string
     brittle: string
-    createdAt: string
+    createdAt: string | Date; // Allow both string and Date
     mimgebisName: string
     mimgebisLastname: string
     mimgebisNumber: string
@@ -83,7 +83,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         accessorKey: "mimgebiQalaqi",
         header: "მიმღების ქალაქი",
     },
-    
+
 
 
     {

@@ -6,6 +6,7 @@ import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUser, currentUserId } from "@/lib/auth";
 import { getUserByEmail } from "@/data/user";
 
+
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
     orderBy: {
@@ -16,10 +17,14 @@ const ShipmentPage = async () => {
   console.log("🚀 ~ ShipmentPage ~ user:", user);
   const userRole = await currentRole();
   const userId = await currentUserId();
-  const filteredShipments =
-    userRole !== "ADMIN"
-      ? shipments.filter((item) => item.userId === userId)
-      : shipments;
+
+
+  const filteredShipments = userRole !== "ADMIN"
+    ? shipments.filter((item) => {
+      console.log("Unformatted Date:", item.createdAt);
+      return item.userId === userId;
+    })
+    : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
     (item) => ({
@@ -37,13 +42,14 @@ const ShipmentPage = async () => {
       mimgebisNumber: item.mimgebisNumber,
       mimgebisAddress: item.mimgebisAddress,
       mimgebiQalaqi: item.mimgebiQalaqi,
-      createdAt: format(item.createdAt, "MMMM do, yyyy"),
+      createdAt: item.createdAt.toISOString(), // Convert Date to string
     })
   );
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
+
         <ShipmentClient data={formattedShipments} />
       </div>
     </div>
