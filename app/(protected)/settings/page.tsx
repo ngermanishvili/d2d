@@ -30,6 +30,8 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { UserRole } from "@prisma/client";
+import {Link} from "lucide-react";
+import {RoleGate} from "@/components/auth/role-gate";
 import ImageUpload from "@/components/ui/image-upload";
 
 // import {UserListForMakingCourierClient} from "../_components/user-list-for-admin-client";
@@ -235,9 +237,6 @@ const SettingsPage = () => {
           </Form>
         </CardContent>
       </Card>
-      {/* <RoleGate allowedRole="ADMIN">
-          <UserListForMakingCourierClient />
-      </RoleGate> */}
     </>
   );
 };
