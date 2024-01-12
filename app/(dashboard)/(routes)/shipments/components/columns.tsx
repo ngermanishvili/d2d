@@ -14,6 +14,13 @@ export type ShipmentColumn = {
     price: string
     brittle: string
     createdAt: string
+    mimgebisName: string
+    mimgebisLastname: string
+    mimgebisNumber: string
+    mimgebisAddress: string
+    markedByCourier: string
+
+
 }
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
@@ -49,10 +56,29 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         accessorKey: "createdAt",
         header: "დამატების თარიღი",
     },
+
+    {
+        accessorKey: "mimgebisName",
+        header: "მიმღების სახელი",
+    },
+    {
+        accessorKey: "mimgebisLastname",
+        header: "მიმღების გვარი",
+    },
+    {
+        accessorKey: "mimgebisNumber",
+        header: "მიმღების ტელეფონის ნომერი",
+    },
+    {
+        accessorKey: "mimgebisAddress",
+        header: "მიმღების მისამართი",
+    },
     {
         accessorKey: "markedByCourier",
         header: "markedByCourier",
     },
+
+
     {
         accessorKey: "id",
         header: "id",

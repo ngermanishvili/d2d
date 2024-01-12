@@ -1,4 +1,4 @@
-import {UserRole} from "@prisma/client";
+import { UserRole } from "@prisma/client";
 import * as z from "zod";
 
 export const NewPasswordSchema = z.object({
@@ -35,6 +35,7 @@ export const RegisterSchema = z.object({
   number: z.string().min(1, {
     message: "min 1 nomriani ",
   }),
+
 });
 
 export const SettingsSchema = z
@@ -46,6 +47,7 @@ export const SettingsSchema = z
     number: z.optional(z.string()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
+    image: z.optional(z.string().url()),
   })
   .refine(
     (data) => {

@@ -78,6 +78,7 @@ export const settings = async (
 
     update({
         user: {
+            image: updatedUser.image ?? undefined,
             name: updatedUser.name,
             email: updatedUser.email,
             role: updatedUser.role,

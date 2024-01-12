@@ -17,7 +17,7 @@ enum UserRole {
 model User {
   id            String     @id @default(cuid())
   name          String?
-  number        String?    
+  number        String?
   email         String?    @unique
   emailVerified DateTime?
   image         String?
@@ -73,19 +73,24 @@ model Billboard {
 }
 
 model Shipment {
-  id              String   @id @default(uuid())
-  name            String
-  userId          String
-  lastName        String
-  phoneNumber     String
-  address         String // 
-  city            String // 
-  brittle         Boolean  @default(false) // New field for the courier to mark true or false
-  price           String
-  markedByCourier Boolean  @default(false) // New field for the courier to mark true or false
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  User            User     @relation(fields: [userId], references: [id])
+  id               String   @id @default(uuid())
+  name             String
+  userId           String
+  lastName         String
+  phoneNumber      String
+  address          String // 
+  city             String // 
+  brittle          Boolean  @default(false) // New field for the courier to mark true or false
+  price            String
+  markedByCourier  Boolean  @default(false) // New field for the courier to mark true or false
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  mimgebisName     String
+  mimgebisLastname String
+  mimgebisNumber   String
+  mimgebiQalaqi    String
+  mimgebisAddress  String
+  User             User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }

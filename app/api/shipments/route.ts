@@ -10,7 +10,7 @@ export async function POST(
     try {
         const body = await req.json()
 
-        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, } = body;
+        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress } = body;
 
         const userId = await currentUserId();
 
@@ -45,7 +45,7 @@ export async function POST(
 
 
         const shipment = await db.shipment.create({
-            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, },
+            data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress },
         });
 
         return NextResponse.json(shipment)

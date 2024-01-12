@@ -25,22 +25,13 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { NextURL } from "next/dist/server/web/next-url";
-import ShippingCostGraph from "../../components/calculate";
-import { ShipmentFormDelivered } from "./shipment-form-2";
+
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -49,13 +40,8 @@ const formSchema = z.object({
   address: z.string().min(1),
   phoneNumber: z.string().min(5),
   price: z.string().min(1),
-  brittle: z.boolean().default(false),
-  markedByCourier: z.boolean().default(false),
-  mimgebisName: z.string().min(1),
-  mimgebisLastname: z.string().min(1),
-  mimgebisNumber: z.string().min(5),
-  mimgebisAddress: z.string().min(1),
-
+  brittle: z.boolean().default(false), // Add this field
+  markedByCourier: z.boolean().default(false), // Add this field
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -65,7 +51,7 @@ interface ShipmentFormProps {
   initialData: Shipment | null;
 }
 
-export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
+export const ShipmentFormDelivered: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -84,11 +70,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       address: "",
       phoneNumber: "",
       price: "0",
-      mimgebisName: "",
-      mimgebisLastname: "",
-      mimgebisNumber: "",
-      mimgebisAddress: "",
-
       brittle: false,
       markedByCourier: false,
     },
@@ -159,8 +140,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       <Separator />
 
       {/* // formik form */}
-      <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">გამგზავნი</h2>
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -307,102 +286,8 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
+
           </div>
-
-          <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">მიმღები</h2>
-
-          <FormField
-            control={form.control}
-            name="mimgebisName"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>სახელი</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="სახელი "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="mimgebisLastname"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>გვარი</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="გვარი "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-
-          <FormField
-            control={form.control}
-            name="mimgebisAddress"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>მისამართი</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="მისამართი "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="mimgebisNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>ტელეფონის ნომერი</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    disabled={loading}
-                    placeholder="ტელეფონის ნომერი "
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* <ShipmentFormDelivered initialData={initialData} /> */}
-          <ShippingCostGraph />
-
-          <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>დაასკანერე QR</CardTitle>
-              <CardDescription>
-                ყველა შეკვეთას გააჩნია უნიკალური QR{" "}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <QRCodeGenerator
-                text={`${process.env.NEXT_PUBLIC_APP_URL}/shipments/${params.shipmentId}`}
-              />
-            </CardContent>
-          </Card>
         </form>
       </Form>
     </>

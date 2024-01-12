@@ -1,6 +1,6 @@
 "use client";
 import useCalculatorStore from "@/hooks/calculate-price"; // Adjust the path as
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartData,
   ChartOptions,
 } from "chart.js";
 
@@ -29,27 +28,28 @@ interface WeightRange {
 }
 
 const weightRanges: WeightRange[] = [
-  {label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6},
-  {label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10},
-  {label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11},
-  {label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13},
-  {label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15},
-  {label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16},
-  {label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17},
-  {label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21},
-  {label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35},
-  {label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47},
-  {label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62},
+  { label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6 },
+  { label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10 },
+  { label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11 },
+  { label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13 },
+  { label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15 },
+  { label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16 },
+  { label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17 },
+  { label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21 },
+  { label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35 },
+  { label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47 },
+  { label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62 },
 ];
 
-const ShippingCostGraph: React.FC = () => {
+const ShippingCostGraph: React.FC = (initialData: any) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
+
   const [selectedCity, setSelectedCity] = useState<"Tbilisi" | "Rustavi">(
     "Tbilisi"
   );
   const [usePackagingService, setUsePackagingService] =
     useState<boolean>(false);
-  const {calculatedPrice, setCost, packagingUsed, setPackagingUsed} =
+  const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
     useCalculatorStore();
 
   const handleCheckboxChange = (range: WeightRange) => {

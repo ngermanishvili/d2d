@@ -1,10 +1,10 @@
 "use client";
-import {CldUploadWidget} from "next-cloudinary";
-import {useEffect, useState} from "react";
-import {ImageIcon, TrashIcon} from "@radix-ui/react-icons";
+import { CldUploadWidget } from "next-cloudinary";
+import { useEffect, useState } from "react";
+import { ImageIcon, TrashIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -38,7 +38,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         {value.map((url) => (
           <div
             key={url}
-            className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
+            className="relative w-full h-[400px] rounded-md overflow-hidden"
           >
             <div className="z-10 absolute top-2 right-2">
               <Button
@@ -55,12 +55,13 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         ))}
       </div>
       <CldUploadWidget onUpload={onUpload} uploadPreset="setazgik">
-        {({open}) => {
+        {({ open }) => {
           const onClick = () => {
             open();
           };
           return (
             <Button
+              className="w-full"
               type="button"
               disabled={disabled}
               variant="secondary"

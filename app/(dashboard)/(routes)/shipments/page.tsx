@@ -1,10 +1,10 @@
-import {db} from "@/lib/db";
-import {format} from "date-fns";
+import { db } from "@/lib/db";
+import { format } from "date-fns";
 
-import {ShipmentClient} from "./components/client";
-import {ShipmentColumn} from "./components/columns";
-import {currentRole, currentUser, currentUserId} from "@/lib/auth";
-import {getUserByEmail} from "@/data/user";
+import { ShipmentClient } from "./components/client";
+import { ShipmentColumn } from "./components/columns";
+import { currentRole, currentUser, currentUserId } from "@/lib/auth";
+import { getUserByEmail } from "@/data/user";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -32,6 +32,11 @@ const ShipmentPage = async () => {
       price: item.price,
       phoneNumber: item.phoneNumber,
       address: item.address,
+      mimgebisName: item.mimgebisName,
+      mimgebisLastname: item.mimgebisLastname,
+      mimgebisNumber: item.mimgebisNumber,
+      mimgebisAddress: item.mimgebisAddress,
+
       createdAt: format(item.createdAt, "MMMM do, yyyy"),
     })
   );

@@ -24,6 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import ShippingCostGraph from "../../../shipments/components/calculate";
 
 const formSchema = z.object({
   label: z.string().min(1),
@@ -158,10 +159,12 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
                 </FormItem>
               )}
             />
+            {/* <ShippingCostGraph /> */}
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
+
         </form>
       </Form>
     </>

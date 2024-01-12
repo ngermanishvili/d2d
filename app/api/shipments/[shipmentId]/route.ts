@@ -33,7 +33,8 @@ export async function PATCH(
 
         const body = await req.json();
 
-        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier } = body;
+        const { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress } = body;
+
 
 
         if (!phoneNumber) {
@@ -79,7 +80,12 @@ export async function PATCH(
                 price,
                 name,
                 lastName,
-                markedByCourier // Include this field in the update operation
+                markedByCourier,
+                mimgebisName,
+                mimgebisLastname,
+                mimgebisNumber,
+                mimgebisAddress
+
             }
         });
 

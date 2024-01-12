@@ -1,14 +1,14 @@
 import NextAuth from "next-auth";
-import {UserRole} from "@prisma/client";
-import {PrismaAdapter} from "@auth/prisma-adapter";
+import { UserRole } from "@prisma/client";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
-import {getUserById} from "@/data/user";
-import {getAccountByUserId} from "./data/account";
+import { getUserById } from "@/data/user";
+import { getAccountByUserId } from "./data/account";
 
 export const {
-  handlers: {GET, POST},
+  handlers: { GET, POST },
   auth,
   signIn,
   signOut,
@@ -19,15 +19,15 @@ export const {
     error: "/auth/error",
   },
   events: {
-    async linkAccount({user}) {
+    async linkAccount({ user }) {
       await db.user.update({
-        where: {id: user.id},
-        data: {emailVerified: new Date()},
+        where: { id: user.id },
+        data: { emailVerified: new Date() },
       });
     },
   },
   callbacks: {
-    async signIn({user, account}) {
+    async signIn({ user, account }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
 
@@ -38,7 +38,7 @@ export const {
 
       return true;
     },
-    async session({token, session}) {
+    async session({ token, session }) {
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
       }
@@ -48,15 +48,17 @@ export const {
       }
 
       if (session.user) {
+
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.number = token.number as string;
+        session.user.image = token.image as string;
       }
 
       return session;
     },
-    async jwt({token}) {
+    async jwt({ token }) {
       if (!token.sub) return token;
 
       const existingUser = await getUserById(token.sub);
@@ -69,10 +71,11 @@ export const {
       token.email = existingUser.email;
       token.role = existingUser.role;
       token.number = existingUser.number;
+      token.image = existingUser.image;
       return token;
     },
   },
   adapter: PrismaAdapter(db),
-  session: {strategy: "jwt"},
+  session: { strategy: "jwt" },
   ...authConfig,
 });
