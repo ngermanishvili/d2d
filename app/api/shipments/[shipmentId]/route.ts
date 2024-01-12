@@ -67,6 +67,25 @@ export async function PATCH(
         }
 
 
+        if (!mimgebisName) {
+            return new NextResponse("mimgebisName is required", { status: 400 })
+        }
+
+        if (!mimgebisLastname) {
+            return new NextResponse("mimgebisLastname is required", { status: 400 })
+        }
+
+        if (!mimgebisNumber) {
+            return new NextResponse("mimgebisNumber is required", { status: 400 })
+        }
+
+        if (!mimgebisAddress) {
+            return new NextResponse("mimgebisAddress is required", { status: 400 })
+        }
+
+
+
+
 
         const shipment = await db.shipment.updateMany({
             where: {

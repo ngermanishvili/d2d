@@ -43,6 +43,24 @@ export async function POST(
             return new NextResponse("Image URL is required", { status: 400 })
         }
 
+        if (!mimgebisName) {
+            return new NextResponse("mimgebisName is required", { status: 400 })
+        }
+
+        if (!mimgebisLastname) {
+            return new NextResponse("mimgebisLastname is required", { status: 400 })
+        }
+
+        if (!mimgebisNumber) {
+            return new NextResponse("mimgebisNumber is required", { status: 400 })
+        }
+
+        if (!mimgebisAddress) {
+            return new NextResponse("mimgebisAddress is required", { status: 400 })
+        }
+
+
+
 
         const shipment = await db.shipment.create({
             data: { name, lastName, phoneNumber, address, city, brittle, price, markedByCourier, userId, mimgebisName, mimgebisLastname, mimgebisNumber, mimgebisAddress },
