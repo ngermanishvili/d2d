@@ -64,23 +64,26 @@ export function DataTable<TData, TValue>({
                     className="max-w-md"
                 />
             </div>
-            <div className="rounded-md border overflow-y-scroll overflow-x-scroll">
-                <Table>
+            <div className="rounded-md border overflow-x-auto">
+                <Table className="min-w-full">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <TableHead key={header.id}>
-                                            {header.isPlaceholder
-                                                ? null
-                                                : flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                        </TableHead>
-                                    )
-                                })}
+                                {headerGroup.headers.map((header, index) => (
+                                    <TableHead
+                                        key={header.id}
+                                        className={`${index === 0 ? 'sticky left-0 text-blue-400' : '' // Apply sticky style to the first column
+                                            } bg-red-200 p-2 font-semibold border `}
+                                    >
+
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                ))}
                             </TableRow>
                         ))}
                     </TableHeader>
@@ -90,17 +93,28 @@ export function DataTable<TData, TValue>({
                                 <TableRow
                                     key={row.id}
                                     data-state={row.getIsSelected() && "selected"}
+
                                 >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id}>
-                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                    {row.getVisibleCells().map((cell, index) => (
+                                        <TableCell
+                                            key={cell.id}
+                                            className={`${index === 0 ? 'sticky left-0 bg-white p-' : '' // Apply sticky style to the first column
+                                                } p-2 border`}
+                                        >
+                                            {flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext()
+                                            )}
                                         </TableCell>
                                     ))}
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={columns.length} className="h-24 text-center">
+                                <TableCell
+                                    colSpan={columns.length}
+                                    className="h-24 text-center"
+                                >
                                     No results.
                                 </TableCell>
                             </TableRow>

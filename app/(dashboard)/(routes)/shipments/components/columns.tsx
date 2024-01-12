@@ -21,15 +21,14 @@ export type ShipmentColumn = {
     markedByCourier: string
     mimgebiQalaqi: string
     trackingId: string
-
-
 }
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
 
     {
         accessorKey: "trackingId",
-        header: "ტრეკინგ ნომერი",
+        header: "თრექინგი",
+
     },
     {
         accessorKey: "name",
@@ -40,29 +39,29 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         header: "გვარი",
     },
     {
-        accessorKey: "phoneNumber",
-        header: "ტელეფონის ნომერი",
+        accessorKey: "city",
+        header: "ქალაქი",
     },
     {
         accessorKey: "address",
         header: "მისამართი",
     },
     {
+        accessorKey: "phoneNumber",
+        header: "ტელეფონის ნომერი",
+    },
+
+    {
         accessorKey: "price",
         header: "ფასი",
     },
-    {
-        accessorKey: "city",
-        header: "ქალაქი",
-    },
+
+
     {
         accessorKey: "brittle",
         header: "მსხვრევადი",
     },
-    {
-        accessorKey: "createdAt",
-        header: "დამატების თარიღი",
-    },
+
 
     {
         accessorKey: "mimgebisName",
@@ -88,8 +87,12 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     },
     {
         accessorKey: "markedByCourier",
-        header: "markedByCourier",
+        header: "სტატუსი",
 
+    },
+    {
+        accessorKey: "createdAt",
+        header: "დამატების თარიღი",
     },
 
     {

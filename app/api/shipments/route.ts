@@ -8,7 +8,7 @@ function generateTrackingNumber(): string {
     const timestamp = new Date().getTime();
 
     const randomNumber = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-    return `GE-${timestamp.toString().slice(-8)}-${randomNumber}`;
+    return `D2D${timestamp.toString().slice(-8)}-${randomNumber}`;
 }
 
 export async function POST(

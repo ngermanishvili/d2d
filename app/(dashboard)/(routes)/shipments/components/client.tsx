@@ -58,7 +58,8 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({
             {filteredData.length > 0 ? (
                 <>
                     <DataTable searchKey="name" columns={columns} data={filteredData} />
-                    <Heading title="API" description="api calls for shipments" />
+
+                    <Heading title="APIss" description="api calls for shipmensdts" />
                     <Separator />
                     <ApiList entityName="shipments" entityIdName="shipmentId" />
                 </>
