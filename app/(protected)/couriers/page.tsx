@@ -9,7 +9,7 @@ const CouriersPage = async () => {
   const billboards = await fetchUserForAdmin();
 
   const formattedBillboards: UsersColumn[] = billboards.map((item) => ({
-    id: item.id,    
+    id: item.id,
     name: item.name,
     email: item.email,
   }));
