@@ -40,12 +40,14 @@ import {
 } from "@/components/ui/select";
 import {NextURL} from "next/dist/server/web/next-url";
 import {UsersColumn} from "./columns";
+import {db} from "@/lib/db";
+import {error} from "console";
 
 const formSchema = z.object({
   name: z.string().optional(),
   number: z.string().optional(),
   image: z.string().optional(),
-  role: z.string().optional(),
+  role: z.nativeEnum(UserRole).optional(),
   email: z.string().optional(),
 });
 
@@ -70,24 +72,18 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       name: "",
       number: "",
       email: "",
-      role: "",
+      role: UserRole.USER,
       image: "",
     },
   });
 
   const onSubmit = async (data: UserFormValues) => {
     try {
-      console.log("Submitted Data:", data);
+      await axios.patch(`/api/couriers/${params.id}`, data);
 
-      // if (initialData) {
-      //   await axios.patch(`/api/shipments/${params.shipmentId}`, data);
-      // } else {
-      //   await axios.post(`/api/shipments`, data);
-      // }
-
-      // router.refresh();
-      // router.push(`/couriers`);
-      toast.success(toastMessage);
+      router.refresh();
+      router.push(`/couriers`);
+      toast.success("sagol daupdateda");
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
@@ -122,7 +118,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               control={form.control}
               name="number"
               render={({field}) => (
-                <FormItem>  
+                <FormItem>
                   <FormLabel>nomeri</FormLabel>
                   <FormControl>
                     <Input disabled={loading} placeholder="სახელი" {...field} />
@@ -143,7 +139,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />{" "}
+            />
             <FormField
               control={form.control}
               name="role"
@@ -164,6 +160,19 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                       <SelectItem value={UserRole.COURIER}>Courier</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="image"
+              render={({field}) => (
+                <FormItem>
+                  <FormLabel>surati</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="surat" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
