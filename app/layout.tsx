@@ -8,6 +8,7 @@ import { AdminNavbar } from './(protected)/_components/admin-navbar'
 import { UserNavbar } from './(protected)/_components/user-navbar'
 
 import './globals.css'
+import NProgressWrapper from '@/components/ui/nprogress-bar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <SessionProvider session={session}>
+      <NProgressWrapper />
       <html lang="en">
         <body
           className={inter.className}>

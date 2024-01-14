@@ -5,9 +5,13 @@ import { usePathname } from "next/navigation"
 
 import { Button } from "@/components/ui/button"
 import { UserButton } from "@/components/auth/user-button"
+import NProgress from 'nprogress';
+
 
 
 export const AdminNavbar = () => {
+
+
     const pathname = usePathname();
 
     return (
