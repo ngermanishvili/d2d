@@ -1,6 +1,7 @@
-import {NextResponse} from "next/server";
+import {NextResponse, NextRequest} from "next/server";
 import {db} from "@/lib/db";
 import {currentUserId} from "@/lib/auth";
+import {idSetStore} from "@/hooks/select-store";
 
 function generateTrackingNumber(): string {
   const timestamp = new Date().getTime();
@@ -27,6 +28,7 @@ export async function POST(req: Request, {params}: {params: {}}) {
       mimgebisLastname,
       mimgebisNumber,
       mimgebisAddress,
+      mimgebiQalaqi,
     } = body;
 
     const userId = await currentUserId();
@@ -95,6 +97,8 @@ export async function POST(req: Request, {params}: {params: {}}) {
         mimgebisLastname,
         mimgebisNumber,
         mimgebisAddress,
+        mimgebiQalaqi,
+        trackingId,
       },
     });
 
@@ -121,5 +125,23 @@ export async function GET(req: Request, {params}: {params: {}}) {
   } catch (error) {
     console.log("[SHIPMENT_GET]", error);
     return new NextResponse("Internal error BROJ", {status: 500});
+  }
+}
+export async function DELETE(req: Request) {
+  const {ids} = await req.json();
+
+  try {
+    const deletedShipments = await db.shipment.deleteMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    return NextResponse.json(deletedShipments);
+  } catch (error) {
+    console.log("[SHIPMENT_DELETE]", error);
+    return new NextResponse("Internal error", {status: 500});
   }
 }

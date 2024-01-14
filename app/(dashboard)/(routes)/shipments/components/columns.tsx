@@ -2,7 +2,8 @@
 
 import {ColumnDef} from "@tanstack/react-table";
 import {CellAction} from "./cell-action";
-
+import {Checkbox} from "@/components/ui/checkbox";
+import {idSetStore} from "@/hooks/select-store";
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -23,6 +24,50 @@ export type ShipmentColumn = {
 };
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
+  {
+    id: "select",
+    header: ({table}) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({row}) => {
+      const {pushId, ids, deleteId} = idSetStore();
+
+      return (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              const id = row.original.id;
+              if (!ids.includes(id)) {
+                pushId(id);
+                console.log(ids);
+              }
+            }
+            if (!value) {
+              const id = row.original.id;
+
+              deleteId(id);
+              console.log(ids);
+            }
+
+            // Toggle the row's selected state
+            return row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      );
+    },
+    // enableSorting: false,
+    // enableHiding: false,
+  },
+
   {
     accessorKey: "trackingId",
     header: "თრექინგი",
@@ -79,28 +124,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebiQalaqi",
     header: "მიმღების ქალაქი",
   },
-
-  {
-    accessorKey: "mimgebisName",
-    header: "მიმღების სახელი",
-  },
-  {
-    accessorKey: "mimgebisLastname",
-    header: "მიმღების გვარი",
-  },
-  {
-    accessorKey: "mimgebisNumber",
-    header: "მიმღების ტელეფონის ნომერი",
-  },
-  {
-    accessorKey: "mimgebisAddress",
-    header: "მიმღების მისამართი",
-  },
   {
     accessorKey: "markedByCourier",
     header: "სტატუსი",
   },
-
   {
     accessorKey: "createdAt",
     header: "დამატების თარიღი",

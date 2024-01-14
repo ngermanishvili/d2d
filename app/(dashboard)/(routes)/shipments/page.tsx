@@ -1,11 +1,10 @@
-import { db } from "@/lib/db";
-import { format } from "date-fns";
+import {db} from "@/lib/db";
+import {format} from "date-fns";
 
-import { ShipmentClient } from "./components/client";
-import { ShipmentColumn } from "./components/columns";
-import { currentRole, currentUser, currentUserId } from "@/lib/auth";
-import { getUserByEmail } from "@/data/user";
-
+import {ShipmentClient} from "./components/client";
+import {ShipmentColumn} from "./components/columns";
+import {currentRole, currentUser, currentUserId} from "@/lib/auth";
+import {getUserByEmail} from "@/data/user";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -17,12 +16,12 @@ const ShipmentPage = async () => {
   const userRole = await currentRole();
   const userId = await currentUserId();
 
-
-  const filteredShipments = userRole !== "ADMIN"
-    ? shipments.filter((item) => {
-      return item.userId === userId;
-    })
-    : shipments;
+  const filteredShipments =
+    userRole !== "ADMIN"
+      ? shipments.filter((item) => {
+          return item.userId === userId;
+        })
+      : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
     (item) => ({
@@ -48,7 +47,6 @@ const ShipmentPage = async () => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-
         <ShipmentClient data={formattedShipments} />
       </div>
     </div>

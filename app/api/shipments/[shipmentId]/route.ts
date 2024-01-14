@@ -42,6 +42,7 @@ export async function PATCH(
       mimgebisLastname,
       mimgebisNumber,
       mimgebisAddress,
+      mimgebiQalaqi,
     } = body;
 
     if (!phoneNumber) {
@@ -105,6 +106,7 @@ export async function PATCH(
         mimgebisLastname,
         mimgebisNumber,
         mimgebisAddress,
+        mimgebiQalaqi,
       },
     });
 
