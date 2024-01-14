@@ -85,11 +85,30 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         accessorKey: "mimgebiQalaqi",
         header: "მიმღების ქალაქი",
     },
+
+    {
+        accessorKey: "mimgebisName",
+        header: "მიმღების სახელი",
+    },
+    {
+        accessorKey: "mimgebisLastname",
+        header: "მიმღების გვარი",
+    },
+    {
+        accessorKey: "mimgebisNumber",
+        header: "მიმღების ტელეფონის ნომერი",
+    },
+    {
+        accessorKey: "mimgebisAddress",
+        header: "მიმღების მისამართი",
+    },
     {
         accessorKey: "markedByCourier",
         header: "სტატუსი",
 
     },
+
+
     {
         accessorKey: "createdAt",
         header: "დამატების თარიღი",

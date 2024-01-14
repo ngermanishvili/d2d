@@ -1,10 +1,10 @@
 "use client";
 
 import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition, useState } from "react";
-import { useSession } from "next-auth/react";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useTransition, useState} from "react";
+import {useSession} from "next-auth/react";
 import {
   Select,
   SelectContent,
@@ -12,10 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SettingsSchema } from "@/schemas";
-import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { settings } from "@/actions/settings";
+import {SettingsSchema} from "@/schemas";
+import {Card, CardHeader, CardContent} from "@/components/ui/card";
+import {Button} from "@/components/ui/button";
+import {settings} from "@/actions/settings";
 import {
   Form,
   FormField,
@@ -25,11 +25,11 @@ import {
   FormDescription,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/use-current-user";
-import { FormError } from "@/components/form-error";
-import { FormSuccess } from "@/components/form-success";
-import { UserRole } from "@prisma/client";
+import {Input} from "@/components/ui/input";
+import {useCurrentUser} from "@/hooks/use-current-user";
+import {FormError} from "@/components/form-error";
+import {FormSuccess} from "@/components/form-success";
+import {UserRole} from "@prisma/client";
 import {Link} from "lucide-react";
 import {RoleGate} from "@/components/auth/role-gate";
 import ImageUpload from "@/components/ui/image-upload";
@@ -42,7 +42,7 @@ const SettingsPage = () => {
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const { update } = useSession();
+  const {update} = useSession();
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
@@ -58,13 +58,9 @@ const SettingsPage = () => {
     },
   });
 
-
-
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition(() => {
-
       settings(values)
-
         .then((data) => {
           if (data.error) {
             setError(data.error);
@@ -90,7 +86,7 @@ const SettingsPage = () => {
             <FormField
               control={form.control}
               name="image"
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormLabel>Background Image</FormLabel>
                   <FormControl>
@@ -110,7 +106,7 @@ const SettingsPage = () => {
                 <FormField
                   control={form.control}
                   name="name"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>სახელი</FormLabel>
                       <FormControl>
@@ -127,7 +123,7 @@ const SettingsPage = () => {
                 <FormField
                   control={form.control}
                   name="number"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>nomeri</FormLabel>
                       <FormControl>
@@ -146,7 +142,7 @@ const SettingsPage = () => {
                   <FormField
                     control={form.control}
                     name="email"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormLabel>ელ-ფოსტა</FormLabel>
                         <FormControl>
@@ -164,7 +160,7 @@ const SettingsPage = () => {
                   <FormField
                     control={form.control}
                     name="password"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormLabel>თქვენი პაროლი</FormLabel>
                         <FormControl>
@@ -182,7 +178,7 @@ const SettingsPage = () => {
                   <FormField
                     control={form.control}
                     name="newPassword"
-                    render={({ field }) => (
+                    render={({field}) => (
                       <FormItem>
                         <FormLabel>ახალი პაროლი</FormLabel>
                         <FormControl>
@@ -202,7 +198,7 @@ const SettingsPage = () => {
                 <FormField
                   control={form.control}
                   name="role"
-                  render={({ field }) => (
+                  render={({field}) => (
                     <FormItem>
                       <FormLabel>სტატუსი</FormLabel>
                       <Select
