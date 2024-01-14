@@ -145,3 +145,25 @@ export async function DELETE(req: Request) {
     return new NextResponse("Internal error", {status: 500});
   }
 }
+
+export async function PATCH(req: Request) {
+  try {
+    const {ids, variable} = await req.json();
+
+    const updatedShipments = await db.shipment.updateMany({
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+      data: {
+        markedByCourier: variable, // Use shemotana directly
+      },
+    });
+
+    return NextResponse.json(updatedShipments);
+  } catch (error) {
+    console.log("[SHIPMENT_UPDATE]", error);
+    return new NextResponse("Internal error", {status: 500});
+  }
+}

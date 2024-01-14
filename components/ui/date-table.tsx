@@ -65,6 +65,35 @@ export function DataTable<TData, TValue>({
       console.log(error);
     }
   };
+  const handleUpdateToTrue = async () => {
+    try {
+      const data = {
+        ids,
+        variable: shemotana,
+      };
+
+      await axios.patch("/api/shipments", data);
+      // Handle success or any other logic
+    } catch (error) {
+      // Handle error
+      console.error("Error updating to true:", error);
+    }
+  };
+
+  const handleUpdateToFalse = async () => {
+    try {
+      const data = {
+        ids,
+        variable: gatana,
+      };
+
+      await axios.patch("/api/shipments", data);
+      // Handle success or any other logic
+    } catch (error) {
+      // Handle error
+      console.error("Error updating to false:", error);
+    }
+  };
 
   return (
     <div>
@@ -85,6 +114,8 @@ export function DataTable<TData, TValue>({
         >
           Delete
         </Button>{" "}
+        <Button onClick={() => handleUpdateToTrue()}>update to true</Button>
+        <Button onClick={() => handleUpdateToFalse()}>update to false</Button>
       </div>
       <div className="rounded-md border overflow-x-auto">
         <Table className="min-w-full">

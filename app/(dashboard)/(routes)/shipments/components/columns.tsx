@@ -26,16 +26,7 @@ export type ShipmentColumn = {
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
-    header: ({table}) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
+    header: ({table}) => <div>Select</div>,
     cell: ({row}) => {
       const {pushId, ids, deleteId} = idSetStore();
 
