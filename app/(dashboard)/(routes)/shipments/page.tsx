@@ -1,10 +1,10 @@
-import {db} from "@/lib/db";
-import {format} from "date-fns";
+import { db } from "@/lib/db";
+import { format } from "date-fns";
 
-import {ShipmentClient} from "./components/client";
-import {ShipmentColumn} from "./components/columns";
-import {currentRole, currentUser, currentUserId} from "@/lib/auth";
-import {getUserByEmail} from "@/data/user";
+import { ShipmentClient } from "./components/client";
+import { ShipmentColumn } from "./components/columns";
+import { currentRole, currentUser, currentUserId } from "@/lib/auth";
+import { getUserByEmail } from "@/data/user";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -19,8 +19,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-          return item.userId === userId;
-        })
+        return item.userId === userId;
+      })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -41,6 +41,8 @@ const ShipmentPage = async () => {
       mimgebiQalaqi: item.mimgebiQalaqi,
       createdAt: item.createdAt.toISOString(), // Convert Date to string
       trackingId: item.trackingId,
+      status: item.status,
+      courierComment: item.courierComment,
     })
   );
 

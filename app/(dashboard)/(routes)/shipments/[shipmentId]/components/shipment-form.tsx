@@ -40,7 +40,7 @@ import {
 } from "@/components/ui/select";
 import { NextURL } from "next/dist/server/web/next-url";
 import ShippingCostGraph from "../../components/calculate";
-import { ShipmentFormDelivered } from "./shipment-form-2";
+import { RoleGate } from "@/components/auth/role-gate";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -56,6 +56,8 @@ const formSchema = z.object({
   mimgebisNumber: z.string().min(5),
   mimgebisAddress: z.string().min(1),
   mimgebiQalaqi: z.string().min(1),
+  status: z.string().min(1),
+  courierComment: z.string().min(1),
 
 });
 
@@ -92,6 +94,8 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       mimgebiQalaqi: "",
       brittle: false,
       markedByCourier: false,
+      status: "მიმდინარე",
+      courierComment: "",
     },
   });
 
@@ -161,7 +165,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
       {/* // formik form */}
       <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">გამგზავნი</h2>
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -181,6 +184,73 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 </FormItem>
               )}
             />
+
+            <FormField
+              control={form.control}
+              name="courierComment"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>კომენტარი</FormLabel>
+                  <FormControl>
+                    <Input disabled={loading} placeholder="კომენტარი" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>სტატუსი</FormLabel>
+                  <FormControl>
+                    <Select
+                      value={field.value}
+                      onValueChange={(newValue) => {
+                        field.onChange(newValue);
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue>{field.value}</SelectValue>
+                      </SelectTrigger>
+                      <SelectContent>
+                        {/* {ADMIN როლგეითი} */}
+                        <RoleGate allowedRole="ADMIN">
+                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                          <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                          <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                          <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
+                          <SelectItem value="აღებული">აღებული </SelectItem>
+                          <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
+                          <SelectItem value="მეორედ გატანა">მეორედ გატანა</SelectItem>
+                          <SelectItem value="უბრუნდება გამგზავნს">უბრუნდება გამგზავნს</SelectItem>
+                          <SelectItem value="გაუქმებულია გამგზავნის მიერ ">გაუქმებულია გამგზავნის მიერ </SelectItem>
+                          <SelectItem value="ასაღები">ასაღები </SelectItem>
+                          <SelectItem value="საწყობში">საწყობში</SelectItem>
+                          <SelectItem value="ფილიალიდან გაცემა ">ფილიალიდან გაცემა </SelectItem>
+                          <SelectItem value="გატანილი ჩასაბარებლად">გატანილი ჩასაბარებლად </SelectItem>
+                          <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">დაუბრუნდა გამგზავნს, დასრულება</SelectItem>
+                          <SelectItem value="ვერ მოხერხდა დაკავშირება">ვერ მოხერხდა დაკავშირება </SelectItem>
+                        </RoleGate>
+                        {/* {USER როლგეითი} */}
+                        <RoleGate allowedRole="USER">
+                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                          <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                          <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                          <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
+                          <SelectItem value="აღებული">აღებული </SelectItem>
+                          <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
+                        </RoleGate>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
 
             <FormField
               control={form.control}
