@@ -1,11 +1,11 @@
 import axios from "axios";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-import {Edit, MoreHorizontal, Trash} from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-import {useParams, useRouter} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,20 +13,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {UsersColumn} from "./columns";
-import {AlertModal} from "@/components/modals/alert-modal";
-import {DeleteUser} from "@/actions/delete-user";
+import { UsersColumn } from "./columns";
+import { AlertModal } from "@/components/modals/alert-modal";
+import { DeleteUser } from "@/actions/delete-user";
 
 interface CellActionProps {
   data: UsersColumn;
 }
 
-export const CellAction: React.FC<CellActionProps> = ({data}) => {
+export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [open2, set2Open] = useState(false);
+
   const onUpdate = async (id: string | null) => {
     router.push(`/couriers/${id}`);
   };

@@ -5,6 +5,10 @@ export const currentUser = async () => {
     const session = await auth();
     return session?.user;
 };
+export const currentUserByEmail = async () => {
+    const session = await auth();
+    return session?.user.email;
+};
 
 
 export const currentUserId = async () => {

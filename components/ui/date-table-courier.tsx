@@ -35,7 +35,7 @@ interface DataTableProps<TData, TValue> {
   searchKey: string;
 }
 
-export function DataTable<TData, TValue>({
+export function CourierDataTable<TData, TValue>({
   columns,
   data,
   searchKey,
@@ -59,46 +59,6 @@ export function DataTable<TData, TValue>({
   });
 
   const { ids } = idSetStore();
-  const onDelete = async () => {
-    try {
-      // Assuming you want to send the IDs in the request body
-      await axios.delete("/api/shipments", {
-        data: { ids },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handleUpdateToTrue = async () => {
-    try {
-      const data = {
-        ids,
-        variable: shemotana,
-      };
-
-      await axios.patch("/api/shipments", data);
-      // Handle success or any other logic
-    } catch (error) {
-      // Handle error
-      console.error("Error updating to true:", error);
-    }
-  };
-
-  const handleUpdateToFalse = async () => {
-    try {
-      const data = {
-        ids,
-        variable: gatana,
-      };
-
-      await axios.patch("/api/shipments", data);
-      // Handle success or any other logic
-    } catch (error) {
-      // Handle error
-      console.error("Error updating to false:", error);
-    }
-  };
-
 
   const email = useEmailStore((state: any) => state.email);
 
@@ -139,17 +99,7 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-md"
           />
-          <Button
-            onClick={() => {
-              // Toggle the state of isActionEnabled on each click
-              onDelete();
-            }}
-          >
-            Delete
-          </Button>{" "}
-          <Button onClick={() => handleUpdateToTrue()}>update to true</Button>
-          <Button onClick={() => handleUpdateToFalse()}>update to false</Button>
-          <Button onClick={() => setIsOpen(true)}>register courier</Button>
+
 
         </div>
         <div className="rounded-md border overflow-x-auto">

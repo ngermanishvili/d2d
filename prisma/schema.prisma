@@ -93,6 +93,7 @@ model Shipment {
   mimgebisAddress  String
   status           String   @default("მიმდინარე") // New field for the courier to mark status
   courierComment   String
+  assignedCourier  String? // New field for the courier to mark status
   User             User     @relation(fields: [userId], references: [id])
 
   @@index([userId])

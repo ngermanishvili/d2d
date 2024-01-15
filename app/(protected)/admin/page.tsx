@@ -39,7 +39,9 @@ const AdminPage = () => {
 
     return (
         <>
-            <Custom404 />
+            {/* <Custom404 /> */}
+
+
             <RoleGate allowedRole="ADMIN">
                 <Card className="w-[600px]">
                     <CardHeader>
@@ -72,7 +74,6 @@ const AdminPage = () => {
                         </div>
                     </CardContent>
                 </Card>
-                <AdminUserTable />
             </RoleGate>
         </>
     );
