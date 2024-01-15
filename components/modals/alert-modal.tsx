@@ -1,9 +1,9 @@
 "use client";
 
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
-import {Modal} from "@/components/ui/modal";
-import {Button} from "@/components/ui/button";
+import { Modal } from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
 
 interface AlertModalProps {
   isOpen: boolean;
