@@ -10,6 +10,7 @@ import { logout } from '@/actions/logout';  // Import the logout function
 const HomeLayoutNavigation = () => {
 
 
+
     return (
         <div className="fixed top-0 w-full bg-white z-10 shadow-sm">
             <div className="py-4 border-b-[1px]">
