@@ -47,8 +47,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
   const [selectedCity, setSelectedCity] = useState<"Tbilisi" | "Rustavi">(
     "Tbilisi"
   );
-  const [usePackagingService, setUsePackagingService] =
-    useState<boolean>(false);
+
   const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
     useCalculatorStore();
 
@@ -81,23 +80,6 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
       totalPrice += 1; // Add 1 GEL for packaging service
     }
     setCost(totalPrice); // Update the cost in the global state
-  };
-  const options: ChartOptions<"bar"> = {
-    scales: {
-      y: {
-        ticks: {
-          callback: (value: any) => `$${value}`,
-        },
-      },
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: (context: any) =>
-            `${context.dataset.label}: ₾${context.parsed.y}`,
-        },
-      },
-    },
   };
 
   return (

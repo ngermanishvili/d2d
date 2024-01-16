@@ -6,11 +6,10 @@ import { ShipmentClient } from "./components/client";
 
 const ShipmentPage = async () => {
   const userRole = await currentRole();
-  const userId = await currentUserId();
 
   let formattedShipments: ShipmentColumn[] = [];
 
-  const userEmail = await currentUserByEmail(); // Await the currentUserByEmail() function call
+  const userEmail = await currentUserByEmail();
   const shipments = await db.shipment.findMany({
     where: {
       assignedCourier: userEmail

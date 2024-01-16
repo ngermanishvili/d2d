@@ -1,7 +1,5 @@
 import { db } from "@/lib/db";
-
 import { ShipmentForm } from "./components/shipment-form";
-import ShippingCostGraph from "../components/calculate";
 
 const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
     const shipment = await db.shipment.findUnique({

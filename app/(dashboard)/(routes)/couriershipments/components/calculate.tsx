@@ -47,8 +47,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
   const [selectedCity, setSelectedCity] = useState<"Tbilisi" | "Rustavi">(
     "Tbilisi"
   );
-  const [usePackagingService, setUsePackagingService] =
-    useState<boolean>(false);
+
   const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
     useCalculatorStore();
 

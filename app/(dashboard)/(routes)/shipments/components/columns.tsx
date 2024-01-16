@@ -49,16 +49,13 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
               deleteId(id);
               console.log(ids);
             }
-
-            // Toggle the row's selected state
             return row.toggleSelected(!!value);
           }}
           aria-label="Select row"
         />
       );
     },
-    // enableSorting: false,
-    // enableHiding: false,
+
   },
 
   {

@@ -7,8 +7,10 @@ import { RoleGate } from '@/components/auth/role-gate'
 import { AdminNavbar } from './(protected)/_components/admin-navbar'
 import { UserNavbar } from './(protected)/_components/user-navbar'
 
+
 import './globals.css'
 import NProgressWrapper from '@/components/ui/nprogress-bar'
+import HomeLayoutNavigation from './_components/home-layout-navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,22 +27,27 @@ export default async function RootLayout({
 }) {
   const session = await auth();
   return (
-    <SessionProvider session={session}>
-      <NProgressWrapper />
-      <html lang="en">
-        <body
-          className={inter.className}>
-          <RoleGate allowedRole="ADMIN">
-            <AdminNavbar />
-          </RoleGate>
-          <RoleGate allowedRole="USER">
-            <UserNavbar />
-          </RoleGate>
-          <Toaster />
-          {children}
-        </body>
-      </html>
-    </SessionProvider>
+    <>
+      <SessionProvider session={session}>
+        <NProgressWrapper />
+        <html lang="en">
+          <body
+            className={inter.className}>
+            <div className="bg-gray-100">
+              <HomeLayoutNavigation />
+            </div>
+            <RoleGate allowedRole="ADMIN">
+              <AdminNavbar />
+            </RoleGate>
+            <RoleGate allowedRole="USER">
+              <UserNavbar />
+            </RoleGate>
+            <Toaster />
+            {children}
+          </body>
+        </html>
+      </SessionProvider>
+    </>
 
   )
 }

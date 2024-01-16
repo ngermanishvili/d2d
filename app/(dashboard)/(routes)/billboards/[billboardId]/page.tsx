@@ -1,8 +1,8 @@
-import {db} from "@/lib/db";
+import { db } from "@/lib/db";
 
-import {BillBoardForm} from "./components/billboard-form";
+import { BillBoardForm } from "./components/billboard-form";
 
-const BillboardPage = async ({params}: {params: {billboardId: string}}) => {
+const BillboardPage = async ({ params }: { params: { billboardId: string } }) => {
   const billboard = await db.billboard.findUnique({
     where: {
       id: params.billboardId,

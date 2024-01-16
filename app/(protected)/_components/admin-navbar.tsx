@@ -1,17 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
-import {Button} from "@/components/ui/button";
-import {UserButton} from "@/components/auth/user-button";
+import { Button } from "@/components/ui/button";
+import { UserButton } from "@/components/auth/user-button";
 import NProgress from "nprogress";
 
 export const AdminNavbar = () => {
   const pathname = usePathname();
 
   return (
-    <div className="bg-secondary flex justify-between items-center p-4 rounded-xl w-full shadow-sm">
+    <div className="bg-secondary  flex justify-between items-center p-4 rounded-xl w-full shadow-sm mt-[100px]">
       <div className="flex gap-x-2">
         <Button
           asChild
@@ -53,7 +53,6 @@ export const AdminNavbar = () => {
           <Link href="/couriers">Couriers</Link>
         </Button>
       </div>
-      <UserButton />
     </div>
   );
 };

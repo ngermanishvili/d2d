@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthConfig, Session, Profile } from 'next-auth';
 import { UserRole } from "@prisma/client";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
@@ -6,6 +6,10 @@ import { db } from "@/lib/db";
 import authConfig from "@/auth.config";
 import { getUserById } from "@/data/user";
 import { getAccountByUserId } from "./data/account";
+
+
+
+// Extend the original NextAuthConfig type to include the signOut property
 
 export const {
   handlers: { GET, POST },
@@ -27,6 +31,8 @@ export const {
     },
   },
   callbacks: {
+
+
     async signIn({ user, account }) {
       // Allow OAuth without email verification
       if (account?.provider !== "credentials") return true;
@@ -74,7 +80,9 @@ export const {
       token.image = existingUser.image;
       return token;
     },
+
   },
+
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
   ...authConfig,

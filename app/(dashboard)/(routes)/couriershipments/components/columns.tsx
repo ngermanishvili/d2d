@@ -58,8 +58,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         />
       );
     },
-    // enableSorting: false,
-    // enableHiding: false,
   },
 
   {

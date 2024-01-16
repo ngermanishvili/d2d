@@ -1,6 +1,5 @@
 "use client"
 import { useParams } from 'next/navigation';
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import QRCodeGenerator from '@/components/ui/qr-code';
 

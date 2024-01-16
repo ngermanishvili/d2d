@@ -2,7 +2,7 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Shipment } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
