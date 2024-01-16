@@ -32,10 +32,11 @@ export default async function RootLayout({
         <NProgressWrapper />
         <html lang="en">
           <body
-            className={inter.className}>
+            className="p-4" >
             <div className="bg-gray-100">
               <HomeLayoutNavigation />
             </div>
+
             <RoleGate allowedRole="ADMIN">
               <AdminNavbar />
             </RoleGate>
