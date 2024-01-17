@@ -1,9 +1,9 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { CellAction } from "./cell-action";
-import { Checkbox } from "@/components/ui/checkbox";
-import { idSetStore } from "@/hooks/select-store";
+import {ColumnDef} from "@tanstack/react-table";
+import {CellAction} from "./cell-action";
+import {Checkbox} from "@/components/ui/checkbox";
+import {idSetStore} from "@/hooks/select-store";
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -13,6 +13,7 @@ export type ShipmentColumn = {
   city: string;
   price: string;
   brittle: string;
+  packaging: string;
   createdAt: string | Date; // Allow both string and Date
   mimgebisName: string;
   mimgebisLastname: string;
@@ -28,9 +29,9 @@ export type ShipmentColumn = {
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
-    header: ({ table }) => <div>Select</div>,
-    cell: ({ row }) => {
-      const { pushId, ids, deleteId } = idSetStore();
+    header: ({table}) => <div>Select</div>,
+    cell: ({row}) => {
+      const {pushId, ids, deleteId} = idSetStore();
 
       return (
         <Checkbox
@@ -55,7 +56,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         />
       );
     },
-
   },
 
   {
@@ -92,6 +92,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "brittle",
     header: "მსხვრევადი",
   },
+  {
+    accessorKey: "packaging",
+    header: "SHEPUTVA",
+  },
 
   {
     accessorKey: "mimgebisName",
@@ -125,17 +129,16 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
-    cell: ({ row }) => <span>{row.original.courierComment}</span>,
+    cell: ({row}) => <span>{row.original.courierComment}</span>,
   },
   {
     accessorKey: "status",
     header: "სტატუსიიიი",
-    cell: ({ row }) => <span>{row.original.status}</span>,
-
+    cell: ({row}) => <span>{row.original.status}</span>,
   },
 
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({row}) => <CellAction data={row.original} />,
   },
 ];

@@ -28,6 +28,7 @@ const ShipmentPage = async () => {
       city: item.city,
       markedByCourier: item.markedByCourier ? "კი" : "არა",
       brittle: item.brittle ? "კი" : "არა",
+      packaging: item.packaging ? "sheputulia" : "sheputvis ugareshod",
       price: item.price,
       phoneNumber: item.phoneNumber,
       address: item.address,
