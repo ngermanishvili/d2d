@@ -38,27 +38,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { NextURL } from "next/dist/server/web/next-url";
 import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
 
 const formSchema = z.object({
-  name: z.string().min(1),
-  lastName: z.string().min(1),
-  city: z.string().min(1),
-  address: z.string().min(1),
-  phoneNumber: z.string().min(5),
-  price: z.string().min(1),
-  brittle: z.boolean().default(false),
-  markedByCourier: z.boolean().default(false),
-  mimgebisName: z.string().min(1),
-  mimgebisLastname: z.string().min(1),
-  mimgebisNumber: z.string().min(5),
-  mimgebisAddress: z.string().min(1),
-  mimgebiQalaqi: z.string().min(1),
-  status: z.string().min(1),
-  courierComment: z.string().min(1),
-
+  name: z.string().min(0).optional(),
+  lastName: z.string().min(0).optional(),
+  city: z.string().min(0).optional(),
+  address: z.string().min(0).optional(),
+  phoneNumber: z.string().min(0).optional(),
+  price: z.string().min(0).optional(),
+  brittle: z.boolean().default(false).optional(),
+  markedByCourier: z.boolean().default(false).optional(),
+  mimgebisName: z.string().min(0).optional(),
+  mimgebisLastname: z.string().min(0).optional(),
+  mimgebisNumber: z.string().min(0).optional(),
+  mimgebisAddress: z.string().min(0).optional(),
+  mimgebiQalaqi: z.string().min(0).optional(),
+  status: z.string().min(0).optional(),
+  courierComment: z.string().min(0).optional(),
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -73,10 +71,10 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const title = initialData ? "Edit Shipment" : "Create Shipment";
-  const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
-  const toastMessage = initialData ? "Shipment updated." : "Shipment created";
-  const action = initialData ? "Save changes" : "Create";
+  const title = initialData ? "აკონტროლე სტატუსები შეკვეთაზე" : "";
+  const description = initialData ? "შეგიძლია მიანიჭო შენს ამანათს სტატუსი და დაწერო სასურველი კომენტარი შეკვეთაზე" : "";
+  const toastMessage = initialData ? "წარმატებით განხორციელდა შეკვეთის განახლება" : "";
+  const action = initialData ? "შენახვა" : "";
   const { calculatedPrice } = useCalculatorStore();
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
@@ -101,18 +99,22 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
   const onSubmit = async (data: ShipmentFormValues) => {
     try {
-      data.price = calculatedPrice;
+      // Remove undefined values before submitting
+      const cleanData = Object.fromEntries(
+        Object.entries(data).filter(([_, value]) => value !== undefined)
+      );
+
       setLoading(true);
-      console.log("Submitted Data:", data);
+      console.log("Submitted Data:", cleanData);
 
       if (initialData) {
-        await axios.patch(`/api/shipments/${params.shipmentId}`, data);
+        await axios.patch(`/api/shipments/${params.shipmentId}`, cleanData);
       } else {
-        await axios.post(`/api/shipments`, data);
+        await axios.post(`/api/shipments`, cleanData);
       }
 
       router.refresh();
-      router.push(`/shipments`);
+      router.push(`/couriershipments`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong.");
@@ -120,6 +122,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       setLoading(false);
     }
   };
+
 
   const onDelete = async () => {
     try {
@@ -166,6 +169,75 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       {/* // formik form */}
       <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">გამგზავნი</h2>
       <Form {...form}>
+        <div>
+          <FormField
+            control={form.control}
+            name="courierComment"
+
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>კომენტარი</FormLabel>
+                <FormControl>
+                  <Input disabled={loading} placeholder="კომენტარი" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>სტატუსი</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value}
+                    onValueChange={(newValue) => {
+                      field.onChange(newValue);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue>{field.value}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {/* {ADMIN როლგეითი} */}
+                      <RoleGate allowedRole="ADMIN">
+                        <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                        <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                        <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                        <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
+                        <SelectItem value="აღებული">აღებული </SelectItem>
+                        <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
+                        <SelectItem value="მეორედ გატანა">მეორედ გატანა</SelectItem>
+                        <SelectItem value="უბრუნდება გამგზავნს">უბრუნდება გამგზავნს</SelectItem>
+                        <SelectItem value="გაუქმებულია გამგზავნის მიერ ">გაუქმებულია გამგზავნის მიერ </SelectItem>
+                        <SelectItem value="ასაღები">ასაღები </SelectItem>
+                        <SelectItem value="საწყობში">საწყობში</SelectItem>
+                        <SelectItem value="ფილიალიდან გაცემა ">ფილიალიდან გაცემა </SelectItem>
+                        <SelectItem value="გატანილი ჩასაბარებლად">გატანილი ჩასაბარებლად </SelectItem>
+                        <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">დაუბრუნდა გამგზავნს, დასრულება</SelectItem>
+                        <SelectItem value="ვერ მოხერხდა დაკავშირება">ვერ მოხერხდა დაკავშირება </SelectItem>
+                      </RoleGate>
+                      {/* {USER როლგეითი} */}
+                      <RoleGate allowedRole="COURIER">
+                        <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                        <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                        <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                        <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
+                        <SelectItem value="აღებული">აღებული </SelectItem>
+                        <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
+                      </RoleGate>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+        </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
@@ -174,6 +246,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             <FormField
               control={form.control}
               name="name"
+              disabled
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>სახელი</FormLabel>
@@ -185,132 +258,72 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="courierComment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>კომენტარი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="კომენტარი" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
 
+            <RoleGate allowedRole="ADMIN">
+              <FormField
+                control={form.control}
+                name="brittle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel >მსხვრევადი</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value ? "Yes" : "No"}
+                        onValueChange={(newValueBrittle) => {
+                          console.log("New Value:", newValueBrittle); // Debug log
+                          const isBrittle = newValueBrittle === "Yes";
+                          console.log("isBrittlee:", isBrittle); // Debug log
+                          field.onChange(isBrittle);
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </RoleGate>
+            <RoleGate allowedRole="ADMIN">
+              <FormField
+                control={form.control}
+                disabled
+                name="markedByCourier"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Marked by Courier</FormLabel>
+                    <FormControl>
+                      <Select
+                        value={field.value ? "Yes" : "No"}
+                        onValueChange={(newValue) => {
+                          console.log("New Value:", newValue); // Debug log
+                          const isMarkedByCourier = newValue === "Yes";
+                          console.log("isMarkedByCourier:", isMarkedByCourier); // Debug log
+                          field.onChange(isMarkedByCourier);
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Yes">Yes</SelectItem>
+                          <SelectItem value="No">No</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </RoleGate>
             <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სტატუსი</FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={(newValue) => {
-                        field.onChange(newValue);
-                      }}
-                    >
-                      <SelectTrigger>
-                        <SelectValue>{field.value}</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        {/* {ADMIN როლგეითი} */}
-                        <RoleGate allowedRole="ADMIN">
-                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
-                          <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
-                          <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
-                          <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
-                          <SelectItem value="აღებული">აღებული </SelectItem>
-                          <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
-                          <SelectItem value="მეორედ გატანა">მეორედ გატანა</SelectItem>
-                          <SelectItem value="უბრუნდება გამგზავნს">უბრუნდება გამგზავნს</SelectItem>
-                          <SelectItem value="გაუქმებულია გამგზავნის მიერ ">გაუქმებულია გამგზავნის მიერ </SelectItem>
-                          <SelectItem value="ასაღები">ასაღები </SelectItem>
-                          <SelectItem value="საწყობში">საწყობში</SelectItem>
-                          <SelectItem value="ფილიალიდან გაცემა ">ფილიალიდან გაცემა </SelectItem>
-                          <SelectItem value="გატანილი ჩასაბარებლად">გატანილი ჩასაბარებლად </SelectItem>
-                          <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">დაუბრუნდა გამგზავნს, დასრულება</SelectItem>
-                          <SelectItem value="ვერ მოხერხდა დაკავშირება">ვერ მოხერხდა დაკავშირება </SelectItem>
-                        </RoleGate>
-                        {/* {USER როლგეითი} */}
-                        <RoleGate allowedRole="USER">
-                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
-                          <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
-                          <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
-                          <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
-                          <SelectItem value="აღებული">აღებული </SelectItem>
-                          <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
-                        </RoleGate>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-            <FormField
-              control={form.control}
-              name="brittle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>მსხვრევადი</FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value ? "Yes" : "No"}
-                      onValueChange={(newValueBrittle) => {
-                        console.log("New Value:", newValueBrittle); // Debug log
-                        const isBrittle = newValueBrittle === "Yes";
-                        console.log("isBrittlee:", isBrittle); // Debug log
-                        field.onChange(isBrittle);
-                      }}
-                    >
-                      <SelectTrigger>
-                        <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="markedByCourier"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Marked by Courier</FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value ? "Yes" : "No"}
-                      onValueChange={(newValue) => {
-                        console.log("New Value:", newValue); // Debug log
-                        const isMarkedByCourier = newValue === "Yes";
-                        console.log("isMarkedByCourier:", isMarkedByCourier); // Debug log
-                        field.onChange(isMarkedByCourier);
-                      }}
-                    >
-                      <SelectTrigger>
-                        <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Yes">Yes</SelectItem>
-                        <SelectItem value="No">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
+              disabled
               key={initialData?.id}
               control={form.control}
               name="lastName"
@@ -326,6 +339,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             />
 
             <FormField
+              disabled
               control={form.control}
               name="address"
               render={({ field }) => (
@@ -343,6 +357,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               )}
             />
             <FormField
+              disabled
               control={form.control}
               name="city"
               render={({ field }) => (
@@ -361,6 +376,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             />
 
             <FormField
+              disabled
               control={form.control}
               name="phoneNumber"
               render={({ field }) => (
@@ -383,6 +399,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">მიმღები</h2>
 
           <FormField
+            disabled
             control={form.control}
             name="mimgebisName"
             render={({ field }) => (
@@ -401,6 +418,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           />
 
           <FormField
+            disabled
             control={form.control}
             name="mimgebisLastname"
             render={({ field }) => (
@@ -420,6 +438,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
 
           <FormField
+            disabled
             control={form.control}
             name="mimgebisAddress"
             render={({ field }) => (
@@ -437,6 +456,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             )}
           />
           <FormField
+            disabled
             control={form.control}
             name="mimgebiQalaqi"
             render={({ field }) => (
@@ -454,6 +474,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             )}
           />
           <FormField
+            disabled
             control={form.control}
             name="mimgebisNumber"
             render={({ field }) => (

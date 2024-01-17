@@ -47,49 +47,49 @@ export async function PATCH(
       courierComment,
     } = body;
 
-    if (!phoneNumber) {
-      return new NextResponse("phoneNumber is required", { status: 400 });
-    }
+    // if (!phoneNumber) {
+    //   return new NextResponse("phoneNumber is required", { status: 400 });
+    // }
 
-    if (!address) {
-      return new NextResponse("address is required", { status: 400 });
-    }
+    // if (!address) {
+    //   return new NextResponse("address is required", { status: 400 });
+    // }
 
-    if (!city) {
-      return new NextResponse("city is required", { status: 400 });
-    }
+    // if (!city) {
+    //   return new NextResponse("city is required", { status: 400 });
+    // }
 
-    if (!price) {
-      return new NextResponse("price is required", { status: 400 });
-    }
+    // if (!price) {
+    //   return new NextResponse("price is required", { status: 400 });
+    // }
 
-    if (!name) {
-      return new NextResponse("Label is required", { status: 400 });
-    }
+    // if (!name) {
+    //   return new NextResponse("Label is required", { status: 400 });
+    // }
 
-    if (!lastName) {
-      return new NextResponse("Image URL is required", { status: 400 });
-    }
+    // if (!lastName) {
+    //   return new NextResponse("Image URL is required", { status: 400 });
+    // }
 
-    if (!params.shipmentId) {
-      return new NextResponse("shipment ID is required", { status: 400 });
-    }
+    // if (!params.shipmentId) {
+    //   return new NextResponse("shipment ID is required", { status: 400 });
+    // }
 
-    if (!mimgebisName) {
-      return new NextResponse("mimgebisName is required", { status: 400 });
-    }
+    // if (!mimgebisName) {
+    //   return new NextResponse("mimgebisName is required", { status: 400 });
+    // }
 
-    if (!mimgebisLastname) {
-      return new NextResponse("mimgebisLastname is required", { status: 400 });
-    }
+    // if (!mimgebisLastname) {
+    //   return new NextResponse("mimgebisLastname is required", { status: 400 });
+    // }
 
-    if (!mimgebisNumber) {
-      return new NextResponse("mimgebisNumber is required", { status: 400 });
-    }
+    // if (!mimgebisNumber) {
+    //   return new NextResponse("mimgebisNumber is required", { status: 400 });
+    // }
 
-    if (!mimgebisAddress) {
-      return new NextResponse("mimgebisAddress is required", { status: 400 });
-    }
+    // if (!mimgebisAddress) {
+    //   return new NextResponse("mimgebisAddress is required", { status: 400 });
+    // }
 
     const shipment = await db.shipment.updateMany({
       where: {
