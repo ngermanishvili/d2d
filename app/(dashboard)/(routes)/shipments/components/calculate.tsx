@@ -1,6 +1,6 @@
 "use client";
 import useCalculatorStore from "@/hooks/calculate-price"; // Adjust the path as
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,34 +28,66 @@ interface WeightRange {
 }
 
 const weightRanges: WeightRange[] = [
-  { label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6 },
-  { label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10 },
-  { label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11 },
-  { label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13 },
-  { label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15 },
-  { label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16 },
-  { label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17 },
-  { label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21 },
-  { label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35 },
-  { label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47 },
-  { label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62 },
+  {label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6},
+  {label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10},
+  {label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11},
+  {label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13},
+  {label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15},
+  {label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16},
+  {label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17},
+  {label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21},
+  {label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35},
+  {label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47},
+  {label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62},
 ];
+interface ShippingCostGraphProps {
+  hasInitialData: boolean;
+}
 
-const ShippingCostGraph: React.FC = (initialData: any) => {
+const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
+  hasInitialData,
+}) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
-  const [selectedCity, setSelectedCity] = useState<"Tbilisi" | "Rustavi">(
-    "Tbilisi"
-  );
+  const [selectedCity, setSelectedCity] = useState<string>("Tbilisi");
 
-  const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
-    useCalculatorStore();
+  const {
+    calculatedPrice,
+    setCost,
+    packagingUsed,
+    setPackagingUsed,
+    archeuliQalaqi,
+    range,
+    setRange,
+  } = useCalculatorStore();
 
+  useEffect(() => {
+    // Check if initialData is true
+    if (hasInitialData) {
+      // Find the WeightRange object with the matching label
+      const initialSelectedRange = weightRanges.find((r) => r.label === range);
+
+      // Set the selected range based on the found object or null
+      setSelectedRange(initialSelectedRange || null);
+
+      setSelectedCity(archeuliQalaqi);
+      setPackagingUsed(packagingUsed);
+      calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
+    }
+  }, [
+    range,
+    setRange,
+    archeuliQalaqi,
+    packagingUsed,
+    setPackagingUsed,
+    selectedRange,
+  ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
     setSelectedRange(newRange);
     calculateTotalPrice(newRange, packagingUsed);
+    setRange(range.label);
   };
 
   const handlePackagingServiceChange = (isChecked: boolean) => {
@@ -69,7 +101,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
   const calculateTotalPrice = (
     range: WeightRange | null,
     usePackaging: boolean,
-    city: "Tbilisi" | "Rustavi" = selectedCity // Default to the current selectedCity state
+    city: string = selectedCity // Default to the current selectedCity state
   ) => {
     let totalPrice = 0;
     if (range) {

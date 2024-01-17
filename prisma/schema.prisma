@@ -82,6 +82,7 @@ model Shipment {
   address          String // 
   city             String // 
   brittle          Boolean  @default(false) // New field for the courier to mark true or false
+  packaging        Boolean  @default(false) // New field for the courier to mark true or false
   price            String
   markedByCourier  Boolean  @default(false) // New field for the courier to mark true or false
   createdAt        DateTime @default(now())
@@ -93,6 +94,7 @@ model Shipment {
   mimgebisAddress  String
   status           String   @default("მიმდინარე") // New field for the courier to mark status
   courierComment   String
+  label            String
   assignedCourier  String? // New field for the courier to mark status
   User             User     @relation(fields: [userId], references: [id])
 

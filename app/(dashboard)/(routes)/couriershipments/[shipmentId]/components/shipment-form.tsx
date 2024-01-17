@@ -42,21 +42,23 @@ import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
 
 const formSchema = z.object({
-  name: z.string().min(0).optional(),
-  lastName: z.string().min(0).optional(),
-  city: z.string().min(0).optional(),
-  address: z.string().min(0).optional(),
-  phoneNumber: z.string().min(0).optional(),
-  price: z.string().min(0).optional(),
-  brittle: z.boolean().default(false).optional(),
-  markedByCourier: z.boolean().default(false).optional(),
-  mimgebisName: z.string().min(0).optional(),
-  mimgebisLastname: z.string().min(0).optional(),
-  mimgebisNumber: z.string().min(0).optional(),
-  mimgebisAddress: z.string().min(0).optional(),
-  mimgebiQalaqi: z.string().min(0).optional(),
-  status: z.string().min(0).optional(),
-  courierComment: z.string().min(0).optional(),
+  name: z.string().min(1),
+  lastName: z.string().min(1),
+  city: z.string().min(1),
+  address: z.string().min(1),
+  phoneNumber: z.string().min(5),
+  price: z.string().min(1),
+  brittle: z.boolean().default(false),
+  packaging: z.boolean().default(false),
+  markedByCourier: z.boolean().default(false),
+  mimgebisName: z.string().min(1),
+  mimgebisLastname: z.string().min(1),
+  mimgebisNumber: z.string().min(5),
+  mimgebisAddress: z.string().min(1),
+  mimgebiQalaqi: z.string().min(1),
+  status: z.string().min(1),
+  courierComment: z.string().min(1),
+
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -91,6 +93,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       mimgebisAddress: "",
       mimgebiQalaqi: "",
       brittle: false,
+      packaging: false,
       markedByCourier: false,
       status: "მიმდინარე",
       courierComment: "",

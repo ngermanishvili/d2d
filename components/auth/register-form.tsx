@@ -109,7 +109,7 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel htmlFor="number">Number</FormLabel>
                   <FormControl>
-                    <Input {...field} placeholder="tqveni nomeri stiven" />
+                    <Input {...field} placeholder="tqveni nomeri" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

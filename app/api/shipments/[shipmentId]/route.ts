@@ -1,14 +1,14 @@
-import { NextResponse } from "next/server";
+import {NextResponse} from "next/server";
 
-import { db } from "@/lib/db";
+import {db} from "@/lib/db";
 
 export async function GET(
   req: Request,
-  { params }: { params: { shipmentId: string } }
+  {params}: {params: {shipmentId: string}}
 ) {
   try {
     if (!params.shipmentId) {
-      return new NextResponse("billboardId ID is required", { status: 400 });
+      return new NextResponse("billboardId ID is required", {status: 400});
     }
     const shipment = await db.shipment.findUnique({
       where: {
@@ -18,13 +18,13 @@ export async function GET(
     return NextResponse.json(shipment);
   } catch (error) {
     console.log("[SHIPMENT_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    return new NextResponse("Internal error", {status: 500});
   }
 }
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { shipmentId: string } }
+  {params}: {params: {shipmentId: string}}
 ) {
   try {
     const body = await req.json();
@@ -36,6 +36,7 @@ export async function PATCH(
       address,
       city,
       brittle,
+      packaging,
       price,
       markedByCourier,
       mimgebisName,
@@ -45,6 +46,7 @@ export async function PATCH(
       mimgebiQalaqi,
       status,
       courierComment,
+      label,
     } = body;
 
     // if (!phoneNumber) {
@@ -100,6 +102,7 @@ export async function PATCH(
         address,
         city,
         brittle,
+        packaging,
         price,
         name,
         lastName,
@@ -111,23 +114,24 @@ export async function PATCH(
         mimgebiQalaqi,
         status,
         courierComment,
+        label,
       },
     });
 
     return NextResponse.json(shipment);
   } catch (error) {
     console.log("[SHIPMENT_PATCH]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    return new NextResponse("Internal error", {status: 500});
   }
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { shipmentId: string } }
+  {params}: {params: {shipmentId: string}}
 ) {
   try {
     if (!params.shipmentId) {
-      return new NextResponse("billboardId ID is required", { status: 400 });
+      return new NextResponse("billboardId ID is required", {status: 400});
     }
 
     const shipment = await db.shipment.deleteMany({
@@ -139,6 +143,6 @@ export async function DELETE(
     return NextResponse.json(shipment);
   } catch (error) {
     console.log("[SHIPMENT_DELETE]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    return new NextResponse("Internal error", {status: 500});
   }
 }
