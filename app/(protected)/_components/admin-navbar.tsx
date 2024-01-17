@@ -4,8 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { UserButton } from "@/components/auth/user-button";
-import NProgress from "nprogress";
+
 
 export const AdminNavbar = () => {
   const pathname = usePathname();
@@ -25,7 +24,7 @@ export const AdminNavbar = () => {
         >
           <Link href="/shipments">შეკვეთების ისტორია</Link>
         </Button>
-        <Button
+        {/* <Button
           asChild
           variant={pathname === "/server" ? "default" : "outline"}
         >
@@ -39,18 +38,18 @@ export const AdminNavbar = () => {
         </Button>
         <Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
           <Link href="/admin">Admin</Link>
+        </Button> */}
+        <Button
+          asChild
+          variant={pathname === "/couriers" ? "default" : "outline"}
+        >
+          <Link href="/couriers">ჩემი კურიერები</Link>
         </Button>
         <Button
           asChild
           variant={pathname === "/settings" ? "default" : "outline"}
         >
-          <Link href="/settings">Settings</Link>
-        </Button>
-        <Button
-          asChild
-          variant={pathname === "/couriers" ? "default" : "outline"}
-        >
-          <Link href="/couriers">Couriers</Link>
+          <Link href="/settings">კაბინეტი</Link>
         </Button>
       </div>
     </div>

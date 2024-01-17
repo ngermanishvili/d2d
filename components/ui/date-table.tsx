@@ -28,6 +28,7 @@ import { db } from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
+import { RoleGate } from "../auth/role-gate";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -116,8 +117,6 @@ export function DataTable<TData, TValue>({
     }
   }
 
-
-
   return (
     <>
       <AlertModalForRegisterCourier
@@ -139,19 +138,26 @@ export function DataTable<TData, TValue>({
             }
             className="max-w-md"
           />
-          <Button
-            onClick={() => {
-              // Toggle the state of isActionEnabled on each click
-              onDelete();
-            }}
-          >
-            Delete
-          </Button>{" "}
-          <Button onClick={() => handleUpdateToTrue()}>update to true</Button>
-          <Button onClick={() => handleUpdateToFalse()}>update to false</Button>
-          <Button onClick={() => setIsOpen(true)}>register courier</Button>
+
+
+          <div className="flex p-4">
+
+            <RoleGate allowedRole="ADMIN">
+              <Button
+                onClick={() => {
+                  onDelete();
+                }}
+                className="m-2"
+              > წაშლა
+              </Button>
+              <Button className="m-2" onClick={() => handleUpdateToTrue()}>შეცვალე სტატუსი (გატანილი)</Button>
+              <Button className="m-2" onClick={() => handleUpdateToFalse()}> შეცვალე სტატუსი  (საწყობში)</Button>
+              <Button className="m-2" onClick={() => setIsOpen(true)}>მიამაგრე შეკვეთას კურიერი</Button>
+            </RoleGate>
+          </div>
 
         </div>
+
         <div className="rounded-md border overflow-x-auto">
           <Table className="min-w-full">
             <TableHeader>
@@ -226,7 +232,7 @@ export function DataTable<TData, TValue>({
             Next
           </Button>
         </div>
-      </div>
+      </div >
     </>
 
   );

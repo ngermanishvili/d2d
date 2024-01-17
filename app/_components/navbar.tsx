@@ -22,9 +22,9 @@ export const Navbar = () => {
           </Button>
           <Button
             asChild
-            variant={pathname === "/client" ? "default" : "outline"}
+            variant={pathname === "/couriershipments" ? "default" : "outline"}
           >
-            <Link href="/client">Client</Link>
+            <Link href="/couriershipments">REGISTER COURIER</Link>
           </Button>
           <Button
             asChild
@@ -46,6 +46,14 @@ export const Navbar = () => {
           >
             <Link href="/settings">Settings</Link>
           </Button>
+          <RoleGate allowedRole={UserRole.COURIER}>
+            <Button
+              asChild
+              variant={pathname === "/couriershipments" ? "default" : "outline"}
+            >
+              <Link href="/couriershipments"> COURIER</Link>
+            </Button>
+          </RoleGate>
           <Button>sxva page1</Button>
           <Button>sxva page2</Button>
         </RoleGate>
