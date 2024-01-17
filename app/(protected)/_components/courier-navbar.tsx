@@ -5,31 +5,20 @@ import { Button } from "@/components/ui/button"
 import { UserButton } from "@/components/auth/user-button"
 
 
-export const UserNavbar = () => {
+export const CourierNavbar = () => {
     const pathname = usePathname();
 
     return (
-        <div className="bg-secondary flex justify-between items-center p-4 rounded-xl w-full shadow-sm mt-[100px]">
+        <div className="bg-secondary flex justify-between items-center p-4 rounded-xl mt-[100px] w-full shadow-sm">
             <div className="flex gap-x-2">
                 <Button
                     asChild
                     variant={pathname ===
-                        "/shipments/new"
+                        "/couriershipments"
                         ? "default"
                         : "outline"}>
                     <Link
-                        href='/shipments/new'>
-                        შეკვეთის განთავსება
-                    </Link>
-                </Button>
-                <Button
-                    asChild
-                    variant={pathname ===
-                        "/client"
-                        ? "default"
-                        : "outline"}>
-                    <Link
-                        href='/shipments'>
+                        href='/couriershipments'>
                         შეკვეთების ისტორია
                     </Link>
                 </Button>

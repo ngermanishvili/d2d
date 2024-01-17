@@ -11,6 +11,7 @@ import { UserNavbar } from './(protected)/_components/user-navbar'
 import './globals.css'
 import NProgressWrapper from '@/components/ui/nprogress-bar'
 import HomeLayoutNavigation from './_components/home-layout-navbar'
+import { CourierNavbar } from './(protected)/_components/courier-navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -42,6 +43,9 @@ export default async function RootLayout({
             </RoleGate>
             <RoleGate allowedRole="USER">
               <UserNavbar />
+            </RoleGate>
+            <RoleGate allowedRole="COURIER">
+              <CourierNavbar />
             </RoleGate>
             <Toaster />
             {children}

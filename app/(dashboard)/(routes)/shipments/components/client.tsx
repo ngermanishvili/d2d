@@ -44,8 +44,8 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Shipment (${data.length})`}
-                    description="manage your shipments"
+                    title={`შეკვეთები (${data.length})`}
+                    description="შეკვეთების ისტორია"
                 />
                 <Button onClick={() => router.push(`/shipments/new`)}>
                     <Plus className="mr-2 h-4 w-4 " />

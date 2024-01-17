@@ -1,10 +1,10 @@
 "use client";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import {UsersClient} from "./components/client";
-import {UsersColumn} from "./components/columns";
-import {db} from "@/lib/db";
-import {fetchUserForAdmin} from "@/hooks/fetch-user-data";
+import { UsersClient } from "./components/client";
+import { UsersColumn } from "./components/columns";
+import { db } from "@/lib/db";
+import { fetchUserForAdmin } from "@/hooks/fetch-user-data";
 
 const CouriersPage = () => {
   const [users, setUsers] = useState<UsersColumn[]>([]); // Fix the initialization of state
@@ -34,9 +34,8 @@ const CouriersPage = () => {
   }));
 
   return (
-    <div style={{marginTop: "70px"}}>
+    <div style={{ marginTop: "70px" }}>
       <UsersClient data={formattedUsers} />
-      alo koki
     </div>
   );
 };
