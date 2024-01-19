@@ -2,12 +2,12 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useEffect, useState} from "react";
-import {Shipment} from "@prisma/client";
-import {Trash} from "lucide-react";
-import {useForm} from "react-hook-form";
-import {useParams, useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { Shipment } from "@prisma/client";
+import { Trash } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import QRCodeGenerator from "@/components/ui/qr-code";
 import useCalculatorStore from "@/hooks/calculate-price";
 
@@ -19,11 +19,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {Heading} from "@/components/ui/heading";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {Input} from "@/components/ui/input";
-import {AlertModal} from "@/components/modals/alert-modal";
+import { Heading } from "@/components/ui/heading";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { AlertModal } from "@/components/modals/alert-modal";
 import {
   Card,
   CardContent,
@@ -38,9 +38,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {NextURL} from "next/dist/server/web/next-url";
+import { NextURL } from "next/dist/server/web/next-url";
 import ShippingCostGraph from "../../components/calculate";
-import {RoleGate} from "@/components/auth/role-gate";
+import { RoleGate } from "@/components/auth/role-gate";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -69,7 +69,7 @@ interface ShipmentFormProps {
   initialData: Shipment | null;
 }
 
-export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
+export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -197,7 +197,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="name"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სახელი</FormLabel>
                   <FormControl>
@@ -211,7 +211,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="courierComment"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>კომენტარი</FormLabel>
                   <FormControl>
@@ -229,7 +229,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="status"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სტატუსი</FormLabel>
                   <FormControl>
@@ -311,7 +311,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="brittle"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>მსხვრევადი</FormLabel>
                   <FormControl>
@@ -338,7 +338,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="markedByCourier"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>Marked by Courier</FormLabel>
                   <FormControl>
@@ -366,7 +366,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               key={initialData?.id}
               control={form.control}
               name="lastName"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>გვარი</FormLabel>
                   <FormControl>
@@ -380,7 +380,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="address"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>მისამართი</FormLabel>
                   <FormControl>
@@ -397,7 +397,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="city"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>ქალაქი</FormLabel>
                   <FormControl>
@@ -415,7 +415,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="phoneNumber"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>ტელეფონის ნომერი</FormLabel>
                   <FormControl>
@@ -439,7 +439,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="mimgebisName"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>სახელი</FormLabel>
                 <FormControl>
@@ -453,7 +453,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="mimgebisLastname"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>გვარი</FormLabel>
                 <FormControl>
@@ -467,7 +467,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="mimgebisAddress"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>მისამართი</FormLabel>
                 <FormControl>
@@ -484,7 +484,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="mimgebiQalaqi"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>mimgebiQalaqi</FormLabel>
                 <FormControl>
@@ -501,7 +501,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="mimgebisNumber"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>ტელეფონის ნომერი</FormLabel>
                 <FormControl>

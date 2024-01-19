@@ -12,8 +12,12 @@ const ShipmentPage = async () => {
   const userEmail = await currentUserByEmail();
   const shipments = await db.shipment.findMany({
     where: {
-      assignedCourier: userEmail
-    }
+      assignedCourier: userEmail,
+    },
+    include: {
+      ShipmentStatusHistory: true, // Include shipment status history
+    },
+
   });
 
   formattedShipments = shipments.map((item) => ({
@@ -36,6 +40,8 @@ const ShipmentPage = async () => {
     status: item.status,
     courierComment: item.courierComment,
     assignedCourier: item.assignedCourier ? item.assignedCourier : "არ არის კურიერი მიბმული",
+    shipmentStatusHistory: item.ShipmentStatusHistory,
+
   }));
 
   return (

@@ -97,6 +97,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       markedByCourier: false,
       status: "მიმდინარე",
       courierComment: "",
+
     },
   });
 
