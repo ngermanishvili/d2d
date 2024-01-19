@@ -1,20 +1,22 @@
-// TrackingSearchContainer.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Container from '@/components/ui/container';
 import { Input } from '@/components/ui/input';
 import { SearchIcon } from 'lucide-react';
 import { TrackingModal } from '@/components/modals/tracking-modal';
-import { Shipment } from '@prisma/client';
+import { Shipment, ShipmentStatusHistory } from '@prisma/client';
+import { useRouter } from 'next/navigation';
 
 const TrackingSearchContainer: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [shipmentData, setShipmentData] = useState<Shipment | null>(null);
     const [loading, setLoading] = useState(false);
+    const [shipmentData, setShipmentData] = useState<Shipment | null>(null);
+    const [statusHistory, setStatusHistory] = useState<ShipmentStatusHistory[] | null>(null);
+
+    const router = useRouter();
 
 
-    const handleSearchClick = async () => {
+    const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const trimmedInputValue = inputValue.trim();
@@ -24,13 +26,25 @@ const TrackingSearchContainer: React.FC = () => {
                 console.error(`Error fetching data. Status: ${response.status}`);
                 return;
             }
+
             const data = await response.json();
+            console.log("Fetched Data:", data);
 
             if (data && data.length > 0) {
                 const matchingShipment = data.find((shipment: any) => shipment.trackingId === trimmedInputValue);
 
                 if (matchingShipment) {
-                    setShipmentData(matchingShipment);
+                    // Fetch the status history separately
+                    const statusHistoryResponse = await fetch(`/api/shipments/${matchingShipment.id}/statushistory`);
+                    const statusHistoryData = await statusHistoryResponse.json();
+                    // console.log("Status History Data:", statusHistoryData);
+
+                    setShipmentData({
+                        ...matchingShipment,
+                    });
+                    // Set the status history in the state
+                    setStatusHistory(statusHistoryData);
+
                     setIsModalOpen(true);
                 } else {
                     console.error("No matching shipment data found for the provided tracking ID");
@@ -43,13 +57,15 @@ const TrackingSearchContainer: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [inputValue, router]);
 
+    const handleSearchClick = () => {
+        fetchData();
+    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
-
 
     return (
         <>
@@ -61,6 +77,7 @@ const TrackingSearchContainer: React.FC = () => {
             </Container>
             {isModalOpen && shipmentData && (
                 <TrackingModal
+                    statusHistory={statusHistory || []}
                     isOpen={isModalOpen}
                     onClose={handleCloseModal}
                     shipmentData={shipmentData}
@@ -76,6 +93,6 @@ const TrackingSearchContainer: React.FC = () => {
             )}
         </>
     );
-}
+};
 
 export default TrackingSearchContainer;

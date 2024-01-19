@@ -1,6 +1,6 @@
 "use client";
 import useCalculatorStore from "@/hooks/calculate-price"; // Adjust the path as
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,6 +11,13 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 ChartJS.register(
   CategoryScale,
@@ -28,17 +35,17 @@ interface WeightRange {
 }
 
 const weightRanges: WeightRange[] = [
-  {label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6},
-  {label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10},
-  {label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11},
-  {label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13},
-  {label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15},
-  {label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16},
-  {label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17},
-  {label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21},
-  {label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35},
-  {label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47},
-  {label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62},
+  { label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6 },
+  { label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10 },
+  { label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11 },
+  { label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13 },
+  { label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15 },
+  { label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16 },
+  { label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17 },
+  { label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21 },
+  { label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35 },
+  { label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47 },
+  { label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62 },
 ];
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
@@ -50,6 +57,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
   const [selectedCity, setSelectedCity] = useState<string>("Tbilisi");
+  const [itemCost, setItemCost] = useState<string>("");
+  const [receiverPays, setReceiverPays] = useState<boolean>(false);
+  const [paymentMethod, setPaymentMethod] = useState<string>("sender"); // Default to sender
+
+
 
   const {
     calculatedPrice,
@@ -60,7 +72,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     range,
     setRange,
   } = useCalculatorStore();
-
   useEffect(() => {
     // Check if initialData is true
     if (hasInitialData) {
@@ -72,16 +83,15 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
       setSelectedCity(archeuliQalaqi);
       setPackagingUsed(packagingUsed);
-      calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
+      setItemCost(itemCost); // Set the initial item cost
+
+      // Check if initialSelectedRange is defined before calculating
+      if (initialSelectedRange) {
+        calculateTotalPrice(initialSelectedRange, packagingUsed, selectedCity);
+      }
     }
-  }, [
-    range,
-    setRange,
-    archeuliQalaqi,
-    packagingUsed,
-    setPackagingUsed,
-    selectedRange,
-  ]);
+  }, [range, setRange, archeuliQalaqi, packagingUsed, setPackagingUsed, selectedRange, itemCost]);
+
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
@@ -104,35 +114,83 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     city: string = selectedCity // Default to the current selectedCity state
   ) => {
     let totalPrice = 0;
+
     if (range) {
-      totalPrice +=
-        city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
+      switch (paymentMethod) {
+        case "sender":
+          totalPrice += city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
+          break;
+        case "receiver":
+          totalPrice += parseFloat(itemCost); // If receiver pays, add item cost
+          break;
+        case "unmarked":
+          // Do nothing for unmarked, as courier collects the payment
+          break;
+        default:
+          break;
+      }
     }
+
     if (usePackaging) {
       totalPrice += 1; // Add 1 GEL for packaging service
     }
+
     setCost(totalPrice); // Update the cost in the global state
   };
 
+
   return (
     <>
-      <div>
-        <label htmlFor="city-select" className="text-2xl">
-          Choose a city:{" "}
+
+
+      <div className="flex justify-between items-center p-2">
+        <label htmlFor="payment-method" className="text-2xl flex flex-col">
+          Choose payment method:
         </label>
         <select
           className="text-2xl text-red-400 text-bold"
-          id="city-select"
-          value={selectedCity}
-          onChange={(e) =>
-            handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
-          }
+          id="payment-method"
+          value={paymentMethod}
+          onChange={(e) => setPaymentMethod(e.target.value)}
         >
-          <option value="Tbilisi">Tbilisi</option>
-          <option value="Rustavi">Rustavi</option>
+          <option value="sender">Sender Pays</option>
+          <option value="receiver">Receiver Pays</option>
+          <option value="unmarked">Unmarked (Courier collects)</option>
         </select>
-      </div>
 
+      </div>
+      <div>
+        {paymentMethod === "receiver" && (
+          <div>
+            <label htmlFor="item-cost" className="text-2xl">
+              Enter item cost:
+            </label>
+            <input
+              type="number"
+              id="item-cost"
+              value={itemCost}
+              onChange={(e) =>
+                setItemCost(parseFloat(e.target.value).toString() || "0")
+              }
+              className="text-2xl border-2 p-1"
+            />
+          </div>
+        )}
+        <div className="flex flex-col">
+          <label htmlFor="city-select" className="text-2xl">
+            Choose a city:
+          </label>
+          <select
+            className="text-2xl text-red-400 text-bold"
+            id="city-select"
+            value={selectedCity}
+            onChange={(e) => handleCityChange(e.target.value as "Tbilisi" | "Rustavi")}
+          >
+            <option value="Tbilisi">Tbielisi</option>
+            <option value="Rustavi">Rustavi</option>
+          </select>
+        </div>
+      </div>
       <div>
         {weightRanges.map((range) => (
           <div key={range.label}>
@@ -155,12 +213,14 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           onChange={(e) => handlePackagingServiceChange(e.target.checked)}
         />
         <label htmlFor="packaging-service" className="text-xl text-red-600">
-          გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1
-          ლარი)
+          გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1 ლარი)
         </label>
       </div>
       <h2 className="text-4xl">ჯამური ფასი: {calculatedPrice} ლარი</h2>
     </>
+
   );
 };
 export default ShippingCostGraph;
+
+

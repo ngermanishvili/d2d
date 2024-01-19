@@ -73,30 +73,41 @@ model Billboard {
 }
 
 model Shipment {
-  id               String   @id @default(uuid())
-  name             String
-  trackingId       String   @unique
-  userId           String
-  lastName         String
-  phoneNumber      String
-  address          String // 
-  city             String // 
-  brittle          Boolean  @default(false) // New field for the courier to mark true or false
-  packaging        Boolean  @default(false) // New field for the courier to mark true or false
-  price            String
-  markedByCourier  Boolean  @default(false) // New field for the courier to mark true or false
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  mimgebisName     String
-  mimgebisLastname String
-  mimgebisNumber   String
-  mimgebiQalaqi    String
-  mimgebisAddress  String
-  status           String   @default("მიმდინარე") // New field for the courier to mark status
-  courierComment   String
-  label            String
-  assignedCourier  String? // New field for the courier to mark status
-  User             User     @relation(fields: [userId], references: [id])
+  id                    String                  @id @default(uuid())
+  name                  String
+  trackingId            String                  @unique
+  userId                String
+  lastName              String
+  phoneNumber           String
+  address               String // 
+  city                  String // 
+  brittle               Boolean                 @default(false) // New field for the courier to mark true or false
+  packaging             Boolean                 @default(false) // New field for the courier to mark true or false
+  price                 String
+  markedByCourier       Boolean                 @default(false) // New field for the courier to mark true or false
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  mimgebisName          String
+  mimgebisLastname      String
+  mimgebisNumber        String
+  mimgebiQalaqi         String
+  mimgebisAddress       String
+  status                String                  @default("მიმდინარე") // New field for the courier to mark status
+  courierComment        String
+  label                 String
+  assignedCourier       String? // New field for the courier to mark status
+  User                  User                    @relation(fields: [userId], references: [id])
+  ShipmentStatusHistory ShipmentStatusHistory[]
 
   @@index([userId])
+}
+
+model ShipmentStatusHistory {
+  id         String   @id @default(uuid())
+  shipmentId String
+  status     String
+  timestamp  DateTime @default(now())
+  // ... other fields
+
+  Shipment Shipment @relation(fields: [shipmentId], references: [id])
 }
