@@ -1,8 +1,7 @@
-import { db } from "@/lib/db";
-import { ShipmentColumn } from "./components/columns";
-import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
-import { ShipmentClient } from "./components/client";
-
+import {db} from "@/lib/db";
+import {ShipmentColumn} from "./components/columns";
+import {currentRole, currentUserId, currentUserByEmail} from "@/lib/auth";
+import {ShipmentClient} from "./components/client";
 
 const ShipmentPage = async () => {
   const userRole = await currentRole();
@@ -17,8 +16,17 @@ const ShipmentPage = async () => {
     include: {
       ShipmentStatusHistory: true, // Include shipment status history
     },
-
   });
+  const amount = shipments
+    .filter((shipmentsTofilter) => {
+      const updatedWithin24Hours =
+        shipmentsTofilter.updatedAt &&
+        new Date(shipmentsTofilter.updatedAt).getTime() >
+          Date.now() - 12 * 60 * 1000;
+      return shipmentsTofilter.status === "ჩაბარებული" && updatedWithin24Hours;
+    })
+    .map((shipmentToMap) => shipmentToMap.price);
+  
 
   formattedShipments = shipments.map((item) => ({
     id: item.id,
@@ -39,9 +47,11 @@ const ShipmentPage = async () => {
     trackingId: item.trackingId,
     status: item.status,
     courierComment: item.courierComment,
-    assignedCourier: item.assignedCourier ? item.assignedCourier : "არ არის კურიერი მიბმული",
+    assignedCourier: item.assignedCourier
+      ? item.assignedCourier
+      : "არ არის კურიერი მიბმული",
     shipmentStatusHistory: item.ShipmentStatusHistory,
-
+    updatedAt: item.updatedAt.toISOString(),
   }));
 
   return (

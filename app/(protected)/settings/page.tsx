@@ -66,6 +66,7 @@ const SettingsPage = () => {
         .then((data) => {
           if (data.error) {
             setError(data.error);
+            console.log(data.error);
           }
 
           if (data.success) {
