@@ -127,6 +127,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       router.refresh();
       router.push(`/shipments`);
       toast.success(toastMessage);
+      
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {

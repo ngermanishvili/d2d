@@ -55,9 +55,11 @@ const SettingsPage = () => {
       email: user?.email || undefined,
       role: user?.role || undefined,
       image: user?.image || undefined,
+      number: user?.number || undefined,
     },
   });
 
+  const isActive = user?.email && user?.number;
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     startTransition(() => {
       settings(values)
@@ -80,6 +82,7 @@ const SettingsPage = () => {
       <Card className="w-[600px]">
         <CardHeader>
           <p className="text-2xl font-semibold text-center">⚙️ კაბინეტი</p>
+          <p>{isActive ? "aqtiuri acc" : "inactive"}</p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
