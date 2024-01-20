@@ -2,12 +2,12 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useState} from "react";
-import {Shipment} from "@prisma/client";
-import {Trash} from "lucide-react";
-import {useForm} from "react-hook-form";
-import {useParams, useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useState } from "react";
+import { Shipment } from "@prisma/client";
+import { Trash } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import QRCodeGenerator from "@/components/ui/qr-code";
 import useCalculatorStore from "@/hooks/calculate-price";
 
@@ -19,11 +19,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {Heading} from "@/components/ui/heading";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {Input} from "@/components/ui/input";
-import {AlertModal} from "@/components/modals/alert-modal";
+import { Heading } from "@/components/ui/heading";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { AlertModal } from "@/components/modals/alert-modal";
 import {
   Card,
   CardContent,
@@ -39,7 +39,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import ShippingCostGraph from "../../components/calculate";
-import {RoleGate} from "@/components/auth/role-gate";
+import { RoleGate } from "@/components/auth/role-gate";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -58,6 +58,7 @@ const formSchema = z.object({
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
   courierComment: z.string().min(1),
+
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -67,20 +68,16 @@ interface ShipmentFormProps {
   initialData: Shipment | null;
 }
 
-export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
+export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const title = initialData ? "აკონტროლე სტატუსები შეკვეთაზე" : "";
-  const description = initialData
-    ? "შეგიძლია მიანიჭო შენს ამანათს სტატუსი და დაწერო სასურველი კომენტარი შეკვეთაზე"
-    : "";
-  const toastMessage = initialData
-    ? "წარმატებით განხორციელდა შეკვეთის განახლება"
-    : "";
+  const description = initialData ? "შეგიძლია მიანიჭო შენს ამანათს სტატუსი და დაწერო სასურველი კომენტარი შეკვეთაზე" : "";
+  const toastMessage = initialData ? "წარმატებით განხორციელდა შეკვეთის განახლება" : "";
   const action = initialData ? "შენახვა" : "";
-  const {calculatedPrice} = useCalculatorStore();
+  const { calculatedPrice } = useCalculatorStore();
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
@@ -130,6 +127,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
     }
   };
 
+
   const onDelete = async () => {
     try {
       setLoading(true);
@@ -173,23 +171,18 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       <Separator />
 
       {/* // formik form */}
-      <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">
-        გამგზავნი
-      </h2>
+      <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">გამგზავნი</h2>
       <Form {...form}>
         <div>
           <FormField
             control={form.control}
             name="courierComment"
-            render={({field}) => (
+
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>კომენტარი</FormLabel>
                 <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="კომენტარი"
-                    {...field}
-                  />
+                  <Input disabled={loading} placeholder="კომენტარი" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -199,7 +192,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           <FormField
             control={form.control}
             name="status"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>სტატუსი</FormLabel>
                 <FormControl>
@@ -216,59 +209,29 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                       {/* {ADMIN როლგეითი} */}
                       <RoleGate allowedRole="ADMIN">
                         <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
-                        <SelectItem value="უარი ჩაბარებაზე">
-                          უარი ჩაბარებაზე
-                        </SelectItem>
-                        <SelectItem value="არ არის მისამართზე">
-                          არ არის მისამართზე
-                        </SelectItem>
-                        <SelectItem value="არ იღებს ყურმილს ">
-                          არ იღებს ყურმილს{" "}
-                        </SelectItem>
+                        <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                        <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                        <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
                         <SelectItem value="აღებული">აღებული </SelectItem>
-                        <SelectItem value="ვერ ხდება დაკავშირება">
-                          ვერ ხდება დაკავშირება
-                        </SelectItem>
-                        <SelectItem value="მეორედ გატანა">
-                          მეორედ გატანა
-                        </SelectItem>
-                        <SelectItem value="უბრუნდება გამგზავნს">
-                          უბრუნდება გამგზავნს
-                        </SelectItem>
-                        <SelectItem value="გაუქმებულია გამგზავნის მიერ ">
-                          გაუქმებულია გამგზავნის მიერ{" "}
-                        </SelectItem>
+                        <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
+                        <SelectItem value="მეორედ გატანა">მეორედ გატანა</SelectItem>
+                        <SelectItem value="უბრუნდება გამგზავნს">უბრუნდება გამგზავნს</SelectItem>
+                        <SelectItem value="გაუქმებულია გამგზავნის მიერ ">გაუქმებულია გამგზავნის მიერ </SelectItem>
                         <SelectItem value="ასაღები">ასაღები </SelectItem>
                         <SelectItem value="საწყობში">საწყობში</SelectItem>
-                        <SelectItem value="ფილიალიდან გაცემა ">
-                          ფილიალიდან გაცემა{" "}
-                        </SelectItem>
-                        <SelectItem value="გატანილი ჩასაბარებლად">
-                          გატანილი ჩასაბარებლად{" "}
-                        </SelectItem>
-                        <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">
-                          დაუბრუნდა გამგზავნს, დასრულება
-                        </SelectItem>
-                        <SelectItem value="ვერ მოხერხდა დაკავშირება">
-                          ვერ მოხერხდა დაკავშირება{" "}
-                        </SelectItem>
+                        <SelectItem value="ფილიალიდან გაცემა ">ფილიალიდან გაცემა </SelectItem>
+                        <SelectItem value="გატანილი ჩასაბარებლად">გატანილი ჩასაბარებლად </SelectItem>
+                        <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">დაუბრუნდა გამგზავნს, დასრულება</SelectItem>
+                        <SelectItem value="ვერ მოხერხდა დაკავშირება">ვერ მოხერხდა დაკავშირება </SelectItem>
                       </RoleGate>
                       {/* {USER როლგეითი} */}
                       <RoleGate allowedRole="COURIER">
                         <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
-                        <SelectItem value="უარი ჩაბარებაზე">
-                          უარი ჩაბარებაზე
-                        </SelectItem>
-                        <SelectItem value="არ არის მისამართზე">
-                          არ არის მისამართზე
-                        </SelectItem>
-                        <SelectItem value="არ იღებს ყურმილს ">
-                          არ იღებს ყურმილს{" "}
-                        </SelectItem>
+                        <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
+                        <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
+                        <SelectItem value="არ იღებს ყურმილს ">არ იღებს ყურმილს </SelectItem>
                         <SelectItem value="აღებული">აღებული </SelectItem>
-                        <SelectItem value="ვერ ხდება დაკავშირება">
-                          ვერ ხდება დაკავშირება
-                        </SelectItem>
+                        <SelectItem value="ვერ ხდება დაკავშირება">ვერ ხდება დაკავშირება</SelectItem>
                       </RoleGate>
                     </SelectContent>
                   </Select>
@@ -277,6 +240,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               </FormItem>
             )}
           />
+
         </div>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -287,7 +251,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               control={form.control}
               name="name"
               disabled
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სახელი</FormLabel>
                   <FormControl>
@@ -298,13 +262,14 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               )}
             />
 
+
             <RoleGate allowedRole="ADMIN">
               <FormField
                 control={form.control}
                 name="brittle"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
-                    <FormLabel>მსხვრევადი</FormLabel>
+                    <FormLabel >მსხვრევადი</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value ? "Yes" : "No"}
@@ -316,9 +281,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                         }}
                       >
                         <SelectTrigger>
-                          <SelectValue>
-                            {field.value ? "Yes" : "No"}
-                          </SelectValue>
+                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="Yes">Yes</SelectItem>
@@ -336,7 +299,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                 control={form.control}
                 disabled
                 name="markedByCourier"
-                render={({field}) => (
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>Marked by Courier</FormLabel>
                     <FormControl>
@@ -350,9 +313,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                         }}
                       >
                         <SelectTrigger>
-                          <SelectValue>
-                            {field.value ? "Yes" : "No"}
-                          </SelectValue>
+                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="Yes">Yes</SelectItem>
@@ -370,7 +331,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               key={initialData?.id}
               control={form.control}
               name="lastName"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>გვარი</FormLabel>
                   <FormControl>
@@ -385,7 +346,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               disabled
               control={form.control}
               name="address"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>მისამართი</FormLabel>
                   <FormControl>
@@ -403,7 +364,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               disabled
               control={form.control}
               name="city"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>ქალაქი</FormLabel>
                   <FormControl>
@@ -422,7 +383,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
               disabled
               control={form.control}
               name="phoneNumber"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>ტელეფონის ნომერი</FormLabel>
                   <FormControl>
@@ -439,19 +400,21 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             />
           </div>
 
-          <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">
-            მიმღები
-          </h2>
+          <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">მიმღები</h2>
 
           <FormField
             disabled
             control={form.control}
             name="mimgebisName"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>სახელი</FormLabel>
                 <FormControl>
-                  <Input disabled={loading} placeholder="სახელი " {...field} />
+                  <Input
+                    disabled={loading}
+                    placeholder="სახელი "
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -462,22 +425,27 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             disabled
             control={form.control}
             name="mimgebisLastname"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>გვარი</FormLabel>
                 <FormControl>
-                  <Input disabled={loading} placeholder="გვარი " {...field} />
+                  <Input
+                    disabled={loading}
+                    placeholder="გვარი "
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
+
           <FormField
             disabled
             control={form.control}
             name="mimgebisAddress"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>მისამართი</FormLabel>
                 <FormControl>
@@ -495,7 +463,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             disabled
             control={form.control}
             name="mimgebiQalaqi"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>mimgebiQalaqi</FormLabel>
                 <FormControl>
@@ -513,7 +481,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             disabled
             control={form.control}
             name="mimgebisNumber"
-            render={({field}) => (
+            render={({ field }) => (
               <FormItem>
                 <FormLabel>ტელეფონის ნომერი</FormLabel>
                 <FormControl>
@@ -529,7 +497,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             )}
           />
           {/* <ShipmentFormDelivered initialData={initialData} /> */}
-          <p>{initialData?.price} GEL</p>
+          <ShippingCostGraph />
 
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
