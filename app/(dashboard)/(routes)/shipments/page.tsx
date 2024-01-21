@@ -41,6 +41,8 @@ const ShipmentPage = async () => {
       trackingId: item.trackingId,
       status: item.status,
       courierComment: item.courierComment,
+      agebisDro: item?.agebisDro,
+      chabarebisDro: item?.chabarebisDro,
     })
   );
 

@@ -95,7 +95,8 @@ model Shipment {
   status                String                  @default("მიმდინარე") // New field for the courier to mark status
   courierComment        String
   label                 String
-  
+  agebisDro             String?
+  chabarebisDro         String?
   assignedCourier       String? // New field for the courier to mark status
   User                  User                    @relation(fields: [userId], references: [id])
   ShipmentStatusHistory ShipmentStatusHistory[]

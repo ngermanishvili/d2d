@@ -24,6 +24,8 @@ export type ShipmentColumn = {
   trackingId: string;
   status: string;
   courierComment: string;
+  agebisDro: string | null;
+  chabarebisDro: string | null;
 };
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
@@ -125,6 +127,14 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "დამატების თარიღი",
+  },
+  {
+    accessorKey: "agebisDro",
+    header: "ამანათის აღების დრო",
+  },
+  {
+    accessorKey: "chabarebisDro",
+    header: "ამანათის ჩაბარების დრო",
   },
   {
     accessorKey: "courierComment",
