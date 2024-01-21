@@ -118,23 +118,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     city: string = selectedCity // Default to the current selectedCity state
   ) => {
     let totalPrice = 0;
-
     if (range) {
-      switch (paymentMethod) {
-        case "sender":
-          totalPrice += city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
-          break;
-        case "receiver":
-          totalPrice += parseFloat(itemCost); // If receiver pays, add item cost
-          break;
-        case "unmarked":
-          // Do nothing for unmarked, as courier collects the payment
-          break;
-        default:
-          break;
-      }
+      totalPrice +=
+        city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
     }
-
     if (usePackaging) {
       totalPrice += 1; // Add 1 GEL for packaging service
     }
@@ -142,58 +129,23 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCost(totalPrice);
   };
 
-
   return (
     <>
-
-
-      <div className="flex justify-between items-center p-2">
-        <label htmlFor="payment-method" className="text-2xl flex flex-col">
-          Choose payment method:
+      <div>
+        <label htmlFor="city-select" className="text-2xl">
+          Choose a city:{" "}
         </label>
         <select
           className="text-2xl text-red-400 text-bold"
-          id="payment-method"
-          value={paymentMethod}
-          onChange={(e) => setPaymentMethod(e.target.value)}
+          id="city-select"
+          value={selectedCity}
+          onChange={(e) =>
+            handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
+          }
         >
-          <option value="sender">Sender Pays</option>
-          <option value="receiver">Receiver Pays</option>
-          <option value="unmarked">Unmarked (Courier collects)</option>
+          <option value="Tbilisi">Tbilisi</option>
+          <option value="Rustavi">Rustavi</option>
         </select>
-
-      </div>
-      <div>
-        {paymentMethod === "receiver" && (
-          <div>
-            <label htmlFor="item-cost" className="text-2xl">
-              Enter item cost:
-            </label>
-            <input
-              type="number"
-              id="item-cost"
-              value={itemCost}
-              onChange={(e) =>
-                setItemCost(parseFloat(e.target.value).toString() || "0")
-              }
-              className="text-2xl border-2 p-1"
-            />
-          </div>
-        )}
-        <div className="flex flex-col">
-          <label htmlFor="city-select" className="text-2xl">
-            Choose a city:
-          </label>
-          <select
-            className="text-2xl text-red-400 text-bold"
-            id="city-select"
-            value={selectedCity}
-            onChange={(e) => handleCityChange(e.target.value as "Tbilisi" | "Rustavi")}
-          >
-            <option value="Tbilisi">Tbielisi</option>
-            <option value="Rustavi">Rustavi</option>
-          </select>
-        </div>
       </div>
       <div>
         <select
@@ -276,14 +228,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           onChange={(e) => handlePackagingServiceChange(e.target.checked)}
         />
         <label htmlFor="packaging-service" className="text-xl text-red-600">
-          გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1 ლარი)
+          გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1
+          ლარი)
         </label>
       </div>
       <h2 className="text-4xl">ჯამური ფასი: {calculatedPrice} ლარი</h2>
     </>
-
   );
 };
 export default ShippingCostGraph;
-
-
