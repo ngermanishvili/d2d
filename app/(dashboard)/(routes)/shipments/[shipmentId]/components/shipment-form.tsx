@@ -115,14 +115,14 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
     itemPrice,
   } = useCalculatorStore();
   const onSubmit = async (data: ShipmentFormValues) => {
-    if(!initialData){
-       
-    }
+   //  const aris = aq iqneba check 
     try {
       console.log(whoPays, itemPriceForCalc);
       data.packaging = packagingUsed;
       data.label = range;
       data.price = calculatedPrice;
+      
+      //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit 
       setLoading(true);
 
       if (initialData) {

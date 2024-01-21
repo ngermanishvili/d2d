@@ -1,8 +1,8 @@
-import { db } from "@/lib/db";
-import { ShipmentClient } from "./components/client";
-import { ShipmentColumn } from "./components/columns";
-import { currentRole, currentUserId } from "@/lib/auth";
-import { RoleGate } from "@/components/auth/role-gate";
+import {db} from "@/lib/db";
+import {ShipmentClient} from "./components/client";
+import {ShipmentColumn} from "./components/columns";
+import {currentRole, currentUserId} from "@/lib/auth";
+import {RoleGate} from "@/components/auth/role-gate";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -16,8 +16,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -54,7 +54,9 @@ const ShipmentPage = async () => {
           <ShipmentClient data={formattedShipments} />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
-          <div className="text-red-500 uppercase">Error: წვდომა შეზღუდულია!</div>
+          <div className="text-red-500 uppercase">
+            Error: წვდომა შეზღუდულია!
+          </div>
         )}
       </div>
     </div>

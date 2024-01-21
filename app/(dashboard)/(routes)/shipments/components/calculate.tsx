@@ -102,6 +102,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   const handlePackagingServiceChange = (isChecked: boolean) => {
     setPackagingUsed(isChecked); // Update the global state
+    if (whoPays === "receiver") {
+      setCost(parseFloat(calculatedPrice) + 1);
+      return;
+    }
     calculateTotalPrice(selectedRange, isChecked); // Recalculate total price
   };
   const handleCityChange = (newCity: "Tbilisi" | "Rustavi") => {
@@ -121,19 +125,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     if (usePackaging) {
       totalPrice += 1; // Add 1 GEL for packaging service
     }
-    // if (whoPays === "receiver") {
-    //   setCost(totalPrice + itemPrice);
-    // }
 
     setCost(totalPrice);
-    // Update the cost in the global state
   };
-
-  // useEffect(() => {
-  //   setCost(itemPrice + parseFloat(calculatedPrice));
-  //   if (itemPrice === null || itemPrice === undefined)
-  //     setCost(parseFloat(calculatedPrice));
-  // }, [itemPrice]);
 
   return (
     <>
@@ -188,7 +182,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 }
               }}
             />
-            <span
+            <button
+              disabled={isAdded}
               onClick={() => {
                 setIsCalculated(false);
                 setIsAdded(true);
@@ -197,7 +192,15 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               }}
             >
               alo kooki datvale
-            </span>
+            </button>
+            <button
+              onClick={() => {
+                setIsCalculated(true);
+                setIsAdded(false);
+              }}
+            >
+              edit item price
+            </button>
           </>
         ) : (
           ""
