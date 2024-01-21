@@ -1,8 +1,8 @@
 import { db } from "@/lib/db";
-
 import { ShipmentClient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId } from "@/lib/auth";
+import { RoleGate } from "@/components/auth/role-gate";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -47,7 +47,15 @@ const ShipmentPage = async () => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <ShipmentClient data={formattedShipments} />
+        <RoleGate allowedRole="ADMIN">
+          <ShipmentClient data={formattedShipments} />
+        </RoleGate>
+        <RoleGate allowedRole="USER">
+          <ShipmentClient data={formattedShipments} />
+        </RoleGate>
+        {userRole !== "ADMIN" && userRole !== "USER" && (
+          <div className="text-red-500 uppercase">Error: წვდომა შეზღუდულია!</div>
+        )}
       </div>
     </div>
   );
