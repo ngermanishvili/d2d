@@ -109,14 +109,21 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
     range,
     setRange,
     setSelectedCity,
+    itemPriceForCalc,
+    whoPays,
+    isCalculated,
+    itemPrice,
   } = useCalculatorStore();
   const onSubmit = async (data: ShipmentFormValues) => {
+    //  const aris = aq iqneba check 
     try {
+      console.log(whoPays, itemPriceForCalc);
       data.packaging = packagingUsed;
       data.label = range;
       data.price = calculatedPrice;
+
+      //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit 
       setLoading(true);
-      console.log("Submitted Data:", data);
 
       if (initialData) {
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
@@ -245,7 +252,8 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       <SelectContent>
                         {/* {ADMIN როლგეითი} */}
                         <RoleGate allowedRole="ADMIN">
-                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                          <SelectItem value="მიმდინარე">მიმდინარე</SelectItem>
+                          <SelectItem value="ჩაბარებული">ჩაბარებული</SelectItem>
                           <SelectItem value="უარი ჩაბარებაზე">
                             უარი ჩაბარებაზე
                           </SelectItem>
@@ -519,7 +527,11 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           {/* <ShipmentFormDelivered initialData={initialData} /> */}
           <ShippingCostGraph hasInitialData={initialData ? true : false} />
 
-          <Button disabled={loading} className="ml-auto" type="submit">
+          <Button
+            disabled={loading || isCalculated}
+            className="ml-auto"
+            type="submit"
+          >
             {action}
           </Button>
 

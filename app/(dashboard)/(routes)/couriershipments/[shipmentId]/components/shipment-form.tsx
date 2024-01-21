@@ -58,7 +58,6 @@ const formSchema = z.object({
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
   courierComment: z.string().min(1),
-
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -74,8 +73,12 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const title = initialData ? "აკონტროლე სტატუსები შეკვეთაზე" : "";
-  const description = initialData ? "შეგიძლია მიანიჭო შენს ამანათს სტატუსი და დაწერო სასურველი კომენტარი შეკვეთაზე" : "";
-  const toastMessage = initialData ? "წარმატებით განხორციელდა შეკვეთის განახლება" : "";
+  const description = initialData
+    ? "შეგიძლია მიანიჭო შენს ამანათს სტატუსი და დაწერო სასურველი კომენტარი შეკვეთაზე"
+    : "";
+  const toastMessage = initialData
+    ? "წარმატებით განხორციელდა შეკვეთის განახლება"
+    : "";
   const action = initialData ? "შენახვა" : "";
   const { calculatedPrice } = useCalculatorStore();
   const form = useForm<ShipmentFormValues>({
@@ -95,7 +98,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       brittle: false,
       packaging: false,
       markedByCourier: false,
-      status: "მიმდინარე",
+      status: "",
       courierComment: "",
 
     },
@@ -171,18 +174,23 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       <Separator />
 
       {/* // formik form */}
-      <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">გამგზავნი</h2>
+      <h2 className="bg-blue-400 text-white rounded-md w-full flex items-center justify-center p-4">
+        გამგზავნი
+      </h2>
       <Form {...form}>
         <div>
           <FormField
             control={form.control}
             name="courierComment"
-
             render={({ field }) => (
               <FormItem>
                 <FormLabel>კომენტარი</FormLabel>
                 <FormControl>
-                  <Input disabled={loading} placeholder="კომენტარი" {...field} />
+                  <Input
+                    disabled={loading}
+                    placeholder="კომენტარი"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -225,7 +233,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <SelectItem value="ვერ მოხერხდა დაკავშირება">ვერ მოხერხდა დაკავშირება </SelectItem>
                       </RoleGate>
                       {/* {USER როლგეითი} */}
-                      <RoleGate allowedRole="COURIER">
+                      <RoleGate allowedRole="USER">
                         <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
                         <SelectItem value="უარი ჩაბარებაზე">უარი ჩაბარებაზე</SelectItem>
                         <SelectItem value="არ არის მისამართზე">არ არის მისამართზე</SelectItem>
@@ -241,217 +249,92 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             )}
           />
 
-        </div>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-8 w-full"
-        >
-          <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="name"
-              disabled
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სახელი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="სახელი" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-
-            <RoleGate allowedRole="ADMIN">
-              <FormField
-                control={form.control}
-                name="brittle"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel >მსხვრევადი</FormLabel>
-                    <FormControl>
-                      <Select
-                        value={field.value ? "Yes" : "No"}
-                        onValueChange={(newValueBrittle) => {
-                          console.log("New Value:", newValueBrittle); // Debug log
-                          const isBrittle = newValueBrittle === "Yes";
-                          console.log("isBrittlee:", isBrittle); // Debug log
-                          field.onChange(isBrittle);
-                        }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </RoleGate>
-            <RoleGate allowedRole="ADMIN">
-              <FormField
-                control={form.control}
-                disabled
-                name="markedByCourier"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Marked by Courier</FormLabel>
-                    <FormControl>
-                      <Select
-                        value={field.value ? "Yes" : "No"}
-                        onValueChange={(newValue) => {
-                          console.log("New Value:", newValue); // Debug log
-                          const isMarkedByCourier = newValue === "Yes";
-                          console.log("isMarkedByCourier:", isMarkedByCourier); // Debug log
-                          field.onChange(isMarkedByCourier);
-                        }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Yes">Yes</SelectItem>
-                          <SelectItem value="No">No</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </RoleGate>
-            <FormField
-              disabled
-              key={initialData?.id}
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>გვარი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="გვარი " {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              disabled
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>მისამართი</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="მისამართი  "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              disabled
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ქალაქი</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="ქალაქი "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              disabled
-              control={form.control}
-              name="phoneNumber"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ტელეფონის ნომერი</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="ტელეფონის ნომერი "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">მიმღები</h2>
 
           <FormField
-            disabled
             control={form.control}
-            name="mimgebisName"
+            name="brittle"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>სახელი</FormLabel>
+                <FormLabel>მსხვრევადი</FormLabel>
                 <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="სახელი "
-                    {...field}
-                  />
+                  <Select
+                    value={field.value ? "Yes" : "No"}
+                    onValueChange={(newValueBrittle) => {
+                      console.log("New Value:", newValueBrittle); // Debug log
+                      const isBrittle = newValueBrittle === "Yes";
+                      console.log("isBrittlee:", isBrittle); // Debug log
+                      field.onChange(isBrittle);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="markedByCourier"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Marked by Courier</FormLabel>
+                <FormControl>
+                  <Select
+                    value={field.value ? "Yes" : "No"}
+                    onValueChange={(newValue) => {
+                      console.log("New Value:", newValue); // Debug log
+                      const isMarkedByCourier = newValue === "Yes";
+                      console.log("isMarkedByCourier:", isMarkedByCourier); // Debug log
+                      field.onChange(isMarkedByCourier);
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue>{field.value ? "Yes" : "No"}</SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Yes">Yes</SelectItem>
+                      <SelectItem value="No">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             disabled
+            key={initialData?.id}
             control={form.control}
-            name="mimgebisLastname"
+            name="lastName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>გვარი</FormLabel>
                 <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="გვარი "
-                    {...field}
-                  />
+                  <Input disabled={loading} placeholder="გვარი " {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-
           <FormField
             disabled
             control={form.control}
-            name="mimgebisAddress"
+            name="address"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>მისამართი</FormLabel>
                 <FormControl>
                   <Input
                     disabled={loading}
-                    placeholder="მისამართი "
+                    placeholder="მისამართი  "
                     {...field}
                   />
                 </FormControl>
@@ -462,14 +345,14 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           <FormField
             disabled
             control={form.control}
-            name="mimgebiQalaqi"
+            name="city"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>mimgebiQalaqi</FormLabel>
+                <FormLabel>ქალაქი</FormLabel>
                 <FormControl>
                   <Input
                     disabled={loading}
-                    placeholder="mimgebiQalaqi "
+                    placeholder="ქალაქი "
                     {...field}
                   />
                 </FormControl>
@@ -477,10 +360,11 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
+
           <FormField
             disabled
             control={form.control}
-            name="mimgebisNumber"
+            name="phoneNumber"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>ტელეფონის ნომერი</FormLabel>
@@ -496,28 +380,119 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
-          {/* <ShipmentFormDelivered initialData={initialData} /> */}
-          <ShippingCostGraph />
+        </div>
 
-          <Button disabled={loading} className="ml-auto" type="submit">
-            {action}
-          </Button>
+        <h2 className="bg-red-400 text-white rounded-md w-full flex items-center justify-center p-4">
+          მიმღები
+        </h2>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>დაასკანერე QR</CardTitle>
-              <CardDescription>
-                ყველა შეკვეთას გააჩნია უნიკალური QR{" "}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <QRCodeGenerator
-                text={`${process.env.NEXT_PUBLIC_APP_URL}/shipments/${params.shipmentId}`}
-              />
-            </CardContent>
-          </Card>
-        </form>
-      </Form>
+        <FormField
+          disabled
+          control={form.control}
+          name="mimgebisName"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>სახელი</FormLabel>
+              <FormControl>
+                <Input disabled={loading} placeholder="სახელი " {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          disabled
+          control={form.control}
+          name="mimgebisLastname"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>გვარი</FormLabel>
+              <FormControl>
+                <Input disabled={loading} placeholder="გვარი " {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          disabled
+          control={form.control}
+          name="mimgebisAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>მისამართი</FormLabel>
+              <FormControl>
+                <Input
+                  disabled={loading}
+                  placeholder="მისამართი "
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          disabled
+          control={form.control}
+          name="mimgebiQalaqi"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>mimgebiQalaqi</FormLabel>
+              <FormControl>
+                <Input
+                  disabled={loading}
+                  placeholder="mimgebiQalaqi "
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          disabled
+          control={form.control}
+          name="mimgebisNumber"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>ტელეფონის ნომერი</FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  disabled={loading}
+                  placeholder="ტელეფონის ნომერი "
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <ShipmentFormDelivered initialData={initialData} /> */}
+        <ShippingCostGraph />
+
+        <Button disabled={loading} className="ml-auto" type="submit">
+          {action}
+        </Button>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>დაასკანერე QR</CardTitle>
+            <CardDescription>
+              ყველა შეკვეთას გააჩნია უნიკალური QR{" "}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <QRCodeGenerator
+              text={`${process.env.NEXT_PUBLIC_APP_URL}/shipments/${params.shipmentId}`}
+            />
+          </CardContent>
+        </Card>
+      </form>
+    </Form >
     </>
   );
 };

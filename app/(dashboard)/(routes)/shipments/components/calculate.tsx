@@ -50,11 +50,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
   const [selectedCity, setSelectedCity] = useState<string>("Tbilisi");
-  const [itemCost, setItemCost] = useState<string>("");
-  const [receiverPays, setReceiverPays] = useState<boolean>(false);
-  const [paymentMethod, setPaymentMethod] = useState<string>("sender"); // Default to sender
-
-
 
   const {
     calculatedPrice,
@@ -64,7 +59,18 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     archeuliQalaqi,
     range,
     setRange,
+    whoPays,
+    setWhoPays,
+    setItemPrice,
+    itemPrice,
+    isAdded,
+    setIsAdded,
+    itemPriceForCalc,
+    setItemPriceForCalc,
+    setIsCalculated,
+    isCalculated,
   } = useCalculatorStore();
+
   useEffect(() => {
     // Check if initialData is true
     if (hasInitialData) {
@@ -76,15 +82,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
       setSelectedCity(archeuliQalaqi);
       setPackagingUsed(packagingUsed);
-      setItemCost(itemCost); // Set the initial item cost
-
-      // Check if initialSelectedRange is defined before calculating
-      if (initialSelectedRange) {
-        calculateTotalPrice(initialSelectedRange, packagingUsed, selectedCity);
-      }
+      calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
     }
-  }, [range, setRange, archeuliQalaqi, packagingUsed, setPackagingUsed, selectedRange, itemCost]);
-
+  }, [
+    range,
+    setRange,
+    archeuliQalaqi,
+    packagingUsed,
+    setPackagingUsed,
+    selectedRange,
+  ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
@@ -95,6 +102,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   const handlePackagingServiceChange = (isChecked: boolean) => {
     setPackagingUsed(isChecked); // Update the global state
+    if (whoPays === "receiver") {
+      setCost(parseFloat(calculatedPrice) + 1);
+      return;
+    }
     calculateTotalPrice(selectedRange, isChecked); // Recalculate total price
   };
   const handleCityChange = (newCity: "Tbilisi" | "Rustavi") => {
@@ -128,7 +139,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       totalPrice += 1; // Add 1 GEL for packaging service
     }
 
-    setCost(totalPrice); // Update the cost in the global state
+    setCost(totalPrice);
   };
 
 
@@ -183,6 +194,65 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
             <option value="Rustavi">Rustavi</option>
           </select>
         </div>
+      </div>
+      <div>
+        <select
+          value={whoPays}
+          onChange={(e) => {
+            if (whoPays === "receiver") {
+              setCost(parseFloat(calculatedPrice) - itemPriceForCalc);
+              setIsAdded(false);
+              setItemPriceForCalc(0);
+              setIsCalculated(false);
+            }
+            if (whoPays === "sender") {
+              setIsCalculated(true);
+            }
+            setWhoPays(e.target.value as "sender" | "receiver");
+          }}
+        >
+          <option value="sender">Sender</option>
+          <option value="receiver">Receiver</option>
+        </select>
+        {whoPays === "receiver" ? (
+          <>
+            <input
+              value={itemPrice || ""} // Ensure value is an empty string if itemPrice is falsy (e.g., null or undefined)
+              type="number"
+              min={0}
+              onChange={(e) => {
+                const enteredValue = parseFloat(e.target.value);
+                if (!isNaN(enteredValue)) {
+                  const newPrice = enteredValue < 0 ? 0 : enteredValue;
+                  setItemPrice(newPrice);
+                } else {
+                  setItemPrice(0); // Set itemPrice to an empty string if the entered value is not a valid number
+                }
+              }}
+            />
+            <button
+              disabled={isAdded}
+              onClick={() => {
+                setIsCalculated(false);
+                setIsAdded(true);
+                setCost(parseFloat(calculatedPrice) + itemPrice);
+                setItemPriceForCalc(itemPrice);
+              }}
+            >
+              alo kooki datvale
+            </button>
+            <button
+              onClick={() => {
+                setIsCalculated(true);
+                setIsAdded(false);
+              }}
+            >
+              edit item price
+            </button>
+          </>
+        ) : (
+          ""
+        )}
       </div>
       <div>
         {weightRanges.map((range) => (

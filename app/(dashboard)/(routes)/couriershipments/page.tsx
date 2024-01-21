@@ -18,9 +18,65 @@ const ShipmentPage = async () => {
     include: {
       ShipmentStatusHistory: true, // Include shipment status history
     },
-
   });
+  const amountInTotal = shipments
+    .filter((shipmentsTofilter) => {
+      return shipmentsTofilter.status === "ჩაბარებული";
+    })
+    .map((shipmentToMap) => shipmentToMap.price);
+  const sumOfNumbersInArray = (numberStrings: string[]): number => {
+    let total = 0;
 
+    for (const numStr of numberStrings) {
+      try {
+        const num = parseFloat(numStr); // Convert the string to a floating-point number
+        if (!isNaN(num)) {
+          total += num;
+        }
+      } catch (error) {
+        console.error(`Skipping non-numeric value: ${numStr}`);
+      }
+    }
+
+    return total;
+  };
+
+  const now = new Date();
+  const startOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    8,
+    0,
+    0
+  );
+  const endOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    20,
+    0,
+    0
+  );
+
+  const amount = shipments
+    .filter((shipmentToFilter) => {
+      const updatedWithinToday =
+        shipmentToFilter.updatedAt &&
+        new Date(shipmentToFilter.updatedAt) >= startOfDay &&
+        new Date(shipmentToFilter.updatedAt) <= endOfDay;
+
+      return shipmentToFilter.status === "ჩაბარებული" && updatedWithinToday;
+    })
+    .map((shipmentToMap) => shipmentToMap.price);
+  const sumOfTotals = sumOfNumbersInArray(amountInTotal);
+  const sumOfToday = sumOfNumbersInArray(amount);
+  console.log(
+    "🚀 ~ ShipmentPage ~ sumofTotal:",
+    sumOfTotals,
+    "sum of this day",
+    sumOfToday
+  );
   formattedShipments = shipments.map((item) => ({
     id: item.id,
     name: item.name,
@@ -40,9 +96,11 @@ const ShipmentPage = async () => {
     trackingId: item.trackingId,
     status: item.status,
     courierComment: item.courierComment,
-    assignedCourier: item.assignedCourier ? item.assignedCourier : "არ არის კურიერი მიბმული",
+    assignedCourier: item.assignedCourier
+      ? item.assignedCourier
+      : "არ არის კურიერი მიბმული",
     shipmentStatusHistory: item.ShipmentStatusHistory,
-
+    updatedAt: item.updatedAt.toISOString(),
   }));
 
   return (

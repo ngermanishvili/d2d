@@ -55,7 +55,9 @@ const ShipmentPage = async () => {
           <ShipmentClient data={formattedShipments} />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
-          <div className="text-red-500 uppercase">Error: წვდომა შეზღუდულია!</div>
+          <div className="text-red-500 uppercase">
+            Error: წვდომა შეზღუდულია!
+          </div>
         )}
       </div>
     </div>
