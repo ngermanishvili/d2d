@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
@@ -6,7 +7,6 @@ import { Toaster } from '@/components/ui/sonner'
 import { RoleGate } from '@/components/auth/role-gate'
 import { AdminNavbar } from './(protected)/_components/admin-navbar'
 import { UserNavbar } from './(protected)/_components/user-navbar'
-
 
 import './globals.css'
 import NProgressWrapper from '@/components/ui/nprogress-bar'
@@ -37,7 +37,6 @@ export default async function RootLayout({
             <div className="bg-gray-100">
               <HomeLayoutNavigation />
             </div>
-
             <RoleGate allowedRole="ADMIN">
               <AdminNavbar />
             </RoleGate>

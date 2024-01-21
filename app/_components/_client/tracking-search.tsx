@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useCallback } from 'react';
 import Container from '@/components/ui/container';
 import { Input } from '@/components/ui/input';

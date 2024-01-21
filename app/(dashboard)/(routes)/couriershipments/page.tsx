@@ -1,3 +1,4 @@
+"use client"
 import { db } from "@/lib/db";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";

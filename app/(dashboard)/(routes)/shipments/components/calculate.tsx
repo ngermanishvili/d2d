@@ -11,13 +11,6 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 ChartJS.register(
   CategoryScale,

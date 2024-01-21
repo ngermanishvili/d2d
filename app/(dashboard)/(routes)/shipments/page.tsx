@@ -1,3 +1,4 @@
+"use client"
 import { db } from "@/lib/db";
 import { ShipmentClient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
