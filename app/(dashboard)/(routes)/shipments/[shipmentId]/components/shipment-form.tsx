@@ -164,7 +164,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
     }
-  }, []); // Dependency array ensures that the effect runs when initialData changes
+  }, []);
 
   return (
     <>
