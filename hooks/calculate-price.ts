@@ -30,6 +30,7 @@ const useCalculatorStore = create<StoreState>((set) => ({
   archeuliQalaqi: "Rustavi",
   range: "0-5 kg",
   packagingUsed: false,
+  isAdded: false,
   setCost: (newCost) => set({ calculatedPrice: newCost.toString() }),
   setPackagingUsed: (used) => set({ packagingUsed: used }),
   setSelectedCity: (city: string) => set({ archeuliQalaqi: city }),
