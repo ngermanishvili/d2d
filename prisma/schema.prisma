@@ -108,7 +108,7 @@ model ShipmentStatusHistory {
   shipmentId String
   status     String
   timestamp  DateTime @default(now())
-  // ... other fields
+  // ... other fields //
 
   Shipment Shipment @relation(fields: [shipmentId], references: [id])
 }
