@@ -1,70 +1,141 @@
-"use client"
-import { Plus } from "lucide-react"
-import { useParams, useRouter, } from "next/navigation"
+"use client";
+import {Plus} from "lucide-react";
+import {useParams, useRouter} from "next/navigation";
 
-import { useState } from "react"
+import {useEffect, useState} from "react";
 
-import { Button } from "@/components/ui/button"
-import { Heading } from "@/components/ui/heading"
-import { Separator } from "@/components/ui/separator"
+import {Button} from "@/components/ui/button";
+import {Heading} from "@/components/ui/heading";
+import {Separator} from "@/components/ui/separator";
 
-import { ShipmentColumn, columns } from "./columns"
-import { CourierDataTable } from "@/components/ui/date-table-courier"
-import { ApiList } from "@/components/ui/api-list"
-import { DatePickerWithRange } from "@/components/ui/date-picker"
-import { DateRange } from "react-day-picker"
+import {ShipmentColumn, columns} from "./columns";
+import {CourierDataTable} from "@/components/ui/date-table-courier";
+import {ApiList} from "@/components/ui/api-list";
+import {DatePickerWithRange} from "@/components/ui/date-picker";
+import {DateRange} from "react-day-picker";
 
 interface ShipmentClientProps {
-    data: ShipmentColumn[];
-
+  data: ShipmentColumn[];
 }
 
+export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
+  const router = useRouter();
+  const params = useParams();
 
+  const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
 
-export const ShipmentClient: React.FC<ShipmentClientProps> = ({
-    data
-}) => {
-    const router = useRouter();
-    const params = useParams();
+  const handleDateRangeChange = (dateRange: DateRange) => {
+    const filteredData = data.filter((shipment) => {
+      const shipmentDate = new Date(shipment.createdAt);
 
-    const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
+      return (
+        (!dateRange.from || shipmentDate >= dateRange.from) &&
+        (!dateRange.to || shipmentDate <= dateRange.to)
+      );
+    });
 
+    setFilteredData(filteredData);
+  };
+  const amountInTotal = filteredData
+    .filter((shipmentsTofilter) => {
+      return shipmentsTofilter.status === "ჩაბარებული";
+    })
+    .map((shipmentToMap) => shipmentToMap.price);
+  const sumOfNumbersInArray = (numberStrings: string[]): number => {
+    let total = 0;
 
+    for (const numStr of numberStrings) {
+      try {
+        const num = parseFloat(numStr); // Convert the string to a floating-point number
+        if (!isNaN(num)) {
+          total += num;
+        }
+      } catch (error) {
+        console.error(`Skipping non-numeric value: ${numStr}`);
+      }
+    }
 
+    return total;
+  };
 
-    const handleDateRangeChange = (dateRange: DateRange) => {
-        const filteredData = data.filter((shipment) => {
-            const shipmentDate = new Date(shipment.createdAt);
+  const now = new Date();
+  const startOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    8,
+    0,
+    0
+  );
+  const endOfDay = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate(),
+    20,
+    0,
+    0
+  );
 
-            return (
-                (!dateRange.from || shipmentDate >= dateRange.from) &&
-                (!dateRange.to || shipmentDate <= dateRange.to)
-            );
-        });
+  const amount = data
+    .filter((shipmentToFilter) => {
+      const updatedWithinToday =
+        shipmentToFilter.updatedAt &&
+        new Date(shipmentToFilter.updatedAt) >= startOfDay &&
+        new Date(shipmentToFilter.updatedAt) <= endOfDay;
 
-        setFilteredData(filteredData);
-    };
+      return shipmentToFilter.status === "ჩაბარებული" && updatedWithinToday;
+    })
+    .map((shipmentToMap) => shipmentToMap.price);
+  const sumOfTotals = sumOfNumbersInArray(amountInTotal);
+  const sumOfToday = sumOfNumbersInArray(amount);
+  console.log(
+    "🚀 ~ ShipmentPage ~ sumofTotal:",
+    sumOfTotals,
+    "sum of this day",
+    sumOfToday
+  );
+  useEffect(() => {
+    // Calculate the sum of totals whenever filteredData or dateRange changes
+    const sumOfTotals = sumOfNumbersInArray(
+      filteredData
+        .filter((shipmentsTofilter) => {
+          return shipmentsTofilter.status === "ჩაბარებული";
+        })
+        .map((shipmentToMap) => shipmentToMap.price)
+    );
+  }, [filteredData]); // Add any dependencies that might change and trigger the effect
 
-
-    return (
+  return (
+    <>
+      <div className="flex items-center justify-between">
+        <Heading
+          title={`ჩემი შეკვეთები (${data.length})`}
+          description="აკონტროლე ყველა შეკვეთა ადმინკადან უსდტ"
+        />
+      </div>
+      <Separator />
+      <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
+      <Heading
+        title={`დროის ამ მონაკვეთში ჩაბარებული შეკვეთებით აღებული თანხა შეადგენს ${sumOfTotals} ლარს`}
+        description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
+      />
+      <Separator />
+      {filteredData.length > 0 ? (
         <>
-            <div className="flex items-center justify-between">
-                <Heading
-                    title={`ჩემი შეკვეთები (${data.length})`}
-                    description="აკონტროლე ყველა შეკვეთა ადმინკადან უსდტ"
-                />
-            </div>
-            <Separator />
-            <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-            {filteredData.length > 0 ? (
-                <>
-                    <CourierDataTable searchKey="name" columns={columns} data={filteredData} />
-                    <Heading title="APIss" description="api calls for shipmensdts" />
-                </>
-            ) : (
-                <CourierDataTable searchKey="name" columns={columns} data={filteredData} />
-            )}
+          <CourierDataTable
+            searchKey="name"
+            columns={columns}
+            data={filteredData}
+          />
+          <Heading title="APIss" description="api calls for shipmensdts" />
         </>
-
-    )
-}
+      ) : (
+        <CourierDataTable
+          searchKey="name"
+          columns={columns}
+          data={filteredData}
+        />
+      )}
+    </>
+  );
+};

@@ -14,7 +14,8 @@ export type ShipmentColumn = {
   price: string;
   brittle: string;
   packaging: string;
-  createdAt: string | Date; // Allow both string and Date
+  createdAt: string | Date;
+  updatedAt: string | Date; // Allow both string and Date
   mimgebisName: string;
   mimgebisLastname: string;
   mimgebisNumber: string;
@@ -127,6 +128,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "დამატების თარიღი",
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "შეცვლის თარიღი",
   },
   {
     accessorKey: "agebisDro",
