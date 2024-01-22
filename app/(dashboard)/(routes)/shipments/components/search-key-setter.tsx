@@ -1,12 +1,7 @@
 import React, {useState} from "react";
+import {useSearchKeyStore} from "@/hooks/search-key-store";
 
-interface ShipmentSearchDropdownProps {
-  setSearchKey: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export const ShipmentSearchDropdown: React.FC<ShipmentSearchDropdownProps> = ({
-  setSearchKey,
-}) => {
+export const ShipmentSearchDropdown = () => {
   const shipmentColumns: string[] = [
     "id",
     "name",
@@ -31,6 +26,7 @@ export const ShipmentSearchDropdown: React.FC<ShipmentSearchDropdownProps> = ({
     "agebisDro",
     "chabarebisDro",
   ];
+  const {searchKey, setSearchKey} = useSearchKeyStore();
 
   const handleChange = (selectedKey: string) => {
     setSearchKey(selectedKey);
@@ -38,6 +34,7 @@ export const ShipmentSearchDropdown: React.FC<ShipmentSearchDropdownProps> = ({
 
   return (
     <select
+      value={searchKey}
       onChange={(e) => handleChange(e.target.value)}
       className="border p-2 rounded-md"
     >

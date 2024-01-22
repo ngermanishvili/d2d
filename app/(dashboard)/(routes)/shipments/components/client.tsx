@@ -13,6 +13,8 @@ import {ApiList} from "@/components/ui/api-list";
 import {DatePickerWithRange} from "@/components/ui/date-picker";
 import {DateRange} from "react-day-picker";
 import {ShipmentSearchDropdown} from "./search-key-setter";
+import {useSearchKeyStore} from "@/hooks/search-key-store";
+
 interface ShipmentClientProps {
   data: ShipmentColumn[];
 }
@@ -22,7 +24,6 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
   const params = useParams();
 
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
-  const [searchKey, setSearchKey] = useState<string>("");
   const handleDateRangeChange = (dateRange: DateRange) => {
     const filteredData = data.filter((shipment) => {
       const shipmentDate = new Date(shipment.createdAt);
@@ -103,6 +104,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
         .map((shipmentToMap) => shipmentToMap.price)
     );
   }, [filteredData]); // Add any dependencies that might change and trigger the effect
+  const {searchKey, setSearchKey} = useSearchKeyStore();
 
   return (
     <>
@@ -122,7 +124,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
         title={`დროის ამ მონაკვეთში ჩაბარებული შეკვეთებით აღებული თანხა შეადგენს ${sumOfTotals} ლარს`}
         description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
       />
-      <ShipmentSearchDropdown setSearchKey={setSearchKey} />
+      <ShipmentSearchDropdown />
 
       {filteredData.length > 0 ? (
         <>
