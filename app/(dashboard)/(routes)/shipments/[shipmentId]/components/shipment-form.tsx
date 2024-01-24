@@ -123,6 +123,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       status: "მიმდინარე",
       courierComment: "",
       label: "0-5 kg",
+      whopays: "sender",
       agebisDro: "",
       chabarebisDro: "",
     },
@@ -198,6 +199,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       data.itemPrice = itemPrice ? itemPrice.toString() : null;
       //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit
       setLoading(true);
+      console.log(data);
 
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
@@ -219,6 +221,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
+      router.refresh();
     }
   };
 
@@ -247,7 +250,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       setWhoPays((initialData.whopays as "sender") || "receiver");
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
-      }
+      } 
     }
   }, []); // Dependency array ensures that the effect runs when initialData changes
 
@@ -378,7 +381,8 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                         </RoleGate>
                         {/* {USER როლგეითი} */}
                         <RoleGate allowedRole="USER">
-                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                          <SelectItem value="მიმდინარე">მიმდინარე</SelectItem>
+                          <SelectItem value="ჩაბარებული">ჩაბარებული</SelectItem>
                           <SelectItem value="უარი ჩაბარებაზე">
                             უარი ჩაბარებაზე
                           </SelectItem>

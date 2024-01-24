@@ -13,7 +13,7 @@ function generateTrackingNumber(): string {
 export async function POST(req: Request, {params}: {params: {}}) {
   try {
     const body = await req.json();
-
+    
     const {
       name,
       lastName,

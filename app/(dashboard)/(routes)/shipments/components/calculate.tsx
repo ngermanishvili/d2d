@@ -49,8 +49,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
-  const [selectedCity, setSelectedCity] = useState<string>("Tbilisi");
-
   const {
     calculatedPrice,
     setCost,
@@ -69,6 +67,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setItemPriceForCalc,
     setIsCalculated,
     isCalculated,
+    setSelectedCity,
   } = useCalculatorStore();
 
   useEffect(() => {
@@ -82,15 +81,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
       setSelectedCity(archeuliQalaqi);
       setPackagingUsed(packagingUsed);
-      calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
+      calculateTotalPrice(selectedRange, packagingUsed, archeuliQalaqi);
+      setCost(parseFloat(calculatedPrice) + itemPrice);
     }
   }, [
-    range,
-    setRange,
-    archeuliQalaqi,
-    packagingUsed,
-    setPackagingUsed,
-    selectedRange,
+    // range,
+    // setRange,
+    // archeuliQalaqi,
+    // packagingUsed,
+    // setPackagingUsed,
+    // selectedRange,
   ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
@@ -115,7 +115,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   const calculateTotalPrice = (
     range: WeightRange | null,
     usePackaging: boolean,
-    city: string = selectedCity // Default to the current selectedCity state
+    city: string = archeuliQalaqi // Default to the current selectedCity state
   ) => {
     let totalPrice = 0;
     if (range) {
@@ -138,7 +138,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         <select
           className="text-2xl text-red-400 text-bold"
           id="city-select"
-          value={selectedCity}
+          value={archeuliQalaqi}
           onChange={(e) =>
             handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
           }
