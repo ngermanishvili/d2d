@@ -48,6 +48,7 @@ const formSchema = z.object({
   name: z.string().min(1),
   lastName: z.string().min(1),
   city: z.string().min(1),
+  whopays: z.string().min(1),
   address: z.string().min(1),
   phoneNumber: z.string().min(5),
   price: z.string().min(1),
@@ -63,6 +64,7 @@ const formSchema = z.object({
   courierComment: z.string().min(1),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
+  itemPrice: z.string().nullable().optional(),
   chabarebisDro: z.string().nullable().optional(),
 });
 
@@ -82,15 +84,34 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
   const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
   const toastMessage = initialData ? "Shipment updated." : "Shipment created";
   const action = initialData ? "Save changes" : "Create";
+
+  const {
+    calculatedPrice,
+    setCost,
+    packagingUsed,
+    setPackagingUsed,
+    archeuliQalaqi,
+    range,
+    setRange,
+    setSelectedCity,
+    itemPriceForCalc,
+    whopays,
+    setItemPrice,
+    setWhoPays,
+    isCalculated,
+    itemPrice,
+  } = useCalculatorStore();
+
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: "",
       lastName: "",
-      city: "",
+      city: archeuliQalaqi,
       address: "",
       phoneNumber: "",
       price: "0",
+      itemPrice: null,
       mimgebisName: "",
       mimgebisLastname: "",
       mimgebisNumber: "",
@@ -106,20 +127,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       chabarebisDro: "",
     },
   });
-  const {
-    calculatedPrice,
-    setCost,
-    packagingUsed,
-    setPackagingUsed,
-    archeuliQalaqi,
-    range,
-    setRange,
-    setSelectedCity,
-    itemPriceForCalc,
-    whoPays,
-    isCalculated,
-    itemPrice,
-  } = useCalculatorStore();
 
   const calculateDates = (): {pickupDate: Date; deliveryDate: Date} => {
     const currentDateTime = new Date();
@@ -186,7 +193,9 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       data.packaging = packagingUsed;
       data.label = range;
       data.price = calculatedPrice;
-
+      data.city = archeuliQalaqi;
+      data.whopays = whopays;
+      data.itemPrice = itemPrice ? itemPrice.toString() : null;
       //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit
       setLoading(true);
 
@@ -235,6 +244,10 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
       setSelectedCity(initialData.city);
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
+      setWhoPays((initialData.whopays as "sender") || "receiver");
+      if (initialData.itemPrice !== null) {
+        setItemPrice(parseFloat(initialData.itemPrice));
+      }
     }
   }, []); // Dependency array ensures that the effect runs when initialData changes
 
@@ -467,23 +480,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
                     <Input
                       disabled={loading}
                       placeholder="მისამართი  "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({field}) => (
-                <FormItem>
-                  <FormLabel>ქალაქი</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="ქალაქი "
                       {...field}
                     />
                   </FormControl>

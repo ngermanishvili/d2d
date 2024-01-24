@@ -11,7 +11,7 @@ interface StoreState {
   setPackagingUsed: (used: boolean) => void;
   archeuliQalaqi: string;
   range: string;
-  whoPays: "sender" | "receiver";
+  whopays: "sender" | "receiver";
   itemPrice: number;
   itemPriceForCalc: number;
   setWhoPays: (payer: "sender" | "receiver") => void;
@@ -35,10 +35,10 @@ const useCalculatorStore = create<StoreState>((set) => ({
   setPackagingUsed: (used) => set({packagingUsed: used}),
   setSelectedCity: (city: string) => set({archeuliQalaqi: city}),
   setRange: (WeightRange: string) => set({range: WeightRange}),
-  whoPays: "sender",
+  whopays: "sender",
   itemPrice: 0,
   itemPriceForCalc: 0,
-  setWhoPays: (payer) => set({whoPays: payer}),
+  setWhoPays: (payer) => set({whopays: payer}),
   setItemPrice: (price) => set({itemPrice: price}),
   setItemPriceForCalc: (price) => set({itemPriceForCalc: price}),
   setIsAdded: (added) => set({isAdded: added}),

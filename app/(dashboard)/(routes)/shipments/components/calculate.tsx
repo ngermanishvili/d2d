@@ -59,7 +59,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     archeuliQalaqi,
     range,
     setRange,
-    whoPays,
+    whopays,
     setWhoPays,
     setItemPrice,
     itemPrice,
@@ -102,7 +102,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   const handlePackagingServiceChange = (isChecked: boolean) => {
     setPackagingUsed(isChecked); // Update the global state
-    if (whoPays === "receiver") {
+    if (whopays === "receiver") {
       setCost(parseFloat(calculatedPrice) + 1);
       return;
     }
@@ -149,15 +149,15 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       </div>
       <div>
         <select
-          value={whoPays}
+          value={whopays}
           onChange={(e) => {
-            if (whoPays === "receiver") {
+            if (whopays === "receiver") {
               setCost(parseFloat(calculatedPrice) - itemPriceForCalc);
               setIsAdded(false);
               setItemPriceForCalc(0);
               setIsCalculated(false);
             }
-            if (whoPays === "sender") {
+            if (whopays === "sender") {
               setIsCalculated(true);
             }
             setWhoPays(e.target.value as "sender" | "receiver");
@@ -166,7 +166,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           <option value="sender">Sender</option>
           <option value="receiver">Receiver</option>
         </select>
-        {whoPays === "receiver" ? (
+        {whopays === "receiver" ? (
           <>
             <input
               value={itemPrice || ""} // Ensure value is an empty string if itemPrice is falsy (e.g., null or undefined)

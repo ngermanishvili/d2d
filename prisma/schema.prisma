@@ -95,6 +95,8 @@ model Shipment {
   status                String                  @default("მიმდინარე") // New field for the courier to mark status
   courierComment        String
   label                 String
+  whopays               String
+  itemPrice             String?
   agebisDro             String?
   chabarebisDro         String?
   assignedCourier       String? // New field for the courier to mark status

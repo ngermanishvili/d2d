@@ -12,8 +12,8 @@ import {DataTable} from "@/components/ui/date-table";
 import {ApiList} from "@/components/ui/api-list";
 import {DatePickerWithRange} from "@/components/ui/date-picker";
 import {DateRange} from "react-day-picker";
-import {ShipmentSearchDropdown} from "./search-key-setter";
 import {useSearchKeyStore} from "@/hooks/search-key-store";
+import {set} from "nprogress";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -23,7 +23,10 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
   const router = useRouter();
   const params = useParams();
 
+  const [initialData, setInitialData] = useState<ShipmentColumn[]>(data);
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
+  const {searchKeyStore, setSearchKeyStore} = useSearchKeyStore();
+
   const handleDateRangeChange = (dateRange: DateRange) => {
     const filteredData = data.filter((shipment) => {
       const shipmentDate = new Date(shipment.createdAt);
@@ -104,13 +107,21 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
         .map((shipmentToMap) => shipmentToMap.price)
     );
   }, [filteredData]); // Add any dependencies that might change and trigger the effect
-  const {searchKey, setSearchKey} = useSearchKeyStore();
+
+  const handleSearchKeyChange = () => {
+    // Reset the filteredData whenever the searchKey changes
+    setFilteredData(initialData);
+  };
+  useEffect(() => {
+    // Listen for changes in the searchKey and reset filteredData
+    handleSearchKeyChange();
+  }, [searchKeyStore]); // Add any other dependencies as needed
 
   return (
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`შეკვეთები (${data.length})`}
+          title={`შეკვეთები (${filteredData.length})`}
           description="შეკვეთების ისტორია"
         />
         <Button onClick={() => router.push(`/shipments/new`)}>
@@ -124,12 +135,11 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
         title={`დროის ამ მონაკვეთში ჩაბარებული შეკვეთებით აღებული თანხა შეადგენს ${sumOfTotals} ლარს`}
         description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
       />
-      <ShipmentSearchDropdown />
 
       {filteredData.length > 0 ? (
         <>
           <DataTable
-            searchKey={searchKey}
+            searchKey={searchKeyStore}
             columns={columns}
             data={filteredData}
           />
@@ -140,7 +150,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({data}) => {
         </>
       ) : (
         <DataTable
-          searchKey={searchKey}
+          searchKey={searchKeyStore}
           columns={columns}
           data={filteredData}
         />

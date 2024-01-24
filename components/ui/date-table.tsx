@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
 
 import {
   ColumnDef,
@@ -23,12 +23,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { idSetStore } from "@/hooks/select-store";
-import { db } from "@/lib/db";
+import {idSetStore} from "@/hooks/select-store";
+import {db} from "@/lib/db";
 import axios from "axios";
-import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
+import {AlertModalForRegisterCourier} from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
-import { RoleGate } from "../auth/role-gate";
+import {RoleGate} from "../auth/role-gate";
+import {useSearchKeyStore} from "@/hooks/search-key-store";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -46,7 +47,6 @@ export function DataTable<TData, TValue>({
   const [shemotana, setShemotana] = useState(true); // Add state for the action
   const [isOpen, setIsOpen] = useState(false);
 
-
   const table = useReactTable({
     data,
     columns,
@@ -59,12 +59,12 @@ export function DataTable<TData, TValue>({
     },
   });
 
-  const { ids } = idSetStore();
+  const {ids} = idSetStore();
   const onDelete = async () => {
     try {
       // Assuming you want to send the IDs in the request body
       await axios.delete("/api/shipments", {
-        data: { ids },
+        data: {ids},
       });
     } catch (error) {
       console.log(error);
@@ -100,7 +100,6 @@ export function DataTable<TData, TValue>({
     }
   };
 
-
   const email = useEmailStore((state: any) => state.email);
 
   const onUpdate = async () => {
@@ -115,7 +114,40 @@ export function DataTable<TData, TValue>({
       // Handle error
       console.error("Error updating to true:", error);
     }
-  }
+  };
+  const {searchKeyStore, setSearchKeyStore} = useSearchKeyStore();
+
+  const shipmentColumnsWithLabels = [
+    {value: "id", label: "აიდი"},
+    {value: "name", label: "სახელი"},
+    {value: "lastName", label: "გვარი"},
+    {value: "phoneNumber", label: "ტელეფონის ნომერი"},
+    {value: "address", label: "მისამართი"},
+    {value: "city", label: "ქალაქი"},
+    {value: "price", label: "ფასი"},
+    {value: "brittle", label: "ბრიტლი"},
+    {value: "packaging", label: "შეფუთვა"},
+    {value: "createdAt", label: "დამატებულია"},
+    {value: "updatedAt", label: "დააფდეითებულია"},
+    {value: "mimgebisName", label: "მიმღების სახელი"},
+    {value: "mimgebisLastname", label: "მიმღების გვარი"},
+    {value: "mimgebisNumber", label: "მიმღების ნომერი"},
+    {value: "mimgebisAddress", label: "მიმღების მისამართი"},
+    {value: "markedByCourier", label: "მონიშნული კურიერის მიერ"},
+    {value: "mimgebiQalaqi", label: "მიმღების ქალაქი"},
+    {value: "trackingId", label: "თრექინგ აიდი"},
+    {value: "status", label: "სტატუსი"},
+    {value: "courierComment", label: "კურიერის კომენტარი"},
+    {value: "agebisDro", label: "აღების დრო"},
+    {value: "chabarebisDro", label: "ჩაბარების დრო"},
+  ];
+
+  const handleChange = (selectedKey: string) => {
+    setSearchKeyStore(selectedKey);
+    table.reset();
+    table.resetColumnFilters();
+    table.resetGlobalFilter();
+  };
 
   return (
     <>
@@ -132,30 +164,52 @@ export function DataTable<TData, TValue>({
         <div className="flex items-center py-4 w-full">
           <Input
             placeholder="Search"
-            value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn(searchKey)?.setFilterValue(event.target.value)
+            value={
+              (table.getColumn(searchKeyStore)?.getFilterValue() as string) ??
+              ""
             }
+            onChange={(event) => {
+              return table
+                .getColumn(searchKeyStore)
+                ?.setFilterValue(event.target.value);
+            }}
             className="max-w-md"
           />
-
-
+          <select
+            value={searchKeyStore}
+            onChange={(e) => handleChange(e.target.value)}
+            className="border p-2 rounded-md"
+          >
+            <option value="">Select Search Key</option>
+            {shipmentColumnsWithLabels.map((column) => (
+              <option key={column.value} value={column.value}>
+                {column.label}
+              </option>
+            ))}
+          </select>
           <div className="flex p-4">
-
             <RoleGate allowedRole="ADMIN">
               <Button
                 onClick={() => {
                   onDelete();
                 }}
                 className="m-2"
-              > წაშლა
+              >
+                {" "}
+                წაშლა
               </Button>
-              <Button className="m-2" onClick={() => handleUpdateToTrue()}>შეცვალე სტატუსი (გატანილი)</Button>
-              <Button className="m-2" onClick={() => handleUpdateToFalse()}> შეცვალე სტატუსი  (საწყობში)</Button>
-              <Button className="m-2" onClick={() => setIsOpen(true)}>მიამაგრე შეკვეთას კურიერი</Button>
+              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
+                შეცვალე სტატუსი (გატანილი)
+              </Button>
+              <Button className="m-2" onClick={() => handleUpdateToFalse()}>
+                {" "}
+                შეცვალე სტატუსი (საწყობში)
+              </Button>
+              <Button className="m-2" onClick={() => setIsOpen(true)}>
+                მიამაგრე შეკვეთას კურიერი
+              </Button>
             </RoleGate>
           </div>
-
         </div>
 
         <div className="rounded-md border overflow-x-auto">
@@ -166,15 +220,16 @@ export function DataTable<TData, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
-                        } bg-red-200 p-2 font-semibold border `}
+                      className={`${
+                        index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
+                      } bg-red-200 p-2 font-semibold border `}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -190,8 +245,9 @@ export function DataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                          } p-2 border`}
+                        className={`${
+                          index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                        } p-2 border`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -232,9 +288,7 @@ export function DataTable<TData, TValue>({
             Next
           </Button>
         </div>
-      </div >
+      </div>
     </>
-
   );
-
 }

@@ -1,12 +1,12 @@
 // searchKeyStore.ts
-import create from 'zustand';
+import create from "zustand";
 
 interface SearchKeyStore {
-  searchKey: string;
-  setSearchKey: (key: string) => void;
+  searchKeyStore: string;
+  setSearchKeyStore: (key: string) => void;
 }
 
 export const useSearchKeyStore = create<SearchKeyStore>((set) => ({
-  searchKey: '',
-  setSearchKey: (key) => set({ searchKey: key }),
+  searchKeyStore: "name",
+  setSearchKeyStore: (key) => set({searchKeyStore: key}),
 }));

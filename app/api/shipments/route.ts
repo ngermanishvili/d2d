@@ -32,10 +32,11 @@ export async function POST(req: Request, {params}: {params: {}}) {
       status,
       courierComment,
       label,
+      whopays,
       agebisDro,
       chabarebisDro,
+      itemPrice, // Add itemPrice to the destructuring
     } = body;
-
     const userId = await currentUserId();
 
     if (!userId) {
@@ -84,6 +85,13 @@ export async function POST(req: Request, {params}: {params: {}}) {
     if (!mimgebisAddress) {
       return new NextResponse("mimgebisAddress is required", {status: 400});
     }
+    if (!whopays) {
+      return new NextResponse("Who pays is required", {status: 400});
+    }
+
+    if (whopays === "receiver" && !itemPrice) {
+      return new NextResponse("Item price is required", {status: 400});
+    }
 
     const trackingId = generateTrackingNumber();
 
@@ -110,6 +118,8 @@ export async function POST(req: Request, {params}: {params: {}}) {
         label,
         agebisDro,
         chabarebisDro,
+        whopays, // Add whopays to the data
+        itemPrice, // Add itemPrice to the data
       },
     });
 
