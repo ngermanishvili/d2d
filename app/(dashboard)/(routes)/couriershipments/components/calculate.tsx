@@ -48,7 +48,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
     "Tbilisi"
   );
 
-  const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
+  const { shipmentCost, setShipmentCost, packagingUsed, setPackagingUsed } =
     useCalculatorStore();
 
   const handleCheckboxChange = (range: WeightRange) => {

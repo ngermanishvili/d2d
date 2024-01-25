@@ -187,6 +187,7 @@ export function DataTable<TData, TValue>({
               </option>
             ))}
           </select>
+
           <div className="flex p-4">
             <RoleGate allowedRole="ADMIN">
               <Button

@@ -86,20 +86,20 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
   const action = initialData ? "Save changes" : "Create";
 
   const {
-    calculatedPrice,
-    setCost,
+    shipmentCost,
+    setShipmentCost,
     packagingUsed,
     setPackagingUsed,
-    archeuliQalaqi,
+    selectedCity,
     range,
     setRange,
-    setSelectedCity,
-    itemPriceForCalc,
-    whopays,
-    setItemPrice,
-    setWhoPays,
-    isCalculated,
+    setCity,
+    selectedParty,
+    setSelectedParty,
     itemPrice,
+    setItemPrice,
+    totalPrice,
+    setTotalPrice,
   } = useCalculatorStore();
 
   const form = useForm<ShipmentFormValues>({
@@ -107,7 +107,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
     defaultValues: initialData || {
       name: "",
       lastName: "",
-      city: archeuliQalaqi,
+      city: selectedCity,
       address: "",
       phoneNumber: "",
       price: "0",
@@ -193,11 +193,10 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
     try {
       data.packaging = packagingUsed;
       data.label = range;
-      data.price = calculatedPrice;
-      data.city = archeuliQalaqi;
-      data.whopays = whopays;
-      data.itemPrice = itemPrice ? itemPrice.toString() : null;
-      //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit
+      data.city = selectedCity;
+      data.whopays = selectedParty;
+      data.price = totalPrice.toString();
+      if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
 
@@ -244,13 +243,13 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setSelectedCity(initialData.city);
+      setCity((initialData.city as "Tbilisi") || "Rustavi");
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
-      setWhoPays((initialData.whopays as "sender") || "receiver");
+      setSelectedParty((initialData.whopays as "Sender") || "Receiver");
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
-      } 
+      }
     }
   }, []); // Dependency array ensures that the effect runs when initialData changes
 
@@ -599,11 +598,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
           {/* <ShipmentFormDelivered initialData={initialData} /> */}
           <ShippingCostGraph hasInitialData={initialData ? true : false} />
 
-          <Button
-            disabled={loading || isCalculated}
-            className="ml-auto"
-            type="submit"
-          >
+          <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
 

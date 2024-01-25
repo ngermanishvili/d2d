@@ -80,7 +80,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({initialData}) => {
     ? "წარმატებით განხორციელდა შეკვეთის განახლება"
     : "";
   const action = initialData ? "შენახვა" : "";
-  const {calculatedPrice} = useCalculatorStore();
+  const {shipmentCost} = useCalculatorStore();
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
