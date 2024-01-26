@@ -1,5 +1,6 @@
 "use client";
 
+
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -17,7 +18,8 @@ export type ShipmentColumn = {
   price: string;
   brittle: string;
   packaging: string;
-  createdAt: string | Date; // Allow both string and Date
+  createdAt: string | Date;
+  updatedAt: string | Date; // Allow both string and Date
   mimgebisName: string;
   mimgebisLastname: string;
   mimgebisNumber: string;
@@ -27,6 +29,8 @@ export type ShipmentColumn = {
   trackingId: string;
   status: string;
   courierComment: string;
+  agebisDro: string | null;
+  chabarebisDro: string | null;
 };
 
 const colors = [
@@ -174,7 +178,30 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
+  {
+    accessorKey: "updatedAt",
+    header: "შეცვლის თარიღი",
+  },
+  {
+    accessorKey: "agebisDro",
+    header: "ამანათის აღების დრო",
+  },
+  {
+    accessorKey: "chabarebisDro",
+    header: "ამანათის ჩაბარების დრო",
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "შეცვლის თარიღი",
+  },
+  {
+    accessorKey: "agebisDro",
+    header: "ამანათის აღების დრო",
+  },
+  {
+    accessorKey: "chabarebisDro",
+    header: "ამანათის ჩაბარების დრო",
+  },
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
