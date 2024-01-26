@@ -1,47 +1,38 @@
-// store.ts
-import { string } from "zod";
-import create from "zustand";
+// Inside useCalculatorStore.ts
 
-interface StoreState {
-  calculatedPrice: string;
+import create from "zustand";
+interface CalculatorStore {
+  shipmentCost: number;
+  setShipmentCost: (cost: number) => void;
   packagingUsed: boolean;
-  setCost: (newCost: number) => void;
-  setSelectedCity: (city: string) => void;
-  setRange: (range: string) => void;
-  setPackagingUsed: (used: boolean) => void;
-  archeuliQalaqi: string;
+  setPackagingUsed: (packagingUsed: boolean) => void;
+  selectedCity: "Tbilisi" | "Rustavi";
   range: string;
-  whoPays: "sender" | "receiver";
+  setRange: (range: string) => void;
+  setCity: (city: "Tbilisi" | "Rustavi") => void;
+  selectedParty: "Sender" | "Receiver";
+  setSelectedParty: (party: "Sender" | "Receiver") => void;
   itemPrice: number;
-  itemPriceForCalc: number;
-  setWhoPays: (payer: "sender" | "receiver") => void;
-  setItemPrice: (price: number) => void;
-  setItemPriceForCalc: (price: number) => void;
-  isAdded: boolean;
-  isCalculated: boolean;
-  setIsCalculated: (calc: boolean) => void
-  setIsAdded: (added: boolean) => void;
+  setItemPrice: (itemPrice: number) => void;
+  totalPrice: number; // New state for the total price (shipment + item price)
+  setTotalPrice: (totalPrice: number) => void; // Add setTotalPrice function
 }
 
-const useCalculatorStore = create<StoreState>((set) => ({
-  isCalculated: false,
-  setIsCalculated: (calc) => set({ isCalculated: calc }),
-  calculatedPrice: "0",
-  archeuliQalaqi: "Rustavi",
-  range: "0-5 kg",
+const useCalculatorStore = create<CalculatorStore>((set) => ({
+  shipmentCost: 0,
+  setShipmentCost: (cost) => set({ shipmentCost: cost }),
   packagingUsed: false,
-  isAdded: false,
-  setCost: (newCost) => set({ calculatedPrice: newCost.toString() }),
-  setPackagingUsed: (used) => set({ packagingUsed: used }),
-  setSelectedCity: (city: string) => set({ archeuliQalaqi: city }),
-  setRange: (WeightRange: string) => set({ range: WeightRange }),
-  whoPays: "sender",
+  setPackagingUsed: (packagingUsed) => set({ packagingUsed }),
+  selectedCity: "Tbilisi",
+  setCity: (city) => set({ selectedCity: city }),
+  range: "",
+  setRange: (range) => set({ range }),
+  selectedParty: "Sender",
+  setSelectedParty: (party) => set({ selectedParty: party }),
   itemPrice: 0,
-  itemPriceForCalc: 0,
-  setWhoPays: (payer) => set({ whoPays: payer }),
-  setItemPrice: (price) => set({ itemPrice: price }),
-  setItemPriceForCalc: (price) => set({ itemPriceForCalc: price }),
-  setIsAdded: (added) => set({ isAdded: added }),
+  setItemPrice: (itemPrice) => set({ itemPrice }),
+  totalPrice: 0, // Initialize the total price state
+  setTotalPrice: (totalPrice) => set({ totalPrice }), // Implementation for setTotalPrice
 }));
 
 export default useCalculatorStore;

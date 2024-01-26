@@ -49,26 +49,21 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
-  const [selectedCity, setSelectedCity] = useState<string>("Tbilisi");
-
   const {
-    calculatedPrice,
-    setCost,
+    selectedParty,
+    setSelectedParty,
+    itemPrice,
+    setItemPrice,
+    shipmentCost,
+    setShipmentCost,
     packagingUsed,
     setPackagingUsed,
-    archeuliQalaqi,
+    selectedCity,
     range,
     setRange,
-    whoPays,
-    setWhoPays,
-    setItemPrice,
-    itemPrice,
-    isAdded,
-    setIsAdded,
-    itemPriceForCalc,
-    setItemPriceForCalc,
-    setIsCalculated,
-    isCalculated,
+    setCity,
+    totalPrice,
+    setTotalPrice,
   } = useCalculatorStore();
 
   useEffect(() => {
@@ -80,17 +75,19 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       // Set the selected range based on the found object or null
       setSelectedRange(initialSelectedRange || null);
 
-      setSelectedCity(archeuliQalaqi);
+      setCity(selectedCity);
       setPackagingUsed(packagingUsed);
       calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
     }
   }, [
     range,
     setRange,
-    archeuliQalaqi,
+    selectedCity,
     packagingUsed,
     setPackagingUsed,
     selectedRange,
+    selectedParty,
+    setSelectedParty,
   ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
@@ -102,35 +99,90 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   const handlePackagingServiceChange = (isChecked: boolean) => {
     setPackagingUsed(isChecked); // Update the global state
-    if (whoPays === "receiver") {
-      setCost(parseFloat(calculatedPrice) + 1);
-      return;
-    }
     calculateTotalPrice(selectedRange, isChecked); // Recalculate total price
   };
   const handleCityChange = (newCity: "Tbilisi" | "Rustavi") => {
-    setSelectedCity(newCity);
+    setCity(newCity);
     calculateTotalPrice(selectedRange, packagingUsed, newCity);
   };
   const calculateTotalPrice = (
     range: WeightRange | null,
     usePackaging: boolean,
-    city: string = selectedCity // Default to the current selectedCity state
+    city: string = selectedCity,
+    selectedPartyParam: "Sender" | "Receiver" = selectedParty,
+    itemPrice: number = useCalculatorStore.getState().itemPrice
   ) => {
-    let totalPrice = 0;
+    let shipmentPrice = 0;
+
     if (range) {
-      totalPrice +=
+      shipmentPrice +=
         city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
     }
+
     if (usePackaging) {
-      totalPrice += 1; // Add 1 GEL for packaging service
+      shipmentPrice += 1; // Add 1 GEL for packaging service
     }
 
-    setCost(totalPrice);
+    let totalPrice = shipmentPrice;
+
+    if (selectedPartyParam === "Receiver") {
+      // Add item price if the receiver is paying
+      totalPrice += itemPrice;
+    }
+
+    // Update the cost and total price in the global state
+    setShipmentCost(shipmentPrice);
+    setItemPrice(itemPrice);
+    setTotalPrice(totalPrice);
+  };
+
+  const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+    setSelectedParty(newParty);
+    calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
+  };
+
+  const handleItemPriceChange = (newItemPrice: number) => {
+    setItemPrice(newItemPrice);
+    calculateTotalPrice(
+      selectedRange,
+      packagingUsed,
+      selectedCity,
+      selectedParty,
+      newItemPrice
+    );
   };
 
   return (
     <>
+      <div>
+        <label htmlFor="party-select" className="text-2xl">
+          Choose who pays:{" "}
+        </label>
+        <select
+          className="text-2xl text-red-400 text-bold"
+          id="party-select"
+          value={selectedParty}
+          onChange={(e) =>
+            handlePartyChange(e.target.value as "Sender" | "Receiver")
+          }
+        >
+          <option value="Sender">Sender</option>
+          <option value="Receiver">Receiver</option>
+        </select>
+      </div>
+      {selectedParty === "Receiver" && (
+        <div>
+          <label htmlFor="item-price" className="text-2xl">
+            Enter item price:{" "}
+          </label>
+          <input
+            type="number"
+            id="item-price"
+            value={itemPrice}
+            onChange={(e) => handleItemPriceChange(Number(e.target.value))}
+          />
+        </div>
+      )}
       <div>
         <label htmlFor="city-select" className="text-2xl">
           Choose a city:{" "}
@@ -146,65 +198,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           <option value="Tbilisi">Tbilisi</option>
           <option value="Rustavi">Rustavi</option>
         </select>
-      </div>
-      <div>
-        <select
-          value={whoPays}
-          onChange={(e) => {
-            if (whoPays === "receiver") {
-              setCost(parseFloat(calculatedPrice) - itemPriceForCalc);
-              setIsAdded(false);
-              setItemPriceForCalc(0);
-              setIsCalculated(false);
-            }
-            if (whoPays === "sender") {
-              setIsCalculated(true);
-            }
-            setWhoPays(e.target.value as "sender" | "receiver");
-          }}
-        >
-          <option value="sender">Sender</option>
-          <option value="receiver">Receiver</option>
-        </select>
-        {whoPays === "receiver" ? (
-          <>
-            <input
-              value={itemPrice || ""} // Ensure value is an empty string if itemPrice is falsy (e.g., null or undefined)
-              type="number"
-              min={0}
-              onChange={(e) => {
-                const enteredValue = parseFloat(e.target.value);
-                if (!isNaN(enteredValue)) {
-                  const newPrice = enteredValue < 0 ? 0 : enteredValue;
-                  setItemPrice(newPrice);
-                } else {
-                  setItemPrice(0); // Set itemPrice to an empty string if the entered value is not a valid number
-                }
-              }}
-            />
-            <button
-              disabled={isAdded}
-              onClick={() => {
-                setIsCalculated(false);
-                setIsAdded(true);
-                setCost(parseFloat(calculatedPrice) + itemPrice);
-                setItemPriceForCalc(itemPrice);
-              }}
-            >
-              alo kooki datvale
-            </button>
-            <button
-              onClick={() => {
-                setIsCalculated(true);
-                setIsAdded(false);
-              }}
-            >
-              edit item price
-            </button>
-          </>
-        ) : (
-          ""
-        )}
       </div>
       <div>
         {weightRanges.map((range) => (
@@ -232,7 +225,14 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           ლარი)
         </label>
       </div>
-      <h2 className="text-4xl">ჯამური ფასი: {calculatedPrice} ლარი</h2>
+      <h2 className="text-4xl">შიპმენტის ფასი: {shipmentCost} ლარი</h2>
+      {/* Display item price if the party is the Receiver */}
+      {selectedParty === "Receiver" && (
+        <>
+          <h2 className="text-4xl">ნივთის ღირებულება: {itemPrice} ლარი</h2>
+          <h2 className="text-4xl">ჯამური ფასი: {totalPrice} ლარი</h2>
+        </>
+      )}{" "}
     </>
   );
 };

@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
+
 
 function generateTrackingNumber(): string {
   const timestamp = new Date().getTime();
@@ -32,8 +33,11 @@ export async function POST(req: Request, { params }: { params: {} }) {
       status,
       courierComment,
       label,
+      whopays,
+      agebisDro,
+      chabarebisDro,
+      itemPrice, // Add itemPrice to the destructuring
     } = body;
-
     const userId = await currentUserId();
 
     if (!userId) {
@@ -82,6 +86,13 @@ export async function POST(req: Request, { params }: { params: {} }) {
     if (!mimgebisAddress) {
       return new NextResponse("mimgebisAddress is required", { status: 400 });
     }
+    if (!whopays) {
+      return new NextResponse("Who pays is required", { status: 400 });
+    }
+
+    if (whopays === "receiver" && !itemPrice) {
+      return new NextResponse("Item price is required", { status: 400 });
+    }
 
     const trackingId = generateTrackingNumber();
 
@@ -106,7 +117,10 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status,
         courierComment,
         label,
-
+        agebisDro,
+        chabarebisDro,
+        whopays, // Add whopays to the data
+        itemPrice, // Add itemPrice to the data
       },
     });
 
@@ -116,8 +130,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
-
-
 
 export async function GET(req: Request, { params }: { params: {} }) {
   try {
@@ -136,18 +148,14 @@ export async function GET(req: Request, { params }: { params: {} }) {
 
     console.log(JSON.stringify(shipments, null, 2));
 
+    console.log(JSON.stringify(shipments, null, 2));
+
     return NextResponse.json(shipments);
   } catch (error) {
     console.error("[SHIPMENT_GET]", error);
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
-
-
-
-
-
-
 
 export async function DELETE(req: Request) {
   const { ids } = await req.json();
@@ -181,7 +189,6 @@ export async function PATCH(req: Request) {
       data: {
         markedByCourier: variable,
       },
-
     });
 
     return NextResponse.json(updatedShipments);

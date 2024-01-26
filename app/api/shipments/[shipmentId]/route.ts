@@ -45,6 +45,7 @@ export async function PATCH(req: Request, { params }: { params: { shipmentId: st
       status,
       courierComment,
       label,
+
     } = body;
 
     // Validate if shipmentId is provided

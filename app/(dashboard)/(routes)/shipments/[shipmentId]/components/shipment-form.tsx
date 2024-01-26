@@ -41,11 +41,14 @@ import {
 import { NextURL } from "next/dist/server/web/next-url";
 import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
+import { format } from "date-fns";
+import { parse, addDays, isSunday } from "date-fns";
 
 const formSchema = z.object({
   name: z.string().min(1),
   lastName: z.string().min(1),
   city: z.string().min(1),
+  whopays: z.string().min(1),
   address: z.string().min(1),
   phoneNumber: z.string().min(5),
   price: z.string().min(1),
@@ -60,6 +63,9 @@ const formSchema = z.object({
   status: z.string().min(1),
   courierComment: z.string().min(1),
   label: z.string().min(1),
+  agebisDro: z.string().nullable().optional(),
+  itemPrice: z.string().nullable().optional(),
+  chabarebisDro: z.string().nullable().optional(),
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -78,15 +84,34 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
   const toastMessage = initialData ? "Shipment updated." : "Shipment created";
   const action = initialData ? "Save changes" : "Create";
+
+  const {
+    shipmentCost,
+    setShipmentCost,
+    packagingUsed,
+    setPackagingUsed,
+    selectedCity,
+    range,
+    setRange,
+    setCity,
+    selectedParty,
+    setSelectedParty,
+    itemPrice,
+    setItemPrice,
+    totalPrice,
+    setTotalPrice,
+  } = useCalculatorStore();
+
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       name: "",
       lastName: "",
-      city: "",
+      city: selectedCity,
       address: "",
       phoneNumber: "",
       price: "0",
+      itemPrice: null,
       mimgebisName: "",
       mimgebisLastname: "",
       mimgebisNumber: "",
@@ -98,37 +123,94 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       status: "მიმდინარე",
       courierComment: "",
       label: "0-5 kg",
+      whopays: "sender",
+      agebisDro: "",
+      chabarebisDro: "",
     },
   });
-  const {
-    calculatedPrice,
-    setCost,
-    packagingUsed,
-    setPackagingUsed,
-    archeuliQalaqi,
-    range,
-    setRange,
-    setSelectedCity,
-    itemPriceForCalc,
-    whoPays,
-    isCalculated,
-    itemPrice,
-  } = useCalculatorStore();
+
+  const calculateDates = (): { pickupDate: Date; deliveryDate: Date } => {
+    const currentDateTime = new Date();
+    const isBefore3PM = currentDateTime.getHours() < 15; // Check if current time is before 4 PM
+
+    const pickupDate = new Date(currentDateTime);
+    if (!isBefore3PM) {
+      // Current time is after 4 PM, set pickup date to the next day
+      pickupDate.setDate(pickupDate.getDate() + 1);
+    }
+
+    // Check if the next day is Sunday
+    if (pickupDate.getDay() === 0) {
+      // If Sunday, set pickup date to Monday
+      pickupDate.setDate(pickupDate.getDate() + 1);
+    }
+
+    // Calculate delivery date as pickup date + 2 days (excluding Sundays)
+    const deliveryDate = new Date(pickupDate);
+    deliveryDate.setDate(
+      deliveryDate.getDate() + 2 + (deliveryDate.getDay() === 0 ? 1 : 0)
+    );
+
+    return { pickupDate, deliveryDate };
+  };
+
+  const formatDate = (date: Date): string => {
+    return date.toLocaleDateString("en-US", { day: "numeric", month: "numeric" });
+  };
+  function formatDateInGeorgian(pickupDate: string): string {
+    // Split the date into parts
+    const parts: string[] = pickupDate.split("/");
+
+    // Map the month number to the Georgian month name
+    const georgianMonths: string[] = [
+      "იანვარი",
+      "თებერვალი",
+      "მარტი",
+      "აპრილი",
+      "მაისი",
+      "ივნისი",
+      "ივლისი",
+      "აგვისტო",
+      "სექტემბერი",
+      "ოქტომბერი",
+      "ნოემბერი",
+      "დეკემბერი",
+    ];
+
+    // Get the Georgian month name
+    const georgianMonth: string = georgianMonths[parseInt(parts[0], 10) - 1];
+
+    // Format the date as "DD იანვარი"
+    const formattedDate: string = `${parts[1]} ${georgianMonth}`;
+
+    return formattedDate;
+  }
+  const { pickupDate, deliveryDate } = calculateDates();
+  const agebis = formatDateInGeorgian(formatDate(pickupDate));
+  const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    //  const aris = aq iqneba check 
+    //  const aris = aq iqneba check
     try {
-      console.log(whoPays, itemPriceForCalc);
       data.packaging = packagingUsed;
       data.label = range;
-      data.price = calculatedPrice;
-
-      //aris aaris tuara true magis mixedvit davsetavt datashi datebs xelit 
+      data.city = selectedCity;
+      data.whopays = selectedParty;
+      data.price = totalPrice.toString();
+      if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
       setLoading(true);
+      console.log(data);
+
+      if (!initialData) {
+        // Calculate pickup and delivery dates using current date and time
+        data.agebisDro = agebis;
+        data.chabarebisDro = chabareba;
+
+        // Execute the post request
+        await axios.post(`/api/shipments`, data);
+      }
 
       if (initialData) {
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
-      } else {
-        await axios.post(`/api/shipments`, data);
       }
 
       router.refresh();
@@ -138,6 +220,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
+      router.refresh();
     }
   };
 
@@ -160,11 +243,15 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setSelectedCity(initialData.city);
+      setCity((initialData.city as "Tbilisi") || "Rustavi");
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
+      setSelectedParty((initialData.whopays as "Sender") || "Receiver");
+      if (initialData.itemPrice !== null) {
+        setItemPrice(parseFloat(initialData.itemPrice));
+      }
     }
-  }, []);
+  }, []); // Dependency array ensures that the effect runs when initialData changes
 
   return (
     <>
@@ -293,7 +380,8 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         </RoleGate>
                         {/* {USER როლგეითი} */}
                         <RoleGate allowedRole="USER">
-                          <SelectItem value="მიმდინარე">ჩაბარებული</SelectItem>
+                          <SelectItem value="მიმდინარე">მიმდინარე</SelectItem>
+                          <SelectItem value="ჩაბარებული">ჩაბარებული</SelectItem>
                           <SelectItem value="უარი ჩაბარებაზე">
                             უარი ჩაბარებაზე
                           </SelectItem>
@@ -395,23 +483,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                     <Input
                       disabled={loading}
                       placeholder="მისამართი  "
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>ქალაქი</FormLabel>
-                  <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="ქალაქი "
                       {...field}
                     />
                   </FormControl>
@@ -527,11 +598,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           {/* <ShipmentFormDelivered initialData={initialData} /> */}
           <ShippingCostGraph hasInitialData={initialData ? true : false} />
 
-          <Button
-            disabled={loading || isCalculated}
-            className="ml-auto"
-            type="submit"
-          >
+          <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
 
