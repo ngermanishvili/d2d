@@ -9,7 +9,6 @@ import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import QRCodeGenerator from "@/components/ui/qr-code";
-import useCalculatorStore from "@/hooks/calculate-price";
 
 import {
   Form,
@@ -80,7 +79,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
     ? "წარმატებით განხორციელდა შეკვეთის განახლება"
     : "";
   const action = initialData ? "შენახვა" : "";
-  const { calculatedPrice } = useCalculatorStore();
+
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
