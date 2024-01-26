@@ -3,15 +3,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
-import { Toaster } from '@/components/ui/sonner'
-import { RoleGate } from '@/components/auth/role-gate'
-import { AdminNavbar } from './(protected)/_components/admin-navbar'
-import { UserNavbar } from './(protected)/_components/user-navbar'
-
 import './globals.css'
 import NProgressWrapper from '@/components/ui/nprogress-bar'
 import HomeLayoutNavigation from './_components/home-layout-navbar'
-import { CourierNavbar } from './(protected)/_components/courier-navbar'
+import { GlobalNavbar } from './(protected)/_components/global-navbar'
+import Footer from '@/components/ui/footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,24 +29,15 @@ export default async function RootLayout({
         <NProgressWrapper />
         <html lang="en">
           <body
-            className="p-4" >
-            <div className="bg-gray-100">
-              <HomeLayoutNavigation />
+            className="bg-slate-50" >
+            <HomeLayoutNavigation />
+            <div className='p-2 w-full '>
+              {session ? <GlobalNavbar /> : null}
             </div>
-            <RoleGate allowedRole="ADMIN">
-              <AdminNavbar />
-            </RoleGate>
-            <RoleGate allowedRole="USER">
-              <UserNavbar />
-            </RoleGate>
-            <RoleGate allowedRole="COURIER">
-              <CourierNavbar />
-            </RoleGate>
-            <Toaster />
             {children}
           </body>
         </html>
-      </SessionProvider>
+      </SessionProvider >
     </>
 
   )

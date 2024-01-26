@@ -1,43 +1,70 @@
+"use client"
 import React from "react";
-import { Modal } from "@/components/ui/modal";
+import moment from 'moment';
+import { Divider, Typography } from 'antd';
+import { Modal, Steps, Tag } from 'antd';
 import { Button } from "@/components/ui/button";
 import { Shipment, ShipmentStatusHistory } from "@prisma/client";
-import moment from 'moment';
+const { Step } = Steps;
 
+import D2DLogo from '@/assets/images/d2d.jpg'
+import Image from "next/image";
+
+
+const { Title, Paragraph, } = Typography;
 
 interface ShipmentDetailsProps {
     shipmentData: Shipment;
 }
 
-const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => (
-    <div>
-        <p>Name: {shipmentData.name}</p>
-        <p>Lastname: {shipmentData.lastName}</p>
-        <p>Tracking ID: {shipmentData.trackingId}</p>
-        <p>Status: {shipmentData.status}</p>
-    </div>
-);
+const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
 
-interface StatusHistoryProps {
-    statusHistory: ShipmentStatusHistory[];
+    const capitalizeFirstLetter = (str: string) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    };
+
+
+    return (
+        <>
+            <div className="flex justify-between mt-5 ">
+                <div>
+                    <Image
+                        className="hidden md:block cursor-pointer rounded-full"
+                        src={D2DLogo}
+                        height="80"
+                        width="80"
+                        alt="Logo"
+                    />
+                </div>
+                <Tag className=" text-sm p-1 absolute right-[20px] " color="orange"> {shipmentData.status}</Tag>
+            </div>
+            <div className="flex justify-between mt-5">
+
+                <div className="">
+                    <Title level={4}>გამგზავნის ინფორმაცია</Title>
+                    <Paragraph >
+                        <ul>
+                            <li>სახელი: {capitalizeFirstLetter(shipmentData.name)}</li>
+                            <li>გვარი: {capitalizeFirstLetter(shipmentData.lastName)}</li>
+                            <li> ტელ: +995 {shipmentData.phoneNumber}</li>
+                        </ul>
+                    </Paragraph>
+
+                </div>
+                <div className="">
+                    <Title level={4}>მიმღების ინფორმაცია</Title>
+                    <Paragraph>
+                        <ul>
+                            <li>სახელი: {capitalizeFirstLetter(shipmentData.mimgebisName)}</li>
+                            <li>გვარი: {capitalizeFirstLetter(shipmentData.mimgebisLastname)}</li>
+                            <li>ტელ: +995 {shipmentData.mimgebisNumber}</li>
+                        </ul>
+                    </Paragraph>
+                </div>
+            </div>
+        </>
+    );
 }
-
-const StatusHistory: React.FC<StatusHistoryProps> = ({ statusHistory }) => (
-    <div>
-        <p>Shipment Status History:</p>
-        <ul>
-            {statusHistory.slice().reverse().map((status) => (
-                <li key={status.id}>
-                    <span className="status-text">{status.status}</span>
-                    <span className="status-date">
-                        {moment(status.timestamp).format('MMMM Do YYYY, h:mm:ss a')}
-                    </span>
-                </li>
-            ))}
-        </ul>
-    </div>
-);
-
 
 interface TrackingModalProps {
     isOpen: boolean;
@@ -56,8 +83,10 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
     onConfirm,
     loading,
 }) => {
+
+
     return (
-        <Modal title="TRACKING" description="tracking status" isOpen={isOpen} onClose={onClose}>
+        <Modal width={1000} title={`შეკვეთა: ${shipmentData?.trackingId}`} visible={isOpen} onCancel={onClose} footer={null}>
             {shipmentData ? (
                 <ShipmentDetails shipmentData={shipmentData} />
             ) : (
@@ -65,7 +94,20 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
             )}
 
             {statusHistory && statusHistory.length > 0 && (
-                <StatusHistory statusHistory={statusHistory} />
+                <div>
+                    <Divider />
+                    <Title level={5}>ადევნე თვალი შეკვეთას</Title>
+                    <Steps direction="horizontal" current={statusHistory.length - 1}>
+                        {statusHistory.map((status, index) => (
+                            <Step
+                                key={status.id}
+                                title={status.status}
+                                description={moment(status.timestamp).format('MMMM Do YYYY, h:mm:ss a')}
+                                status={index === statusHistory.length - 1 ? 'process' : 'finish'}
+                            />
+                        ))}
+                    </Steps>
+                </div>
             )}
 
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
@@ -76,23 +118,6 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
                     Continue
                 </Button>
             </div>
-
-            <style jsx>{`
-                /* Add your custom styles here */
-                .status-item {
-                    display: flex;
-                    justify-content: space-between;
-                    margin-bottom: 8px;
-                }
-
-                .status-text {
-                    font-weight: bold;
-                }
-
-                .status-date {
-                    color: #666;
-                }
-            `}</style>
         </Modal>
     );
 };

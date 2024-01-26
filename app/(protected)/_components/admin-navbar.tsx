@@ -24,21 +24,6 @@ export const AdminNavbar = () => {
         >
           <Link href="/shipments">შეკვეთების ისტორია</Link>
         </Button>
-        {/* <Button
-          asChild
-          variant={pathname === "/server" ? "default" : "outline"}
-        >
-          <Link href="/server">Server</Link>
-        </Button>
-        <Button
-          asChild
-          variant={pathname === "/client" ? "default" : "outline"}
-        >
-          <Link href="/client">Client</Link>
-        </Button>
-        <Button asChild variant={pathname === "/admin" ? "default" : "outline"}>
-          <Link href="/admin">Admin</Link>
-        </Button> */}
         <Button
           asChild
           variant={pathname === "/couriers" ? "default" : "outline"}
@@ -52,6 +37,7 @@ export const AdminNavbar = () => {
           <Link href="/settings">კაბინეტი</Link>
         </Button>
       </div>
+
     </div>
   );
 };

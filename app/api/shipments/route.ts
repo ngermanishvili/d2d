@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 
@@ -106,6 +106,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status,
         courierComment,
         label,
+
       },
     });
 

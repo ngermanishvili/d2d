@@ -72,8 +72,8 @@ const TrackingSearchContainer: React.FC = () => {
     return (
         <>
             <Container>
-                <div className='rounded-md w-full bg-slate-300 flex justify-between p-4'>
-                    <Input value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                <div className='rounded-md w-full bg-white flex justify-between p-4'>
+                    <Input className='border-2 border-rose-600 outine-none' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
                     <SearchIcon onClick={handleSearchClick} className='ml-2 flex justify-center items-center' />
                 </div>
             </Container>

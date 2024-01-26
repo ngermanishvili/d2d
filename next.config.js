@@ -6,6 +6,7 @@ const nextConfig = {
             "cdn.builder.io",
             "png.pngtree.com",
             "encrypted-tbn0.gstatic.com",
+            "images.unsplash.com",
         ],
     },
 };

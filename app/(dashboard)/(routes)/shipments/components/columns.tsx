@@ -1,9 +1,12 @@
 "use client";
 
-import {ColumnDef} from "@tanstack/react-table";
-import {CellAction} from "./cell-action";
-import {Checkbox} from "@/components/ui/checkbox";
-import {idSetStore} from "@/hooks/select-store";
+import { ColumnDef } from "@tanstack/react-table";
+import { CellAction } from "./cell-action";
+import { Checkbox } from "@/components/ui/checkbox";
+import { idSetStore } from "@/hooks/select-store";
+import { Badge, Alert, Tag } from 'antd';
+
+
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -26,12 +29,29 @@ export type ShipmentColumn = {
   courierComment: string;
 };
 
+const colors = [
+  'pink',
+  'red',
+  'yellow',
+  'orange',
+  'cyan',
+  'green',
+  'blue',
+  'purple',
+  'geekblue',
+  'magenta',
+  'volcano',
+  'gold',
+  'lime',
+];
+
+
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
-    header: ({table}) => <div>Select</div>,
-    cell: ({row}) => {
-      const {pushId, ids, deleteId} = idSetStore();
+    header: ({ table }) => <div>Select</div>,
+    cell: ({ row }) => {
+      const { pushId, ids, deleteId } = idSetStore();
 
       return (
         <Checkbox
@@ -61,10 +81,20 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "trackingId",
     header: "თრექინგი",
+
+    cell: ({ row }) => <Tag className="p-2" color="geekblue">{row.original.trackingId}</Tag>,
+
+
   },
   {
     accessorKey: "name",
     header: "სახელი",
+    cell: ({ row }) => <div className="p-2" style={{ display: 'flex', }}>
+      <img className="w-10 h-10" src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" alt="avatar" />
+      <p className="w-[100px] h-auto p-2">  {row.original.name}</p>
+
+    </div>
+
   },
   {
     accessorKey: "lastName",
@@ -81,6 +111,11 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",
+    cell: ({ row }) => (
+      <div className="w-[150px]">
+        {`+995 ${row.original.phoneNumber}`}
+      </div>
+    ),
   },
 
   {
@@ -108,6 +143,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "mimgebisNumber",
     header: "მიმღების ტელეფონის ნომერი",
+    cell: ({ row }) => <div className="w-[150px]">
+      {`+995 ${row.original.mimgebisNumber}`}
+    </div>
+
   },
   {
     accessorKey: "mimgebisAddress",
@@ -125,20 +164,36 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "createdAt",
     header: "დამატების თარიღი",
+    cell: ({ row }) => (
+      <div>
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
+      </div>
+    ),
   },
+
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
-    cell: ({row}) => <span>{row.original.courierComment}</span>,
+    cell: ({ row }) => <Tag className="p-2" color="geekblue">{row.original.courierComment}</Tag>,
   },
   {
     accessorKey: "status",
     header: "სტატუსიიიი",
-    cell: ({row}) => <span>{row.original.status}</span>,
+    cell: ({ row }) => <div>
+      {/* <Alert message={row.original.status} type="success" /> */}
+      <Tag className="p-2" color="green">
+        {row.original.status}
+      </Tag>
+    </div>
+
   },
 
   {
     id: "actions",
-    cell: ({row}) => <CellAction data={row.original} />,
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];
