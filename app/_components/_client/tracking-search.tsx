@@ -59,7 +59,7 @@ const TrackingSearchContainer: React.FC = () => {
         } finally {
             setLoading(false);
         }
-    }, [inputValue, router]);
+    }, [inputValue]);
 
     const handleSearchClick = () => {
         fetchData();

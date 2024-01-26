@@ -131,13 +131,13 @@ export default function Landing() {
                                     Working with us is a pleasure
                                 </h3>
                                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
-                                    Don't let your uses guess by attaching tooltips and popoves to
+                                    Don&apos;t let your uses guess by attaching tooltips and popoves to
                                     any element. Just make sure you enable them first via
                                     JavaScript.
                                 </p>
                                 <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
                                     The kit comes with three pre-built pages to help you get
-                                    started faster. You can change the text and images and you're
+                                    started faster. You can change the text and images and you&apos;re
                                     good to go. Just make sure you enable them first via
                                     JavaScript.
                                 </p>
@@ -231,7 +231,7 @@ export default function Landing() {
                                     <p className="mt-4 text-lg leading-relaxed text-blueGray-500">
                                         The extension comes with three pre-built pages to help you
                                         get started faster. You can change the text and images and
-                                        you're good to go.
+                                        you&apos;re good to go.
                                     </p>
                                     <ul className="list-none mt-6">
                                         <li className="py-2">
@@ -497,7 +497,7 @@ export default function Landing() {
                                 </h6>
                                 <p className="mt-2 mb-4 text-blueGray-400">
                                     Some quick example text to build on the card title and make up
-                                    the bulk of the card's content.
+                                    the bulk of the card&apos;s content.
                                 </p>
                             </div>
                             <div className="w-full lg:w-3/12 px-4 text-center">
@@ -509,7 +509,7 @@ export default function Landing() {
                                 </h5>
                                 <p className="mt-2 mb-4 text-blueGray-400">
                                     Some quick example text to build on the card title and make up
-                                    the bulk of the card's content.
+                                    the bulk of the card&apos;s content.
                                 </p>
                             </div>
                             <div className="w-full lg:w-3/12 px-4 text-center">
@@ -521,81 +521,13 @@ export default function Landing() {
                                 </h5>
                                 <p className="mt-2 mb-4 text-blueGray-400">
                                     Some quick example text to build on the card title and make up
-                                    the bulk of the card's content.
+                                    the bulk of the card&apos;s content.
                                 </p>
                             </div>
                         </div>
                     </div>
                 </section>
-                {/* <section className="relative block py-24 lg:pt-0 bg-blueGray-800">
-                    <div className="container mx-auto px-4">
-                        <div className="flex flex-wrap justify-center lg:-mt-64 -mt-48">
-                            <div className="w-full lg:w-6/12 px-4">
-                                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200">
-                                    <div className="flex-auto p-5 lg:p-10">
-                                        <h4 className="text-2xl font-semibold">
-                                            Want to work with us?
-                                        </h4>
-                                        <p className="leading-relaxed mt-1 mb-4 text-blueGray-500">
-                                            Complete this form and we will get back to you in 24
-                                            hours.
-                                        </p>
-                                        <div className="relative w-full mb-3 mt-8">
-                                            <label
-                                                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                                htmlFor="full-name"
-                                            >
-                                                Full Name
-                                            </label>
-                                            <input
-                                                type="text"
-                                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                placeholder="Full Name"
-                                            />
-                                        </div>
 
-                                        <div className="relative w-full mb-3">
-                                            <label
-                                                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                                htmlFor="email"
-                                            >
-                                                Email
-                                            </label>
-                                            <input
-                                                type="email"
-                                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                                placeholder="Email"
-                                            />
-                                        </div>
-
-                                        <div className="relative w-full mb-3">
-                                            <label
-                                                className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                                                htmlFor="message"
-                                            >
-                                                Message
-                                            </label>
-                                            <textarea
-                                                rows={4}
-                                                cols={80}
-                                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
-                                                placeholder="Type a message..."
-                                            />
-                                        </div>
-                                        <div className="text-center mt-6">
-                                            <Button
-                                                className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button"
-                                            >
-                                                Send Message
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section> */}
             </main >
         </>
     );
