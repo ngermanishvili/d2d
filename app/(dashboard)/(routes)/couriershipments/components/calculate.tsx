@@ -48,7 +48,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
     "Tbilisi"
   );
 
-  const { calculatedPrice, setCost, packagingUsed, setPackagingUsed } =
+  const { shipmentCost, setShipmentCost, packagingUsed, setPackagingUsed } =
     useCalculatorStore();
 
   const handleCheckboxChange = (range: WeightRange) => {
@@ -79,7 +79,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
     if (usePackaging) {
       totalPrice += 1; // Add 1 GEL for packaging service
     }
-    setCost(totalPrice); // Update the cost in the global state
+    setShipmentCost(totalPrice); // Update the cost in the global state
   };
   const options: ChartOptions<"bar"> = {
     scales: {
@@ -144,7 +144,7 @@ const ShippingCostGraph: React.FC = (initialData: any) => {
           ლარი)
         </label>
       </div>
-      <h2 className="text-4xl">ჯამური ფასი: {calculatedPrice} ლარი</h2>
+      <h2 className="text-4xl">ჯამური ფასი: {shipmentCost} ლარი</h2>
     </>
   );
 };
