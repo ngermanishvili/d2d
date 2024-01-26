@@ -38,9 +38,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         {value.map((url) => (
           <div
             key={url}
-            className="relative w-[150px] h-[150px] rounded-lg overflow-hidden"
+            className="relative w-[150px] h-[150px] ml-[80px] mt-[50px] rounded-lg overflow-hidden"
           >
-            <div className="z-10 absolute top-2 right-2">
+            <div className="z-10 absolute top-2 right-4">
               <Button
                 type="button"
                 onClick={() => onRemove(url)}
@@ -50,6 +50,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 <TrashIcon className="w-4 h-4" />
               </Button>
             </div>
+
             <Image fill className="object-cover" alt="image" src={url} />
           </div>
         ))}
@@ -61,14 +62,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           };
           return (
             <Button
-              className="w-[150px] ml-4"
+              className="w-[170px] ml-4"
               type="button"
               disabled={disabled}
               variant="secondary"
               onClick={onClick}
             >
               <ImageIcon className="h-4 w-4 mr-2" />
-              Upload Image
+              ატვირთე ფოტო
             </Button>
           );
         }}

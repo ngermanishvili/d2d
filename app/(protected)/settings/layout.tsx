@@ -5,13 +5,18 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     return (
-        <div className="bg-black w-full">
-
+        <div className="">
 
             {children}
+
 
         </div>
     );
 }
 
 export default ProtectedLayout;
+
+
+
+
+

@@ -4,6 +4,7 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FaTwitter } from "react-icons/fa";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import Image from "next/image";
+import TeamImage from '@/assets/images/avatar1.jpg'
 
 
 
@@ -305,7 +306,7 @@ export default function Landing() {
                                 <div className="px-6">
                                     <Image
                                         alt="..."
-                                        src="/img/team-1-800x800.jpg"
+                                        src={TeamImage}
                                         className="shadow-lg rounded-full mx-auto max-w-120-px"
                                         width={500}
                                         height={500}
@@ -342,7 +343,7 @@ export default function Landing() {
                                 <div className="px-6">
                                     <Image
                                         alt="..."
-                                        src="/img/team-2-800x800.jpg"
+                                        src={TeamImage}
                                         className="shadow-lg rounded-full mx-auto max-w-120-px"
                                         width={500}
                                         height={500}
@@ -373,7 +374,7 @@ export default function Landing() {
                                 <div className="px-6">
                                     <Image
                                         alt="..."
-                                        src="/img/team-3-800x800.jpg"
+                                        src={TeamImage}
                                         className="shadow-lg rounded-full mx-auto max-w-120-px"
                                         width={500}
                                         height={500}
@@ -410,7 +411,7 @@ export default function Landing() {
                                 <div className="px-6">
                                     <Image
                                         alt="..."
-                                        src="/img/team-4-470x470.png"
+                                        src={TeamImage}
                                         className="shadow-lg rounded-full mx-auto max-w-120-px"
                                         width={500}
                                         height={500}
