@@ -3,8 +3,6 @@ import { ShipmentClient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId } from "@/lib/auth";
 import { RoleGate } from "@/components/auth/role-gate";
-import { PageContainer, ProCard } from '@ant-design/pro-components';
-
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -39,16 +37,17 @@ const ShipmentPage = async () => {
       mimgebisNumber: item.mimgebisNumber,
       mimgebisAddress: item.mimgebisAddress,
       mimgebiQalaqi: item.mimgebiQalaqi,
-      createdAt: item.createdAt.toISOString(),
+      createdAt: item.createdAt.toISOString(), // Convert Date to string
+      updatedAt: item.updatedAt.toISOString(), // Convert Date to string
       trackingId: item.trackingId,
       status: item.status,
       courierComment: item.courierComment,
+      agebisDro: item?.agebisDro,
+      chabarebisDro: item?.chabarebisDro,
     })
   );
 
   return (
-
-
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
