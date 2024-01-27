@@ -2,12 +2,12 @@
 
 import * as z from "zod";
 
-import {useTransition, useState} from "react";
-import {useForm} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useTransition, useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import {CardWrapper} from "./card-wrapper";
-import {Input} from "../ui/input";
+import { CardWrapper } from "./card-wrapper";
+import { Input } from "../ui/input";
 import {
   Form,
   FormControl,
@@ -16,11 +16,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {RegisterSchema} from "@/schemas";
-import {Button} from "../ui/button";
-import {FormError} from "../form-error";
-import {FormSuccess} from "../form-success";
-import {register} from "@/actions/register";
+import { RegisterSchema } from "@/schemas";
+import { Button } from "../ui/button";
+import { FormError } from "../form-error";
+import { FormSuccess } from "../form-success";
+import { register } from "@/actions/register";
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -33,6 +33,7 @@ export const RegisterForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      confirm: "", // Add this line
       name: "",
       number: "",
     },
@@ -73,7 +74,7 @@ export const RegisterForm = () => {
               control={form.control}
               name="email"
               disabled={isPending}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormControl>
@@ -91,7 +92,7 @@ export const RegisterForm = () => {
               control={form.control}
               name="name"
               disabled={isPending}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="name">Name</FormLabel>
                   <FormControl>
@@ -105,7 +106,7 @@ export const RegisterForm = () => {
               control={form.control}
               name="number"
               disabled={isPending}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="number">Number</FormLabel>
                   <FormControl>
@@ -119,9 +120,25 @@ export const RegisterForm = () => {
               control={form.control}
               name="password"
               disabled={isPending}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel htmlFor="email">password</FormLabel>
+                  <FormControl>
+                    <Input {...field} type="password" placeholder="********" />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirm"
+              disabled={isPending}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel htmlFor="confirm">
+                    Confirm Password
+                  </FormLabel>
                   <FormControl>
                     <Input {...field} type="password" placeholder="********" />
                   </FormControl>
