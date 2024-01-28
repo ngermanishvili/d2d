@@ -1,9 +1,12 @@
-"use client"
 import React from 'react';
 import Image from 'next/image';
 import useBlogPostsData from '@/hooks/use-blogposts-unique-data';
 
-const BlogPostById = ({ blogpostId }: { blogpostId: string }) => {
+interface BlogPostByIdProps {
+    blogpostId: string;
+}
+
+const BlogPostById: React.FC<BlogPostByIdProps> = ({ blogpostId }) => {
     const { blogPostData, loading } = useBlogPostsData(blogpostId);
 
     if (loading) {
