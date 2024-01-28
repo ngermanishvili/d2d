@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useState, useTransition, useEffect } from "react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useSession } from "next-auth/react";
 import { SettingsSchema } from "@/schemas";
@@ -30,6 +30,7 @@ import { FormSuccess } from "@/components/form-success";
 import ImageUpload from "@/components/ui/image-upload";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import usePhotoStore from "@/hooks/photo-store";
 
 // components
 
@@ -62,6 +63,7 @@ export default function CardSettings() {
       input8: user?.input8 || undefined,
     },
   });
+  const { setPhotoUrl, photoUrl } = usePhotoStore();
 
   const router = useRouter();
   const isActive =
@@ -73,7 +75,15 @@ export default function CardSettings() {
     user?.input6 &&
     user?.input7 &&
     user?.input8;
+
+  useEffect(() => {
+    if (user?.image) {
+      setPhotoUrl(user?.image);
+    }
+  }, []);
+
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+    values.image = photoUrl;
     startTransition(() => {
       settings(values)
         .then((data) => {
@@ -419,6 +429,24 @@ export default function CardSettings() {
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="w-full lg:w-6/12 px-4">
+                  <FormField
+                    control={form.control}
+                    name="image"
+                    render={({ field }) => (
+                      <FormItem className="relative w-full mb-3">
+                        <FormControl>
+                          <ImageUpload
+                            value={field.value ? [field.value] : []}
+                            onChange={(url) => field.onChange(url)}
+                            onRemove={() => field.onChange("")}
+                          />
+                        </FormControl>
+                        <FormMessage />
                       </FormItem>
                     )}
                   />

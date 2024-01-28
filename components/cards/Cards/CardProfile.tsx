@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
 import photo from "../../../assets/images/avatar1.jpg";
 import Image from "next/image";
-import ImageUpload from "@/components/ui/image-upload";
+import usePhotoStore from "@/hooks/photo-store";
+import { Button } from "@/components/ui/button";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 // components
 interface SettingsPageProps {
@@ -9,7 +12,8 @@ interface SettingsPageProps {
 }
 
 const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
-  
+  const { photoUrl, setPhotoUrl } = usePhotoStore();
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
@@ -17,20 +21,32 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
           <div className="flex flex-wrap justify-center">
             <div className="w-full px-4 flex justify-center">
               <div className="relative">
-                <Image
-                  width={140}
-                  height={140}
-                  alt="..."
-                  src={photo}
-                  // className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
-                />
+                {photoUrl.length > 0 ? (
+                  <>
+                    <img
+                      alt="..."
+                      src={photoUrl}
+                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
+                    />
+                    <Button
+                      type="button"
+                      onClick={() => setPhotoUrl("")}
+                      variant="destructive"
+                      size="sm"
+                    >
+                      <TrashIcon className="w-4 h-4" />
+                    </Button>
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             <div className="w-full px-4 text-center mt-20">
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                    {amountOfShipments}
+                    {amountOfShipments} alo
                   </span>
                   <span className="text-sm text-blueGray-400">შეკვეთები</span>
                 </div>

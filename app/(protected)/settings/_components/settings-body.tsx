@@ -232,7 +232,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                                 <FormControl>
                                   <ImageUpload
                                     value={field.value ? [field.value] : []}
-                                    onChange={(url) => field.onChange(url)}
+                                    onChange={(url) => {field.onChange(url)}}
                                     onRemove={() => field.onChange("")}
                                   />
                                 </FormControl>

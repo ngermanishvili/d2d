@@ -2,8 +2,7 @@
 import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
 import { ImageIcon, TrashIcon } from "@radix-ui/react-icons";
-import Image from "next/image";
-
+import usePhotoStore from "@/hooks/photo-store";
 import { Button } from "@/components/ui/button";
 
 interface ImageUploadProps {
@@ -19,6 +18,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   value,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const { setPhotoUrl } = usePhotoStore();
 
   useEffect(() => {
     setIsMounted(true);
@@ -26,6 +26,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const onUpload = (result: any) => {
     onChange(result.info.secure_url);
+    setPhotoUrl(result.info.secure_url);
   };
 
   if (!isMounted) {
@@ -34,24 +35,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div>
-      <div className="mb-4 ml-4 flex items-center w-[300px] gap-4">
+      <div className="w-full gap-4">
         {value.map((url) => (
-          <div
-            key={url}
-            className="relative w-[150px] h-[150px] ml-[80px] mt-[50px] rounded-lg overflow-hidden"
-          >
-            <div className="z-10 absolute top-2 right-4">
-              <Button
-                type="button"
-                onClick={() => onRemove(url)}
-                variant="destructive"
-                size="icon"
-              >
-                <TrashIcon className="w-4 h-4" />
-              </Button>
-            </div>
-
-            <Image fill className="object-cover" alt="image" src={url} />
+          <div key={url} className="w-full flex justify-center">
+            <div className="z-10 "></div>
+            {/* 
+            <Image fill className="object-cover" alt="image" src={url} /> */}
           </div>
         ))}
       </div>
@@ -62,7 +51,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           };
           return (
             <Button
-              className="w-[170px] ml-4"
+              className="w-full"
               type="button"
               disabled={disabled}
               variant="secondary"
