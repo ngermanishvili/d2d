@@ -7,6 +7,7 @@ import MobileMenu from "./mobile-navbar-menu";
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { NAV_MENU_GLOBAL } from '@/routes/global-navbar-routes';
+import { UserButton } from '@/components/auth/user-button';
 
 
 export default function Header() {
@@ -55,7 +56,9 @@ export default function Header() {
                                 რეგისტრაცია
                             </Link>
                         </Button>
+
                     </div>
+                    <UserButton />
 
                     <MobileMenu />
 
