@@ -19,48 +19,51 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
-            <div className="w-full px-4 flex justify-center">
-              <div className="relative">
-                {photoUrl.length > 0 ? (
-                  <>
-                    <img
-                      alt="..."
-                      src={photoUrl}
-                      className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px"
-                    />
-                    <Button
-                      type="button"
-                      onClick={() => setPhotoUrl("")}
-                      variant="destructive"
-                      size="sm"
-                    >
-                      <TrashIcon className="w-4 h-4" />
-                    </Button>
-                  </>
-                ) : (
-                  ""
-                )}
-              </div>
+            <div className="w-full px-4 flex justify-center relative ">
+
+              {photoUrl.length > 0 ? (
+                <>
+                  <Image
+                    width={150}
+                    height={150}
+                    alt="..."
+                    src={photoUrl}
+                    className="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px inline-block "
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => setPhotoUrl("")}
+                    variant="destructive"
+                    size="sm"
+                    className="absolute right-[30px] mt-10"
+                  >
+                    <TrashIcon className="w-4 h-4" />
+                  </Button>
+                </>
+              ) : (
+                ""
+              )}
+
             </div>
             <div className="w-full px-4 text-center mt-20">
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                    {amountOfShipments} alo
+                    {amountOfShipments}
                   </span>
-                  <span className="text-sm text-blueGray-400">შეკვეთები</span>
+                  <span className="text-sm text-blueGray-400">სულ შეკვეთები</span>
                 </div>
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                     10
                   </span>
-                  <span className="text-sm text-blueGray-400">Photos</span>
+                  <span className="text-sm text-blueGray-400">აქტიური შეკვეთები</span>
                 </div>
                 <div className="lg:mr-4 p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                    89
+                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600 ">
+                    ✅
                   </span>
-                  <span className="text-sm text-blueGray-400">Comments</span>
+                  <span className="text-sm text-blueGray-400">სტატუსი</span>
                 </div>
               </div>
             </div>
@@ -84,22 +87,6 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
           </div>
           <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
             <div className="flex flex-wrap justify-center">
-              <div className="w-full lg:w-9/12 px-4">
-                <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
-                  An artist of considerable range, Jenna the name taken by
-                  Melbourne-raised, Brooklyn-based Nick Murphy writes, performs
-                  and records all of his own music, giving it a warm, intimate
-                  feel with a solid groove structure. An artist of considerable
-                  range.
-                </p>
-                {/* <a
-                  href="#pablo"
-                  className="font-normal text-lightBlue-500"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Show more
-                </a> */}
-              </div>
             </div>
           </div>
         </div>
