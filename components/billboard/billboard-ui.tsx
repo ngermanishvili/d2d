@@ -14,8 +14,13 @@ const BillBoardUi: React.FC<BillboardProps> = ({ imageUrl, loading, label }) => 
 
     return (
         <>
-            <h2 className='flex items-center justify-center p-2 mb-4 font-bold text-xl uppercase '>{label}</h2>
-            <div className="w-full p-4 rounded-lg h-[400px] bg-transparent ">
+            {/* <div className="text-center pb-12 md:pb-2 ">
+                <div className="max-w-3xl mx-auto">
+                    <p className="text-xl mt-6 text-gray-600 " data-aos="zoom-y-out" data-aos-delay="150"> { } </p>
+
+                </div>
+            </div> */}
+            <div className="w-full mb-4  h-[300px] rounded-sm p-2 object-contain ">
                 {loading ? 'Loading...' : (
                     <Image
                         src={imageUrl}
