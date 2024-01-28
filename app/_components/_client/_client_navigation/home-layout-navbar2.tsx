@@ -46,8 +46,6 @@ export default function Header({ isSession }: { isSession: boolean }) {
                     </nav>
 
                     {/* Desktop sign in links */}
-
-
                     {isSession ? <UserButton />
                         :
                         <div className="p-2">

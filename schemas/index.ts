@@ -22,21 +22,29 @@ export const ResetSchema = z.object({
   }),
 });
 
-export const RegisterSchema = z.object({
-  email: z.string().email({
-    message: "არასწორი ელ-ფოსტა",
-  }),
-  password: z.string().min(6, {
-    message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს კოკეხ",
-  }),
-  name: z.string().min(1, {
-    message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
-  }),
-  number: z.string().min(1, {
-    message: "min 1 nomriani ",
-  }),
+export const RegisterSchema = z
+  .object({
+    email: z.string().email({
+      message: "არასწორი ელ-ფოსტა",
+    }),
+    password: z.string().min(6, {
+      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს კოკეხ",
+    }),
+    confirm: z.string().min(6, {
+      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს კოკეხ",
+    }),
 
-});
+    name: z.string().min(1, {
+      message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
+    }),
+    number: z.string().min(1, {
+      message: "min 1 nomriani ",
+    }),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords don't match",
+    path: ["confirm"],
+  });
 
 const isValidUrl = (url: string): boolean => {
   try {
@@ -56,7 +64,11 @@ export const SettingsSchema = z
     number: z.optional(z.string()),
     password: z.optional(z.string().min(6)),
     newPassword: z.optional(z.string().min(6)),
-    image: z.optional(z.string().refine((url) => url === "" || isValidUrl(url), { message: "Invalid URL" })),
+    image: z.optional(
+      z.string().refine((url) => url === "" || isValidUrl(url), {
+        message: "Invalid URL",
+      })
+    ),
   })
   .refine(
     (data) => {

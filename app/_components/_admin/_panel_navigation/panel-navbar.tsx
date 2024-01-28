@@ -90,7 +90,7 @@ export function PanelNavbar() {
                             </RoleGate>
                         </ul>
                         <div className="hidden items-center gap-4 lg:flex">
-                            <UserButton />
+                            {/* <UserButton /> */}
                             <div
 
                             >
