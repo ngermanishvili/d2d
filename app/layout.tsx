@@ -5,10 +5,9 @@ import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import './globals.css'
 import NProgressWrapper from '@/components/ui/nprogress-bar'
-import HomeLayoutNavigation from './_components/home-layout-navbar'
-import { GlobalNavbar } from './(protected)/_components/global-navbar'
 import Footer from '@/components/ui/footer'
-import Header from './_components/home-layout-navbar2'
+import Header from './_components/_client/_client_navigation/home-layout-navbar2'
+import PanelNavbar from './_components/_admin/_panel_navigation/panel-navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +33,7 @@ export default async function RootLayout({
             {/* <HomeLayoutNavigation /> */}
             <Header />
             <div className='p-2 w-full '>
-              {session ? <GlobalNavbar /> : null}
+              {session ? <PanelNavbar /> : null}
             </div>
             {children}
             <Footer />
