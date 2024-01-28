@@ -19,10 +19,15 @@ export const metadata: Metadata = {
 export default async function RootLayout({
 
   children,
+
 }: {
   children: React.ReactNode
+  isSession: boolean
 }) {
   const session = await auth();
+  let isSession = session ? true : false
+
+
   return (
     <>
       <SessionProvider session={session}>
@@ -31,7 +36,7 @@ export default async function RootLayout({
           <body
             className="bg-slate-50" >
             {/* <HomeLayoutNavigation /> */}
-            <Header />
+            <Header isSession={isSession} />
             <div className='p-2 w-full '>
               {session ? <PanelNavbar /> : null}
             </div>

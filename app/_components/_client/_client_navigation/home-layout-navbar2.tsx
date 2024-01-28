@@ -10,7 +10,8 @@ import { NAV_MENU_GLOBAL } from '@/routes/global-navbar-routes';
 import { UserButton } from '@/components/auth/user-button';
 
 
-export default function Header() {
+
+export default function Header({ isSession }: { isSession: boolean }) {
     const [top, setTop] = useState<boolean>(true);
 
     // detect whether the user has scrolled the page down by 10px
@@ -45,21 +46,23 @@ export default function Header() {
                     </nav>
 
                     {/* Desktop sign in links */}
-                    <div className="p-2">
-                        <Button size="sm">
-                            <Link href="/auth/login" passHref>
-                                ავტორიზაცია
-                            </Link>
-                        </Button>
-                        <Button className="ml-4" size="sm">
-                            <Link href="/auth/register" passHref>
-                                რეგისტრაცია
-                            </Link>
-                        </Button>
 
-                    </div>
-                    <UserButton />
 
+                    {isSession ? <UserButton />
+                        :
+                        <div className="p-2">
+                            <Button size="sm">
+                                <Link href="/auth/login" passHref>
+                                    ავტორიზაცია
+                                </Link>
+                            </Button>
+                            <Button className="ml-4" size="sm">
+                                <Link href="/auth/register" passHref>
+                                    რეგისტრაცია
+                                </Link>
+                            </Button>
+
+                        </div>}
                     <MobileMenu />
 
                 </div>
