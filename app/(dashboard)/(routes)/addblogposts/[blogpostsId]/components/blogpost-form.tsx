@@ -31,7 +31,6 @@ const formSchema = z.object({
   imageUrl: z.string().min(1),
   excerpt: z.string(),
   slug: z.string(),
-
 });
 
 // This BlogPostFormValues is for the formik form values type definition.
@@ -63,7 +62,6 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
       slug: "",
     },
   });
-
 
   const onSubmit = async (data: BlogPostFormValues) => {
     try {
@@ -170,11 +168,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
               <FormItem>
                 <FormLabel>slug</FormLabel>
                 <FormControl>
-                  <Input
-                    disabled={loading}
-                    placeholder="slug"
-                    {...field}
-                  />
+                  <Input disabled={loading} placeholder="slug" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
