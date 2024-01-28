@@ -69,6 +69,17 @@ export const SettingsSchema = z
         message: "Invalid URL",
       })
     ),
+    input1: z.optional(z.string()),
+    input2: z.optional(z.string()),
+    input3: z.optional(z.string()),
+    input4: z.optional(z.string()),
+    input5: z.optional(z.string()),
+    input6: z.optional(z.string()),
+    input7: z.optional(z.string()),
+    input8: z.optional(z.string()),
+
+
+
   })
   .refine(
     (data) => {

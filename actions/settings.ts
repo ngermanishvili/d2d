@@ -11,81 +11,80 @@ import { currentUser } from "@/lib/auth";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
-export const settings = async (
-    values: z.infer<typeof SettingsSchema>
-) => {
-    const user = await currentUser();
+export const settings = async (values: z.infer<typeof SettingsSchema>) => {
+  const user = await currentUser();
 
-    if (!user) {
-        return { error: "Unauthorized" }
+  if (!user) {
+    return { error: "Unauthorized" };
+  }
+
+  const dbUser = await getUserById(user.id);
+
+  if (!dbUser) {
+    return { error: "Unauthorized" };
+  }
+
+  if (user.isOAuth) {
+    values.email = undefined;
+    values.password = undefined;
+    values.newPassword = undefined;
+    values.isTwoFactorEnabled = undefined;
+  }
+
+  if (values.email && values.email !== user.email) {
+    const existingUser = await getUserByEmail(values.email);
+
+    if (existingUser && existingUser.id !== user.id) {
+      return { error: "Email already in use!" };
     }
 
-    const dbUser = await getUserById(user.id);
+    const verificationToken = await generateVerificationToken(values.email);
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token
+    );
 
-    if (!dbUser) {
-        return { error: "Unauthorized" }
+    return { success: "Verification email sent!" };
+  }
+
+  if (values.password && values.newPassword && dbUser.password) {
+    const passwordsMatch = await bcrypt.compare(
+      values.password,
+      dbUser.password
+    );
+
+    if (!passwordsMatch) {
+      return { error: "Incorrect password!" };
     }
 
-    if (user.isOAuth) {
-        values.email = undefined;
-        values.password = undefined;
-        values.newPassword = undefined;
-        values.isTwoFactorEnabled = undefined;
-    }
+    const hashedPassword = await bcrypt.hash(values.newPassword, 10);
+    values.password = hashedPassword;
+    values.newPassword = undefined;
+  }
 
-    if (values.email && values.email !== user.email) {
-        const existingUser = await getUserByEmail(values.email);
+  const updatedUser = await db.user.update({
+    where: { id: dbUser.id },
+    data: {
+      ...values,
+    },
+  });
 
-        if (existingUser && existingUser.id !== user.id) {
-            return { error: "Email already in use!" }
-        }
+  update({
+    user: {
+      image: updatedUser.image ?? undefined,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      role: updatedUser.role,
+      input1: updatedUser.input1 !== null ? updatedUser.input1 : undefined,
+      input2: updatedUser.input2 !== null ? updatedUser.input2 : undefined,
+      input3: updatedUser.input3 !== null ? updatedUser.input3 : undefined,
+      input4: updatedUser.input4 !== null ? updatedUser.input4 : undefined,
+      input5: updatedUser.input5 !== null ? updatedUser.input5 : undefined,
+      input6: updatedUser.input6 !== null ? updatedUser.input6 : undefined,
+      input7: updatedUser.input7 !== null ? updatedUser.input7 : undefined,
+      input8: updatedUser.input8 !== null ? updatedUser.input8 : undefined,
+    },
+  });
 
-        const verificationToken = await generateVerificationToken(
-            values.email
-        );
-        await sendVerificationEmail(
-            verificationToken.email,
-            verificationToken.token,
-        );
-
-        return { success: "Verification email sent!" };
-    }
-
-    if (values.password && values.newPassword && dbUser.password) {
-        const passwordsMatch = await bcrypt.compare(
-            values.password,
-            dbUser.password,
-        );
-
-        if (!passwordsMatch) {
-            return { error: "Incorrect password!" };
-        }
-
-        const hashedPassword = await bcrypt.hash(
-            values.newPassword,
-            10,
-        );
-        values.password = hashedPassword;
-        values.newPassword = undefined;
-    }
-
-    const updatedUser = await db.user.update({
-        where: { id: dbUser.id },
-        data: {
-            ...values,
-        }
-    });
-
-    update({
-        user: {
-            image: updatedUser.image ?? undefined,
-            name: updatedUser.name,
-            email: updatedUser.email,
-            role: updatedUser.role,
-        }
-    });
-
-
-
-    return { success: "Settings Updated!" }
-}
+  return { success: "Settings Updated!" };
+};

@@ -22,6 +22,14 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  input1      String?
+  input2      String?
+  input3      String?
+  input4      String?
+  input5      String?
+  input6      String?
+  input7      String?
+  input8      String?
   role          UserRole   @default(USER)
   accounts      Account[]
   shipments     Shipment[] // Back-reference to Shipment
