@@ -10,11 +10,13 @@ const useBlogPostsData = (blogpostId: string) => {
 
     const [loading, setLoading] = useState<boolean>(true);
     const [blogPostData, setBlogPostData] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`/api/blogposts/${params?.blogpostId}`);
+                const response = await axios.get(`/api/blogposts/${params.blogpostId}`); // Remove optional chaining if always expected
                 const data = response.data;
 
                 // Set the data in the state variable
@@ -27,9 +29,9 @@ const useBlogPostsData = (blogpostId: string) => {
         }
 
         fetchData();
-    }, [blogpostId]);
+    }, [blogpostId, params.blogpostId]);
 
-    return { loading, blogPostData };
+    return { loading, blogPostData, error }; // Return error state
 };
 
 export default useBlogPostsData;
