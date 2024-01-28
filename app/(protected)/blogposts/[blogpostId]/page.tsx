@@ -7,7 +7,7 @@ interface BlogPostByIdProps {
     blogpostId: string;
 }
 
-const BlogPostById: React.FC<BlogPostByIdProps> = ({ blogpostId }) => {
+const UniquePosts: React.FC<BlogPostByIdProps> = ({ blogpostId }) => {
     const { blogPostData, loading } = useBlogPostsData(blogpostId);
 
     if (loading) {
@@ -32,4 +32,4 @@ const BlogPostById: React.FC<BlogPostByIdProps> = ({ blogpostId }) => {
     );
 };
 
-export default BlogPostById as React.FC<BlogPostByIdProps>;
+export default UniquePosts;
