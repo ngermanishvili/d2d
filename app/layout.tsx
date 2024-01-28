@@ -8,6 +8,7 @@ import NProgressWrapper from '@/components/ui/nprogress-bar'
 import HomeLayoutNavigation from './_components/home-layout-navbar'
 import { GlobalNavbar } from './(protected)/_components/global-navbar'
 import Footer from '@/components/ui/footer'
+import Header from './_components/home-layout-navbar2'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,11 +31,13 @@ export default async function RootLayout({
         <html lang="en">
           <body
             className="bg-slate-50" >
-            <HomeLayoutNavigation />
+            {/* <HomeLayoutNavigation /> */}
+            <Header />
             <div className='p-2 w-full '>
               {session ? <GlobalNavbar /> : null}
             </div>
             {children}
+            <Footer />
           </body>
         </html>
       </SessionProvider >

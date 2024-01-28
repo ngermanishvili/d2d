@@ -12,26 +12,16 @@ import BlogPostCard from "./blog-post-card";
 import AvatarImage from "@/assets/images/avatar1.jpg";
 import AvatarImage2 from "@/assets/images/avatar2.jpg";
 import AvatarImage3 from "@/assets/images/avatar3.jpg";
+import { useRouter } from "next/navigation";
+import useBlogPostsData from "@/hooks/use-blogposts-data";
 
-const BLOG_POSTS = [
-    {
-        img: AvatarImage,
-        title: "Hydrogen-Powered Vehicles",
-        desc: "This article delves into the cutting-edge technology behind hydrogen fuel cells and their environmental benefits.",
-    },
-    {
-        img: AvatarImage2,
-        title: "Mental Health in the Digital Age",
-        desc: "This article explores the intricate relationship between social media usage and mental health",
-    },
-    {
-        img: AvatarImage3,
-        title: "Mars Colonization and Beyond",
-        desc: "This article takes readers on a journey through the latest developments in space exploration.",
-    },
-];
+
 
 export function LatestBlogPosts() {
+    const router = useRouter();
+
+    const { blogPostsData } = useBlogPostsData();
+
     return (
         <section className="py-40 px-8">
             <div className="container mx-auto mb-12">
@@ -40,9 +30,10 @@ export function LatestBlogPosts() {
                 </Typography>
             </div>
             <div className="container mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
-                {BLOG_POSTS.map((props, idx) => (
-                    <BlogPostCard key={idx} {...props} />
+                {blogPostsData?.slice(0, 7).map((item: any) => (
+                    <BlogPostCard key={item} img={item.imageUrl} title={item.title} desc={item.content} />
                 ))}
+
                 <Card
                     placeholder=""
                     className="relative grid h-full w-full place-items-center overflow-hidden
@@ -62,6 +53,7 @@ export function LatestBlogPosts() {
                             variant="text"
                             color="white"
                             className="flex items-center gap-2"
+                            onClick={() => { router.push(`/blogposts`) }}
                         >
                             read more
                             <ArrowRightIcon

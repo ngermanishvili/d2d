@@ -72,6 +72,8 @@ model Billboard {
   updatedAt DateTime @updatedAt
 }
 
+
+
 model Shipment {
   id                    String                  @id @default(uuid())
   name                  String
@@ -113,4 +115,20 @@ model ShipmentStatusHistory {
   timestamp  DateTime @default(now())
 
   Shipment Shipment @relation(fields: [shipmentId], references: [id])
+}
+
+
+model BlogPosts {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  imageUrl    String
+  slug        String   @unique
+  excerpt     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  metaTitle       String?
+  metaDescription String?
+  metaKeywords    String?
 }
