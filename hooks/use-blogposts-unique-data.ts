@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useParams } from 'next/navigation';
 
 
-const useBlogPostsData = (blogpostId: string) => {
+const useBlogPostsData = (blogpostId: any) => {
     const params = useParams()
 
     const [loading, setLoading] = useState<boolean>(true);
