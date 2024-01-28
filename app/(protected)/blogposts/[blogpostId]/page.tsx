@@ -3,11 +3,9 @@ import React from 'react';
 import Image from 'next/image';
 import useBlogPostsData from '@/hooks/use-blogposts-unique-data';
 
-interface BlogPostByIdProps {
-    blogpostId: string;
-}
 
-const UniquePosts: React.FC<BlogPostByIdProps> = ({ blogpostId }) => {
+
+const UniquePosts = (blogpostId: any) => {
     const { blogPostData, loading } = useBlogPostsData(blogpostId);
 
     if (loading) {
