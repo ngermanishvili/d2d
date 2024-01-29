@@ -1,7 +1,3 @@
-import { RoleGate } from "@/components/auth/role-gate";
-
-
-
 interface ProtectedLayoutProps {
     children: React.ReactNode;
 };
