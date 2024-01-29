@@ -1,5 +1,5 @@
-
 import type { Metadata } from 'next'
+import Head from 'next/head'
 
 
 export const metadata: Metadata = {
@@ -107,6 +107,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
     children,
 
+
 }: {
     children: React.ReactNode
 }) {
@@ -114,6 +115,14 @@ export default async function RootLayout({
 
     return (
         <>
+            <Head>
+                <meta charSet="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <meta name="robots" content="index, follow" />
+                {metadata.title && <title>{metadata.title.toString()}</title>}
+                <meta name="description" content={metadata.description || ''} />
+                <meta name="keywords" content={Array.isArray(metadata?.keywords) ? metadata.keywords.join(', ') : metadata?.keywords || ''} />
+            </Head>
             <div className='p-20'>
                 {children}
             </div>
