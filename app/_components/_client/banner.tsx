@@ -1,15 +1,20 @@
+"use client"
 import { useState, useEffect } from 'react';
 
 const hasAcceptedCookies = () => {
-    return document.cookie.includes('acceptedCookies=true');
+    if (typeof document !== 'undefined') {
+        return document.cookie.includes('acceptedCookies=true');
+    }
+    return false; // Default to false if document is not available
 };
 
 export default function Banner() {
     const [bannerOpen, setBannerOpen] = useState<boolean>(!hasAcceptedCookies());
 
     const handleAccept = () => {
-
-        document.cookie = 'acceptedCookies=true; max-age=31536000';
+        if (typeof document !== 'undefined') {
+            document.cookie = 'acceptedCookies=true; max-age=31536000';
+        }
         setBannerOpen(false);
     };
 
@@ -18,6 +23,7 @@ export default function Banner() {
             setBannerOpen(false);
         }
     }, []);
+
 
     return (
         <>

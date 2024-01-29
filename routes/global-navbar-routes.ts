@@ -17,7 +17,7 @@ export const NAV_MENU_GLOBAL = [
     },
     {
         name: "ბლოგი",
-        to: "/",
+        to: "/blogposts",
     },
     {
         name: "გზავნილის ძიება",
