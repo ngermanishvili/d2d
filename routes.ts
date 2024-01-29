@@ -8,6 +8,8 @@
 export const publicRoutes = [
     "/",
     "/auth/new-verification",
+    "/info/privacy-policy",
+    "/blogposts"
 ]
 
 export const privateRoutes =
