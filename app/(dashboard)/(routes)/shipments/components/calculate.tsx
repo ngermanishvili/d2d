@@ -84,7 +84,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
       // Set the selected range based on the found object or null
       setSelectedRange(initialSelectedRange || null);
-
+      console.log("calculates LOG")
       setCity(selectedCity);
       setPackagingUsed(packagingUsed);
       calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
