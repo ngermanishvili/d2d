@@ -43,6 +43,7 @@ import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
 import { format } from "date-fns";
 import { parse, addDays, isSunday } from "date-fns";
+import { ShipmentForm2 } from "./shipment-form2";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -292,10 +293,11 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სახელი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="სახელი" {...field} />
+                <FormItem className="relative w-full mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                  >სახელი</FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input disabled={loading} placeholder="სახელი" {...field} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -617,6 +619,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           </Card>
         </form>
       </Form>
+
     </>
   );
 };

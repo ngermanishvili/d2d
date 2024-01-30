@@ -20,6 +20,16 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import { Label } from "@/components/ui/label"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface WeightRange {
   label: string;
@@ -136,6 +146,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setTotalPrice(totalPrice);
   };
 
+  const handleWeightRangeChange = (selectedLabel: string) => {
+    const selectedRange = weightRanges.find((range) => range.label === selectedLabel) || null;
+    setSelectedRange(selectedRange);
+    calculateTotalPrice(selectedRange, packagingUsed);
+    setRange(selectedLabel);
+  };
+
   const handlePartyChange = (newParty: "Sender" | "Receiver") => {
     setSelectedParty(newParty);
     calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
@@ -154,85 +171,100 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div>
-        <label htmlFor="party-select" className="text-2xl">
-          Choose who pays:{" "}
-        </label>
-        <select
-          className="text-2xl text-red-400 text-bold"
-          id="party-select"
-          value={selectedParty}
-          onChange={(e) =>
-            handlePartyChange(e.target.value as "Sender" | "Receiver")
-          }
-        >
-          <option value="Sender">Sender</option>
-          <option value="Receiver">Receiver</option>
-        </select>
-      </div>
-      {selectedParty === "Receiver" && (
-        <div>
-          <label htmlFor="item-price" className="text-2xl">
-            Enter item price:{" "}
-          </label>
-          <input
-            type="number"
-            id="item-price"
-            value={itemPrice}
-            onChange={(e) => handleItemPriceChange(Number(e.target.value))}
-          />
+      <div className="container flex flex-col bg-slate-200 gap-8">
+
+
+        <div >
+          <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+            კალკულატორი
+          </h2>
+          <p className="leading-7 [&:not(:first-child)]:mt-6">
+            აირჩიე ვინ იხდის შეკვეთის საფასურს
+          </p>
+          <select
+            className="text-2xl text-red-400 text-bold"
+            id="party-select"
+            value={selectedParty}
+            onChange={(e) =>
+              handlePartyChange(e.target.value as "Sender" | "Receiver")
+            }
+          >
+            <option value="Sender">Sender</option>
+            <option value="Receiver">Receiver</option>
+          </select>
         </div>
-      )}
-      <div>
-        <label htmlFor="city-select" className="text-2xl">
-          Choose a city:{" "}
-        </label>
-        <select
-          className="text-2xl text-red-400 text-bold"
-          id="city-select"
-          value={selectedCity}
-          onChange={(e) =>
-            handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
-          }
-        >
-          <option value="Tbilisi">Tbilisi</option>
-          <option value="Rustavi">Rustavi</option>
-        </select>
-      </div>
-      <div>
-        {weightRanges.map((range) => (
-          <div key={range.label}>
+        {selectedParty === "Receiver" && (
+          <div>
+            <label htmlFor="item-price" className="text-2xl">
+              Enter item price:{" "}
+            </label>
             <input
-              type="checkbox"
-              id={range.label}
-              checked={selectedRange?.label === range.label}
-              onChange={() => handleCheckboxChange(range)}
+              type="number"
+              id="item-price"
+              value={itemPrice}
+              onChange={(e) => handleItemPriceChange(Number(e.target.value))}
             />
-            <label htmlFor={range.label}>{range.label}</label>
           </div>
-        ))}
+        )}
+        <div>
+          <label htmlFor="city-select" className="text-2xl">
+            ქალაქის მიხედვით
+          </label>
+          <select
+            className="text-2xl text-red-400 text-bold"
+            id="city-select"
+            value={selectedCity}
+            onChange={(e) =>
+              handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
+            }
+          >
+            <option value="Tbilisi">Tbilisi</option>
+            <option value="Rustavi">Rustavi</option>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="weight-range-select" className="text-2xl">
+            წონა
+          </label>
+          <Select
+            value={selectedRange?.label || ""}
+            onValueChange={handleWeightRangeChange}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select weight range" />
+            </SelectTrigger>
+            <SelectContent>
+              {weightRanges.map((range) => (
+                <SelectItem key={range.label} value={range.label}>
+                  {range.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="mt-4">
+          <input
+            className="w-8 h-8"
+            type="checkbox"
+            id="packaging-service"
+            checked={packagingUsed}
+            onChange={(e) => handlePackagingServiceChange(e.target.checked)}
+          />
+          <label htmlFor="packaging-service" className="text-xl text-red-600">
+            გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1
+            ლარი)
+          </label>
+        </div>
+        <h2 className="text-4xl">შიპმენტის ფასი: {shipmentCost} ლარი</h2>
+        {/* Display item price if the party is the Receiver */}
+        {selectedParty === "Receiver" && (
+          <>
+            <h2 className="text-4xl">ნივთის ღირებულება: {itemPrice} ლარი</h2>
+            <h2 className="text-4xl">ჯამური ფასი: {totalPrice} ლარი</h2>
+          </>
+        )}{" "}
       </div>
-      <div className="mt-4">
-        <input
-          className="w-8 h-8"
-          type="checkbox"
-          id="packaging-service"
-          checked={packagingUsed}
-          onChange={(e) => handlePackagingServiceChange(e.target.checked)}
-        />
-        <label htmlFor="packaging-service" className="text-xl text-red-600">
-          გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1
-          ლარი)
-        </label>
-      </div>
-      <h2 className="text-4xl">შიპმენტის ფასი: {shipmentCost} ლარი</h2>
-      {/* Display item price if the party is the Receiver */}
-      {selectedParty === "Receiver" && (
-        <>
-          <h2 className="text-4xl">ნივთის ღირებულება: {itemPrice} ლარი</h2>
-          <h2 className="text-4xl">ჯამური ფასი: {totalPrice} ლარი</h2>
-        </>
-      )}{" "}
     </>
   );
 };
