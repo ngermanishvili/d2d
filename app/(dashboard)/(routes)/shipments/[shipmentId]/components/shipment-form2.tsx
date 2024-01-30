@@ -381,7 +381,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                         </div>
                                     </div>
                                     <div className="w-full lg:w-6/12 px-4 relative mb-3">
-                                        <FormField
+                                        {/* <FormField
                                             control={form.control}
                                             name="city"
                                             render={({ field }) => (
@@ -394,7 +394,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                                     <FormMessage />
                                                 </FormItem>
                                             )}
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                                 <hr className="mt-6 border-b-1 border-blueGray-300" />
