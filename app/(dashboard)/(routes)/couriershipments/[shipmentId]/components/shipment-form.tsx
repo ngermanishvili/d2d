@@ -529,7 +529,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
             )}
           />
           {/* <ShipmentFormDelivered initialData={initialData} /> */}
-          <ShippingCostGraph />
+          <ShippingCostGraph hasInitialData={initialData ? true : false} />
 
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
