@@ -4,9 +4,9 @@ interface ProtectedLayoutProps {
 
 const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
     return (
-        <div className="">
+        <>
             {children}
-        </div>
+        </>
     );
 }
 

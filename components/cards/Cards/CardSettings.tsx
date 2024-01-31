@@ -31,6 +31,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import usePhotoStore from "@/hooks/photo-store";
+import { RoleGate } from "@/components/auth/role-gate";
 
 // components
 
@@ -80,6 +81,7 @@ export default function CardSettings() {
     if (user?.image) {
       setPhotoUrl(user?.image);
     }
+    console.log(user?.input1, user?.input2);
   }, []);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -106,7 +108,9 @@ export default function CardSettings() {
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
-            <h6 className="text-blueGray-700 text-xl font-bold">ჩემი კაბინეტი</h6>
+            <h6 className="text-blueGray-700 text-xl font-bold">
+              ჩემი კაბინეტი
+            </h6>
             {/* <button
               className="bg-blueGray-700 active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
               type="button"
@@ -148,7 +152,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -171,7 +175,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -255,52 +259,71 @@ export default function CardSettings() {
                 ინფორმაციით
               </h6>
               <div className="flex flex-wrap">
-                <div className="w-full lg:w-6/12 px-4">
-                  <FormField
-                    control={form.control}
-                    name="input1"
-                    render={({ field }) => (
-                      <FormItem className="relative w-full mb-3">
-                        <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input1
-                        </FormLabel>
-                        <FormControl className="relative rounded-md shadow-sm">
-                          <Input
-                            {...field}
-                            placeholder="input1"
-                            disabled={isPending}
-                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
-                          />
-                        </FormControl>
-                        <FormMessage className="mt-1 text-xs text-red-500" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <FormField
-                    control={form.control}
-                    name="input2"
-                    render={({ field }) => (
-                      <FormItem className="relative w-full mb-3">
-                        <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input2
-                        </FormLabel>
-                        <FormControl className="relative rounded-md shadow-sm">
-                          <Input
-                            {...field}
-                            placeholder="input2"
-                            disabled={isPending}
-                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
-                          />
-                        </FormControl>
-                        <FormMessage className="mt-1 text-xs text-red-500" />
-                      </FormItem>
-                    )}
-                  />
-                </div>{" "}
+                <RoleGate allowedRole="USER">
+                  {user?.input1 === null ? (
+                    <>
+                      <div className="w-full lg:w-6/12 px-4">
+                        <FormField
+                          control={form.control}
+                          name="input1"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                input1
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm">
+                                <Input
+                                  {...field}
+                                  placeholder="input1"
+                                  disabled={isPending}
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                  // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                                />
+                              </FormControl>
+                              <FormMessage className="mt-1 text-xs text-red-500" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="w-full p-8 text-center">
+                      საიდენტიფიკაციო კოდის და რაღაცის შესაცვლელად მიმართეთ
+                      მენეჯმენტს <br /> {user?.input1}
+                    </div>
+                  )}
+                  {user?.input2 === null ? (
+                    <div className="w-full lg:w-6/12 px-4">
+                      <FormField
+                        control={form.control}
+                        name="input2"
+                        render={({ field }) => (
+                          <FormItem className="relative w-full mb-3">
+                            <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                              input2
+                            </FormLabel>
+                            <FormControl className="relative rounded-md shadow-sm">
+                              <Input
+                                {...field}
+                                placeholder="input2"
+                                disabled={isPending}
+                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                              />
+                            </FormControl>
+                            <FormMessage className="mt-1 text-xs text-red-500" />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full p-8 text-center">
+                      საიდენტიფიკაციო კოდის და რაღაცის შესაცვლელად მიმართეთ
+                      მენეჯმენტს
+                      <br /> {user?.input2}
+                    </div>
+                  )}
+                </RoleGate>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -316,14 +339,14 @@ export default function CardSettings() {
                             placeholder="input3"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
                       </FormItem>
                     )}
                   />
-                </div>{" "}
+                </div>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -339,7 +362,7 @@ export default function CardSettings() {
                             placeholder="input4"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -362,7 +385,7 @@ export default function CardSettings() {
                             placeholder="input5"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -385,7 +408,7 @@ export default function CardSettings() {
                             placeholder="input6"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -408,7 +431,7 @@ export default function CardSettings() {
                             placeholder="input7"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -431,7 +454,7 @@ export default function CardSettings() {
                             placeholder="input8"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -445,6 +468,9 @@ export default function CardSettings() {
                     name="image"
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
+                        <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                          ატვირთეთ კომპანიის ლოგო
+                        </FormLabel>
                         <FormControl>
                           <ImageUpload
                             value={field.value ? [field.value] : []}

@@ -22,7 +22,7 @@ export default function Header() {
     }, [top])
 
     return (
-        <header className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-white backdrop-blur-sm shadow-lg' : ''}`}>
+        <div className={`fixed w-full z-30 md:bg-opacity-90 transition duration-300 ease-in-out ${!top ? 'bg-white backdrop-blur-sm shadow-lg' : ''}`}>
             <div className="max-w-6xl mx-auto px-5 sm:px-6">
                 <div className="flex items-center justify-between h-16 md:h-20">
 
@@ -65,6 +65,6 @@ export default function Header() {
                     <div className='w-[300px] h-1 bg-black m-2 mb-2 rounded-md'></div>
                 </div> */}
             </div>
-        </header>
+        </div>
     )
 }

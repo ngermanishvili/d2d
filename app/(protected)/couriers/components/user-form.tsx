@@ -2,12 +2,12 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {useState, useEffect} from "react";
-import {Shipment, UserRole} from "@prisma/client";
-import {Trash} from "lucide-react";
-import {useForm} from "react-hook-form";
-import {useParams, useRouter} from "next/navigation";
-import {zodResolver} from "@hookform/resolvers/zod";
+import { useState, useEffect } from "react";
+import { Shipment, UserRole } from "@prisma/client";
+import { Trash } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useParams, useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 import QRCodeGenerator from "@/components/ui/qr-code";
 import useCalculatorStore from "@/hooks/calculate-price";
 
@@ -19,11 +19,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {Heading} from "@/components/ui/heading";
-import {Button} from "@/components/ui/button";
-import {Separator} from "@/components/ui/separator";
-import {Input} from "@/components/ui/input";
-import {AlertModal} from "@/components/modals/alert-modal";
+import { Heading } from "@/components/ui/heading";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { AlertModal } from "@/components/modals/alert-modal";
 import {
   Card,
   CardContent,
@@ -38,10 +38,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {NextURL} from "next/dist/server/web/next-url";
-import {UsersColumn} from "./columns";
-import {db} from "@/lib/db";
-import {error} from "console";
+import { NextURL } from "next/dist/server/web/next-url";
+import { UsersColumn } from "./columns";
+import { db } from "@/lib/db";
+import { error } from "console";
 
 const formSchema = z.object({
   name: z.string().optional(),
@@ -57,7 +57,7 @@ interface ShipmentFormProps {
   initialData: UsersColumn;
 }
 
-export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
+export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
@@ -104,7 +104,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="name"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სახელი</FormLabel>
                   <FormControl>
@@ -117,7 +117,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="number"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>nomeri</FormLabel>
                   <FormControl>
@@ -130,7 +130,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="email"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სახელი</FormLabel>
                   <FormControl>
@@ -143,7 +143,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="role"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>სტატუსი</FormLabel>
                   <Select
@@ -167,7 +167,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({initialData}) => {
             <FormField
               control={form.control}
               name="image"
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormLabel>surati</FormLabel>
                   <FormControl>

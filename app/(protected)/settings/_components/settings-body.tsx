@@ -86,7 +86,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
 
   return (
     <>
-      <main className="profile-page mt-[250px]">
+      <div className="profile-page mt-[250px]">
         <section className="">
           <div
             className="absolute top-0 w-full h-full bg-center bg-cover"
@@ -196,7 +196,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                                     placeholder="John Doe"
                                     disabled={isPending}
                                     className="w-full md:w-[350px] sm:w-[200px]  mx-w-full"
-                                    // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                                  // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                                   />
                                 </FormControl>
                                 <FormMessage className="mt-1 text-xs text-red-500" />
@@ -232,7 +232,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                                 <FormControl>
                                   <ImageUpload
                                     value={field.value ? [field.value] : []}
-                                    onChange={(url) => {field.onChange(url)}}
+                                    onChange={(url) => { field.onChange(url) }}
                                     onRemove={() => field.onChange("")}
                                   />
                                 </FormControl>
@@ -355,7 +355,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 };

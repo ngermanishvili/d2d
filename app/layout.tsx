@@ -39,6 +39,7 @@ export default async function RootLayout({
             className="bg-slate-50" >
             {/* <HomeLayoutNavigation /> */}
             <Header isSession={isSession} />
+
             <div className='p-2 w-full '>
               {session ? <PanelNavbar /> : null}
             </div>

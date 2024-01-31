@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
+import { NextURL } from "next/dist/server/web/next-url";
 
 export async function GET(
   req: Request,
@@ -22,7 +23,10 @@ export async function GET(
   }
 }
 
-export async function PATCH(req: Request, { params }: { params: { shipmentId: string } }) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { shipmentId: string } }
+) {
   try {
     const body = await req.json();
 
@@ -45,7 +49,6 @@ export async function PATCH(req: Request, { params }: { params: { shipmentId: st
       status,
       courierComment,
       label,
-
     } = body;
 
     // Validate if shipmentId is provided
@@ -64,6 +67,11 @@ export async function PATCH(req: Request, { params }: { params: { shipmentId: st
     if (!existingShipment) {
       return new NextResponse("Shipment not found", { status: 404 });
     }
+
+    // Check if the status is changed
+    const isStatusChanged =
+      (existingShipment.status !== status && status === undefined) ||
+      status === null;
 
     // Update the shipment
     const updatedShipment = await db.shipment.updateMany({
@@ -90,14 +98,19 @@ export async function PATCH(req: Request, { params }: { params: { shipmentId: st
         label,
       },
     });
+    if (!status) {
+      return NextResponse.json(updatedShipment);
+    }
 
-    // Create a new entry in ShipmentStatusHistory for the updated status
-    await db.shipmentStatusHistory.create({
-      data: {
-        shipmentId: params.shipmentId,
-        status: status,
-      },
-    });
+    // Create a new entry in ShipmentStatusHistory only if the status is changed
+    if (isStatusChanged) {
+      await db.shipmentStatusHistory.create({
+        data: {
+          shipmentId: params.shipmentId,
+          status: status,
+        },
+      });
+    }
 
     return NextResponse.json(updatedShipment);
   } catch (error) {
@@ -105,7 +118,6 @@ export async function PATCH(req: Request, { params }: { params: { shipmentId: st
     return new NextResponse("Internal error", { status: 500 });
   }
 }
-
 
 export async function DELETE(
   req: Request,

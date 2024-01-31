@@ -20,7 +20,7 @@ export default function Landing() {
     const { imageUrl, loading, label } = useBillboardData();
     return (
         <>
-            <main>
+            <div>
                 <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
                     <div
                         className="absolute top-0 w-full h-full bg-center bg-cover "
@@ -258,7 +258,7 @@ export default function Landing() {
                     </div>
                 </section>
 
-            </main >
+            </div >
         </>
     );
 }
