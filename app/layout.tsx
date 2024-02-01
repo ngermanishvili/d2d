@@ -8,6 +8,8 @@ import NProgressWrapper from '@/components/ui/nprogress-bar'
 import Footer from '@/components/ui/footer'
 import Header from './_components/_client/_client_navigation/home-layout-navbar2'
 import PanelNavbar from './_components/_admin/_panel_navigation/panel-navbar'
+import type { AppProps } from 'next/app';
+import Providers from './_components/_client/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,22 +32,25 @@ export default async function RootLayout({
   let isSession = session ? true : false
 
 
+
   return (
     <>
       <SessionProvider session={session}>
-        <NProgressWrapper />
         <html lang="en">
-          <body
-            className="bg-slate-50" >
-            {/* <HomeLayoutNavigation /> */}
-            <Header isSession={isSession} />
+          <Providers >
+            <body
+              className="bg-slate-50" >
+              <Header isSession={isSession} />
+              <div className='p-2 w-full '>
+                {session ? <PanelNavbar /> : null}
+              </div>
 
-            <div className='p-2 w-full '>
-              {session ? <PanelNavbar /> : null}
-            </div>
-            {children}
-            <Footer />
-          </body>
+              {children}
+
+              <Footer />
+
+            </body>
+          </Providers>
         </html>
       </SessionProvider >
     </>
