@@ -50,7 +50,7 @@ export const {
       }
 
       if (session.user) {
-        session.user.name = token.name;
+        session.user.name = token.name as string;
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.number = token.number as string;
@@ -62,7 +62,7 @@ export const {
         session.user.input6 = token.input6 as string;
         session.user.input7 = token.input7 as string;
         session.user.input8 = token.input8 as string;
-        
+
         session.user.image = token.image as string;
       }
 
@@ -90,7 +90,7 @@ export const {
       token.input7 = existingUser.input7;
       token.input8 = existingUser.input8;
       token.image = existingUser.image;
-      
+
       return token;
     },
   },

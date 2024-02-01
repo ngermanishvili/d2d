@@ -46,9 +46,7 @@ export default async function RootLayout({
               </div>
 
               {children}
-
               <Footer />
-
             </body>
           </Providers>
         </html>
