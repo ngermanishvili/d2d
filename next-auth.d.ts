@@ -4,6 +4,8 @@ import NextAuth, { type DefaultSession } from "next-auth";
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
   isOAuth: boolean;
+  name: string;
+  lastName: string;
   number: string;
   image: string;
   input1: string;

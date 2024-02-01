@@ -72,7 +72,7 @@ export const settings = async (values: z.infer<typeof SettingsSchema>) => {
   update({
     user: {
       image: updatedUser.image ?? undefined,
-      name: updatedUser.name,
+      name: updatedUser.name ?? undefined,
       email: updatedUser.email,
       role: updatedUser.role,
       input1: updatedUser.input1 !== null ? updatedUser.input1 : undefined,

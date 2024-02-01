@@ -150,7 +150,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                     <div className="flex justify-center py-4 lg:pt-4 pt-8">
                       <div className="mr-4 p-3 text-center">
                         <span className="text-md font-bold inline-block uppercase tracking-wide text-blueGray-600">
-                          {`გამარჯობა ${user?.name}!`}
+                          {`გამარჯობsdsdა ${user?.name}!`}
                         </span>
                       </div>
 
@@ -203,6 +203,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                               </FormItem>
                             )}
                           />
+
                           <FormField
                             control={form.control}
                             name="number"
