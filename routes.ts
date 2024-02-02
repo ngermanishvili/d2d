@@ -11,6 +11,7 @@ export const publicRoutes = [
     "/info/privacy-policy",
     "/blogposts",
     "/sitemap.xml",
+    "/robots.txt"
 ]
 
 export const privateRoutes =
