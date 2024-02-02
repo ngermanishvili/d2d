@@ -44,10 +44,10 @@ export default async function RootLayout({
 
               {/* Tawk.to Chat code */}
               {/* Tawk.to Chat code */}
-              {/* <Script
+              <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
                 strategy="lazyOnload"
-              /> */}
+              />
 
               <Header isSession={isSession} />
               <div className='p-2 w-full '>
@@ -58,7 +58,8 @@ export default async function RootLayout({
               <div id="fb-root"></div>
               <div id="fb-customer-chat" className="fb-customerchat"></div>
 
-              <Script id="fb-chat" strategy="lazyOnload">
+              <Script strategy="afterInteractive"
+                id="fb-chat" >
                 {`
               var chatbox = document.getElementById('fb-customer-chat');
               chatbox.setAttribute("page_id", "115850238226188");
