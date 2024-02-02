@@ -8,6 +8,7 @@ import { Shipment } from "@prisma/client";
 import D2DLogo from "@/assets/images/d2d.jpg";
 import Image from "next/image";
 import usePhoneStore from "@/hooks/user-shipment-phone";
+import LoadingSpinner from "@/app/_components/_client/loading-spinner";
 
 const { Title, Paragraph } = Typography;
 
@@ -36,7 +37,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
             alt="Logo"
           />
         </div>
-       
+
       </div>
       <div className="flex justify-between mt-5">
         <div className="">
@@ -46,7 +47,6 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
               <li>სახელი: {capitalizeFirstLetter(shipmentData.name)}</li>
               <li>გვარი: {capitalizeFirstLetter(shipmentData.lastName)}</li>
               <li>
-                {" "}
                 <input
                   type="text"
                   value={phone}
@@ -102,19 +102,19 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
       {shipmentData ? (
         <ShipmentDetails shipmentData={shipmentData} />
       ) : (
-        <p>Loading...</p>
+        <>
+          <LoadingSpinner />
+        </>
       )}
 
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-        <Button disabled={loading} variant="outline" onClick={onClose}>
-          Cancel
-        </Button>
+
         <Button
           disabled={loading}
           variant="destructive"
           onClick={() => onConfirm(phone)}
         >
-          Continue
+          დახურვა
         </Button>
       </div>
     </Modal>

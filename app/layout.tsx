@@ -4,12 +4,13 @@ import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import './globals.css'
-import NProgressWrapper from '@/components/ui/nprogress-bar'
 import Footer from '@/components/ui/footer'
 import Header from './_components/_client/_client_navigation/home-layout-navbar2'
 import PanelNavbar from './_components/_admin/_panel_navigation/panel-navbar'
-import type { AppProps } from 'next/app';
 import Providers from './_components/_client/Providers'
+import Script from 'next/script';
+import Head from 'next/head'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,15 +38,52 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
+          <Head>
+
+            <meta name="google-site-verification" content="your-verification-code" />
+          </Head>
           <Providers >
             <body
               className="bg-slate-50" >
+              {/* Facebook Messenger Chat code */}
+
+
+              {/* Tawk.to Chat code */}
+              {/* Tawk.to Chat code */}
+              <Script src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7" strategy="lazyOnload" />
+
               <Header isSession={isSession} />
               <div className='p-2 w-full '>
                 {session ? <PanelNavbar /> : null}
               </div>
 
               {children}
+              <div id="fb-root"></div>
+              <div id="fb-customer-chat" className="fb-customerchat"></div>
+
+              <Script strategy="afterInteractive"
+                id="fb-chat" >
+                {`
+              var chatbox = document.getElementById('fb-customer-chat');
+              chatbox.setAttribute("page_id", "115850238226188");
+              chatbox.setAttribute("attribution", "biz_inbox");
+
+              window.fbAsyncInit = function() {
+                FB.init({
+                  xfbml: true,
+                  version: 'v18.0'
+                });
+              };
+
+              (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+                fjs.parentNode.insertBefore(js, fjs);
+              }(document, 'script', 'facebook-jssdk'));
+              `}
+              </Script>
               <Footer />
             </body>
           </Providers>
@@ -55,3 +93,4 @@ export default async function RootLayout({
 
   )
 }
+
