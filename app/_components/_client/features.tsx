@@ -37,7 +37,9 @@ export default function Features() {
                     {/* Section header */}
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                         <h1 className="h2 mb-4">რატომ ჩვენ?</h1>
-                        <p className="text-xl text-gray-600">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur excepteur sint occaecat cupidatat.</p>
+                        <p className="text-xl text-gray-600">
+                            ჩვენ ვქნით მარტივ და მოხერხებულ სერვის მომხმარებლისთვის, გაზრდილი ეფექტურობით და კომფორტით.
+                        </p>
                     </div>
 
                     {/* Section content */}
@@ -58,7 +60,7 @@ export default function Features() {
                                 >
                                     <div>
                                         <div className="font-bold leading-snug tracking-tight mb-1">სწრაფი მიწოდება</div>
-                                        <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                                        <div className="text-gray-600">ისარგებლე ყველაზე სწრაფი და იაფი მიწოდებით თბილისის მაშტაბით</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +75,7 @@ export default function Features() {
                                 >
                                     <div>
                                         <div className="font-bold leading-snug tracking-tight mb-1"> კურიერები</div>
-                                        <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                                        <div className="text-gray-600">მორგებული საკურიერო პირობები</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +90,7 @@ export default function Features() {
                                 >
                                     <div>
                                         <div className="uppercase font-bold leading-snug tracking-tight mb-1">24/7 Support</div>
-                                        <div className="text-gray-600">Take collaboration to the next level with security and administrative features built for teams.</div>
+                                        <div className="text-gray-600">მოგვწერე ნებისმიერ დროს და ჩვენი გუნდი მომენტალურად გიპასუხებთ</div>
                                     </div>
                                     <div className="flex justify-center items-center w-8 h-8 bg-white rounded-full shadow flex-shrink-0 ml-3">
                                         <svg className="w-3 h-3 fill-current" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">

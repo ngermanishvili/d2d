@@ -5,7 +5,7 @@ export const NAV_MENU_GLOBAL = [
     },
     {
         name: "ჩვენს შესახებ",
-        to: "/",
+        to: "/about",
     },
     {
         name: "სერვისები",
