@@ -42,13 +42,35 @@ import { NextURL } from "next/dist/server/web/next-url";
 import { UsersColumn } from "./columns";
 import { db } from "@/lib/db";
 import { error } from "console";
-
+import ImageUpload from "@/components/ui/image-upload";
+import Image from "next/image";
+const isValidUrl = (url: string): boolean => {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
 const formSchema = z.object({
-  name: z.string().optional(),
-  number: z.string().optional(),
-  image: z.string().optional(),
-  role: z.nativeEnum(UserRole).optional(),
-  email: z.string().optional(),
+  name: z.optional(z.string()),
+  role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.COURIER]),
+  email: z.optional(z.string().email()),
+  number: z.optional(z.string()),
+
+  image: z.optional(
+    z.string().refine((url) => url === "" || isValidUrl(url), {
+      message: "Invalid URL",
+    })
+  ),
+  input1: z.optional(z.string()),
+  input2: z.optional(z.string()),
+  input3: z.optional(z.string()),
+  input4: z.optional(z.string()),
+  input5: z.optional(z.string()),
+  input6: z.optional(z.string()),
+  input7: z.optional(z.string()),
+  input8: z.optional(z.string()),
 });
 
 type UserFormValues = z.infer<typeof formSchema>;
@@ -74,10 +96,20 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       email: "",
       role: UserRole.USER,
       image: "",
+      input1: "",
+      input2: "",
+      input3: "",
+      input4: "",
+      input5: "",
+      input6: "",
+      input7: "",
+      input8: "",
     },
   });
 
+  const [isPending, startTransition] = useState(false);
   const onSubmit = async (data: UserFormValues) => {
+    console.log(data);
     try {
       await axios.patch(`/api/couriers/${params.id}`, data);
 
@@ -100,83 +132,370 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-          <div className="grid grid-cols-3 gap-8">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სახელი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="სახელი" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="number"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>nomeri</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="სახელი" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />{" "}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სახელი</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="სახელი" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>სტატუსი</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
-                      </SelectTrigger>
+          <div className="flex flex-wrap">
+            {/* <div className="w-full px-4">
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      surati
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        disabled={loading}
+                        placeholder="surat"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value={UserRole.USER}>User</SelectItem>
-                      <SelectItem value={UserRole.COURIER}>Courier</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />{" "}
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>surati</FormLabel>
-                  <FormControl>
-                    <Input disabled={loading} placeholder="surat" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Image
+                height={100}
+                width={100}
+                src={initialData?.image ? initialData.image : ""}
+                alt="Company Picture"
+              />
+            </div> */}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      სახელი
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        disabled={loading}
+                        placeholder="სახელი"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="number"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      nomeri
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        disabled={loading}
+                        placeholder="სახელი"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      სახელი
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        disabled={loading}
+                        placeholder="სახელი"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />{" "}
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      სტატუსი
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="relative rounded-md shadow-sm">
+                        <SelectTrigger>
+                          <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={UserRole.USER}>User</SelectItem>
+                        <SelectItem value={UserRole.COURIER}>
+                          Courier
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />{" "}
+            </div>
+          </div>
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input1"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input1
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input1"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>{" "}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input2"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input1
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input2"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input3"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input3
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input3"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input4"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input4
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input4"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>{" "}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input5"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input5
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input5"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>{" "}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input6"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input6
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input6"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>{" "}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input7"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input7
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input7"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>{" "}
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="input8"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      input8
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        {...field}
+                        placeholder="input8"
+                        disabled={isPending}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      />
+                    </FormControl>
+                    <FormMessage className="mt-1 text-xs text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      ატვირთეთ კომპანიის ლოგო
+                    </FormLabel>
+                    <FormControl>
+                      <ImageUpload
+                        value={field.value ? [field.value] : []}
+                        onChange={(url) => field.onChange(url)}
+                        onRemove={() => field.onChange("")}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="w-full lg:w-6/12 px-4">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem className="mb-4">
+                    <FormLabel className="block mb-1 text-sm font-bold">
+                      სტატუსი
+                    </FormLabel>
+                    <Select
+                      disabled={isPending}
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="">
+                        <SelectTrigger>
+                          <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value={UserRole.ADMIN}>Admin</SelectItem>
+                        <SelectItem value={UserRole.USER}>User</SelectItem>
+                        <SelectItem value={UserRole.COURIER}>
+                          Courier
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}

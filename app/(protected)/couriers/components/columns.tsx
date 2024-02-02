@@ -9,8 +9,16 @@ export type UsersColumn = {
   name: string | undefined;
   number: string | undefined;
   image: string | undefined;
-  role: UserRole;
   email: string | undefined;
+  input1: string | undefined;
+  input2: string | undefined;
+  input3: string | undefined;
+  input4: string | undefined;
+  input5: string | undefined;
+  input6: string | undefined;
+  input7: string | undefined;
+  input8: string | undefined;
+  role: UserRole;
 };
 
 export const columns: ColumnDef<UsersColumn>[] = [

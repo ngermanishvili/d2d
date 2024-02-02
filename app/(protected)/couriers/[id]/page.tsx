@@ -20,6 +20,14 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
               image: user.image || undefined,
               role: user.role || undefined,
               email: user.email || undefined,
+              input1: user.input1 || "",
+              input2: user.input2 || "",
+              input3: user.input3 || "",
+              input4: user.input4 || "",
+              input5: user.input5 || "",
+              input6: user.input6 || "",
+              input7: user.input7 || "",
+              input8: user.input8 || "",
             }}
           />
         )}
