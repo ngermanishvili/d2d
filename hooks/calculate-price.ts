@@ -12,7 +12,7 @@ interface CalculatorStore {
   setCity: (city: "Tbilisi" | "Rustavi") => void;
   selectedParty: "Sender" | "Receiver";
   setSelectedParty: (party: "Sender" | "Receiver") => void;
-  itemPrice: number;
+  itemPrice: string;
   setItemPrice: (itemPrice: number) => void;
   totalPrice: number; // New state for the total price (shipment + item price)
   setTotalPrice: (totalPrice: number) => void; // Add setTotalPrice function
@@ -29,8 +29,8 @@ const useCalculatorStore = create<CalculatorStore>((set) => ({
   setRange: (range) => set({ range }),
   selectedParty: "Sender",
   setSelectedParty: (party) => set({ selectedParty: party }),
-  itemPrice: 0,
-  setItemPrice: (itemPrice) => set({ itemPrice }),
+  itemPrice: "",
+  setItemPrice: (itemPrice) => set({ itemPrice: itemPrice.toString() }),
   totalPrice: 0, // Initialize the total price state
   setTotalPrice: (totalPrice) => set({ totalPrice }), // Implementation for setTotalPrice
 }));

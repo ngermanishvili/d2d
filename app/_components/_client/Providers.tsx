@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 
 const ProgressBar = dynamic(
     () => import('next-nprogress-bar').then((module) => module.AppProgressBar),
-    { ssr: false }
+    // { ssr: false }
 );
 
 const Providers = ({ children }: { children: React.ReactNode }) => {

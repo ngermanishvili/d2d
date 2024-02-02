@@ -20,8 +20,8 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import {
   Select,
@@ -30,6 +30,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { string } from "zod";
 
 interface WeightRange {
   label: string;
@@ -84,7 +85,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
       // Set the selected range based on the found object or null
       setSelectedRange(initialSelectedRange || null);
-      console.log("calculates LOG")
+      console.log("calculates LOG");
       setCity(selectedCity);
       setPackagingUsed(packagingUsed);
       calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
@@ -120,7 +121,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     usePackaging: boolean,
     city: string = selectedCity,
     selectedPartyParam: "Sender" | "Receiver" = selectedParty,
-    itemPrice: number = useCalculatorStore.getState().itemPrice
+    itemPrice: number = useCalculatorStore.getState().itemPrice === ""
+      ? 0
+      : parseFloat(useCalculatorStore.getState().itemPrice)
   ) => {
     let shipmentPrice = 0;
 
@@ -147,7 +150,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   };
 
   const handleWeightRangeChange = (selectedLabel: string) => {
-    const selectedRange = weightRanges.find((range) => range.label === selectedLabel) || null;
+    const selectedRange =
+      weightRanges.find((range) => range.label === selectedLabel) || null;
     setSelectedRange(selectedRange);
     calculateTotalPrice(selectedRange, packagingUsed);
     setRange(selectedLabel);
@@ -171,99 +175,145 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="container flex flex-col bg-slate-200 gap-8">
+      <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 justify-center">
+        <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
+          კალკულატორი
+        </h2>
+        <div className="w-full flex flex-row gap-8 mb-8">
+          <div className="w-1/2">
+            <div className="w-full flex gap-8 flex-col">
+              <div>
+                <div className="flex w-full justify-between gap-1">
+                  <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                    გადამხდელი მხარე
+                  </p>
+                  <p className=" text-2xl leading-9 :mt-6">:</p>
+                  <div className="w-1/2">
+                    <Select
+                      value={selectedParty || ""}
+                      onValueChange={(value) =>
+                        handlePartyChange(value as "Sender" | "Receiver")
+                      }
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="აირჩიეთ გადამხდელი მხარე" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Sender">გამგზავნი</SelectItem>
+                        <SelectItem value="Receiver">მიმღები</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </div>
+              {selectedParty === "Receiver" && (
+                <div className="flex w-full justify-between align-middle gap-1">
+                  <label
+                    htmlFor="item-price"
+                    className="text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5"
+                  >
+                    ნივთის საფასური
+                  </label>
+                  <p className=" text-2xl leading-9 :mt-6">:</p>
+                  <input
+                    className="w-1/2 bg-transparent rounded-md border text-popover-foreground shadow-md pl-[2px] "
+                    type="text"
+                    id="item-price"
+                    value={itemPrice}
+                    onChange={(e) => {
+                      handleItemPriceChange(Number(e.target.value));
+                    }}
+                  />
+                </div>
+              )}
+              <div className="flex w-full justify-between gap-1">
+                <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                  გზავნილის წონა
+                </p>
+                <p className=" text-2xl leading-9 :mt-6">:</p>
 
-
-        <div >
-          <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
-            კალკულატორი
-          </h2>
-          <p className="leading-7 [&:not(:first-child)]:mt-6">
-            აირჩიე ვინ იხდის შეკვეთის საფასურს
-          </p>
-          <select
-            className="text-2xl text-red-400 text-bold"
-            id="party-select"
-            value={selectedParty}
-            onChange={(e) =>
-              handlePartyChange(e.target.value as "Sender" | "Receiver")
-            }
-          >
-            <option value="Sender">Sender</option>
-            <option value="Receiver">Receiver</option>
-          </select>
-        </div>
-        {selectedParty === "Receiver" && (
-          <div>
-            <label htmlFor="item-price" className="text-2xl">
-              Enter item price:{" "}
-            </label>
-            <input
-              type="number"
-              id="item-price"
-              value={itemPrice}
-              onChange={(e) => handleItemPriceChange(Number(e.target.value))}
-            />
+                <div className="w-1/2">
+                  <Select
+                    value={selectedRange?.label || ""}
+                    onValueChange={handleWeightRangeChange}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select weight range" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {weightRanges.map((range) => (
+                        <SelectItem key={range.label} value={range.label}>
+                          {range.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="flex w-full justify-between gap-1">
+                <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                  შეკვეთის ქალაქი
+                </p>
+                <p className=" text-2xl leading-9 :mt-6">:</p>
+                <div className="w-1/2">
+                  <Select
+                    value={selectedCity || ""}
+                    onValueChange={(value) =>
+                      handleCityChange(value as "Tbilisi" | "Rustavi")
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="აირჩიეთ ქალაქი" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Tbilisi">თბილისი</SelectItem>
+                      <SelectItem value="Rustavi">რუსთავი</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-        <div>
-          <label htmlFor="city-select" className="text-2xl">
-            ქალაქის მიხედვით
-          </label>
-          <select
-            className="text-2xl text-red-400 text-bold"
-            id="city-select"
-            value={selectedCity}
-            onChange={(e) =>
-              handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
-            }
-          >
-            <option value="Tbilisi">Tbilisi</option>
-            <option value="Rustavi">Rustavi</option>
-          </select>
+          <div className="w-1/2 ml-8">
+            <div className="w-full flex flex-col gap-8">
+              <div className="flex justify-start align-baseline gap-3 h-[36px] pt-1.5 ml-4">
+                <input
+                  className="w-6 h-6"
+                  type="checkbox"
+                  id="packaging-service"
+                  checked={packagingUsed}
+                  onChange={(e) =>
+                    handlePackagingServiceChange(e.target.checked)
+                  }
+                />
+                <label
+                  htmlFor="packaging-service"
+                  className="text-xl leading-5 text-black text-primary"
+                >
+                  შეფუთის სერვისი (ღირებულება 1ლარი)
+                </label>
+              </div>
+              <div className="flex justify-start flex-col h-[36px] ml-4">
+                <div className="flex flex-col gap-8">
+                  <h2 className="text-2xl h-[36px] pb-1 pt-1">
+                    შიპმენტის ფასი: {shipmentCost} ლარი
+                  </h2>
+                  {selectedParty === "Receiver" && (
+                    <>
+                      <h2 className="text-2xl h-[36px] pb-1 pt-1">
+                        ნივთის ღირებულება: {itemPrice === "" ? 0 : itemPrice}{" "}
+                        ლარი
+                      </h2>
+                      <h2 className="text-2xl h-[36px] pb-1 pt-1">
+                        ჯამური ფასი: {totalPrice} ლარი
+                      </h2>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div>
-          <label htmlFor="weight-range-select" className="text-2xl">
-            წონა
-          </label>
-          <Select
-            value={selectedRange?.label || ""}
-            onValueChange={handleWeightRangeChange}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select weight range" />
-            </SelectTrigger>
-            <SelectContent>
-              {weightRanges.map((range) => (
-                <SelectItem key={range.label} value={range.label}>
-                  {range.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="mt-4">
-          <input
-            className="w-8 h-8"
-            type="checkbox"
-            id="packaging-service"
-            checked={packagingUsed}
-            onChange={(e) => handlePackagingServiceChange(e.target.checked)}
-          />
-          <label htmlFor="packaging-service" className="text-xl text-red-600">
-            გსურთ შეფუთვის სერვისით სარგებლობა? <br /> (შეფუთვის ღირებულება 1
-            ლარი)
-          </label>
-        </div>
-        <h2 className="text-4xl">შიპმენტის ფასი: {shipmentCost} ლარი</h2>
-        {/* Display item price if the party is the Receiver */}
-        {selectedParty === "Receiver" && (
-          <>
-            <h2 className="text-4xl">ნივთის ღირებულება: {itemPrice} ლარი</h2>
-            <h2 className="text-4xl">ჯამური ფასი: {totalPrice} ლარი</h2>
-          </>
-        )}{" "}
       </div>
     </>
   );
