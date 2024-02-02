@@ -44,10 +44,10 @@ export default async function RootLayout({
 
               {/* Tawk.to Chat code */}
               {/* Tawk.to Chat code */}
-              <Script
+              {/* <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
                 strategy="lazyOnload"
-              />
+              /> */}
 
               <Header isSession={isSession} />
               <div className='p-2 w-full '>
