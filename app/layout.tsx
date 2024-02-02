@@ -41,7 +41,7 @@ export default async function RootLayout({
             <body
               className="bg-slate-50" >
               {/* Facebook Messenger Chat code */}
-              <Script strategy="lazyOnload">
+              <Script id="fb-chat" strategy="lazyOnload">
                 {`
                   // Messenger საუბრის დანამატი Code
                   var chatbox = document.getElementById('fb-customer-chat');
