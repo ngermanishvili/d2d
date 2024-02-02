@@ -4,12 +4,12 @@ import { Inter } from 'next/font/google'
 import { SessionProvider } from 'next-auth/react'
 import { auth } from '@/auth'
 import './globals.css'
-import NProgressWrapper from '@/components/ui/nprogress-bar'
 import Footer from '@/components/ui/footer'
 import Header from './_components/_client/_client_navigation/home-layout-navbar2'
 import PanelNavbar from './_components/_admin/_panel_navigation/panel-navbar'
-import type { AppProps } from 'next/app';
 import Providers from './_components/_client/Providers'
+import Script from 'next/script';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -40,6 +40,35 @@ export default async function RootLayout({
           <Providers >
             <body
               className="bg-slate-50" >
+              <Script strategy="lazyOnload">
+                {`
+                  // Messenger საუბრის დანამატი Code
+                  var chatbox = document.getElementById('fb-customer-chat');
+                  chatbox.setAttribute("page_id", "115850238226188");
+                  chatbox.setAttribute("attribution", "biz_inbox");
+
+                  // Your SDK code
+                  window.fbAsyncInit = function() {
+                    FB.init({
+                      xfbml: true,
+                      version: 'v19.0'
+                    });
+                  };
+
+                  (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) return;
+                    js = d.createElement(s); js.id = id;
+                    js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                  }(document, 'script', 'facebook-jssdk'));
+                `}
+              </Script>
+              <Script
+                src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
+                strategy="lazyOnload"
+              />
+
               <Header isSession={isSession} />
               <div className='p-2 w-full '>
                 {session ? <PanelNavbar /> : null}
@@ -55,3 +84,4 @@ export default async function RootLayout({
 
   )
 }
+

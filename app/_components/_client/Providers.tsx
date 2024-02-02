@@ -1,5 +1,10 @@
 "use client"
-import { AppProgressBar as ProgressBar } from 'next-nprogress-bar';
+import dynamic from 'next/dynamic';
+
+const ProgressBar = dynamic(
+    () => import('next-nprogress-bar').then((module) => module.AppProgressBar),
+    { ssr: false }
+);
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
     return (
