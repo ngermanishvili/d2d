@@ -41,6 +41,23 @@ export default async function RootLayout({
             <body
               className="bg-slate-50" >
               {/* Facebook Messenger Chat code */}
+
+              {/* Tawk.to Chat code */}
+              {/* Tawk.to Chat code */}
+              <Script
+                src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
+                strategy="lazyOnload"
+              />
+
+              <Header isSession={isSession} />
+              <div className='p-2 w-full '>
+                {session ? <PanelNavbar /> : null}
+              </div>
+
+              {children}
+              <div id="fb-root"></div>
+              <div id="fb-customer-chat" className="fb-customerchat"></div>
+
               <Script id="fb-chat" strategy="lazyOnload">
                 {`
               var chatbox = document.getElementById('fb-customer-chat');
@@ -63,19 +80,6 @@ export default async function RootLayout({
               }(document, 'script', 'facebook-jssdk'));
               `}
               </Script>
-              {/* Tawk.to Chat code */}
-              {/* Tawk.to Chat code */}
-              <Script
-                src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
-                strategy="lazyOnload"
-              />
-
-              <Header isSession={isSession} />
-              <div className='p-2 w-full '>
-                {session ? <PanelNavbar /> : null}
-              </div>
-
-              {children}
               <Footer />
             </body>
           </Providers>
