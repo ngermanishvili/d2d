@@ -40,6 +40,7 @@ export default async function RootLayout({
           <Providers >
             <body
               className="bg-slate-50" >
+              {/* Facebook Messenger Chat code */}
               <Script strategy="lazyOnload">
                 {`
                   // Messenger საუბრის დანამატი Code
@@ -65,10 +66,10 @@ export default async function RootLayout({
                 `}
               </Script>
               {/* Tawk.to Chat code */}
+              {/* Tawk.to Chat code */}
               <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
                 strategy="lazyOnload"
-                id="tawk-to-script"
               />
 
               <Header isSession={isSession} />
