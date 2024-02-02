@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 1,
         },
         {
-            url: "https://acme.com/blogposts",
+            url: "https://d2d.ge/blogposts",
             changeFrequency: "weekly",
             priority: 0.8,
         },
