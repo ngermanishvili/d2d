@@ -9,10 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
       setIsClient(true);
-
       setIsLoading(false);
     };
 
@@ -21,7 +18,6 @@ export default function Home() {
 
   return (
     <>
-
       {isLoading ? (
         <LoadingSpinner />
       ) : (
