@@ -64,9 +64,11 @@ export default async function RootLayout({
                   }(document, 'script', 'facebook-jssdk'));
                 `}
               </Script>
+              {/* Tawk.to Chat code */}
               <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
                 strategy="lazyOnload"
+                id="tawk-to-script"
               />
 
               <Header isSession={isSession} />
