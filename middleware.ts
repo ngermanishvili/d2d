@@ -6,7 +6,6 @@ import {
     apiAuthPrefix,
     privateRoutes,
     DEFAULT_LOGIN_REDIRECT,
-    COOKIES_POLICY_ROUTE,
 } from "@/routes";
 // import { setCookie, getCookie } from 'cookies-next';
 import { NextRequest, NextResponse } from 'next/server';
@@ -16,7 +15,6 @@ const { auth } = NextAuth(authConfig);
 export default auth((req) => {
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
-
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
     const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -33,6 +31,8 @@ export default auth((req) => {
     // if (!hasAcceptedCookies && hasExplicitlyAcceptedCookies) {
     //     setCookie('acceptedCookies', 'true', { req });
     // }
+
+
 
     if (isApiAuthRoute) {
         return null;
@@ -52,9 +52,11 @@ export default auth((req) => {
         return null;
     }
 
-    if (!isLoggedIn && !isPublicRoute) {
-        return NextResponse.redirect(new URL("/auth/login", nextUrl));
+    if (!isLoggedIn && isPublicRoute) {
+        return null;
     }
+
+
 
     return NextResponse.next();
 });
