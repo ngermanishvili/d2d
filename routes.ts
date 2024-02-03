@@ -4,6 +4,7 @@
  * @type {string[]}
  */
 
+
 export const publicRoutes = [
   "/",
   "/auth/new-verification",
@@ -13,6 +14,12 @@ export const publicRoutes = [
   "/robots.txt",
   "/about",
 ];
+
+/**
+ * An array of routes that are private
+ * These routes are only accessible with authentication
+ * @type {string[]}
+ */
 
 export const privateRoutes = [
   "/billboards",

@@ -42,7 +42,7 @@ export default function Header({ isSession }: { isSession: boolean }) {
                 <div className="flex items-center justify-between h-16 md:h-20">
 
                     {/* Site branding */}
-                    <div className="shrink-0 cursor-pointer">
+                    <div className="swhrink-0 cursor-pointer">
                         <Link href="/">
                             <Image className='rounded-md' src={Logo} alt="Logo" width={80} height={60} />
                         </Link>
