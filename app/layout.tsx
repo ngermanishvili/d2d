@@ -38,11 +38,6 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
-          <Head>
-
-            <meta name="google-site-verification" content="your-verification-code" />
-            <meta name="robots" content="noindex"></meta>
-          </Head>
           <Providers >
             <body
               className="bg-slate-50" >

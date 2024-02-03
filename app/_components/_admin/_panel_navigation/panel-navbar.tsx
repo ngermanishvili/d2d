@@ -51,7 +51,7 @@ export function PanelNavbar() {
     }, []);
 
     return (
-        <div className="px-10 sticky top-4 z-0 mt-[100px]">
+        <div className=" sticky top-4 z-0 mt-[100px]">
             <div className="mx-auto ">
                 <MTNavbar
                     placeholder=''
