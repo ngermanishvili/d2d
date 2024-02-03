@@ -3,6 +3,8 @@ import { ShipmentClient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId } from "@/lib/auth";
 import { RoleGate } from "@/components/auth/role-gate";
+import ShipmentFormXLSX from "./[shipmentId]/components/shipment-xlsx";
+import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -16,8 +18,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -46,12 +48,14 @@ const ShipmentPage = async () => {
       chabarebisDro: item?.chabarebisDro,
     })
   );
+ 
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
           <ShipmentClient data={formattedShipments} />
+          <ShipmentFormXLSX />
         </RoleGate>
         <RoleGate allowedRole="USER">
           <ShipmentClient data={formattedShipments} />

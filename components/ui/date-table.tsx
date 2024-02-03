@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -29,14 +29,15 @@ import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
 import { RoleGate } from "../auth/role-gate";
 import { useSearchKeyStore } from "@/hooks/search-key-store";
-
-interface DataTableProps<TData, TValue> {
+import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import { ShipmentColumn } from "@/hooks/xlsx-shipment-store";
+interface DataTableProps<TData extends ShipmentColumn, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchKey: string;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData extends ShipmentColumn, TValue>({
   columns,
   data,
   searchKey,
@@ -57,8 +58,16 @@ export function DataTable<TData, TValue>({
       columnFilters,
     },
   });
+  const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
 
-  const { ids } = idSetStore();
+  const { ids, pushId, deleteId } = idSetStore();
+  useEffect(() => {
+    let array = table
+      .getFilteredSelectedRowModel()
+      .rows.map((item) => item.original);
+    setFilteredDataxlsx(array);
+  }, [ids, pushId, deleteId]);
+
   const onDelete = async () => {
     try {
       // Assuming you want to send the IDs in the request body
@@ -220,15 +229,16 @@ export function DataTable<TData, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
-                        } bg-red-200 p-2 font-semibold border `}
+                      className={`${
+                        index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
+                      } bg-red-200 p-2 font-semibold border `}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -244,8 +254,9 @@ export function DataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                          } p-2 border`}
+                        className={`${
+                          index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                        } p-2 border`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -286,7 +297,7 @@ export function DataTable<TData, TValue>({
             Next
           </Button>
         </div>
-      </div >
+      </div>
     </>
   );
 }

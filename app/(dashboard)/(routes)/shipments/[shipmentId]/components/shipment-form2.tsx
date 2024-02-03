@@ -303,7 +303,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 w-full"
+                className="space-y-8 w-full flex flex-col"
               >
                 <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
                   გამგზავნის მონაცემები
@@ -733,7 +733,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 {action === "Create" ? (
                   <Button
                     disabled={loading}
-                    className="ml-auto"
+                    className="ml-auto self-end"
                     onClick={() => setIsConfirmOpen(true)}
                   >
                     დადასტურება
@@ -741,7 +741,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 ) : (
                   <Button
                     disabled={loading}
-                    className="ml-auto"
+                    className="ml-auto self-start"
                     onClick={() => console.log("first")}
                   >
                     ცვილების შენახვა
