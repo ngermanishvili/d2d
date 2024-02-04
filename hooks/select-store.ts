@@ -8,7 +8,7 @@ interface IdStore {
 }
 
 // Create the Zustand store
-export const idSetStore = create<IdStore>((set) => ({
+export const useidSetStore = create<IdStore>((set) => ({
   // Initial state with an empty array
   ids: [],
 

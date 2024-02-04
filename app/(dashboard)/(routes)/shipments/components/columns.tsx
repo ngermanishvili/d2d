@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
-import { idSetStore } from "@/hooks/select-store";
+import { useidSetStore } from "@/hooks/select-store";
 import { Badge, Alert, Tag } from "antd";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 export type ShipmentColumn = {
@@ -81,7 +81,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       );
     },
     cell: ({ row }) => {
-      const { pushId, ids, deleteId } = idSetStore();
+      const { pushId, ids, deleteId } = useidSetStore();
 
       return (
         <Checkbox
