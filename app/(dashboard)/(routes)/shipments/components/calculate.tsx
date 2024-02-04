@@ -176,18 +176,18 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   return (
     <>
       <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 justify-center">
-        <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
+        <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
           კალკულატორი
         </h2>
-        <div className="w-full flex flex-row gap-8 mb-8">
-          <div className="w-1/2">
-            <div className="w-full flex gap-8 flex-col">
+        <div className="w-full flex flex-col md:flex-row gap-8 mb-8">
+          <div className="w-full md:w-1/2">
+            <div className="w-full flex gap-4 md:gap-8 flex-col">
               <div>
                 <div className="flex w-full justify-between gap-1">
-                  <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                  <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
                     გადამხდელი მხარე
                   </p>
-                  <p className=" text-2xl leading-9 :mt-6">:</p>
+                  <p className="text-base md:text-xl leading-9 :mt-4">:</p>
                   <div className="w-1/2">
                     <Select
                       value={selectedParty || ""}
@@ -210,13 +210,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 <div className="flex w-full justify-between align-middle gap-1">
                   <label
                     htmlFor="item-price"
-                    className="text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5"
+                    className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5"
                   >
                     ნივთის საფასური
                   </label>
-                  <p className=" text-2xl leading-9 :mt-6">:</p>
+                  <p className="text-base md:text-xl leading-9 :mt-4">:</p>
                   <input
-                    className="w-1/2 bg-transparent rounded-md border text-popover-foreground shadow-md pl-[2px] "
+                    className="w-1/2 h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md pl-[2px] text-sm md:text-base"
                     type="text"
                     id="item-price"
                     value={itemPrice}
@@ -227,11 +227,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
               )}
               <div className="flex w-full justify-between gap-1">
-                <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
                   გზავნილის წონა
                 </p>
-                <p className=" text-2xl leading-9 :mt-6">:</p>
-
+                <p className="text-base md:text-xl leading-9 :mt-4">:</p>
                 <div className="w-1/2">
                   <Select
                     value={selectedRange?.label || ""}
@@ -251,10 +250,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
               </div>
               <div className="flex w-full justify-between gap-1">
-                <p className=" text-2xl leading-8 [&:not(:first-child)]:mt-6 w-2/5">
+                <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
                   შეკვეთის ქალაქი
                 </p>
-                <p className=" text-2xl leading-9 :mt-6">:</p>
+                <p className="text-base md:text-xl leading-9 :mt-4">:</p>
                 <div className="w-1/2">
                   <Select
                     value={selectedCity || ""}
@@ -274,9 +273,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               </div>
             </div>
           </div>
-          <div className="w-1/2 ml-8">
-            <div className="w-full flex flex-col gap-8">
-              <div className="flex justify-start align-baseline gap-3 h-[36px] pt-1.5 ml-4">
+          <div className="w-full md:w-1/2 mt-4 md:mt-0">
+            <div className="w-full flex flex-col gap-4">
+              <div className="flex justify-start align-baseline gap-2 h-[36px] pt-1.5 ml-2 md:ml-4">
                 <input
                   className="w-6 h-6"
                   type="checkbox"
@@ -288,28 +287,25 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 />
                 <label
                   htmlFor="packaging-service"
-                  className="text-xl leading-5 text-black text-primary"
+                  className="text-base md:text-xl leading-5 text-black text-primary"
                 >
                   შეფუთის სერვისი (ღირებულება 1ლარი)
                 </label>
               </div>
-              <div className="flex justify-start flex-col h-[36px] ml-4">
-                <div className="flex flex-col gap-8">
-                  <h2 className="text-2xl h-[36px] pb-1 pt-1">
-                    შიპმენტის ფასი: {shipmentCost} ლარი
-                  </h2>
-                  {selectedParty === "Receiver" && (
-                    <>
-                      <h2 className="text-2xl h-[36px] pb-1 pt-1">
-                        ნივთის ღირებულება: {itemPrice === "" ? 0 : itemPrice}{" "}
-                        ლარი
-                      </h2>
-                      <h2 className="text-2xl h-[36px] pb-1 pt-1">
-                        ჯამური ფასი: {totalPrice} ლარი
-                      </h2>
-                    </>
-                  )}
-                </div>
+              <div className="flex justify-start flex-col gap-4 ml-2 md:ml-4">
+                <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
+                  შიპმენტის ფასი: {shipmentCost} ლარი
+                </h2>
+                {selectedParty === "Receiver" && (
+                  <>
+                    <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
+                      ნივთის ღირებულება: {itemPrice === "" ? 0 : itemPrice} ლარი
+                    </h2>
+                    <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
+                      ჯამური ფასი: {totalPrice} ლარი
+                    </h2>
+                  </>
+                )}
               </div>
             </div>
           </div>
