@@ -57,8 +57,7 @@ const ShipmentPage = async () => {
           <ShipmentClient data={formattedShipments} />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
-          <div className="text-red-500 uppercase">
-            Error: წვდომა შეზღუდულია!
+          <div className="flex items-center justify-center h-[50vh]">
           </div>
         )}
       </div>

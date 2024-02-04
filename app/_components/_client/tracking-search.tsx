@@ -72,10 +72,9 @@ const TrackingSearchContainer: React.FC = () => {
     return (
         <>
             <Container>
-                <div className='rounded-md w-full bg-transparent flex justify-between p-4 '>
-
-                    <Input className='border-2 border-white bg-white outine-none md:flex-col' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
-                    <SearchIcon onClick={handleSearchClick} className=' text-white ml-4 mt-1 flex justify-center items-center' />
+                <div className='rounded-md  bg-transparent flex justify-between p-4  '>
+                    <Input placeholder='ადევნე თვალი შენს ამანათს' className='border-2 h-[50px] border-white bg-white outine-none md:flex-col' value={inputValue} onChange={(e) => setInputValue(e.target.value)} />
+                    <SearchIcon onClick={handleSearchClick} className=' absolute right-[40px] mt-3 lg:right-[120px] text-black rounded-md w-6 h-6 ml-4  flex justify-center items-center ' />
                 </div>
             </Container>
             {isModalOpen && shipmentData && (

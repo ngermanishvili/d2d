@@ -2,6 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import LoadingSpinner from '@/app/_components/_client/loading-spinner';
+import TrackingSearchContainer from '@/app/_components/_client/tracking-search';
 
 interface BillboardProps {
     imageUrl: string;
@@ -25,7 +26,12 @@ const BillBoardUi: React.FC<BillboardProps> = ({ imageUrl, loading, label }) => 
                         width={imageWidth}
                         height={imageHeight}
                     />
+
                 )}
+                {/* <h2 className='flex justify-center items-center mt-4'>ადევნე თვალი შენს ამანათს</h2> */}
+                <div className='absolute top-[280px] w-full max-w-[1200px] lg:left-[14%]'>
+                    <TrackingSearchContainer />
+                </div>
             </div>
         </>
     );

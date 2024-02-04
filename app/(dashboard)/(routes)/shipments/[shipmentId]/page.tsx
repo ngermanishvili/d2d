@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { ShipmentForm } from "./components/shipment-form";
 import { ShipmentForm2 } from "./components/shipment-form2";
 import { RoleGate } from "@/components/auth/role-gate";
-import AuthErrorPage from "@/app/auth/error/page";
+import ErrorPage404 from "@/app/_components/_client/error-page";
 
 const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
     const shipment = await db.shipment.findUnique({
@@ -10,12 +10,11 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
             id: params.shipmentId,
         },
     });
+
     return (
         <>
             <div className="flex justify-center items-center h-[80vh]">
-
-
-                <AuthErrorPage />
+                <ErrorPage404 />
             </div>
             <RoleGate allowedRole="ADMIN"  >
                 <div className="flex-col ">

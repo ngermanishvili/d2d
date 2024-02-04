@@ -102,12 +102,12 @@ export default function Landing() {
                         </div>
 
 
-                        <div className="mx-8 mt-10 lg:mx-16 -mt-14 rounded-xl bg-black p-5 md:p-14 shadow-md ">
+                        {/* <div className="mx-8 mt-10 lg:mx-16 -mt-14 rounded-xl bg-black p-5 md:p-14 shadow-md ">
                             <div className="flex justify-between items-center w-400">
                                 <h3 className="text-red-400 text-3xl">ადევნე თვალი შენს ამანათს</h3>
                                 <TrackingSearchContainer />
                             </div>
-                        </div>
+                        </div> */}
                         <Features />
 
 
