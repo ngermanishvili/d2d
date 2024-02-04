@@ -22,7 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { idSetStore } from "@/hooks/select-store";
+import { useidSetStore } from "@/hooks/select-store";
 import { db } from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
@@ -60,7 +60,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
   });
   const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
 
-  const { ids, pushId, deleteId } = idSetStore();
+  const { ids, pushId, deleteId } = useidSetStore();
   useEffect(() => {
     let array = table
       .getFilteredSelectedRowModel()
@@ -229,16 +229,15 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${
-                        index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
-                      } bg-red-200 p-2 font-semibold border `}
+                      className={`${index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
+                        } bg-red-200 p-2 font-semibold border `}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -254,9 +253,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${
-                          index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                        } p-2 border`}
+                        className={`${index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                          } p-2 border`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

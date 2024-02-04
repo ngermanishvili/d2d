@@ -1,9 +1,9 @@
 "use client";
 
-import {ColumnDef} from "@tanstack/react-table";
-import {CellAction} from "./cell-action";
-import {Checkbox} from "@/components/ui/checkbox";
-import {idSetStore} from "@/hooks/select-store";
+import { ColumnDef } from "@tanstack/react-table";
+import { CellAction } from "./cell-action";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useidSetStore } from "@/hooks/select-store";
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -30,9 +30,9 @@ export type ShipmentColumn = {
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
-    header: ({table}) => <div>Select</div>,
-    cell: ({row}) => {
-      const {pushId, ids, deleteId} = idSetStore();
+    header: ({ table }) => <div>Select</div>,
+    cell: ({ row }) => {
+      const { pushId, ids, deleteId } = useidSetStore();
 
       return (
         <Checkbox
@@ -132,22 +132,22 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "assignedCourier",
     header: "კურიერი",
-    cell: ({row}) => <span>{row.original?.assignedCourier}</span>,
+    cell: ({ row }) => <span>{row.original?.assignedCourier}</span>,
   },
 
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
-    cell: ({row}) => <span>{row.original.courierComment}</span>,
+    cell: ({ row }) => <span>{row.original.courierComment}</span>,
   },
   {
     accessorKey: "status",
     header: "სტატუსიიიი",
-    cell: ({row}) => <span>{row.original.status}</span>,
+    cell: ({ row }) => <span>{row.original.status}</span>,
   },
 
   {
     id: "actions",
-    cell: ({row}) => <CellAction data={row.original} />,
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

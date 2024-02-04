@@ -23,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { idSetStore } from "@/hooks/select-store";
+import { useidSetStore } from "@/hooks/select-store";
 import { db } from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
@@ -58,7 +58,7 @@ export function CourierDataTable<TData, TValue>({
     },
   });
 
-  const { ids } = idSetStore();
+  const { ids } = useidSetStore();
 
   const email = useEmailStore((state: any) => state.email);
 
