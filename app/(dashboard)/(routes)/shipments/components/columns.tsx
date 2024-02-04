@@ -46,12 +46,12 @@ const colors = [
   "gold",
   "lime",
 ];
+const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
     header: ({ table }) => {
-      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
 
       return (
         <Checkbox
