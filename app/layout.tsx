@@ -60,18 +60,8 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
-          <Head>
-            <meta
-              name="google-site-verification"
-              content="your-verification-code"
-            />
-            <meta name="robots" content="noindex"></meta>
-          </Head>
           <Providers>
             <body className="bg-slate-50">
-              {/* Facebook Messenger Chat code */}
-
-              {/* Tawk.to Chat code */}
               {/* Tawk.to Chat code */}
               <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"

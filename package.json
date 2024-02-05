@@ -49,6 +49,7 @@
     "next": "14.0.4",
     "next-auth": "^5.0.0-beta.4",
     "next-cloudinary": "^5.18.0",
+    "next-intl": "^3.5.4",
     "next-nprogress-bar": "^2.1.2",
     "next-themes": "^0.2.1",
     "npm": "^10.2.5",

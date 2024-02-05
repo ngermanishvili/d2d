@@ -7,6 +7,7 @@ import Image from "next/image";
 import TeamImage from '@/assets/images/avatar1.jpg'
 
 
+
 import Features from "./features";
 import TrackingSearchContainer from "./tracking-search";
 import TopText from "./hero-top-text";
@@ -16,7 +17,9 @@ import BillBoardUi from "@/components/billboard/billboard-ui";
 import LatestBlogPosts from "./blog-posts";
 
 
+
 export default function Landing() {
+
     const { imageUrl, loading, label } = useBillboardData();
     return (
         <>
@@ -59,8 +62,8 @@ export default function Landing() {
                                         </div>
                                         <h6 className="text-xl font-semibold">Awarded Agency</h6>
                                         <p className="mt-2 mb-4 text-blueGray-500">
-                                            Divide details about your product or agency work into
-                                            parts. A paragraph describing a feature will be enough.
+                                            Divide details about your product or agency work into parts.
+                                            A paragraph describing a feature will be enough.
                                         </p>
                                     </div>
                                 </div>
