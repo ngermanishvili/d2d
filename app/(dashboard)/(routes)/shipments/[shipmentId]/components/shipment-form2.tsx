@@ -742,7 +742,10 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   <Button
                     disabled={loading}
                     className="ml-auto self-start"
-                    onClick={() => console.log("first")}
+                    onClick={async () => {
+                      await onSubmit(form.getValues());
+                      router.push("/shipments");
+                    }}
                   >
                     ცვილების შენახვა
                   </Button>

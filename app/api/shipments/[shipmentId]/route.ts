@@ -49,6 +49,8 @@ export async function PATCH(
       status,
       courierComment,
       label,
+      chabarebisDro,
+
     } = body;
 
     // Validate if shipmentId is provided
@@ -96,6 +98,8 @@ export async function PATCH(
         status,
         courierComment,
         label,
+        chabarebisDro,
+
       },
     });
     if (!status) {
