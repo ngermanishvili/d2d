@@ -13,9 +13,7 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
 
     return (
         <>
-            <div className="flex justify-center items-center h-[80vh]">
-                <ErrorPage404 />
-            </div>
+
             <RoleGate allowedRole="ADMIN"  >
                 <div className="flex-col ">
                     <div className="flex-1 space-y-4 p-8 pt-6">

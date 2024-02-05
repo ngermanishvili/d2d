@@ -6,7 +6,6 @@ import Link from 'next/link';
 const ErrorPage404: React.FC = () => {
 
 
-
     return (
         <>
             <Result
