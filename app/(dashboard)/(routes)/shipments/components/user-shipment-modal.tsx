@@ -95,7 +95,7 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
     <Modal
       width={1000}
       title={`შეკვეთა: ${shipmentData?.trackingId}`}
-      visible={isOpen}
+      open={isOpen}
       onCancel={onClose}
       footer={null}
     >

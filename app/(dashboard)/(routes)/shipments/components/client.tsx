@@ -108,7 +108,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
         })
         .map((shipmentToMap) => shipmentToMap.price)
     );
-  }, [filteredData]); // Add any dependencies that might change and trigger the effect
+  }, [filteredData]);
 
   const handleSearchKeyChange = () => {
     // Reset the filteredData whenever the searchKey changes
@@ -118,7 +118,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   useEffect(() => {
     // Listen for changes in the searchKey and reset filteredData
     handleSearchKeyChange();
-  }, [searchKeyStore, ]); // Add any other dependencies as needed
+  }, [searchKeyStore,]); // Add any other dependencies as needed
 
   return (
     <>
@@ -129,7 +129,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
         />
         <Button onClick={() => router.push(`/shipments/new`)}>
           <Plus className="mr-2 h-4 w-4 " />
-          Add New
+          შეკვეთის დამატება
         </Button>
       </div>
       <Separator />

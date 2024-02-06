@@ -126,18 +126,18 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "სახელი",
     cell: ({ row }) => (
       <div className="p-2" style={{ display: "flex" }}>
-        <img
-          className="w-10 h-10"
-          src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj"
-          alt="avatar"
-        />
-        <p className="w-[100px] h-auto p-2"> {row.original.name}</p>
+        <p > {row.original.name}</p>
       </div>
     ),
   },
   {
     accessorKey: "lastName",
     header: "გვარი",
+    cell: ({ row }) => (
+      <div className="p-2" style={{ display: "flex" }}>
+        <p > {row.original.lastName}</p>
+      </div>
+    ),
   },
   {
     accessorKey: "city",
@@ -154,44 +154,68 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
     ),
   },
-
-  {
-    accessorKey: "price",
-    header: "ფასი",
-  },
-
-  {
-    accessorKey: "brittle",
-    header: "მსხვრევადი",
-  },
-  {
-    accessorKey: "packaging",
-    header: "SHEPUTVA",
-  },
-
   {
     accessorKey: "mimgebisName",
     header: "მიმღების სახელი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold"> {row.original.mimgebisName}</p>
+      </div>
+    )
   },
   {
     accessorKey: "mimgebisLastname",
     header: "მიმღების გვარი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold"> {row.original.mimgebisLastname}</p>
+      </div>
+    )
   },
   {
     accessorKey: "mimgebisNumber",
-    header: "მიმღების ტელეფონის ნომერი",
+    header: "მიმღების ნომერი",
     cell: ({ row }) => (
-      <div className="w-[150px]">{`+995 ${row.original.mimgebisNumber}`}</div>
+      <div className="w-[120px]">
+        <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
+
+      </div>
     ),
   },
   {
     accessorKey: "mimgebisAddress",
     header: "მიმღების მისამართი",
+    cell: ({ row }) => (
+      <div className="w-[150px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold"> {row.original.mimgebisAddress}</p>
+      </div>
+    )
   },
 
   {
     accessorKey: "mimgebiQalaqi",
     header: "მიმღების ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold"> {row.original.mimgebiQalaqi}</p>
+      </div>
+    )
+  },
+  {
+    accessorKey: "brittle",
+    header: "მსხვრევადი",
+  },
+
+  {
+    accessorKey: "packaging",
+    header: "D2D შეფუთვა",
+    cell: ({ row }) => (
+      <div className="w-[100px]">{`${row.original.packaging}`}</div>
+    ),
+  },
+  {
+    accessorKey: "price",
+    header: "ფასი",
   },
   {
     accessorKey: "markedByCourier",
@@ -201,7 +225,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "createdAt",
     header: "დამატების თარიღი",
     cell: ({ row }) => (
-      <div>
+      <div className="w-[120px]">
         {new Date(row.original.createdAt).toLocaleDateString("en-US", {
           year: "2-digit",
           month: "2-digit",
