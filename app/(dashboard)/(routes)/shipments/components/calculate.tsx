@@ -175,7 +175,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 justify-center">
+      <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 rounded-sm justify-center">
         <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
           კალკულატორი
         </h2>
@@ -303,6 +303,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                     </h2>
                     <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
                       ჯამური ფასი: {totalPrice} ლარი
+                    </h2>
+                    <h2>
+                      მომსახურების ტარიფის გადახდა უნდა მოხდეს ნივთის აღების
+                      დროს
                     </h2>
                   </>
                 )}

@@ -48,7 +48,7 @@ export const CreateModal: React.FC<AlertModalProps> = ({
             <div className="w-full flex justify-between">
               <span className="w-3/4">შეკვეთის ჩაბარების თარიღი</span>
               <p>:</p>{" "}
-              <p className="w-6/12"> 2{chabarebis.replace(" ", "-")}</p>
+              <p className="w-6/12"> {chabarebis.replace(" ", "-")}</p>
             </div>
           </>
         )}

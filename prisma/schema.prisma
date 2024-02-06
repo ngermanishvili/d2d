@@ -13,6 +13,19 @@ enum UserRole {
   ADMIN
   COURIER
 }
+model SavedAddress {
+  id        String   @id @default(uuid())
+  address   String
+  mimgebisadress      String
+  // Add other relevant fields as needed
+  userId    String   // Reference to User
+
+  // Add index to userId field
+  @@index([userId])
+  
+  user      User     @relation(fields: [userId], references: [id])
+}
+
 
 model User {
   id            String     @id @default(cuid())
@@ -33,6 +46,7 @@ model User {
   role          UserRole   @default(USER)
   accounts      Account[]
   shipments     Shipment[] // Back-reference to Shipment
+  savedAddresses SavedAddress[]
 }
 
 model Account {

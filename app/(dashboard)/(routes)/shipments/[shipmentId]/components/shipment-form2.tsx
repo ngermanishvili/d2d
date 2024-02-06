@@ -41,6 +41,8 @@ import {
 } from "@/components/ui/select";
 import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
+import AdressInput from "./adress";
+import AdressInputClient from "./adress-client";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -361,20 +363,24 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         control={form.control}
                         name="address"
                         render={({ field }) => (
-                          <FormItem className="relative w-full mb-3">
-                            <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                              მისამართი
-                            </FormLabel>
-                            <FormControl className="relative rounded-md shadow-sm">
-                              <Input
-                                disabled={loading}
-                                placeholder="მისამართი"
-                                {...field}
-                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
+                          <>
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                მისამართი
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm">
+                                <Input
+                                  disabled={loading}
+                                  placeholder="მისამართი"
+                                  {...field}
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+
+                            <AdressInput />
+                          </>
                         )}
                       />
                     </div>
@@ -709,6 +715,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           </FormItem>
                         )}
                       />
+                    </div>
+                  </div>
+                  <div className="w-full flex flex-col justify-center">
+                    <div className="w-1/4 flex flex-col self-center">
+                      <h2 className="text-xl">აღების თარიღი : {agebis}</h2>
+                      <h2 className="text-xl">
+                        ჩაბარების თარიღი : {chabareba}
+                      </h2>
                     </div>
                   </div>
                 </div>

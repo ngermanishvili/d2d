@@ -2,7 +2,6 @@ import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 
-
 function generateTrackingNumber(): string {
   const timestamp = new Date().getTime();
   const randomNumber = Math.floor(Math.random() * 10000)
@@ -123,8 +122,20 @@ export async function POST(req: Request, { params }: { params: {} }) {
         itemPrice, // Add itemPrice to the data
       },
     });
+    let savedAdress; // Declare the variable here
+    const isSaved = await db.savedAddress.findMany({
+      where: {},
+    });
+    const arr = isSaved.map((item) => item.address);
+    if (!arr.includes(address)) {
+      console.log(isSaved,arr);
+      console.log("shemovida");
+      savedAdress = await db.savedAddress.create({
+        data: { userId: userId, address: address, mimgebisadress: address },
+      });
+    }
 
-    return NextResponse.json(shipment);
+    return NextResponse.json({ shipment, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
     return new NextResponse("Internal error BROJ", { status: 500 });
