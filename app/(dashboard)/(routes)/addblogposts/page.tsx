@@ -13,6 +13,8 @@ const BillboardsPage = async () => {
     title: item.title,
     content: item.content,
     slug: item.slug,
+    qvesatauri: item.qvesatauri,
+    qvesatauri2: item.qvesatauri2,
 
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));

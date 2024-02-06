@@ -33,7 +33,10 @@ export async function PATCH(
       imageUrl,
       content,
       excerpt,
-      slug } = body;
+      slug,
+      qvesatauri,
+      qvesatauri2,
+    } = body;
 
     const blogposts = await db.blogPosts.updateMany({
       where: {
@@ -44,7 +47,9 @@ export async function PATCH(
         imageUrl,
         content,
         excerpt,
-        slug
+        slug,
+        qvesatauri,
+        qvesatauri2
       },
     });
 

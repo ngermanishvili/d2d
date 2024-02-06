@@ -60,10 +60,9 @@ export default function Landing() {
                                             <TbTruckDelivery />
 
                                         </div>
-                                        <h6 className="text-xl font-semibold">Awarded Agency</h6>
+                                        <h6 className="text-xl font-semibold">სწრაფი მიწოდება</h6>
                                         <p className="mt-2 mb-4 text-blueGray-500">
-                                            Divide details about your product or agency work into parts.
-                                            A paragraph describing a feature will be enough.
+                                            ჩვენი გუნდი გთავაზობთ უსწრაფესს მიწოდებას საქართველოს მაშტაბით
                                         </p>
                                     </div>
                                 </div>
@@ -77,10 +76,9 @@ export default function Landing() {
                                             <TbTruckDelivery />
 
                                         </div>
-                                        <h6 className="text-xl font-semibold">Free Revisions</h6>
+                                        <h6 className="text-xl font-semibold">მარტივი გადახდა</h6>
                                         <p className="mt-2 mb-4 text-blueGray-500">
-                                            Keep you user engaged by providing meaningful information.
-                                            Remember that by this time, the user is curious.
+                                            ჩვენთან გადახდა საკმაოდ მარტივია, შეკვეთის გაფორმების დროს დაიანგარიშე ფასი და მიუთითე გადამხდელი მხარე.
                                         </p>
                                     </div>
                                 </div>
@@ -93,24 +91,19 @@ export default function Landing() {
                                             <TbTruckDelivery />
 
                                         </div>
-                                        <h6 className="text-xl font-semibold">Verified Company</h6>
-                                        <p className="mt-2 mb-4 text-blueGray-500">
-                                            Write a few lines about each one. A paragraph describing a
-                                            feature will be enough. Keep you user engaged!
-                                        </p>
+                                        <h6 className="text-xl font-semibold">რას გთავაზობს D2D?</h6>
+                                        <div>
+                                            <p className="mt-2 mb-4 text-blueGray-500">
+                                                სანდო სერვისი, სწრაფი მიწოდება, მარტივი გადახდა, კურიერებზე მორგებული ფასები
+                                            </p>
+                                            <Link href="/about">გაიგე მეტი ჩვენს შესახებ</Link>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
-
-                        {/* <div className="mx-8 mt-10 lg:mx-16 -mt-14 rounded-xl bg-black p-5 md:p-14 shadow-md ">
-                            <div className="flex justify-between items-center w-400">
-                                <h3 className="text-red-400 text-3xl">ადევნე თვალი შენს ამანათს</h3>
-                                <TrackingSearchContainer />
-                            </div>
-                        </div> */}
                         <Features />
 
 
@@ -203,59 +196,6 @@ export default function Landing() {
                         </svg>
                     </div>
 
-
-                    <div className="container mx-auto px-4 lg:pt-24 lg:pb-64">
-                        <div className="flex flex-wrap text-center justify-center">
-                            <div className="w-full lg:w-6/12 px-4">
-                                <h2 className="text-4xl font-semibold text-white">
-                                    Build something
-                                </h2>
-                                <p className="text-lg leading-relaxed mt-4 mb-4 text-blueGray-400">
-                                    Put the potentially record low maximum sea ice extent tihs
-                                    year down to low ice. According to the National Oceanic and
-                                    Atmospheric Administration, Ted, Scambos.
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex flex-wrap mt-12 justify-center">
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <FaTruckArrowRight />
-                                </div>
-                                <h6 className="text-xl mt-5 font-semibold text-white">
-                                    Excelent Services
-                                </h6>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                    the bulk of the card&apos;s content.
-                                </p>
-                            </div>
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <FaTruckArrowRight />
-                                </div>
-                                <h5 className="text-xl mt-5 font-semibold text-white">
-                                    Grow your market
-                                </h5>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                    the bulk of the card&apos;s content.
-                                </p>
-                            </div>
-                            <div className="w-full lg:w-3/12 px-4 text-center">
-                                <div className="text-blueGray-800 p-3 w-12 h-12 shadow-lg rounded-full bg-white inline-flex items-center justify-center">
-                                    <FaTruckArrowRight />
-                                </div>
-                                <h5 className="text-xl mt-5 font-semibold text-white">
-                                    Launch time
-                                </h5>
-                                <p className="mt-2 mb-4 text-blueGray-400">
-                                    Some quick example text to build on the card title and make up
-                                    the bulk of the card&apos;s content.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </section>
 
             </div >

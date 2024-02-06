@@ -25,13 +25,12 @@ export function LatestBlogPosts() {
       <div className="container mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
         {blogPostsData?.slice(0, 7).map((item: any) => (
           <BlogPostCard
-            key={item}
+            key={item.id}
             img={item.imageUrl}
             title={item.title}
-            desc={item.content}
+            desc={item.excerpt}
           />
         ))}
-
         <Card
           placeholder=""
           className="relative grid h-full w-full place-items-center overflow-hidden

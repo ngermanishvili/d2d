@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { title, imageUrl, content, excerpt, slug } = body;
+    const { title, imageUrl, content, excerpt, slug, qvesatauri, qvesatauri2 } = body;
 
 
     const billboard = await db.blogPosts.create({
@@ -14,7 +14,9 @@ export async function POST(req: Request) {
         imageUrl,
         content,
         excerpt,
-        slug
+        slug,
+        qvesatauri,
+        qvesatauri2,
       },
     });
 

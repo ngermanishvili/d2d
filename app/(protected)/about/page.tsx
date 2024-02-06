@@ -2,29 +2,32 @@
 import React from 'react'
 import Link from 'next/link'
 import { Image } from 'antd'
-import Logo from '@/assets/images/d2d.jpg'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { MdOutlineDeliveryDining } from "react-icons/md";
-import BillBoardUi from '@/components/billboard/billboard-ui';
-import useBillboardData from '@/hooks/use-billboard-data';
 
 
 const AboutUs = () => {
-    const { imageUrl, loading, label } = useBillboardData();
 
     const yourWidthValue = "100%";
     const yourHeightValue = "400px";
     return (
 
         <>
-            <div className="container mx-auto overflow-hidden pb-20 ">
+            <div className="container mx-[4px] overflow-hidden pb-20 ">
                 <div className="flex flex-wrap items-center">
 
                     <div className="w-full  px-12 md:px-4 ml-auto mr-auto">
-                        <div className='mt-[80px] w-full'>
-                            <BillBoardUi label={label} imageUrl={imageUrl} loading={loading} />
+                        <div className="mt-[20px] max-w-[1500px]w-full bg-center ">
+                            <Image
+                                src='https://images.unsplash.com/photo-1563906267088-b029e7101114?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                                alt="დაბალი ტარიფები, saqartveloshi, dabali, taripi"
+                                width={3270}
+                                height={300}
+                            />
+
+
                         </div>
-                        <h3 className="text-3xl mb-2 font-semibold leading-normal">
+                        <h3 className=" mt-8 text-2xl mb-2 font-semibold leading-normal">
                             ჩვენს შესახებ
                         </h3>
                         <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">

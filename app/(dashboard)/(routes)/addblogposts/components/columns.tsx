@@ -10,6 +10,8 @@ export type BillboardColumn = {
     content: string
     slug: string
     createdAt: string
+    qvesatauri: string
+    qvesatauri2: string
 }
 
 export const columns: ColumnDef<BillboardColumn>[] = [
@@ -29,6 +31,14 @@ export const columns: ColumnDef<BillboardColumn>[] = [
     {
         accessorKey: "createdAt",
         header: "Date",
+    },
+    {
+        accessorKey: "qvesatauri",
+        header: "Qvesatauri",
+    },
+    {
+        accessorKey: "qvesatauri2",
+        header: "Qvesatauri2",
     },
     {
         id: 'actions',

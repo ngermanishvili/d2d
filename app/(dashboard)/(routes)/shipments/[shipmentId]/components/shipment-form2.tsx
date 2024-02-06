@@ -215,14 +215,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
       }
 
-      router.refresh();
-      router.push(`/shipments`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
-      router.refresh();
     }
   };
 
@@ -724,32 +721,21 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   loading={loading}
                   onConfirm={async () => {
                     await onSubmit(form.getValues());
-
                     router.push("/shipments");
+                    router.refresh();
                   }}
                   isOpen={isConfirmOpen}
                   onClose={() => setIsConfirmOpen(false)}
                 />
-                {action === "Create" ? (
-                  <Button
-                    disabled={loading}
-                    className="ml-auto self-end"
-                    onClick={() => setIsConfirmOpen(true)}
-                  >
-                    დადასტურება
-                  </Button>
-                ) : (
-                  <Button
-                    disabled={loading}
-                    className="ml-auto self-start"
-                    onClick={async () => {
-                      await onSubmit(form.getValues());
-                      router.push("/shipments");
-                    }}
-                  >
-                    ცვილების შენახვა
-                  </Button>
-                )}
+
+                <Button
+                  type="button"
+                  disabled={loading}
+                  className="ml-auto self-end"
+                  onClick={() => setIsConfirmOpen(true)}
+                >
+                  დადასტურება
+                </Button>
               </form>
             </Form>
           </div>
