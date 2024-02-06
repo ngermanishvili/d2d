@@ -229,8 +229,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 0 ? "sticky left-0 text-blue-400" : "" // Apply sticky style to the first column
-                        } bg-red-200 p-2 font-semibold border `}
+                      className={`${index === 0 ? "sticky left-0 text-white" : "" // Apply sticky style to the first column
+                        } text-white bg-gray-900 text-sm border-black `}
                     >
                       {header.isPlaceholder
                         ? null

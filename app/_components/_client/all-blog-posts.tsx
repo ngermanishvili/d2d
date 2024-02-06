@@ -53,7 +53,7 @@ export function AllBlogPosts() {
             key={item.id}
             img={item.imageUrl}
             title={item.title}
-            desc={item.content}
+            desc={item.excerpt}
             blogpostId={item.id}
           />
         ))}

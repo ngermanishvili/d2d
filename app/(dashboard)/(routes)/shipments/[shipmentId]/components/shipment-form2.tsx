@@ -741,28 +741,15 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   isOpen={isConfirmOpen}
                   onClose={() => setIsConfirmOpen(false)}
                 />
-                {action === "Create" ? (
-                  <Button
-                    type="button"
-                    disabled={loading}
-                    className="ml-auto self-end"
-                    onClick={() => setIsConfirmOpen(true)}
-                  >
-                    დადასტურება
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    disabled={loading}
-                    className="ml-auto self-start"
-                    onClick={async () => {
-                      await onSubmit(form.getValues());
-                      router.push("/shipments");
-                    }}
-                  >
-                    shecvla
-                  </Button>
-                )}
+
+                <Button
+                  type="button"
+                  disabled={loading}
+                  className="ml-auto self-end"
+                  onClick={() => setIsConfirmOpen(true)}
+                >
+                  დადასტურება
+                </Button>
               </form>
             </Form>
           </div>

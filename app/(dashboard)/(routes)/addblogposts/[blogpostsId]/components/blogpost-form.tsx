@@ -31,6 +31,8 @@ const formSchema = z.object({
   imageUrl: z.string().min(1),
   excerpt: z.string(),
   slug: z.string(),
+  qvesatauri: z.string(),
+  qvesatauri2: z.string(),
 
 });
 
@@ -61,6 +63,8 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
       imageUrl: "",
       excerpt: "",
       slug: "",
+      qvesatauri: "",
+      qvesatauri2: "",
     },
   });
 
@@ -146,16 +150,90 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title</FormLabel>
+                <FormLabel>სათაური</FormLabel>
                 <FormControl>
                   <Input
                     disabled={loading}
-                    placeholder="Blog Post Title"
+                    placeholder="ბლოგ პოსტის სათაური"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+
+          {/* Add the excerpt field to the form */}
+          <FormField
+            control={form.control}
+            name="excerpt"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>პატარა აღწერა რომელიც მთავარ გვერდზე ჩანს</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="Blog Post აღწერა"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="qvesatauri"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>არტიკლის სათაური</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="ბლოგ პოსტ კონტენტი"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+
+          <FormField
+            control={form.control}
+            name="content"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ბლოგპოსტ კონტენტი</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="ბლოგ პოსტ კონტენტი"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="qvesatauri2"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>ქვესათაური მეორე აბზაცისთვის</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="ქვესათაური მეორე აბზაცისთვის"
                     {...field}
                   />
                 </FormControl>
@@ -168,46 +246,11 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="slug"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>slug</FormLabel>
+                <FormLabel>მეორე აბზაცი</FormLabel>
                 <FormControl>
                   <Input
                     disabled={loading}
-                    placeholder="slug"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="content"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Content</FormLabel>
-                <FormControl>
-                  <textarea
-                    disabled={loading}
-                    placeholder="Blog Post Content"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Add the excerpt field to the form */}
-          <FormField
-            control={form.control}
-            name="excerpt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Excerpt</FormLabel>
-                <FormControl>
-                  <textarea
-                    disabled={loading}
-                    placeholder="Blog Post Excerpt"
+                    placeholder="მეორე აბზაცი"
                     {...field}
                   />
                 </FormControl>

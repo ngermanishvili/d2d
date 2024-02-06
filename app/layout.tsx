@@ -60,8 +60,9 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
-          <Providers>
-            <body className="bg-slate-50">
+
+          <body className="bg-slate-50">
+            <Providers>
               {/* Tawk.to Chat code */}
               <Script
                 src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
@@ -100,8 +101,8 @@ export default async function RootLayout({
               `}
               </Script>
               <Footer />
-            </body>
-          </Providers>
+            </Providers>
+          </body>
         </html>
       </SessionProvider>
     </>

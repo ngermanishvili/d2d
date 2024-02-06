@@ -145,7 +145,10 @@ model BlogPosts {
   title       String
   content     String   @db.LongText
   imageUrl    String
-  slug        String   @unique
+  slug        String   @db.LongText
+  qvesatauri String
+  qvesatauri2 String
+
   excerpt     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
