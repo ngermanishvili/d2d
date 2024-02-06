@@ -210,30 +210,14 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-  {
-    accessorKey: "updatedAt",
-    header: "შეცვლის თარიღი",
-  },
+
   {
     accessorKey: "agebisDro",
     header: "ამანათის აღების დრო",
   },
-  {
-    accessorKey: "chabarebisDro",
-    header: "ამანათის ჩაბარების დრო",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "შეცვლის თარიღი",
-  },
-  {
-    accessorKey: "agebisDro",
-    header: "ამანათის აღების დრო",
-  },
-  {
-    accessorKey: "chabarebisDro",
-    header: "ამანათის ჩაბარების დრო",
-  },
+
+
+
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
