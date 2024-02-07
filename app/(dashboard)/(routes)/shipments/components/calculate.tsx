@@ -31,6 +31,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { string } from "zod";
+import { Alert, Card } from "antd";
 
 interface WeightRange {
   label: string;
@@ -175,7 +176,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 rounded-sm justify-center">
+      <div className="container w-full pt-4 pb-4 flex flex-col bg-red-400 gap-4 rounded-sm justify-center">
         <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
           კალკულატორი
         </h2>
@@ -184,15 +185,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
             <div className="w-full flex gap-4 md:gap-8 flex-col">
               <div>
                 <div className="flex w-full justify-between gap-1">
-                  <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
+                  <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
                     გადამხდელი მხარე
-                  </p>
-                  <p className="text-base md:text-xl leading-9 :mt-4">:</p>
-                  <div className="w-1/2">
+                  </h4>
+                  <div className="w-1/2 bg-white">
                     <Select
+
                       value={selectedParty || ""}
                       onValueChange={(value) =>
                         handlePartyChange(value as "Sender" | "Receiver")
+
                       }
                     >
                       <SelectTrigger>
@@ -210,13 +212,15 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 <div className="flex w-full justify-between align-middle gap-1">
                   <label
                     htmlFor="item-price"
-                    className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5"
+                    className=" flex items-center justify-center relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold"
                   >
                     ნივთის საფასური
                   </label>
-                  <p className="text-base md:text-xl leading-9 :mt-4">:</p>
+                  <div className="text-base md:text-xl leading-9 :mt-4">
+                    <div className="w-full h-2 bg-green-400"></div>
+                  </div>
                   <input
-                    className="w-1/2 h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md pl-[2px] text-sm md:text-base"
+                    className="w-1/2 h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md pl-[2px] text-md md:text-base bg-white"
                     type="text"
                     id="item-price"
                     value={itemPrice}
@@ -227,11 +231,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
               )}
               <div className="flex w-full justify-between gap-1">
-                <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
+                <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono font-semibold flex items-center justify-center text-md">
                   გზავნილის წონა
-                </p>
-                <p className="text-base md:text-xl leading-9 :mt-4">:</p>
-                <div className="w-1/2">
+                </h4>
+                <div className="w-1/2 bg-white">
                   <Select
                     value={selectedRange?.label || ""}
                     onValueChange={handleWeightRangeChange}
@@ -250,11 +253,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
               </div>
               <div className="flex w-full justify-between gap-1">
-                <p className="text-base md:text-xl leading-8 [&:not(:first-child)]:mt-4 w-2/5">
+                <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center">
                   შეკვეთის ქალაქი
-                </p>
-                <p className="text-base md:text-xl leading-9 :mt-4">:</p>
-                <div className="w-1/2">
+                </h4>
+                <div className="w-1/2 bg-white border-none">
                   <Select
                     value={selectedCity || ""}
                     onValueChange={(value) =>
@@ -273,48 +275,51 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/2 mt-4 md:mt-0">
-            <div className="w-full flex flex-col gap-4">
-              <div className="flex justify-start align-baseline gap-2 h-[36px] pt-1.5 ml-2 md:ml-4">
-                <input
-                  className="w-6 h-6"
-                  type="checkbox"
-                  id="packaging-service"
-                  checked={packagingUsed}
-                  onChange={(e) =>
-                    handlePackagingServiceChange(e.target.checked)
-                  }
-                />
-                <label
-                  htmlFor="packaging-service"
-                  className="text-base md:text-xl leading-5 text-black text-primary"
-                >
-                  შეფუთის სერვისი (ღირებულება 1ლარი)
-                </label>
-              </div>
+
+          <Card className="w-full md:w-1/2 mt-4 md:mt-0">
+            <div className="w-full flex flex-col gap-2">
+
               <div className="flex justify-start flex-col gap-4 ml-2 md:ml-4">
                 <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
-                  შიპმენტის ფასი: {shipmentCost} ლარი
+                  შეკვეთის ფასი - {shipmentCost} ლარი
                 </h2>
                 {selectedParty === "Receiver" && (
                   <>
                     <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
-                      ნივთის ღირებულება: {itemPrice === "" ? 0 : itemPrice} ლარი
+                      ნივთის ღირებულება - {itemPrice === "" ? 0 : itemPrice} ლარი
                     </h2>
                     <h2 className="text-base md:text-xl h-[36px] pb-1 pt-1">
-                      ჯამური ფასი: {totalPrice} ლარი
+                      ჯამური ფასი - {totalPrice} ლარი
                     </h2>
-                    <h2>
-                      მომსახურების ტარიფის გადახდა უნდა მოხდეს ნივთის აღების
-                      დროს
-                    </h2>
+                    <div className="flex justify-start ">
+
+                      <label
+                        htmlFor="packaging-service"
+                        className="text-base md:text-xl  leading-5 text-black text-primary"
+                      >
+                        <p className=" rounded-sm px-4 leading-7 [&:not(:first-child)]:mt-6">
+                          შეფუთის სერვისი (+1 ლარი)
+                        </p>
+                      </label>
+                      <input
+                        className="w-5 h-5 mt-1 "
+                        type="checkbox"
+                        id="packaging-service"
+                        checked={packagingUsed}
+                        onChange={(e) =>
+                          handlePackagingServiceChange(e.target.checked)
+                        }
+                      />
+                    </div>
+
                   </>
                 )}
               </div>
+              <Alert className="mt-8" message="მომსახურების თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს" type="info" showIcon />
             </div>
-          </div>
-        </div>
-      </div>
+          </Card>
+        </div >
+      </div >
     </>
   );
 };

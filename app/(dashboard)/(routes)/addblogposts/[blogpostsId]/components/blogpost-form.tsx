@@ -50,10 +50,10 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit Blog Post" : "Create Blog Post";
-  const description = initialData ? "Edit a blog post" : "Add a new blog post";
-  const toastMessage = initialData ? "Blog post updated." : "Blog post created";
-  const action = initialData ? "Save changes" : "Create";
+  const title = initialData ? "ჩეცვალე ბლოგ პოსტი" : "შექმენი ბლოგ პოსტი";
+  const description = initialData ? "შეცვალე ბლოგ-პოსტი" : "დაამატე ახალი ბლოგ-პოსტი";
+  const toastMessage = initialData ? "ბლოგ-პოსტი შეცვლილია" : "ბლოგ-პოსტი შეიქმნა წარმატებით";
+  const action = initialData ? "შენახვა" : "შექმნა";
 
   const form = useForm<BlogPostFormValues>({
     resolver: zodResolver(formSchema),
@@ -137,7 +137,8 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="imageUrl"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Featured Image</FormLabel>
+                <FormLabel className="flex justify-center items-center font-semibold "> ბლოგის ფოტოს ატვირთვა</FormLabel>
+
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
@@ -159,6 +160,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
                 <FormLabel>სათაური</FormLabel>
                 <FormControl>
                   <Input
+                    className="border-green-800"
                     disabled={loading}
                     placeholder="ბლოგ პოსტის სათაური"
                     {...field}
@@ -176,9 +178,10 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="excerpt"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>პატარა აღწერა რომელიც მთავარ გვერდზე ჩანს</FormLabel>
+                <FormLabel>ფოტოს და სათაურის შემდეგ მოდის პატარა აღწერა სანამ სრულად ნახავს მომხმარებელი</FormLabel>
                 <FormControl>
                   <Input
+                    className="border-purple-500"
                     disabled={loading}
                     placeholder="Blog Post აღწერა"
                     {...field}
@@ -196,6 +199,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
                 <FormLabel>არტიკლის სათაური</FormLabel>
                 <FormControl>
                   <Input
+                    className="border-orange-500"
                     disabled={loading}
                     placeholder="ბლოგ პოსტ კონტენტი"
                     {...field}
@@ -212,9 +216,10 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="content"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ბლოგპოსტ კონტენტი</FormLabel>
+                <FormLabel>პირველი აბზაცი</FormLabel>
                 <FormControl>
                   <Input
+                    className="h-[100px] border-green-500"
                     disabled={loading}
                     placeholder="ბლოგ პოსტ კონტენტი"
                     {...field}
@@ -232,6 +237,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
                 <FormLabel>ქვესათაური მეორე აბზაცისთვის</FormLabel>
                 <FormControl>
                   <Input
+                    className="border-orange-500"
                     disabled={loading}
                     placeholder="ქვესათაური მეორე აბზაცისთვის"
                     {...field}
@@ -249,6 +255,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
                 <FormLabel>მეორე აბზაცი</FormLabel>
                 <FormControl>
                   <Input
+                    className="h-[100px] border-green-500"
                     disabled={loading}
                     placeholder="მეორე აბზაცი"
                     {...field}

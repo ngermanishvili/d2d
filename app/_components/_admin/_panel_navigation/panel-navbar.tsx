@@ -63,19 +63,20 @@ export function PanelNavbar() {
                         <Typography placeholder='' color="blue-gray" className="text-lg font-bold">
                             D2D
                         </Typography>
-                        <ul className="ml-10 hidden items-center gap-8 lg:flex">
+                        <ul className="ml-2 hidden items-center gap-6 lg:flex text-sm">
                             <RoleGate allowedRole="ADMIN">
                                 {NAV_MENU_ADMIN.map(({ name, icon: Icon, to }) => (
                                     <NavItem key={name} href={to}>
-                                        <Icon className="h-5 w-5" />
-                                        {name}
+                                        <p className="hover:text-gray-600 transition-all">{name}</p>
+                                        <Icon className="h-4 w-4" />
+
                                     </NavItem>
                                 ))}
                             </RoleGate>
                             <RoleGate allowedRole="USER">
                                 {NAV_MENU_USER.map(({ name, icon: Icon, to }) => (
                                     <NavItem key={name} href={to}>
-                                        <Icon className="h-5 w-5" />
+                                        <Icon className="h-2 w-2" />
                                         {name}
                                     </NavItem>
                                 ))}
@@ -112,41 +113,45 @@ export function PanelNavbar() {
                         </IconButton>
                     </div>
                     <Collapse open={open}>
-                        <div className="container mx-auto mt-3 border-t border-gray-200 px-2 pt-4">
+                        <div className=" flex items-start justify-start">
+                            <div
+                            >
+                                <Button placeholder='w-[200px]' color="gray">კაბინეტი</Button>
+                            </div>
+                        </div>
+                        <div className="mt-3 border-t border-gray-200 mx-auto pt-4">
+
                             <ul className="flex flex-col gap-4">
                                 <RoleGate allowedRole="ADMIN">
                                     {NAV_MENU_ADMIN.map(({ name, icon: Icon, to }) => (
                                         <NavItem key={name} href={to}>
+
+                                            <p className="hover:text-gray-600 transition-all">{name}</p>
+
                                             <Icon className="h-5 w-5" />
-                                            {name}
                                         </NavItem>
                                     ))}
                                 </RoleGate>
                                 <RoleGate allowedRole="USER">
                                     {NAV_MENU_USER.map(({ name, icon: Icon, to }) => (
                                         <NavItem key={name} href={to}>
-                                            <Icon className="h-5 w-5" />
                                             {name}
+                                            <Icon className="h-5 w-5" />
+
                                         </NavItem>
                                     ))}
                                 </RoleGate>
                                 <RoleGate allowedRole="COURIER">
                                     {NAV_MENU_COURIER.map(({ name, icon: Icon, to }) => (
                                         <NavItem key={name} href={to}>
-                                            <Icon className="h-5 w-5" />
                                             {name}
+                                            <Icon className="h-5 w-5" />
+
                                         </NavItem>
                                     ))}
                                 </RoleGate>
                             </ul>
-                            <div className="mt-6 mb-4 flex items-center gap-4">
-                                <Button placeholder='' variant="text">Log in</Button>
-                                <div
 
-                                >
-                                    <Button placeholder='' color="gray">კაბინეტი</Button>
-                                </div>
-                            </div>
                         </div>
                     </Collapse>
                 </MTNavbar>
