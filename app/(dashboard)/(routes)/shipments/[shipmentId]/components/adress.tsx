@@ -5,18 +5,26 @@ import type { InputRef } from "antd";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 import axios from "axios";
+import useAddressStore from "@/hooks/adress-store";
 
 const AdressInput: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
   const [name, setName] = useState("");
   const inputRef = useRef<InputRef>(null);
+  const { address, setAddress } = useAddressStore();
 
   useEffect(() => {
     const fetchAddress = async () => {
       try {
-        const arrOfAddress = await axios.get("/api/shipments/adress");
+        const arrOfAddress = await axios.get("/api/shipments/address");
         const array = arrOfAddress.data;
-        const newarr = array.map((elementi: any) => elementi.address);
+        const newarr = array
+          .map((elementi: any) => elementi.address)
+          .filter((v: any, i: any, self: any) => {
+            // It returns the index of the first
+            // instance of each value
+            return i == self.indexOf(v);
+          });
         setItems(newarr);
         console.log("🚀 ~ fetchAddress ~ array:", newarr);
         // const arrofAdr = array.map((item: any) => item.adress);
@@ -31,6 +39,7 @@ const AdressInput: React.FC = () => {
 
   const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+    setAddress(event.target.value);
   };
 
   const addItem = (
@@ -42,6 +51,7 @@ const AdressInput: React.FC = () => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
+    console.log(inputRef.current?.input);
   };
 
   return (

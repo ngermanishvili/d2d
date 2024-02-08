@@ -43,6 +43,7 @@ import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
 import AdressInput from "./adress";
 import AdressInputClient from "./adress-client";
+import useAddressStore from "@/hooks/adress-store";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -81,6 +82,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { address, setAddress } = useAddressStore();
   const title = initialData ? "Edit Shipment" : "Create Shipment";
   const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
   const toastMessage = initialData ? "Shipment updated." : "Shipment created";
@@ -193,6 +195,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
+    console.log(address);
+    data.address = address;
     //  const aris = aq iqneba check
     try {
       data.packaging = packagingUsed;
@@ -369,17 +373,10 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                 მისამართი
                               </FormLabel>
                               <FormControl className="relative rounded-md shadow-sm">
-                                <Input
-                                  disabled={loading}
-                                  placeholder="მისამართი"
-                                  {...field}
-                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                />
+                                <AdressInput />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
-
-                            <AdressInput />
                           </>
                         )}
                       />
