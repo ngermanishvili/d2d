@@ -8,7 +8,6 @@ import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import QRCodeGenerator from "@/components/ui/qr-code";
 import useCalculatorStore from "@/hooks/calculate-price";
 
 import {
@@ -25,13 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { CreateModal } from "@/components/modals/shipment-create-modal";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import {
   Select,
   SelectContent,
@@ -44,6 +37,9 @@ import { RoleGate } from "@/components/auth/role-gate";
 import AdressInput from "./adress";
 import AdressInputClient from "./adress-client";
 import useAddressStore from "@/hooks/adress-store";
+import Image from "next/image";
+import Logo from "@/assets/images/d2d.jpg";
+import { Alert } from "antd";
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -83,10 +79,10 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const { address, setAddress } = useAddressStore();
-  const title = initialData ? "Edit Shipment" : "Create Shipment";
-  const description = initialData ? "Edit a Shipment" : "Add a new Shipment";
-  const toastMessage = initialData ? "Shipment updated." : "Shipment created";
-  const action = initialData ? "Save changes" : "Create";
+  const title = initialData ? "შეცვალე შეკვეთა" : "შეკვეთის განთავსება";
+  const description = initialData ? "შეცვალე შეკვეთა" : "ახალი შეკვეთის დამატება";
+  const toastMessage = initialData ? "შეკვეთა წარმატებით შეიცვალა" : "შეკვეთა წარმატებით დაემატა";
+  const action = initialData ? "ცვლილების შენახვა" : "შეკვეთის დამატება";
 
   const {
     shipmentCost,
@@ -284,22 +280,19 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       <Separator />
 
       <>
-        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
-          <div className="rounded-t bg-white mb-0 px-6 py-6">
+        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-slate-200 border-0">
+          <div className="rounded-t bg-red-500 mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
-              <h6 className="text-blueGray-700 text-xl font-bold">
-                შეკვეთის განთავსება
-              </h6>
-              <button
-                className="bg-blueGray-700 active:bg-blueGray-600 text-white font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-                type="button"
-              >
-                Settings
-              </button>
+              <Image
+                width={100}
+                height={50}
+                src={Logo}
+                alt="logo"
+                className="rounded-md"
+
+              />
+              <h2 className="text-white">D2D GEORGIA</h2>
             </div>
-            <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-              Contact Information
-            </h6>
           </div>
 
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
@@ -308,11 +301,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 w-full flex flex-col"
               >
-                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold uppercase">
                   გამგზავნის მონაცემები
                 </h6>
                 <div className="flex flex-wrap">
                   <div className="w-full lg:w-6/12 px-4">
+
                     <div className="relative w-full mb-3">
                       <FormField
                         control={form.control}
@@ -423,12 +417,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                         /> */}
                   </div>
                 </div>
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
-                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                <hr className="mt-4 border-b-2 border-black" />
+                <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold uppercase">
                   მიმღების მონაცემები
                 </h6>
                 <div className="flex flex-wrap">
+
                   <div className="w-full lg:w-6/12 px-4">
+
                     <div className="relative w-full mb-3">
                       <FormField
                         control={form.control}
@@ -714,14 +710,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       />
                     </div>
                   </div>
-                  <div className="w-full flex flex-col justify-center">
-                    <div className="w-1/4 flex flex-col self-center">
-                      <h2 className="text-xl">აღების თარიღი : {agebis}</h2>
-                      <h2 className="text-xl">
-                        ჩაბარების თარიღი : {chabareba}
-                      </h2>
-                    </div>
-                  </div>
+
                 </div>
                 <ShippingCostGraph
                   hasInitialData={initialData ? true : false}

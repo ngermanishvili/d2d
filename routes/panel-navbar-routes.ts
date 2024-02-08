@@ -1,44 +1,49 @@
-import {
-    RectangleStackIcon,
-    UserCircleIcon,
-    CommandLineIcon,
-    Squares2X2Icon,
-    XMarkIcon,
-    Bars3Icon,
-} from "@heroicons/react/24/solid";
+
+import { GiTatteredBanner } from "react-icons/gi";
+import { MdAddchart } from "react-icons/md";
+import { CiDeliveryTruck } from "react-icons/ci";
+import { MdWorkHistory } from "react-icons/md";
+import { IoIosAddCircle } from "react-icons/io";
+
+
+
+
+
+
 
 export const NAV_MENU_ADMIN = [
 
     {
         name: "ბილბორდები",
-        icon: RectangleStackIcon,
+        icon: GiTatteredBanner,
         to: "/billboards",
     },
     {
         name: "ბილბორდების დამატება",
-        icon: XMarkIcon,
         to: "/billboards/new",
+        icon: MdAddchart,
+
     },
     {
         name: "ჩემი კურიერები",
-        icon: Squares2X2Icon,
+        icon: CiDeliveryTruck,
         to: "/couriers",
     },
     {
         name: "ბლოგპოსტების დამატება",
-        icon: Bars3Icon,
+        icon: GiTatteredBanner,
         to: "/addblogposts",
     },
 
     {
         name: "შეკვეთების ისტორია",
-        icon: UserCircleIcon,
+        icon: MdWorkHistory,
         to: "/shipments",
     },
 
     {
         name: "შეკვეთის განთავსება",
-        icon: CommandLineIcon,
+        icon: IoIosAddCircle,
         to: "/shipments/new",
     },
 ];
@@ -47,13 +52,13 @@ export const NAV_MENU_USER = [
 
     {
         name: "შეკვეთების ისტორია",
-        icon: CommandLineIcon,
+        icon: MdWorkHistory,
         to: "/shipments",
     },
 
     {
         name: "შეკვეთის განთავსება",
-        icon: CommandLineIcon,
+        icon: IoIosAddCircle,
         to: "/shipments/new",
     },
 ];
@@ -62,7 +67,7 @@ export const NAV_MENU_USER = [
 export const NAV_MENU_COURIER = [
     {
         name: "ჩემი შეკვეთები",
-        icon: RectangleStackIcon,
+        icon: MdWorkHistory,
         to: "/couriershipments",
     },
 

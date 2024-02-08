@@ -17,28 +17,28 @@ export type BillboardColumn = {
 export const columns: ColumnDef<BillboardColumn>[] = [
     {
         accessorKey: "title",
-        header: "title",
+        header: "სათაური",
     },
     {
         accessorKey: "slug",
-        header: "slug",
+        header: "აბზაცი1",
     },
     {
         accessorKey: "content",
-        header: "Content",
+        header: "აბზაცი2",
     },
 
     {
         accessorKey: "createdAt",
-        header: "Date",
+        header: "დამატების თარიღი",
     },
     {
         accessorKey: "qvesatauri",
-        header: "Qvesatauri",
+        header: "ქვესათაური აბზაცი 1",
     },
     {
         accessorKey: "qvesatauri2",
-        header: "Qvesatauri2",
+        header: "ქვესათაური აბზაცი 2",
     },
     {
         id: 'actions',

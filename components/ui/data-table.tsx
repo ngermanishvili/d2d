@@ -1,10 +1,10 @@
 "use client";
 
 import * as React from "react";
-import {useState} from "react";
+import { useState } from "react";
 
-import {Button} from "@/components/ui/button";
-import {Input} from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   ColumnDef,
   flexRender,
@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-       
+
       </div>
       <div className="rounded-md border overflow-x-auto">
         <Table className="min-w-full">
@@ -79,16 +79,15 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
-                    className={`${
-                      index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
-                    } bg-red-400 p-2 font-semibold`}
+                    className={`${index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
+                      } bg-black text-white font-semibold`}
                   >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -100,14 +99,13 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className="bg-red-400 p-2 font-semibold"
+                  className=" p-2 font-semibold"
                 >
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell
                       key={cell.id}
-                      className={`${
-                        index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
-                      } bg-red-400 p-2 font-semibold`}
+                      className={`${index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
+                        } p-2 border font-semibold`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
