@@ -132,7 +132,7 @@ export default function CardSettings() {
           <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             {isActive
               ? "ანგარიში აქტიურია"
-              : "ანგარიში არ არის აქტიური, გასააკტიურებლად შეავსეთ ყველა საჭირო ველი"}
+              : "ანგარიში არ არის აქტიური, გასააქტიურებლად შეავსეთ ყველა საჭირო ველი"}
           </h6>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -224,7 +224,7 @@ export default function CardSettings() {
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3">
                               <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                input1
+                                იურიდიული მისამართი
                               </FormLabel>
                               <FormControl className="relative rounded-md shadow-sm">
                                 <Input
@@ -263,7 +263,7 @@ export default function CardSettings() {
                         render={({ field }) => (
                           <FormItem className="relative w-full mb-3">
                             <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                              input2
+                              საიდენტიფიკაციო კოდი
                             </FormLabel>
                             <FormControl className="relative rounded-md shadow-sm">
                               <Input
@@ -301,12 +301,12 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input3
+                          კომპანიის დასახელება
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
                             {...field}
-                            placeholder="input3"
+                            placeholder="კომპანიის დასახელება"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -324,12 +324,12 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input4
+                          საბანკო ანგარიშის ნომერი
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
                             {...field}
-                            placeholder="input4"
+                            placeholder="საბანკო ანგარიშის ნომერი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -347,12 +347,12 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input5
+                          კომპანიის დირექტორი
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
                             {...field}
-                            placeholder="input5"
+                            placeholder="კომპანიის დირექტორი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -370,12 +370,12 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input6
+                          საკონტაქტო ტელეფონი
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
                             {...field}
-                            placeholder="input6"
+                            placeholder="საკონტაქტო ტელეფონი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -393,12 +393,12 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          input7
+                          საქმიანობის სფერო
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
                             {...field}
-                            placeholder="input7"
+                            placeholder="საქმიანობის სფერო"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                             // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -409,7 +409,7 @@ export default function CardSettings() {
                     )}
                   />
                 </div>{" "}
-                <div className="w-full lg:w-6/12 px-4">
+                <div className="w-full lg:w-6/12 px-4 hidden">
                   <FormField
                     control={form.control}
                     name="input8"

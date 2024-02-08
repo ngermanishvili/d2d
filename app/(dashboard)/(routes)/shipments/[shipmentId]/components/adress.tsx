@@ -57,7 +57,7 @@ const AdressInput: React.FC = () => {
   return (
     <Select
       style={{ width: 300 }}
-      placeholder="Custom dropdown render"
+      placeholder={items[0]}
       dropdownRender={(menu) => (
         <>
           {menu}
@@ -71,7 +71,7 @@ const AdressInput: React.FC = () => {
               onKeyDown={(e) => e.stopPropagation()}
             />
             <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-              Add item
+              მისამართი
             </Button>
           </Space>
         </>

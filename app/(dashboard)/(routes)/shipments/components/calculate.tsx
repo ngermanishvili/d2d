@@ -176,7 +176,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="container w-full pt-4 pb-4 flex flex-col bg-red-400 gap-4 rounded-sm justify-center">
+      <div className="container w-full pt-4 pb-4 flex flex-col bg-red-500 gap-4 rounded-sm justify-center">
         <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
           კალკულატორი
         </h2>
