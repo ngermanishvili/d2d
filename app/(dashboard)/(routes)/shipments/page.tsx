@@ -18,8 +18,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-          return item.userId === userId;
-        })
+        return item.userId === userId;
+      })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -48,14 +48,13 @@ const ShipmentPage = async () => {
       chabarebisDro: item?.chabarebisDro,
     })
   );
- 
+
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
           <ShipmentClient data={formattedShipments} />
-          <ShipmentFormXLSX />
         </RoleGate>
         <RoleGate allowedRole="USER">
           <ShipmentClient data={formattedShipments} />

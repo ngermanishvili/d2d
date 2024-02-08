@@ -15,6 +15,7 @@ import { DateRange } from "react-day-picker";
 import { useSearchKeyStore } from "@/hooks/search-key-store";
 import { set } from "nprogress";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import ShipmentFormXLSX from "../[shipmentId]/components/shipment-xlsx";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -127,11 +128,15 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
           title={`შეკვეთები (${filteredData.length})`}
           description="შეკვეთების ისტორია"
         />
-        <Button onClick={() => router.push(`/shipments/new`)}>
+        {/* <Button onClick={() => router.push(`/shipments/new`)}>
           <Plus className="mr-2 h-4 w-4 " />
           შეკვეთის დამატება
-        </Button>
-      </div>
+        </Button> */}
+        <div >
+          <ShipmentFormXLSX />
+        </div>
+      </div >
+
       <Separator />
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
       <Heading
@@ -139,25 +144,27 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
         description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
       />
 
-      {filteredData.length > 0 ? (
-        <>
+      {
+        filteredData.length > 0 ? (
+          <>
+            <DataTable
+              searchKey={searchKeyStore}
+              columns={columns}
+              data={filteredData}
+            />
+
+            <Heading title="APIss" description="api calls for shipmensdts" />
+            <Separator />
+            <ApiList entityName="shipments" entityIdName="shipmentId" />
+          </>
+        ) : (
           <DataTable
             searchKey={searchKeyStore}
             columns={columns}
             data={filteredData}
           />
-
-          <Heading title="APIss" description="api calls for shipmensdts" />
-          <Separator />
-          <ApiList entityName="shipments" entityIdName="shipmentId" />
-        </>
-      ) : (
-        <DataTable
-          searchKey={searchKeyStore}
-          columns={columns}
-          data={filteredData}
-        />
-      )}
+        )
+      }
     </>
   );
 };

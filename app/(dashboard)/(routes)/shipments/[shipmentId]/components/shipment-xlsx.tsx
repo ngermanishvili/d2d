@@ -2,6 +2,8 @@
 import * as XLSX from "xlsx";
 import { Shipment } from "@prisma/client";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import { FaFileExcel } from "react-icons/fa";
+
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -31,33 +33,33 @@ const ShipmentFormXLSX = () => {
   const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
   const renameKeys = (data: any) => {
     return {
-      id: data.id,
-      name: data.name,
-      "ტრექინგის ID": data.trackingId,
-      userId: data.userId,
-      გვარი: data.lastName,
+      "თრექინგი ID": data.trackingId,
+      // id: data.id,
+      "სახელი": data.name,
+      // userId: data.userId,
+      "გვარი": data.lastName,
       "ტელეფონის ნომერი": data.phoneNumber,
-      მისამართი: data.address,
-      ქალაქი: data.city,
+      "მისამართი": data.address,
+      "ქალაქი": data.city,
       "შექმნის თარიღი": data.createdAt,
-      brittle: data.brittle,
-      packaging: data.packaging,
-      ფასი: data.price,
+      "მსხვრევადი": data.brittle,
+      "შეფუთვა": data.packaging,
+      "ფასი": data.price,
       "მონიშნულია კურიერის მიერ": data.markedByCourier,
-      აღწერა: data.courierComment,
+      "აღწერა": data.courierComment,
       label: data.label,
-      whopays: data.whopays,
-      itemPrice: data.itemPrice,
+      "ვინ იხდის?": data.whopays,
+      "პროდუქტის ფასი": data.itemPrice,
       "აღწერის თარიღი": data.updatedAt,
       "მიმღები კურიერი": data.assignedCourier,
       "მიმდინარე სტატუსი": data.status,
-      agebisDro: data.agebisDro,
-      chabarebisDro: data.chabarebisDro,
-      "მიმღები კურიერის სახელი": data.mimgebisName,
-      "მიმღები კურიერის გვარი": data.mimgebisLastname,
-      "მიმღები კურიერის ნომერი": data.mimgebisNumber,
-      "მიმღები კურიერის ქალაქი": data.mimgebiQalaqi,
-      "მიმღები კურიერის მისამართი": data.mimgebisAddress,
+      'სავარაუდო აღების დრო': data.agebisDro,
+      "სავარაუდო ჩაბარების დრო": data.chabarebisDro,
+      "მიმღების სახელი": data.mimgebisName,
+      "მიმღების  გვარი": data.mimgebisLastname,
+      "მიმღების  ნომერი": data.mimgebisNumber,
+      "მიმღების  ქალაქი": data.mimgebiQalaqi,
+      "მიმღების მისამართი": data.mimgebisAddress,
     };
   };
 
@@ -72,17 +74,19 @@ const ShipmentFormXLSX = () => {
       XLSX.utils.book_append_sheet(workbook, worksheet, "ShipmentData");
 
       // Use XLSX.write instead of XLSX.writeFile
-      const blob = XLSX.writeFile(workbook, "shipment.xlsx");
+      const blob = XLSX.writeFile(workbook, "შეკვეთების-ისტორია.xlsx");
     }
   };
   return (
     <div className="container mx-auto p-4">
       <button
+        title="გადმოწერე XLSX file"
         type="button"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded flex gap-3 "
         onClick={downloadXLSX}
       >
-        Download XLSX
+        <FaFileExcel className="mt-1" />
+        გადმოწერე XLSX
       </button>
     </div>
   );
