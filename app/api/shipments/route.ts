@@ -2,12 +2,33 @@ import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 
-function generateTrackingNumber(): string {
-  const timestamp = new Date().getTime();
-  const randomNumber = Math.floor(Math.random() * 10000)
-    .toString()
-    .padStart(4, "0");
-  return `${timestamp.toString().slice(-4)}-${randomNumber}`;
+async function generateTrackingNumber() {
+  // Retrieve current count
+  let shipmentCounter = await db.shipmentCounter.findFirst();
+  
+  // If no record exists, create a new one with an initial count
+  if (!shipmentCounter) {
+    shipmentCounter = await db.shipmentCounter.create({
+      data: {
+        count: 100 // Initial count value
+      }
+    });
+  }
+  
+  // Increment count
+  const newCount = shipmentCounter.count + 1;
+
+  // Generate 4-digit random number
+  const randomDigits = Math.floor(1000 + Math.random() * 9000);
+
+  // Update count in database
+  await db.shipmentCounter.update({
+    where: { id: shipmentCounter.id },
+    data: { count: newCount },
+  });
+
+  // Return tracking number
+  return `${newCount}-${randomDigits}`;
 }
 
 export async function POST(req: Request, { params }: { params: {} }) {
@@ -94,8 +115,12 @@ export async function POST(req: Request, { params }: { params: {} }) {
       return new NextResponse("Item price is required", { status: 400 });
     }
 
-    const trackingId = generateTrackingNumber();
-
+    const trackingId = await generateTrackingNumber();
+    if (!trackingId) {
+      return new NextResponse("Tracking could not be generated", {
+        status: 400,
+      });
+    }
     const shipment = await db.shipment.create({
       data: {
         name,
