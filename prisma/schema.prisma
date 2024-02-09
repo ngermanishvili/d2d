@@ -137,6 +137,9 @@ model ShipmentStatusHistory {
   timestamp  DateTime @default(now())
 
   Shipment Shipment @relation(fields: [shipmentId], references: [id])
+  
+  @@index([shipmentId])
+
 }
 
 

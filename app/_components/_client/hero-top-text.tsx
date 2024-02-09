@@ -7,7 +7,7 @@ import BillBoardUi from "@/components/billboard/billboard-ui";
 export default function TopText() {
     const { imageUrl, loading, label } = useBillboardData();
     return (
-        <section className="relative">
+        <div className="relative">
 
             {/* Illustration behind hero content */}
             <div className="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none -z-1" aria-hidden="true">
@@ -57,6 +57,6 @@ export default function TopText() {
             </div>
 
 
-        </section>
+        </div>
     )
 }

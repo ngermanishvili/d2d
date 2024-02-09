@@ -203,7 +203,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
-
+      data.address = "wqiejiqwojeioqwjeioqwjeoiqwjeiojqwoej";
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;

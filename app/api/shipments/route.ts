@@ -35,6 +35,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
       whopays,
       agebisDro,
       chabarebisDro,
+
       itemPrice, // Add itemPrice to the destructuring
     } = body;
     const userId = await currentUserId();
@@ -128,7 +129,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
     });
     const arr = isSaved.map((item) => item.address);
     if (!arr.includes(address)) {
-      console.log(isSaved,arr);
+      console.log(isSaved, arr);
       console.log("shemovida");
       savedAdress = await db.savedAddress.create({
         data: { userId: userId, address: address, mimgebisadress: address },
@@ -191,6 +192,8 @@ export async function PATCH(req: Request) {
   try {
     const { ids, variable } = await req.json();
 
+    console.log("Received PATCH request with IDs:", ids);
+
     const updatedShipments = await db.shipment.updateMany({
       where: {
         id: {
@@ -202,9 +205,14 @@ export async function PATCH(req: Request) {
       },
     });
 
+    console.log("Updated shipments:", updatedShipments);
+
+    // Log the updated shipment data
+    console.log("Updated shipment data:", updatedShipments);
+
     return NextResponse.json(updatedShipments);
   } catch (error) {
-    console.log("[SHIPMENT_UPDATE]", error);
+    console.error("[SHIPMENT_UPDATE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }

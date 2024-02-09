@@ -29,7 +29,6 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json();
-
     // Extract variables from the request body
     const {
       name,
@@ -72,8 +71,7 @@ export async function PATCH(
 
     // Check if the status is changed
     const isStatusChanged =
-      (existingShipment.status !== status && status === undefined) ||
-      status === null;
+      existingShipment.status !== status && status !== undefined;
 
     // Update the shipment
     const updatedShipment = await db.shipment.updateMany({

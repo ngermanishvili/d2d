@@ -14,7 +14,7 @@ export async function GET(
 
         const statusHistory = await db.shipmentStatusHistory.findMany({
             where: {
-                shipmentId,
+                shipmentId: shipmentId,
             },
         });
 
@@ -24,3 +24,7 @@ export async function GET(
         return new NextResponse('Internal error', { status: 500 });
     }
 }
+
+
+
+

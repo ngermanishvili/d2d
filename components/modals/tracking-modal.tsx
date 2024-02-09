@@ -86,7 +86,7 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
 
 
     return (
-        <Modal width={1000} title={`შეკვეთა: ${shipmentData?.trackingId}`} visible={isOpen} onCancel={onClose} footer={null}>
+        <Modal width={1000} title={`შეკვეთა: ${shipmentData?.trackingId}`} open={isOpen} onCancel={onClose} footer={null}>
             {shipmentData ? (
                 <ShipmentDetails shipmentData={shipmentData} />
             ) : (

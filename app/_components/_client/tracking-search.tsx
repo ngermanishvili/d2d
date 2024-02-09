@@ -17,11 +17,12 @@ const TrackingSearchContainer: React.FC = () => {
 
     const router = useRouter();
 
-
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const trimmedInputValue = inputValue.trim();
+
+            console.log("Fetching data for tracking ID:", trimmedInputValue);
 
             const response = await fetch(`/api/shipments?trackingId=${trimmedInputValue}`);
             if (!response.ok) {
@@ -37,9 +38,16 @@ const TrackingSearchContainer: React.FC = () => {
 
                 if (matchingShipment) {
                     // Fetch the status history separately
+                    console.log("Fetching status history for shipment ID:", matchingShipment.id);
                     const statusHistoryResponse = await fetch(`/api/shipments/${matchingShipment.id}/statushistory`);
+
+                    if (!statusHistoryResponse.ok) {
+                        console.error(`Error fetching status history. Status: ${statusHistoryResponse.status}`);
+                        return;
+                    }
+
                     const statusHistoryData = await statusHistoryResponse.json();
-                    // console.log("Status History Data:", statusHistoryData);
+                    console.log("Status History Data:", statusHistoryData);
 
                     setShipmentData({
                         ...matchingShipment,
@@ -60,6 +68,7 @@ const TrackingSearchContainer: React.FC = () => {
             setLoading(false);
         }
     }, [inputValue]);
+
 
     const handleSearchClick = () => {
         fetchData();
