@@ -40,7 +40,7 @@ interface WeightRange {
 }
 
 const weightRanges: WeightRange[] = [
-  { label: "0-5 kg", tbilisiPrice: 4, rustaviPrice: 6 },
+  { label: "0-5 kg", tbilisiPrice: 5, rustaviPrice: 6 },
   { label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10 },
   { label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11 },
   { label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13 },

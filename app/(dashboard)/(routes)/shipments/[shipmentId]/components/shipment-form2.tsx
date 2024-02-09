@@ -147,7 +147,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     // Calculate delivery date as pickup date + 2 days (excluding Sundays)
     const deliveryDate = new Date(pickupDate);
     deliveryDate.setDate(
-      deliveryDate.getDate() + 2 + (deliveryDate.getDay() === 0 ? 1 : 0)
+      deliveryDate.getDate() + 1 + (deliveryDate.getDay() === 0 ? 1 : 0)
     );
 
     return { pickupDate, deliveryDate };

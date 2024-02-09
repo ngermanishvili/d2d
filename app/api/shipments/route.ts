@@ -7,7 +7,7 @@ function generateTrackingNumber(): string {
   const randomNumber = Math.floor(Math.random() * 10000)
     .toString()
     .padStart(4, "0");
-  return `${timestamp.toString().slice(-8)}-${randomNumber}`;
+  return `${timestamp.toString().slice(-4)}-${randomNumber}`;
 }
 
 export async function POST(req: Request, { params }: { params: {} }) {
