@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint no-use-before-define: 0 */  // --> OFF
+/* eslint no-use-before-define: 0 */ // --> OFF
 
 "use client";
 
@@ -122,11 +122,94 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
+    accessorKey: "status",
+    header: "სტატუსიიიი",
+    cell: ({ row }) => (
+      <div>
+        {/* <Alert message={row.original.status} type="success" /> */}
+        <Tag className="p-2" color="green">
+          {row.original.status}
+        </Tag>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "createdAt",
+    header: "შეკვეთის თარიღი",
+    cell: ({ row }) => (
+      <div className="w-[120px]">
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisName",
+    header: "მიმღების სახელი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisName}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisLastname",
+    header: "მიმღების გვარი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisLastname}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisNumber",
+    header: "მიმღების ნომერი",
+    cell: ({ row }) => (
+      <div className="w-[120px]">
+        <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebiQalaqi",
+    header: "მიმღების ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebiQalaqi}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisAddress",
+    header: "მიმღების მისამართი",
+    cell: ({ row }) => (
+      <div className="w-[150px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisAddress}
+        </p>
+      </div>
+    ),
+  },
+
+  {
     accessorKey: "name",
     header: "სახელი",
     cell: ({ row }) => (
       <div className="p-2" style={{ display: "flex" }}>
-        <p > {row.original.name}</p>
+        <p> {row.original.name}</p>
       </div>
     ),
   },
@@ -135,8 +218,15 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "გვარი",
     cell: ({ row }) => (
       <div className="p-2" style={{ display: "flex" }}>
-        <p > {row.original.lastName}</p>
+        <p> {row.original.lastName}</p>
       </div>
+    ),
+  },
+  {
+    accessorKey: "phoneNumber",
+    header: "ტელეფონის ნომერი",
+    cell: ({ row }) => (
+      <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
     ),
   },
   {
@@ -147,60 +237,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "address",
     header: "მისამართი",
   },
-  {
-    accessorKey: "phoneNumber",
-    header: "ტელეფონის ნომერი",
-    cell: ({ row }) => (
-      <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
-    ),
-  },
-  {
-    accessorKey: "mimgebisName",
-    header: "მიმღების სახელი",
-    cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold"> {row.original.mimgebisName}</p>
-      </div>
-    )
-  },
-  {
-    accessorKey: "mimgebisLastname",
-    header: "მიმღების გვარი",
-    cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold"> {row.original.mimgebisLastname}</p>
-      </div>
-    )
-  },
-  {
-    accessorKey: "mimgebisNumber",
-    header: "მიმღების ნომერი",
-    cell: ({ row }) => (
-      <div className="w-[120px]">
-        <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
 
-      </div>
-    ),
-  },
-  {
-    accessorKey: "mimgebisAddress",
-    header: "მიმღების მისამართი",
-    cell: ({ row }) => (
-      <div className="w-[150px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold"> {row.original.mimgebisAddress}</p>
-      </div>
-    )
-  },
-
-  {
-    accessorKey: "mimgebiQalaqi",
-    header: "მიმღების ქალაქი",
-    cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold"> {row.original.mimgebiQalaqi}</p>
-      </div>
-    )
-  },
   {
     accessorKey: "brittle",
     header: "მსხვრევადი",
@@ -221,26 +258,11 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "markedByCourier",
     header: "სტატუსი",
   },
-  {
-    accessorKey: "createdAt",
-    header: "დამატების თარიღი",
-    cell: ({ row }) => (
-      <div className="w-[120px]">
-        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
-          year: "2-digit",
-          month: "2-digit",
-          day: "2-digit",
-        })}
-      </div>
-    ),
-  },
 
   {
     accessorKey: "agebisDro",
     header: "ამანათის აღების დრო",
   },
-
-
 
   {
     accessorKey: "courierComment",
@@ -249,18 +271,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       <Tag className="p-2" color="geekblue">
         {row.original.courierComment}
       </Tag>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "სტატუსიიიი",
-    cell: ({ row }) => (
-      <div>
-        {/* <Alert message={row.original.status} type="success" /> */}
-        <Tag className="p-2" color="green">
-          {row.original.status}
-        </Tag>
-      </div>
     ),
   },
 

@@ -10,25 +10,23 @@ import useAddressStore from "@/hooks/adress-store";
 const AdressInput: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
   const [name, setName] = useState("");
+  const [address, setMisamarti] = useState<string>(""); // Separate state for selected address
   const inputRef = useRef<InputRef>(null);
-  const { address, setAddress } = useAddressStore();
+  const { setAddress } = useAddressStore(); // Destructure setMisamarti from useAddressStore if needed
 
   useEffect(() => {
     const fetchAddress = async () => {
       try {
         const arrOfAddress = await axios.get("/api/shipments/address");
         const array = arrOfAddress.data;
-        const newarr = array
+        const newarr: any = array
           .map((elementi: any) => elementi.address)
           .filter((v: any, i: any, self: any) => {
-            // It returns the index of the first
-            // instance of each value
             return i == self.indexOf(v);
           });
         setItems(newarr);
+        setMisamarti(newarr[0]); // Set default selected address
         console.log("🚀 ~ fetchAddress ~ array:", newarr);
-        // const arrofAdr = array.map((item: any) => item.adress);
-        // setItems(arrofAdr);
       } catch (error) {
         console.error("Error fetching addresses:", error);
       }
@@ -46,7 +44,10 @@ const AdressInput: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>
   ) => {
     e.preventDefault();
-    setItems([...items, name || `New item ${items.length}`]);
+    if (name.length === 0) {
+      return;
+    }
+    setItems([...items, name]);
     setName("");
     setTimeout(() => {
       inputRef.current?.focus();
@@ -56,22 +57,24 @@ const AdressInput: React.FC = () => {
 
   return (
     <Select
-      style={{ width: 300 }}
-      placeholder={items[0]}
+      value={address} // Use separate state for the value
+      style={{ width: "100%", height: "36px" }}
+      placeholder="Select address"
+      onChange={(value) => setMisamarti(value)} // Update selected address
       dropdownRender={(menu) => (
         <>
           {menu}
-          <Divider style={{ margin: "8px 0" }} />
-          <Space style={{ padding: "0 8px 4px" }}>
+          <Divider />
+          <Space>
             <Input
-              placeholder="Please enter item"
+              placeholder="Please enter address"
               ref={inputRef}
               value={name}
               onChange={onNameChange}
               onKeyDown={(e) => e.stopPropagation()}
             />
             <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
-              მისამართი
+              Add Address
             </Button>
           </Space>
         </>
