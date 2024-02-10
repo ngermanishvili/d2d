@@ -100,6 +100,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     selectedRange,
     selectedParty,
     setSelectedParty,
+    itemPrice,
+    setItemPrice,
   ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
@@ -137,17 +139,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       shipmentPrice += 1; // Add 1 GEL for packaging service
     }
 
-    let totalPrice = shipmentPrice;
-
-    if (selectedPartyParam === "Receiver") {
-      // Add item price if the receiver is paying
-      totalPrice += itemPrice;
-    }
+    let TotalPrice = shipmentPrice;
 
     // Update the cost and total price in the global state
     setShipmentCost(shipmentPrice);
     setItemPrice(itemPrice);
-    setTotalPrice(totalPrice);
+    setTotalPrice(TotalPrice);
+
+    if (itemPrice !== 0) {
+      setTotalPrice(TotalPrice + itemPrice);
+    }
   };
 
   const handleWeightRangeChange = (selectedLabel: string) => {
@@ -159,12 +160,19 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   };
 
   const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+    if (selectedParty === "Sender" && newParty === "Receiver") {
+      setTotalPrice(totalPrice - parseFloat(itemPrice));
+      setItemPrice(0);
+      setSelectedParty(newParty);
+      return;
+    }
     setSelectedParty(newParty);
     calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
   };
 
   const handleItemPriceChange = (newItemPrice: number) => {
     setItemPrice(newItemPrice);
+    setTotalPrice(parseFloat(itemPrice) + shipmentCost);
     calculateTotalPrice(
       selectedRange,
       packagingUsed,
@@ -220,6 +228,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                   type="text"
                   id="item-price"
                   value={itemPrice}
+                  disabled={selectedParty === "Receiver" ? true : false}
                   onChange={(e) => {
                     handleItemPriceChange(Number(e.target.value));
                   }}
