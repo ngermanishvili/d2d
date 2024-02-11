@@ -35,7 +35,6 @@ import {
 import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
 import AdressInput from "./adress";
-import AdressInputClient from "./adress-client";
 import useAddressStore from "@/hooks/adress-store";
 import Image from "next/image";
 import Logo from "@/assets/images/d2d.jpg";
@@ -303,9 +302,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 w-full flex flex-col max-h-full"
               >
-                <div className="w-full flex flex-row">
-                  <div className="w-1/2">
-                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold uppercase">
+                <div className="w-full flex flex-col sm:flex-row">
+                  <div className=" w-5/7 sm:w-1/2 flex flex-col self-center sm:self-auto ">
+                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 mb-4 font-bold uppercase">
                       გამგზავნის მონაცემები
                     </h6>
                     <div className="flex flex-wrap">
@@ -422,8 +421,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                     </div>
                   </div>
                   <Divider type="vertical" className="h-auto bg-slate-300" />
-                  <div className="w-1/2">
-                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold uppercase">
+                  <div className=" w-5/7 sm:w-1/2 flex flex-col self-center sm:self-auto ">
+                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold mb-4 uppercase">
                       მიმღების მონაცემები
                     </h6>
                     <div className="flex flex-wrap">
