@@ -46,6 +46,7 @@ const ShipmentPage = async () => {
       courierComment: item.courierComment,
       agebisDro: item?.agebisDro,
       chabarebisDro: item?.chabarebisDro,
+      gamgzavnisqalaqi: item?.gamgzavnisqalaqi
     })
   );
 

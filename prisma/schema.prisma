@@ -103,6 +103,7 @@ model Shipment {
   userId                String
   lastName              String
   phoneNumber           String
+  gamgzavnisqalaqi      String                @default("თბილისი") 
   address               String // 
   city                  String // 
   brittle               Boolean                 @default(false) // New field for the courier to mark true or false

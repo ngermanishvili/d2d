@@ -5,7 +5,7 @@ import { currentUserId } from "@/lib/auth";
 async function generateTrackingNumber() {
   // Retrieve current count
   let shipmentCounter = await db.shipmentCounter.findFirst();
-  
+
   // If no record exists, create a new one with an initial count
   if (!shipmentCounter) {
     shipmentCounter = await db.shipmentCounter.create({
@@ -14,7 +14,7 @@ async function generateTrackingNumber() {
       }
     });
   }
-  
+
   // Increment count
   const newCount = shipmentCounter.count + 1;
 
@@ -56,8 +56,9 @@ export async function POST(req: Request, { params }: { params: {} }) {
       whopays,
       agebisDro,
       chabarebisDro,
-
       itemPrice, // Add itemPrice to the destructuring
+      gamgzavnisqalaqi,
+
     } = body;
     const userId = await currentUserId();
 
@@ -146,6 +147,8 @@ export async function POST(req: Request, { params }: { params: {} }) {
         chabarebisDro,
         whopays, // Add whopays to the data
         itemPrice, // Add itemPrice to the data
+        gamgzavnisqalaqi
+
       },
     });
     let savedAdress; // Declare the variable here

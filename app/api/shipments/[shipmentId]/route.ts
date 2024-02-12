@@ -49,6 +49,7 @@ export async function PATCH(
       courierComment,
       label,
       chabarebisDro,
+      gamgzavnisqalaqi
 
     } = body;
 
@@ -97,6 +98,7 @@ export async function PATCH(
         courierComment,
         label,
         chabarebisDro,
+        gamgzavnisqalaqi
 
       },
     });

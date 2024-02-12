@@ -34,6 +34,7 @@ export type ShipmentColumn = {
   courierComment: string;
   agebisDro: string | null;
   chabarebisDro: string | null;
+  gamgzavnisqalaqi: string
 };
 
 const colors = [
@@ -158,6 +159,19 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
+  {
+    accessorKey: "gamgzavnisqalaqi",
+    header: "გამგზავნის ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.gamgzavnisqalaqi}
+        </p>
+      </div>
+    ),
+  },
+
   {
     accessorKey: "mimgebisLastname",
     header: "მიმღების გვარი",
