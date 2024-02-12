@@ -40,6 +40,8 @@ import useAddressStore from "@/hooks/adress-store";
 import Image from "next/image";
 import Logo from "@/assets/images/d2d.jpg";
 import { Alert, Divider } from "antd";
+import { FaUserTag, FaPhoneVolume } from "react-icons/fa6";
+
 
 const formSchema = z.object({
   name: z.string().min(1),
@@ -320,13 +322,17 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                   სახელი
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="სახელი"
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                  />
+                                  <div className="relative">
+                                    <Input
+                                      disabled={loading}
+                                      placeholder="სახელი"
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150"
+                                    />
+                                    <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
+                                  </div>
                                 </FormControl>
+
                                 <FormMessage />
                               </FormItem>
                             )}
@@ -344,12 +350,16 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                   გვარი
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="გვარი"
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                  />
+                                  <div className="relative">
+                                    <Input
+                                      disabled={loading}
+                                      placeholder="გვარი"
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all h-[50px] duration-150"
+                                    />
+                                    <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
+
+                                  </div>
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -365,11 +375,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             name="address"
                             render={({ field }) => (
                               <>
-                                <FormItem className="relative w-full mb-3">
-                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold">
+                                <FormItem className="relative w-full mb-3 h-[50px]">
+                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold ">
                                     მისამართი
                                   </FormLabel>
-                                  <FormControl className="relative rounded-md shadow-sm w-full">
+                                  <FormControl className="relative rounded-md shadow-sm w-full h-[50px]">
                                     <AdressInput />
                                   </FormControl>
                                   <FormMessage />
@@ -390,12 +400,17 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                   ტელეფონის ნომერი
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="ტელეფონის ნომერი"
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                  />
+                                  <div className="relative">
+
+
+                                    <Input
+                                      disabled={loading}
+                                      placeholder="ტელეფონის ნომერი"
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                    />
+                                    <FaPhoneVolume className="absolute top-[17px] right-[10px] w-5 h-5" />
+                                  </div>
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
