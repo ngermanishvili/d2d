@@ -100,6 +100,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     selectedRange,
     selectedParty,
     setSelectedParty,
+    itemPrice,
+    setItemPrice,
   ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
@@ -137,17 +139,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       shipmentPrice += 1; // Add 1 GEL for packaging service
     }
 
-    let totalPrice = shipmentPrice;
-
-    if (selectedPartyParam === "Receiver") {
-      // Add item price if the receiver is paying
-      totalPrice += itemPrice;
-    }
+    let TotalPrice = shipmentPrice;
 
     // Update the cost and total price in the global state
     setShipmentCost(shipmentPrice);
     setItemPrice(itemPrice);
-    setTotalPrice(totalPrice);
+    setTotalPrice(TotalPrice);
+
+    if (itemPrice !== 0) {
+      setTotalPrice(TotalPrice + itemPrice);
+    }
   };
 
   const handleWeightRangeChange = (selectedLabel: string) => {
@@ -159,12 +160,19 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   };
 
   const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+    if (selectedParty === "Sender" && newParty === "Receiver") {
+      setTotalPrice(totalPrice - parseFloat(itemPrice));
+      setItemPrice(0);
+      setSelectedParty(newParty);
+      return;
+    }
     setSelectedParty(newParty);
     calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
   };
 
   const handleItemPriceChange = (newItemPrice: number) => {
     setItemPrice(newItemPrice);
+    setTotalPrice(parseFloat(itemPrice) + shipmentCost);
     calculateTotalPrice(
       selectedRange,
       packagingUsed,
@@ -176,19 +184,19 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="container w-full pt-4 pb-4 flex flex-col bg-slate-200 gap-4 rounded-sm justify-center">
-        <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-2xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
+      <div className="container pl-4 pr-4 w-full flex flex-col bg-slate-200 gap-4 rounded-sm justify-center">
+        <h2 className="w-full mt-10 scroll-m-20 border-b pb-2 text-xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
           კალკულატორი
         </h2>
         <div className="w-full flex flex-col md:flex-row justify-between gap-8 mb-8">
           <div className="w-full md:w-1/2">
             <div className="w-full flex gap-4 md:gap-8 flex-col">
               <div>
-                <div className="flex w-full justify-between gap-1">
-                  <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
+                <div className="flex w-full flex-col sm:flex-row justify-between gap-1">
+                  <h4 className=" relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
                     გადამხდელი მხარე
                   </h4>
-                  <div className="w-1/2 bg-white">
+                  <div className="w-4/5 self-center sm:self-auto rounded-md bg-white">
                     <Select
                       value={selectedParty || ""}
                       onValueChange={(value) =>
@@ -207,30 +215,31 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
               </div>
 
-              <div className="flex w-full justify-between align-middle gap-1">
+              <div className="flex w-full flex-col sm:flex-row justify-between align-middle gap-1">
                 <label
                   htmlFor="item-price"
-                  className="text-md  text-md flex items-center justify-center relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold"
+                  className="text-md flex items-center justify-center relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold"
                 >
                   ნივთის საფასური
                 </label>
 
                 <input
-                  className="w-1/2 min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white"
+                  className="w-4/5 self-center sm:self-auto min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white"
                   type="text"
                   id="item-price"
                   value={itemPrice}
+                  disabled={selectedParty === "Receiver" ? true : false}
                   onChange={(e) => {
                     handleItemPriceChange(Number(e.target.value));
                   }}
                 />
               </div>
 
-              <div className="flex w-full justify-between gap-1">
+              <div className="flex w-full flex-col sm:flex-row justify-between gap-1">
                 <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
                   გზავნილის წონა
                 </h4>
-                <div className="w-1/2 min-w-[116px] bg-white">
+                <div className="w-4/5 self-center sm:self-auto min-w-[116px] bg-white">
                   <Select
                     value={selectedRange?.label || ""}
                     onValueChange={handleWeightRangeChange}
@@ -248,11 +257,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                   </Select>
                 </div>
               </div>
-              <div className="flex w-full justify-between gap-1">
+              <div className="flex w-full flex-col sm:flex-row justify-between gap-1">
                 <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center">
                   შეკვეთის ქალაქი
                 </h4>
-                <div className="w-1/2 bg-white border-none">
+                <div className="w-4/5 self-center sm:self-auto bg-white border-none">
                   <Select
                     value={selectedCity || ""}
                     onValueChange={(value) =>
@@ -275,13 +284,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           <div className="w-full md:w-1/2 mt-4 md:mt-0">
             <div className="w-full flex flex-col justify-center">
               <div className="flex w-full text-center md:text-start flex-col gap-8 text-wh md:ml-4">
-                <div className="flex md:justify-start justify-center gap-2">
+                <div className="flex md:justify-start text-center justify-center gap-2">
                   <label
                     htmlFor="packaging-service"
                     className="text-base md:text-lg xl:text-xl  leading-5 text-black text-primary"
                   >
                     <p className=" rounded-sm leading-7 [&:not(:first-child)]:mt-6 md:text-lg xl:text-xl">
-                      შეფუთის სერვისი (+1 ლარი)
+                      შეფუთის სერვისი <br /> (+1 ლარი)
                     </p>
                   </label>
                   <input
@@ -313,7 +322,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         {selectedParty === "Sender" ? (
           <div className="w-full text-center">
             <Alert
-              className="w-[300px] mx-auto"
+              className="w-5/6 sm:w-1/2 mx-auto"
               message="თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს"
               type="info"
             />
