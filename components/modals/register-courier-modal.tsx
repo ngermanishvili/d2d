@@ -6,6 +6,7 @@ import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
+import toast from "react-hot-toast";
 
 interface AlertModalProps {
     isOpen: boolean;
@@ -34,24 +35,34 @@ export const AlertModalForRegisterCourier: React.FC<AlertModalProps> = ({
         return null;
     }
 
+    const handleConfirm = () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email && emailRegex.test(email)) {
+            onConfirm();
+            toast.success("კურიერს წარმატებით მიემაგრა შეკვეთა-(ები)");
+        } else {
+            toast.error("შეიყვანეთ სწორი ელ-ფოსტა");
+        }
+    };
+
     return (
         <Modal
-            title="დაარეგისრრირე კურიერ"
-            description="This action cannot be undone."
+            title="შეკვეთების განაწილება"
+            description="მონიშნე სასურველი შეკვეთა ჩაწერე კურიერს ელ-ფოსტა და მიამაგრე კურიერს"
             isOpen={isOpen}
             onClose={onClose}
         >
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
                 <div>
 
-                    <Input onChange={(e) => setEmail(e.target.value)} disabled={loading} placeholder="ემაილი" />
+                    <Input onChange={(e) => setEmail(e.target.value)} disabled={loading} placeholder="კურიერის ელ-ფოსტა" />
 
                 </div>
                 <Button disabled={loading} variant="outline" onClick={onClose}>
-                    Cancel
+                    დახურვა
                 </Button>
-                <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-                    Continiue
+                <Button disabled={loading} variant="destructive" onClick={handleConfirm}>
+                    შეკვეთების განაწილება
                 </Button>
             </div>
         </Modal>

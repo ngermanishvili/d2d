@@ -9,6 +9,7 @@ import PanelNavbar from "./_components/_admin/_panel_navigation/panel-navbar";
 import Providers from "./_components/_client/Providers";
 import Script from "next/script";
 import Head from "next/head";
+import ToasterProvider from "@/providers/ToasterProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -75,6 +76,7 @@ export default async function RootLayout({
               </div>
 
               {children}
+              <ToasterProvider />
               <div id="fb-root"></div>
               <div id="fb-customer-chat" className="fb-customerchat"></div>
               {/* 

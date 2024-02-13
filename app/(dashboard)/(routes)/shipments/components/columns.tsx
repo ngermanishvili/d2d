@@ -37,21 +37,7 @@ export type ShipmentColumn = {
   gamgzavnisqalaqi: string
 };
 
-const colors = [
-  "pink",
-  "red",
-  "yellow",
-  "orange",
-  "cyan",
-  "green",
-  "blue",
-  "purple",
-  "geekblue",
-  "magenta",
-  "volcano",
-  "gold",
-  "lime",
-];
+
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -138,7 +124,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "createdAt",
     header: "შეკვეთის თარიღი",
     cell: ({ row }) => (
-      <div className="w-[120px]">
+      <div className="w-[140px]">
         {new Date(row.original.createdAt).toLocaleDateString("en-US", {
           year: "2-digit",
           month: "2-digit",
@@ -149,9 +135,9 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
   {
     accessorKey: "mimgebisName",
-    header: "მიმღების სახელი",
+    header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
+      <div className="w-[250px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
           {row.original.mimgebisName}
@@ -163,7 +149,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "gamgzavnisqalaqi",
     header: "გამგზავნის ქალაქი",
     cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
+      <div className="w-[140px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
           {row.original.gamgzavnisqalaqi}
@@ -172,23 +158,23 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-  {
-    accessorKey: "mimgebisLastname",
-    header: "მიმღების გვარი",
-    cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold">
-          {" "}
-          {row.original.mimgebisLastname}
-        </p>
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "mimgebisLastname",
+  //   header: "მიმღების გვარი",
+  //   cell: ({ row }) => (
+  //     <div className="w-[120px]" style={{ display: "flex" }}>
+  //       <p className="text-gray-900 font-semibold">
+  //         {" "}
+  //         {row.original.mimgebisLastname}
+  //       </p>
+  //     </div>
+  //   ),
+  // },
   {
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
     cell: ({ row }) => (
-      <div className="w-[120px]">
+      <div className="w-[150px]">
         <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
       </div>
     ),
@@ -209,7 +195,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebisAddress",
     header: "მიმღების მისამართი",
     cell: ({ row }) => (
-      <div className="w-[150px]" style={{ display: "flex" }}>
+      <div className="w-[200px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
           {row.original.mimgebisAddress}
@@ -220,22 +206,22 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
   {
     accessorKey: "name",
-    header: "სახელი",
+    header: "სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="p-2" style={{ display: "flex" }}>
+      <div className="p-2 w-[200px]" style={{ display: "flex" }}>
         <p> {row.original.name}</p>
       </div>
     ),
   },
-  {
-    accessorKey: "lastName",
-    header: "გვარი",
-    cell: ({ row }) => (
-      <div className="p-2" style={{ display: "flex" }}>
-        <p> {row.original.lastName}</p>
-      </div>
-    ),
-  },
+  // {
+  //   accessorKey: "lastName",
+  //   header: "გვარი",
+  //   cell: ({ row }) => (
+  //     <div className="p-2" style={{ display: "flex" }}>
+  //       <p> {row.original.lastName}</p>
+  //     </div>
+  //   ),
+  // },
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",
@@ -276,6 +262,11 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "agebisDro",
     header: "ამანათის აღების დრო",
+    cell: ({ row }) => (
+      <Tag className="p-2 w-[150px]" color="geekblue">
+        {row.original.agebisDro}
+      </Tag>
+    ),
   },
 
   {

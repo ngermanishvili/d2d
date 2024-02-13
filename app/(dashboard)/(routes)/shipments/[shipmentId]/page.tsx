@@ -11,9 +11,9 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
         },
     });
 
+
     return (
         <>
-
             <RoleGate allowedRole="ADMIN"  >
                 <div className="flex-col ">
                     <div className="flex-1 space-y-4 p-8 pt-6">

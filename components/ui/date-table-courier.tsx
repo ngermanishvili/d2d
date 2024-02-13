@@ -28,6 +28,7 @@ import { db } from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
+import toast from "react-hot-toast";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -69,6 +70,7 @@ export function CourierDataTable<TData, TValue>({
         variable: email,
       };
       await axios.patch("/api/shipments/courierupdate", data);
+      toast.success("Courier has been updated");
       // Handle success or any other logic
     } catch (error) {
       // Handle error
