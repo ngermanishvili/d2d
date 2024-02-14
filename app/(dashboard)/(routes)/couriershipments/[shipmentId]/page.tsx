@@ -1,8 +1,7 @@
-"use client"
 
 import { db } from "@/lib/db";
 
-import { ShipmentForm } from "./components/shipment-form";
+import { ShipmentForm2 } from "./components/shipment-form";
 
 const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
     const shipment = await db.shipment.findUnique({
@@ -15,7 +14,7 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
     return (
         <div className="flex-col ">
             <div className="flex-1 space-y-4 p-8 pt-6">
-                <ShipmentForm initialData={shipment} />
+                <ShipmentForm2 initialData={shipment} />
             </div>
         </div>
     );

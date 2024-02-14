@@ -9,7 +9,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
 } from "chart.js";
 
 ChartJS.register(
@@ -20,8 +19,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 
 import {
   Select,

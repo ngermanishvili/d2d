@@ -152,8 +152,9 @@ export function CourierDataTable<TData, TValue>({
                   <TableCell
                     colSpan={columns.length}
                     className="h-24 text-center"
+
                   >
-                    No results.
+                    მონაცემები არ მოიძებნა.
                   </TableCell>
                 </TableRow>
               )}

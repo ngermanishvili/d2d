@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -133,6 +133,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       agebisDro: "",
       chabarebisDro: "",
       gamgzavnisqalaqi: "თბილისი",
+
     },
   });
 

@@ -37,7 +37,21 @@ export type ShipmentColumn = {
   gamgzavnisqalaqi: string
 };
 
-
+const colors = [
+  "pink",
+  "red",
+  "yellow",
+  "orange",
+  "cyan",
+  "green",
+  "blue",
+  "purple",
+  "geekblue",
+  "magenta",
+  "volcano",
+  "gold",
+  "lime",
+];
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -158,18 +172,18 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-  // {
-  //   accessorKey: "mimgebisLastname",
-  //   header: "მიმღების გვარი",
-  //   cell: ({ row }) => (
-  //     <div className="w-[120px]" style={{ display: "flex" }}>
-  //       <p className="text-gray-900 font-semibold">
-  //         {" "}
-  //         {row.original.mimgebisLastname}
-  //       </p>
-  //     </div>
-  //   ),
-  // },
+  {
+    accessorKey: "mimgebisLastname",
+    header: "მიმღების გვარი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisLastname}
+        </p>
+      </div>
+    ),
+  },
   {
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
@@ -213,15 +227,15 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-  // {
-  //   accessorKey: "lastName",
-  //   header: "გვარი",
-  //   cell: ({ row }) => (
-  //     <div className="p-2" style={{ display: "flex" }}>
-  //       <p> {row.original.lastName}</p>
-  //     </div>
-  //   ),
-  // },
+  {
+    accessorKey: "lastName",
+    header: "გვარი",
+    cell: ({ row }) => (
+      <div className="p-2" style={{ display: "flex" }}>
+        <p> {row.original.lastName}</p>
+      </div>
+    ),
+  },
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",

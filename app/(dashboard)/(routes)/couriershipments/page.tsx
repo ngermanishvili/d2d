@@ -83,6 +83,7 @@ const ShipmentPage = async () => {
     city: item.city,
     markedByCourier: item.markedByCourier ? "კი" : "არა",
     brittle: item.brittle ? "კი" : "არა",
+    packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
     price: item.price,
     phoneNumber: item.phoneNumber,
     address: item.address,
@@ -91,15 +92,15 @@ const ShipmentPage = async () => {
     mimgebisNumber: item.mimgebisNumber,
     mimgebisAddress: item.mimgebisAddress,
     mimgebiQalaqi: item.mimgebiQalaqi,
-    createdAt: item.createdAt.toISOString(),
+    createdAt: item.createdAt.toISOString(), // Convert Date to string
+    updatedAt: item.updatedAt.toISOString(), // Convert Date to string
     trackingId: item.trackingId,
     status: item.status,
     courierComment: item.courierComment,
-    assignedCourier: item.assignedCourier
-      ? item.assignedCourier
-      : "არ არის კურიერი მიბმული",
-    shipmentStatusHistory: item.ShipmentStatusHistory,
-    updatedAt: item.updatedAt.toISOString(),
+    agebisDro: item?.agebisDro,
+    chabarebisDro: item?.chabarebisDro,
+    gamgzavnisqalaqi: item?.gamgzavnisqalaqi
+
   }));
 
   return (

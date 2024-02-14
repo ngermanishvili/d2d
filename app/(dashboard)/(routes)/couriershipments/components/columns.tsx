@@ -1,9 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint no-use-before-define: 0 */ // --> OFF
+
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useidSetStore } from "@/hooks/select-store";
+import { Badge, Alert, Tag } from "antd";
+import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+
 export type ShipmentColumn = {
   id: string;
   name: string;
@@ -13,8 +20,9 @@ export type ShipmentColumn = {
   city: string;
   price: string;
   brittle: string;
-  createdAt: string | Date; // Allow both string and Date
-  updatedAt: string | Date;
+  packaging: string;
+  createdAt: string | Date;
+  updatedAt: string | Date; // Allow both string and Date
   mimgebisName: string;
   mimgebisLastname: string;
   mimgebisNumber: string;
@@ -24,13 +32,60 @@ export type ShipmentColumn = {
   trackingId: string;
   status: string;
   courierComment: string;
-  assignedCourier: string;
+  agebisDro: string | null;
+  chabarebisDro: string | null;
+  gamgzavnisqalaqi: string
 };
+
+const colors = [
+  "pink",
+  "red",
+  "yellow",
+  "orange",
+  "cyan",
+  "green",
+  "blue",
+  "purple",
+  "geekblue",
+  "magenta",
+  "volcano",
+  "gold",
+  "lime",
+];
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
-    header: ({ table }) => <div>Select</div>,
+    header: ({ table }) => {
+      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
+
+      return (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => {
+            if (value === true) {
+              const filteredRowModel = table.getFilteredRowModel();
+
+              if (filteredRowModel) {
+                const arr = filteredRowModel.rows.map((i) => i.original);
+                setFilteredDataxlsx(arr);
+                table.toggleAllPageRowsSelected(!!value);
+
+                // Do something with arr
+              }
+            } else {
+              table.toggleAllPageRowsSelected(!!value);
+
+              setFilteredDataxlsx([]);
+            }
+          }}
+          aria-label="Select all"
+        />
+      );
+    },
     cell: ({ row }) => {
       const { pushId, ids, deleteId } = useidSetStore();
 
@@ -42,17 +97,13 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
               const id = row.original.id;
               if (!ids.includes(id)) {
                 pushId(id);
-                console.log(ids);
               }
             }
             if (!value) {
               const id = row.original.id;
 
               deleteId(id);
-              console.log(ids);
             }
-
-            // Toggle the row's selected state
             return row.toggleSelected(!!value);
           }}
           aria-label="Select row"
@@ -64,14 +115,133 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "trackingId",
     header: "თრექინგი",
+
+    cell: ({ row }) => (
+      <Tag className="p-2" color="geekblue">
+        {row.original.trackingId}
+      </Tag>
+    ),
   },
   {
+    accessorKey: "status",
+    header: "სტატუსიიიი",
+    cell: ({ row }) => (
+      <div>
+        {/* <Alert message={row.original.status} type="success" /> */}
+        <Tag className="p-2" color="green">
+          {row.original.status}
+        </Tag>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "createdAt",
+    header: "შეკვეთის თარიღი",
+    cell: ({ row }) => (
+      <div className="w-[140px]">
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisName",
+    header: "მიმღების სახელი და გვარი",
+    cell: ({ row }) => (
+      <div className="w-[250px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisName}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "gamgzavnisqalaqi",
+    header: "გამგზავნის ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[140px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.gamgzavnisqalaqi}
+        </p>
+      </div>
+    ),
+  },
+
+  {
+    accessorKey: "mimgebisLastname",
+    header: "მიმღების გვარი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisLastname}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisNumber",
+    header: "მიმღების ნომერი",
+    cell: ({ row }) => (
+      <div className="w-[150px]">
+        <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebiQalaqi",
+    header: "მიმღების ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[120px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebiQalaqi}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "mimgebisAddress",
+    header: "მიმღების მისამართი",
+    cell: ({ row }) => (
+      <div className="w-[200px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebisAddress}
+        </p>
+      </div>
+    ),
+  },
+
+  {
     accessorKey: "name",
-    header: "სახელი",
+    header: "სახელი და გვარი",
+    cell: ({ row }) => (
+      <div className="p-2 w-[200px]" style={{ display: "flex" }}>
+        <p> {row.original.name}</p>
+      </div>
+    ),
   },
   {
     accessorKey: "lastName",
     header: "გვარი",
+    cell: ({ row }) => (
+      <div className="p-2" style={{ display: "flex" }}>
+        <p> {row.original.lastName}</p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "phoneNumber",
+    header: "ტელეფონის ნომერი",
+    cell: ({ row }) => (
+      <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
+    ),
   },
   {
     accessorKey: "city",
@@ -81,15 +251,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "address",
     header: "მისამართი",
   },
-  {
-    accessorKey: "phoneNumber",
-    header: "ტელეფონის ნომერი",
-  },
-
-  {
-    accessorKey: "price",
-    header: "ფასი",
-  },
 
   {
     accessorKey: "brittle",
@@ -97,53 +258,39 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
 
   {
-    accessorKey: "mimgebisName",
-    header: "მიმღების სახელი",
+    accessorKey: "packaging",
+    header: "D2D შეფუთვა",
+    cell: ({ row }) => (
+      <div className="w-[100px]">{`${row.original.packaging}`}</div>
+    ),
   },
   {
-    accessorKey: "mimgebisLastname",
-    header: "მიმღების გვარი",
-  },
-  {
-    accessorKey: "mimgebisNumber",
-    header: "მიმღების ტელეფონის ნომერი",
-  },
-  {
-    accessorKey: "mimgebisAddress",
-    header: "მიმღების მისამართი",
-  },
-
-  {
-    accessorKey: "mimgebiQalaqi",
-    header: "მიმღების ქალაქი",
+    accessorKey: "price",
+    header: "ფასი",
   },
   {
     accessorKey: "markedByCourier",
     header: "სტატუსი",
   },
+
   {
-    accessorKey: "createdAt",
-    header: "დამატების თარიღი",
-  },
-  {
-    accessorKey: "updatedAt",
-    header: "დააფდეითების თარიღი",
-  },
-  {
-    accessorKey: "assignedCourier",
-    header: "კურიერი",
-    cell: ({ row }) => <span>{row.original?.assignedCourier}</span>,
+    accessorKey: "agebisDro",
+    header: "ამანათის აღების დრო",
+    cell: ({ row }) => (
+      <Tag className="p-2 w-[150px]" color="geekblue">
+        {row.original.agebisDro}
+      </Tag>
+    ),
   },
 
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
-    cell: ({ row }) => <span>{row.original.courierComment}</span>,
-  },
-  {
-    accessorKey: "status",
-    header: "სტატუსიიიი",
-    cell: ({ row }) => <span>{row.original.status}</span>,
+    cell: ({ row }) => (
+      <Tag className="p-2" color="geekblue">
+        {row.original.courierComment}
+      </Tag>
+    ),
   },
 
   {
