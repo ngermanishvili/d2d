@@ -2,8 +2,8 @@ import create from "zustand";
 
 export type ShipmentColumn = {
   id: string;
-  name: string;
-  lastName: string;
+  mimgebiFullName: string;
+  gamgzavniFullName: string;
   phoneNumber: string;
   address: string;
   city: string;
@@ -12,8 +12,6 @@ export type ShipmentColumn = {
   packaging: string;
   createdAt: string | Date;
   updatedAt: string | Date; // Allow both string and Date
-  mimgebisName: string;
-  mimgebisLastname: string;
   mimgebisNumber: string;
   mimgebisAddress: string;
   markedByCourier: string;

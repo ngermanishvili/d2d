@@ -13,8 +13,6 @@ import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 
 export type ShipmentColumn = {
   id: string;
-  name: string;
-  lastName: string;
   phoneNumber: string;
   address: string;
   city: string;
@@ -23,8 +21,6 @@ export type ShipmentColumn = {
   packaging: string;
   createdAt: string | Date;
   updatedAt: string | Date; // Allow both string and Date
-  mimgebisName: string;
-  mimgebisLastname: string;
   mimgebisNumber: string;
   mimgebisAddress: string;
   markedByCourier: string;
@@ -34,24 +30,12 @@ export type ShipmentColumn = {
   courierComment: string;
   agebisDro: string | null;
   chabarebisDro: string | null;
-  gamgzavnisqalaqi: string
+  gamgzavnisqalaqi: string;
+  mimgebiFullName: string;
+  gamgzavniFullName: string;
 };
 
-const colors = [
-  "pink",
-  "red",
-  "yellow",
-  "orange",
-  "cyan",
-  "green",
-  "blue",
-  "purple",
-  "geekblue",
-  "magenta",
-  "volcano",
-  "gold",
-  "lime",
-];
+
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -148,13 +132,13 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "mimgebisName",
+    accessorKey: "mimgebiFullName",
     header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
       <div className="w-[250px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
-          {row.original.mimgebisName}
+          {row.original.mimgebiFullName}
         </p>
       </div>
     ),
@@ -172,18 +156,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-  {
-    accessorKey: "mimgebisLastname",
-    header: "მიმღების გვარი",
-    cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold">
-          {" "}
-          {row.original.mimgebisLastname}
-        </p>
-      </div>
-    ),
-  },
+
   {
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
@@ -219,23 +192,15 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
 
   {
-    accessorKey: "name",
+    accessorKey: "gamgzavniFullName",
     header: "სახელი და გვარი",
     cell: ({ row }) => (
       <div className="p-2 w-[200px]" style={{ display: "flex" }}>
-        <p> {row.original.name}</p>
+        <p> {row.original.gamgzavniFullName}</p>
       </div>
     ),
   },
-  {
-    accessorKey: "lastName",
-    header: "გვარი",
-    cell: ({ row }) => (
-      <div className="p-2" style={{ display: "flex" }}>
-        <p> {row.original.lastName}</p>
-      </div>
-    ),
-  },
+
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",

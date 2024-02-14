@@ -98,33 +98,31 @@ model Billboard {
 
 model Shipment {
   id                    String                  @id @default(uuid())
-  name                  String
+  gamgzavniFullName     String
+  mimgebiFullName       String
   trackingId            String                  @unique
   userId                String
-  lastName              String
   phoneNumber           String
   gamgzavnisqalaqi      String                @default("თბილისი") 
-  address               String // 
-  city                  String // 
-  brittle               Boolean                 @default(false) // New field for the courier to mark true or false
-  packaging             Boolean                 @default(false) // New field for the courier to mark true or false
+  address               String 
+  city                  String 
+  brittle               Boolean                 @default(false) 
+  packaging             Boolean                 @default(false) 
   price                 String
-  markedByCourier       Boolean                 @default(false) // New field for the courier to mark true or false
+  markedByCourier       Boolean                 @default(false) 
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
-  mimgebisName          String
-  mimgebisLastname      String
   mimgebisNumber        String
-  mimgebiQalaqi         String
+  mimgebiQalaqi         String                @default("თბილისი") 
   mimgebisAddress       String
-  status                String                  @default("მიმდინარე") // New field for the courier to mark status
+  status                String                  @default("მიმდინარე") 
   courierComment        String
   label                 String
   whopays               String
   itemPrice             String?
   agebisDro             String?
   chabarebisDro         String?
-  assignedCourier       String? // New field for the courier to mark status
+  assignedCourier       String? 
   User                  User                    @relation(fields: [userId], references: [id])
   ShipmentStatusHistory ShipmentStatusHistory[]
 

@@ -36,8 +36,8 @@ export async function POST(req: Request, { params }: { params: {} }) {
     const body = await req.json();
 
     const {
-      name,
-      lastName,
+      mimgebiFullName,
+      gamgzavniFullName,
       phoneNumber,
       address,
       city,
@@ -45,8 +45,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
       packaging,
       price,
       markedByCourier,
-      mimgebisName,
-      mimgebisLastname,
+
       mimgebisNumber,
       mimgebisAddress,
       mimgebiQalaqi,
@@ -69,9 +68,9 @@ export async function POST(req: Request, { params }: { params: {} }) {
     if (!phoneNumber) {
       return new NextResponse("Phone number is required", { status: 400 });
     }
-    if (!address) {
-      return new NextResponse("Address is required", { status: 400 });
-    }
+    // if (!address) {
+    //   return new NextResponse("Address is required", { status: 400 });
+    // }
 
     if (!city) {
       return new NextResponse("City is required", { status: 400 });
@@ -81,25 +80,19 @@ export async function POST(req: Request, { params }: { params: {} }) {
       return new NextResponse("Price is required", { status: 400 });
     }
 
-    if (!mimgebiQalaqi) {
-      return new NextResponse("mimgebiQalaqi is required", { status: 400 });
-    }
+    // if (!mimgebiQalaqi) {
+    //   return new NextResponse("mimgebiQalaqi is required", { status: 400 });
+    // }
 
-    if (!name) {
+    if (!mimgebiFullName) {
       return new NextResponse("Label is required", { status: 400 });
     }
 
-    if (!lastName) {
+    if (!gamgzavniFullName) {
       return new NextResponse("Image URL is required", { status: 400 });
     }
 
-    if (!mimgebisName) {
-      return new NextResponse("mimgebisName is required", { status: 400 });
-    }
 
-    if (!mimgebisLastname) {
-      return new NextResponse("mimgebisLastname is required", { status: 400 });
-    }
 
     if (!mimgebisNumber) {
       return new NextResponse("mimgebisNumber is required", { status: 400 });
@@ -122,10 +115,9 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status: 400,
       });
     }
+
     const shipment = await db.shipment.create({
       data: {
-        name,
-        lastName,
         phoneNumber,
         address,
         city,
@@ -134,8 +126,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
         price,
         markedByCourier,
         userId,
-        mimgebisName,
-        mimgebisLastname,
         mimgebisNumber,
         mimgebisAddress,
         mimgebiQalaqi,
@@ -147,7 +137,10 @@ export async function POST(req: Request, { params }: { params: {} }) {
         chabarebisDro,
         whopays, // Add whopays to the data
         itemPrice, // Add itemPrice to the data
-        gamgzavnisqalaqi
+        gamgzavnisqalaqi,
+        mimgebiFullName,
+        gamgzavniFullName,
+
 
       },
     });

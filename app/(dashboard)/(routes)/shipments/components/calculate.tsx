@@ -28,8 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { string } from "zod";
-import { Alert, Card } from "antd";
+import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
 
 interface WeightRange {
@@ -39,17 +38,17 @@ interface WeightRange {
 }
 
 const weightRanges: WeightRange[] = [
-  { label: "0-5 kg", tbilisiPrice: 5, rustaviPrice: 6 },
-  { label: "5-10 kg", tbilisiPrice: 7, rustaviPrice: 10 },
-  { label: "10-15 kg", tbilisiPrice: 8, rustaviPrice: 11 },
-  { label: "15-20 kg", tbilisiPrice: 9, rustaviPrice: 13 },
-  { label: "20-25 kg", tbilisiPrice: 11, rustaviPrice: 15 },
-  { label: "25-30 kg", tbilisiPrice: 12, rustaviPrice: 16 },
-  { label: "30-40 kg", tbilisiPrice: 13, rustaviPrice: 17 },
-  { label: "40-50 kg", tbilisiPrice: 16, rustaviPrice: 21 },
-  { label: "50-75 kg", tbilisiPrice: 28, rustaviPrice: 35 },
-  { label: "75-100 kg", tbilisiPrice: 38, rustaviPrice: 47 },
-  { label: "100-150 kg", tbilisiPrice: 50, rustaviPrice: 62 },
+  { label: "0-5 კგ", tbilisiPrice: 5, rustaviPrice: 6 },
+  { label: "5-10 კგ", tbilisiPrice: 7, rustaviPrice: 10 },
+  { label: "10-15 კგ", tbilisiPrice: 8, rustaviPrice: 11 },
+  { label: "15-20 კგ", tbilisiPrice: 9, rustaviPrice: 13 },
+  { label: "20-25 კგ", tbilisiPrice: 11, rustaviPrice: 15 },
+  { label: "25-30 კგ", tbilisiPrice: 12, rustaviPrice: 16 },
+  { label: "30-40 კგ", tbilisiPrice: 13, rustaviPrice: 17 },
+  { label: "40-50 კგ", tbilisiPrice: 16, rustaviPrice: 21 },
+  { label: "50-75 კგ", tbilisiPrice: 28, rustaviPrice: 35 },
+  { label: "75-100 კგ", tbilisiPrice: 38, rustaviPrice: 47 },
+  { label: "100-150 კგ", tbilisiPrice: 50, rustaviPrice: 62 },
 ];
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
@@ -187,7 +186,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="w-full flex flex-row gap-4 rounded-sm justify-center ">
+      <div className="w-full flex flex-row gap-2 mx-4 px-4 rounded-sm justify-center">
         <div className=" hidden xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className=" w-11/12 flex justify-center items-center">
             <Image
@@ -198,27 +197,30 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
             />
           </div>
         </div>
-        <div className="w-full  bg-slate-300 xl:w-1/2 xl:self-end xl:pl-10 xl:pb-2 ">
+        <div className="w-full bg-white rounded-md xl:w-1/2 xl:self-end p-2 xl:pb-2 ">
           {" "}
-          <h2 className="w-full mt-10 scroll-m-20 border-b pb-6 text-xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
-            კალკულატორი
-          </h2>
+          <div className="bg-red-500 ">
+            <h2 className="w-full p-4 mt-10 scroll-m-20 border-b pb-6 text-xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
+              გამოთვლა
+            </h2>
+          </div>
+
           <div className="w-full flex flex-col md:flex-row justify-between gap-8 mb-8">
             <div className="w-full md:w-1/2">
               <div className="w-full flex gap-4 md:gap-8 flex-col">
                 <div>
-                  <div className="flex w-full flex-col sm:flex-row justify-between gap-1">
-                    <h4 className=" relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
+                  <div className="flex w-full flex-col sm:flex-row justify-between gap-4 mt-4">
+                    <h4 className=" relative rounded bg-red-500 text-white w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-sm">
                       გადამხდელი მხარე
                     </h4>
-                    <div className="w-4/5 self-center sm:self-auto rounded-md bg-white">
+                    <div className="w-4/5 self-center sm:self-auto rounded-md">
                       <Select
                         value={selectedParty || ""}
                         onValueChange={(value) =>
                           handlePartyChange(value as "Sender" | "Receiver")
                         }
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className=" bg-white">
                           <SelectValue placeholder="აირჩიეთ გადამხდელი მხარე" />
                         </SelectTrigger>
                         <SelectContent>
@@ -230,16 +232,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                   </div>
                 </div>
 
-                <div className="flex w-full flex-col sm:flex-row justify-between align-middle gap-1">
+                <div className="flex w-full flex-col sm:flex-row justify-between align-middle gap-4">
                   <label
                     htmlFor="item-price"
-                    className="text-md flex items-center justify-center relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold"
+                    className="text-md flex items-center justify-center relative rounded bg-red-500 text-white w-full px-[0.3rem] py-[6px] font-mono text-sm font-semibold "
                   >
                     ნივთის საფასური
                   </label>
 
                   <input
-                    className="w-4/5 self-center sm:self-auto min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white"
+                    className="w-4/5 self-center sm:self-auto min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white focus:border-transparent focus:outline-none"
                     type="text"
                     id="item-price"
                     value={itemPrice}
@@ -250,8 +252,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                   />
                 </div>
 
-                <div className="flex w-full flex-col sm:flex-row justify-between gap-1">
-                  <h4 className="relative rounded bg-blue-100 w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
+                <div className="flex w-full flex-col sm:flex-row justify-between gap-4">
+                  <h4 className="relative rounded bg-red-500 text-white w-full px-[0.3rem] py-[6px] font-mono text-md font-semibold flex items-center justify-center text-md">
                     გზავნილის წონა
                   </h4>
                   <div className="w-4/5 self-center sm:self-auto min-w-[116px] bg-white">
@@ -275,17 +277,17 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 mt-4 md:mt-0">
+            <div className="w-full md:w-1/2 mt-4 md:mt-0 ">
               <div className="w-full flex flex-col justify-center">
-                <div className="flex w-full text-center md:text-start flex-col gap-8 text-wh md:ml-4">
-                  <div className="flex md:justify-start text-center justify-center gap-2">
+                <div className="flex w-full text-center md:text-start flex-col gap-6 text-wh md:ml-4">
+                  <div className="flex md:justify-start text-center justify-center  mt-4">
                     <label
                       htmlFor="packaging-service"
                       className="text-base md:text-lg xl:text-xl  leading-5 text-black text-primary"
                     >
-                      <p className=" rounded-sm leading-7 [&:not(:first-child)]:mt-6 md:text-lg xl:text-xl">
-                        შეფუთის სერვისი <br /> (+1 ლარი)
-                      </p>
+                      <Typography.Title level={5} style={{ marginTop: "4px", marginRight: "10px" }}>
+                        შეფუთვის სერვისი +1 ლარი
+                      </Typography.Title>
                     </label>
                     <input
                       className="w-5 h-5 mt-2 "
@@ -297,35 +299,44 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       }
                     />
                   </div>
-                  <h2 className="text-base h-[36px] pb-1 pt-1 md:text-lg xl:text-xl">
-                    შეკვეთის ფასი - {shipmentCost} ლარი
-                  </h2>
-
+                  <div className="flex gap-2">
+                    <Typography.Title level={5} style={{ margin: 0 }}>
+                      ფასი წონის მიხედვით -
+                    </Typography.Title>
+                    <Badge className="text-md" status="processing" count={shipmentCost} showZero overflowCount={99999} style={{ width: "70px", height: "25px", maxWidth: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "16px" }} />
+                  </div>
                   <>
-                    <h2 className="text-base h-[36px] pb-1 pt-1 md:text-lg xl:text-xl">
-                      ნივთის ღირებულება - {itemPrice === "" ? 0 : itemPrice}{" "}
-                      ლარი
-                    </h2>
-                    <h2 className="text-base md:text-lg xl:text-xl h-[36px] pb-1 pt-1">
-                      ჯამური ფასი - {totalPrice} ლარი
-                    </h2>
+                    <div className="flex gap-2">
+                      <Typography.Title level={5} style={{ margin: 0 }}>
+                        ნივთის საფასური -
+                      </Typography.Title>
+                      <Badge className="text-md" status="processing" count={itemPrice === "" ? 0 : itemPrice} showZero overflowCount={99999} style={{ width: "70px", height: "25px", maxWidth: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "16px" }} />
+                    </div>
                   </>
                 </div>
               </div>
             </div>
           </div>
+          <Divider />
           {selectedParty === "Sender" ? (
             <div className="w-full text-center">
               <Alert
-                className="w-5/6 sm:w-1/2 mx-auto"
+                className="w-[600px] max-w-[100%] px-4 my-8"
                 message="თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს"
-                type="info"
+                type="error"
               />
             </div>
           ) : (
             ""
           )}
+          <div className="flex gap-4">
+            <Typography.Title level={2} style={{ margin: "10px" }}>
+              ჯამი
+            </Typography.Title>
+            <Badge className="text-md mt-3" status="success" count={`${totalPrice} ₾`} showZero overflowCount={99999} style={{ width: "150px", height: "35px", maxWidth: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontSize: "16px" }} />
+          </div>
         </div>
+
       </div>
     </>
   );

@@ -44,8 +44,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
                     <Title level={4}>გამგზავნის ინფორმაცია</Title>
                     <Paragraph >
                         <ul>
-                            <li>სახელი: {capitalizeFirstLetter(shipmentData.name)}</li>
-                            <li>გვარი: {capitalizeFirstLetter(shipmentData.lastName)}</li>
+                            <li>სახელი: {capitalizeFirstLetter(shipmentData.gamgzavniFullName)}</li>
                             <li> ტელ: +995 {shipmentData.phoneNumber}</li>
                         </ul>
                     </Paragraph>
@@ -55,8 +54,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
                     <Title level={4}>მიმღების ინფორმაცია</Title>
                     <Paragraph>
                         <ul>
-                            <li>სახელი: {capitalizeFirstLetter(shipmentData.mimgebisName)}</li>
-                            <li>გვარი: {capitalizeFirstLetter(shipmentData.mimgebisLastname)}</li>
+                            <li>სახელი: {capitalizeFirstLetter(shipmentData.mimgebiFullName)}</li>
                             <li>ტელ: +995 {shipmentData.mimgebisNumber}</li>
                         </ul>
                     </Paragraph>

@@ -31,8 +31,7 @@ export async function PATCH(
     const body = await req.json();
     // Extract variables from the request body
     const {
-      name,
-      lastName,
+
       phoneNumber,
       address,
       city,
@@ -40,8 +39,7 @@ export async function PATCH(
       packaging,
       price,
       markedByCourier,
-      mimgebisName,
-      mimgebisLastname,
+
       mimgebisNumber,
       mimgebisAddress,
       mimgebiQalaqi,
@@ -49,7 +47,9 @@ export async function PATCH(
       courierComment,
       label,
       chabarebisDro,
-      gamgzavnisqalaqi
+      gamgzavnisqalaqi,
+      mimgebiFullName,
+      gamgzavniFullName
 
     } = body;
 
@@ -86,11 +86,7 @@ export async function PATCH(
         brittle,
         packaging,
         price,
-        name,
-        lastName,
         markedByCourier,
-        mimgebisName,
-        mimgebisLastname,
         mimgebisNumber,
         mimgebisAddress,
         mimgebiQalaqi,
@@ -98,7 +94,9 @@ export async function PATCH(
         courierComment,
         label,
         chabarebisDro,
-        gamgzavnisqalaqi
+        gamgzavnisqalaqi,
+        mimgebiFullName,
+        gamgzavniFullName,
 
       },
     });
