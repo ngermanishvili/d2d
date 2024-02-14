@@ -78,8 +78,8 @@ const ShipmentPage = async () => {
   );
   formattedShipments = shipments.map((item) => ({
     id: item.id,
-    name: item.name,
-    lastName: item.lastName,
+    mimgebiFullName: item?.mimgebiFullName,
+    gamgzavniFullName: item?.gamgzavniFullName,
     city: item.city,
     markedByCourier: item.markedByCourier ? "კი" : "არა",
     brittle: item.brittle ? "კი" : "არა",
@@ -87,8 +87,6 @@ const ShipmentPage = async () => {
     price: item.price,
     phoneNumber: item.phoneNumber,
     address: item.address,
-    mimgebisName: item.mimgebisName,
-    mimgebisLastname: item.mimgebisLastname,
     mimgebisNumber: item.mimgebisNumber,
     mimgebisAddress: item.mimgebisAddress,
     mimgebiQalaqi: item.mimgebiQalaqi,

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -42,9 +42,10 @@ import Logo from "@/assets/images/d2d.jpg";
 import { Alert, Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 
+
 const formSchema = z.object({
-  name: z.string().min(1),
-  lastName: z.string().min(1),
+  mimgebiFullName: z.string().min(1),
+  gamgzavniFullName: z.string().min(1),
   city: z.string().min(1),
   whopays: z.string().min(1),
   address: z.string().min(1),
@@ -92,8 +93,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const action = initialData ? "ცვლილების შენახვა" : "შეკვეთის დამატება";
 
   const {
-    shipmentCost,
-    setShipmentCost,
     packagingUsed,
     setPackagingUsed,
     selectedCity,
@@ -105,24 +104,23 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     itemPrice,
     setItemPrice,
     totalPrice,
-    setTotalPrice,
   } = useCalculatorStore();
 
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-      name: "",
-      lastName: "",
+
+      mimgebiFullName: "",
+      gamgzavniFullName: "",
       city: selectedCity,
       address: "",
       phoneNumber: "",
       price: "0",
       itemPrice: null,
-      mimgebisName: "",
-      mimgebisLastname: "",
+
       mimgebisNumber: "",
       mimgebisAddress: "",
-      mimgebiQalaqi: "",
+      mimgebiQalaqi: "თბილისი",
       brittle: false,
       packaging: false,
       markedByCourier: false,
@@ -133,7 +131,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       agebisDro: "",
       chabarebisDro: "",
       gamgzavnisqalaqi: "თბილისი",
-
     },
   });
 
@@ -288,6 +285,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       <Separator />
 
       <>
+
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-slate-200 border-0">
           <div className="rounded-t bg-red-500 mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
@@ -308,22 +306,21 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 w-full flex flex-col max-h-full"
               >
-                <div className="w-full flex flex-col sm:flex-row">
-                  <div className=" w-5/7 sm:w-1/2 flex flex-col self-center sm:self-auto ">
-                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 mb-4 font-bold uppercase">
+                <div className="w-full flex flex-row">
+                  <div className="w-1/2">
+                    <h2 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase ">
                       გამგზავნის მონაცემები
-                    </h6>
-                    <div className="flex flex-wrap">
+                    </h2>
+                    <div className="flex flex-wrap mt-8">
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-                            disabled
                             control={form.control}
-                            name="name"
+                            name="gamgzavniFullName"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  სახელი
+                                  გამგზავნის სახელი / გვარი
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
                                   <div className="relative">
@@ -343,38 +340,36 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         </div>
                       </div>
                       <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            disabled
-                            control={form.control}
-                            name="lastName"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  გვარი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <div className="relative">
-                                    <Input
-                                      disabled={loading}
-                                      placeholder="გვარი"
-                                      {...field}
-                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all h-[50px] duration-150"
-                                    />
-                                    <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
-                                  </div>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+                        <FormField
+                          control={form.control}
+                          name="phoneNumber"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                ტელეფონის ნომერი
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm">
+                                <div className="relative">
+
+
+                                  <Input
+                                    disabled={loading}
+                                    placeholder="ტელეფონის ნომერი"
+                                    {...field}
+                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                  />
+                                  <FaPhoneVolume className="absolute top-[17px] right-[10px] w-5 h-5" />
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
 
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-                            disabled
                             control={form.control}
                             name="address"
                             render={({ field }) => (
@@ -393,52 +388,60 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            disabled
-                            control={form.control}
-                            name="phoneNumber"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  ტელეფონის ნომერი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <div className="relative">
-                                    <Input
-                                      disabled={loading}
-                                      placeholder="ტელეფონის ნომერი"
-                                      {...field}
-                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
-                                    />
-                                    <FaPhoneVolume className="absolute top-[17px] right-[10px] w-5 h-5" />
-                                  </div>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+                      <div className="w-full lg:w-6/12 px-4 relative mb-3">
+                        <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
+                          ქალაქი
+                        </FormLabel>
+                        <FormField
+                          control={form.control}
+                          name="gamgzavnisqalaqi"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
+                              <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
+                                <Select
+                                  value={field.value}
+                                  onValueChange={(newValue) => {
+                                    field.onChange(newValue);
+                                  }}
+                                >
+                                  <SelectTrigger className="h-[50px]">
+                                    <SelectValue>{field.value}</SelectValue>
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {/* {ADMIN როლგეითი} */}
+                                    <SelectItem value="თბილისი">
+                                      თბილისი
+                                    </SelectItem>
+                                    <SelectItem value="რუსთავი">
+                                      რუსთავი
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
                       </div>
+
                     </div>
                   </div>
-                  <Divider type="vertical" className="h-auto bg-slate-300" />
-                  <div className=" w-5/7 sm:w-1/2 flex flex-col self-center sm:self-auto ">
-                    <h6 className="text-blueGray-400 text-sm ml-4 mt-6 font-bold mb-4 uppercase">
+                  <Divider type="vertical" className="h-auto bg-red-600 w-1.5 rounded-sm mt-4" />
+                  <div className="w-1/2">
+                    <h6 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase">
                       მიმღების მონაცემები
                     </h6>
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-wrap mt-8">
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-                            disabled
                             control={form.control}
-                            name="mimgebisName"
+                            name="mimgebiFullName"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  სახელი
+                                  მიმღების სახელი / გვარი
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
                                   <div className="absolute">
@@ -449,6 +452,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
                                     />
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
+
                                   </div>
                                 </FormControl>
                                 <FormMessage />
@@ -458,66 +462,73 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         </div>
                       </div>
                       <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            disabled
-                            control={form.control}
-                            name="mimgebisLastname"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  გვარი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <div className="relative">
-                                    <Input
-                                      disabled={loading}
-                                      placeholder="გვარი"
-                                      {...field}
-                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
-                                    />
-                                    <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
-                                  </div>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+                        <FormField
+                          control={form.control}
+                          name="mimgebisAddress"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                მისამართი
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm">
+                                <div className="relative">
+
+                                  <Input
+                                    disabled={loading}
+                                    placeholder="მისამართი"
+                                    {...field}
+                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                  />
+                                  <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
+
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
 
-                      <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            disabled
-                            control={form.control}
-                            name="mimgebisAddress"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  მისამართი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <div className="relative">
-                                    <Input
-                                      disabled={loading}
-                                      placeholder="მისამართი"
-                                      {...field}
-                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
-                                    />
-                                    <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
-                                  </div>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+
+                      <div className="w-full lg:w-6/12 px-4 relative mb-3">
+                        <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
+                          ქალაქი
+                        </FormLabel>
+                        <FormField
+                          control={form.control}
+                          name="mimgebiQalaqi"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
+                              <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
+                                <Select
+                                  value={field.value}
+                                  onValueChange={(newValue) => {
+                                    field.onChange(newValue);
+                                  }}
+                                >
+                                  <SelectTrigger className="h-[50px] bg-white">
+                                    <SelectValue>{field.value}</SelectValue>
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {/* {ADMIN როლგეითი} */}
+                                    <SelectItem value="თბილისი">
+                                      თბილისი
+                                    </SelectItem>
+                                    <SelectItem value="რუსთავი">
+                                      რუსთავი
+                                    </SelectItem>
+                                  </SelectContent>
+                                </Select>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
                       </div>
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-                            disabled
                             control={form.control}
                             name="mimgebisNumber"
                             render={({ field }) => (
@@ -542,42 +553,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-6/12 px-4 relative mb-3">
-                        <FormField
-                          disabled
-                          control={form.control}
-                          name="mimgebiQalaqi"
-                          render={({ field }) => (
-                            <FormItem className="relative w-full mb-3">
-                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                ქალაქი
-                              </FormLabel>
-                              <FormControl className="relative rounded-md shadow-sm">
-                                <Select
-                                  disabled
-                                  value={selectedCity || ""}
-                                  onValueChange={(value) =>
-                                    setCity(value as "Tbilisi" | "Rustavi")
-                                  }
-                                >
-                                  <SelectTrigger>
-                                    <SelectValue placeholder="აირჩიეთ ქალაქი" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    <SelectItem value="Tbilisi">
-                                      თბილისი
-                                    </SelectItem>
-                                    <SelectItem value="Rustavi">
-                                      რუსთავი
-                                    </SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      </div>
+
                     </div>
 
                     <div className="flex flex-wrap">
@@ -689,7 +665,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       <div className="w-full lg:w-4/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-
                             control={form.control}
                             name="markedByCourier"
                             render={({ field }) => (
@@ -699,21 +674,21 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                 </FormLabel>
                                 <FormControl>
                                   <Select
-                                    value={field.value ? "კი" : "არა"}
+                                    value={field.value ? "Yes" : "No"}
                                     onValueChange={(newValue) => {
                                       const isMarkedByCourier =
-                                        newValue === "კი";
+                                        newValue === "Yes";
                                       field.onChange(isMarkedByCourier);
                                     }}
                                   >
                                     <SelectTrigger>
                                       <SelectValue>
-                                        {field.value ? "კი" : "არა"}
+                                        {field.value ? "Yes" : "No"}
                                       </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
-                                      <SelectItem value="კი">კი</SelectItem>
-                                      <SelectItem value="არა">არა</SelectItem>
+                                      <SelectItem value="Yes">Yes</SelectItem>
+                                      <SelectItem value="No">No</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </FormControl>
@@ -738,13 +713,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                     disabled={loading}
                                     placeholder="დაწერე კომენტარი.."
                                     {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none"
                                   />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
                             )}
                           />
+
                         </div>
                       </div>
                     </div>
@@ -757,7 +733,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   loading={loading}
                   onConfirm={async () => {
                     await onSubmit(form.getValues());
-                    router.push("/couriershipments");
+                    router.push("/shipments");
                     router.refresh();
                   }}
                   isOpen={isConfirmOpen}
