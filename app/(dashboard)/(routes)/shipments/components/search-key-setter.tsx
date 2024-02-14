@@ -7,8 +7,8 @@ export const ShipmentSearchDropdown: React.FC<ShipmentSearchDropdownProps> = ({
 }) => {
     const shipmentColumns: string[] = [
         "id",
-        "name",
-        "lastName",
+        "mimgebiFullName",
+        "gamgzavniFullName",
         "phoneNumber",
         "address",
         "city",
@@ -17,8 +17,6 @@ export const ShipmentSearchDropdown: React.FC<ShipmentSearchDropdownProps> = ({
         "packaging",
         "createdAt",
         "updatedAt",
-        "mimgebisName",
-        "mimgebisLastname",
         "mimgebisNumber",
         "mimgebisAddress",
         "markedByCourier",

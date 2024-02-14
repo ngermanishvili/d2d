@@ -34,10 +34,7 @@ const ShipmentFormXLSX = () => {
   const renameKeys = (data: any) => {
     return {
       "თრექინგი ID": data.trackingId,
-      // id: data.id,
-      "სახელი": data.name,
-      // userId: data.userId,
-      "გვარი": data.lastName,
+      "სახელი / გვარი": data.gamgzavniFullName,
       "ტელეფონის ნომერი": data.phoneNumber,
       "მისამართი": data.address,
       "ქალაქი": data.city,
@@ -55,8 +52,8 @@ const ShipmentFormXLSX = () => {
       "მიმდინარე სტატუსი": data.status,
       'სავარაუდო აღების დრო': data.agebisDro,
       "სავარაუდო ჩაბარების დრო": data.chabarebisDro,
-      "მიმღების სახელი": data.mimgebisName,
-      "მიმღების  გვარი": data.mimgebisLastname,
+      "მიმღების სახელი / გვარი": data.mimgebiFullName,
+
       "მიმღების  ნომერი": data.mimgebisNumber,
       "მიმღების  ქალაქი": data.mimgebiQalaqi,
       "მიმღების მისამართი": data.mimgebisAddress,

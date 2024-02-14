@@ -127,8 +127,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
 
   const shipmentColumnsWithLabels = [
     { value: "id", label: "აიდი" },
-    { value: "name", label: "სახელი" },
-    { value: "lastName", label: "გვარი" },
+    { value: "mimgebiFullName", label: "მიმღების სახელი" },
+    { value: "gamgzavniFullName", label: "გამგზავნის სახელი" },
     { value: "phoneNumber", label: "ტელეფონის ნომერი" },
     { value: "address", label: "მისამართი" },
     { value: "city", label: "ქალაქი" },
@@ -137,8 +137,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     { value: "packaging", label: "შეფუთვა" },
     { value: "createdAt", label: "დამატებულია" },
     { value: "updatedAt", label: "დააფდეითებულია" },
-    { value: "mimgebisName", label: "მიმღების სახელი" },
-    { value: "mimgebisLastname", label: "მიმღების გვარი" },
     { value: "mimgebisNumber", label: "მიმღების ნომერი" },
     { value: "mimgebisAddress", label: "მიმღების მისამართი" },
     { value: "markedByCourier", label: "მონიშნული კურიერის მიერ" },

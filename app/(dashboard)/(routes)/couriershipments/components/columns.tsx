@@ -36,21 +36,6 @@ export type ShipmentColumn = {
 };
 
 
-const colors = [
-  "pink",
-  "red",
-  "yellow",
-  "orange",
-  "cyan",
-  "green",
-  "blue",
-  "purple",
-  "geekblue",
-  "magenta",
-  "volcano",
-  "gold",
-  "lime",
-];
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -147,7 +132,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "mimgebisName",
+    accessorKey: "mimgebiFullName",
     header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
       <div className="w-[250px]" style={{ display: "flex" }}>
@@ -206,16 +191,16 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-
   {
-    accessorKey: "lastName",
-    header: "გვარი",
+    accessorKey: "gamgzavniFullName",
+    header: "სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="p-2" style={{ display: "flex" }}>
+      <div className="p-2 w-[200px]" style={{ display: "flex" }}>
         <p> {row.original.gamgzavniFullName}</p>
       </div>
     ),
   },
+
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",
