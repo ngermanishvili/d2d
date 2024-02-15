@@ -45,20 +45,24 @@ export const NewVerificationForm = () => {
 
 
     return (
-        <CardWrapper
-            headerLabel="Confirming your verification"
-            backButtonHref="/auth/login"
-            backButtonLabel="back to login"
-        >
-            <div className="flex items-center w-full justify-center">
-                {!success && !error && (
-                    <BeatLoader />
-                )}
-                <FormSuccess message={success} />
-                {!success && (
-                    <FormError message={error} />
-                )}
+        <>
+            <div className="mt-5 flex items-center justify-center p-[60px]">
+                <CardWrapper
+                    headerLabel="ვერიფიკაციის დადასტურება"
+                    backButtonHref="/auth/login"
+                    backButtonLabel="ავტორიზაციის გვერდზე დაბრუნება"
+                >
+                    <div className="flex items-center w-full justify-center">
+                        {!success && !error && (
+                            <BeatLoader />
+                        )}
+                        <FormSuccess message={success} />
+                        {!success && (
+                            <FormError message={error} />
+                        )}
+                    </div>
+                </CardWrapper>
             </div>
-        </CardWrapper>
+        </>
     )
 }

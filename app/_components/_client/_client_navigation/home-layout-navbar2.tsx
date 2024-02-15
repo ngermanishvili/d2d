@@ -65,12 +65,12 @@ export default function Header({ isSession }: { isSession: boolean }) {
                             <div className="p-2">
                                 <Button size="sm">
                                     <Link href="/auth/login" passHref>
-                                        Authorization
+                                        ავტორიზაცია
                                     </Link>
                                 </Button>
                                 <Button className="ml-4" size="sm">
                                     <Link href="/auth/register" passHref>
-                                        Register
+                                        რეგისტრაცია
                                     </Link>
                                 </Button>
                             </div>

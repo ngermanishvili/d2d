@@ -22,7 +22,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     const existingUser = await getUserByEmail(email);
 
     if (!existingUser || !existingUser.email || !existingUser.password) {
-        return { error: "Email does not exist!" }
+        return { error: "ელ-ფოსტა ვერ მოიძებნა" }
     }
 
     if (!existingUser.emailVerified) {
@@ -32,7 +32,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
         await sendVerificationEmail(existingUser.email, verificationToken.token);
 
-        return { success: "Confirmation email sent!" };
+        return { success: "გთხოვთ შეამოწმოთ ელ-ფოსტა" };
     }
 
 
@@ -46,9 +46,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return { error: "Invalid Credentials" };
+                    return { error: "ელ-ფოსტა ან პაროლი არასწორია" };
                 default:
-                    return { error: "Something went wrong!" };
+                    return { error: "მოხდა შეცდომა.." };
             }
         }
 

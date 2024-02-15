@@ -71,16 +71,11 @@ export const RegisterForm = () => {
     <>
 
       <div className=" mt-5 flex items-center justify-center p-[60px]">
-
         <CardWrapper
-
           headerLabel="რეგისტრაცია"
           backButtonLabel="გაქვთ უკვე ანგარიში?"
           backButtonHref="/auth/login"
-
         >
-
-
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
               <div className="space-y-4">
