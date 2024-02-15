@@ -19,7 +19,7 @@ export function LatestBlogPosts() {
     <section className="py-40 px-8">
       <div className="container mx-auto mb-12">
         <Typography placeholder="" variant="h3" color="blue-gray">
-          Check my latest blog posts
+          ჩემი ბლოგი
         </Typography>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
@@ -29,6 +29,8 @@ export function LatestBlogPosts() {
             img={item.imageUrl}
             title={item.title}
             desc={item.excerpt}
+            blogpostId={item.id}
+
           />
         ))}
         <Card
@@ -44,15 +46,14 @@ export function LatestBlogPosts() {
               className="mt-4"
               color="white"
             >
-              Discover all my articles
+              ჩემი ბლოგი
             </Typography>
             <Typography
               placeholder=""
               color="white"
               className="py-4 font-normal"
             >
-              I am a versatile writer who explores a wide range of genres and
-              topics.
+              ყველა ინფორმაცია ჩვენი კომპანიის შესახებ
             </Typography>
             <Button
               placeholder=""
@@ -63,7 +64,7 @@ export function LatestBlogPosts() {
                 router.push(`/blogposts`);
               }}
             >
-              read more
+              მეტის ნახვა
               <ArrowRightIcon
                 strokeWidth={3}
                 className="h-3.5 w-3.5 text-white"
