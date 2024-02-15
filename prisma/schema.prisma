@@ -162,5 +162,5 @@ model BlogPosts {
 
 model ShipmentCounter {
   id    Int     @id @default(autoincrement())
-  count Int     @default(100)
+  count Int     @default(4000)
 }

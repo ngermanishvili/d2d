@@ -10,8 +10,8 @@ async function generateTrackingNumber() {
   if (!shipmentCounter) {
     shipmentCounter = await db.shipmentCounter.create({
       data: {
-        count: 100 // Initial count value
-      }
+        count: 100, // Initial count value
+      },
     });
   }
 
@@ -19,7 +19,6 @@ async function generateTrackingNumber() {
   const newCount = shipmentCounter.count + 1;
 
   // Generate 4-digit random number
-  const randomDigits = Math.floor(1000 + Math.random() * 9000);
 
   // Update count in database
   await db.shipmentCounter.update({
@@ -28,7 +27,7 @@ async function generateTrackingNumber() {
   });
 
   // Return tracking number
-  return `${newCount}-${randomDigits}`;
+  return `${newCount}`;
 }
 
 export async function POST(req: Request, { params }: { params: {} }) {
@@ -57,7 +56,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
       chabarebisDro,
       itemPrice, // Add itemPrice to the destructuring
       gamgzavnisqalaqi,
-
     } = body;
     const userId = await currentUserId();
 
@@ -91,8 +89,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
     if (!gamgzavniFullName) {
       return new NextResponse("Image URL is required", { status: 400 });
     }
-
-
 
     if (!mimgebisNumber) {
       return new NextResponse("mimgebisNumber is required", { status: 400 });
@@ -140,8 +136,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
         gamgzavnisqalaqi,
         mimgebiFullName,
         gamgzavniFullName,
-
-
       },
     });
     let savedAdress; // Declare the variable here
