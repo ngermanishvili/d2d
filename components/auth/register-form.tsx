@@ -21,6 +21,14 @@ import { Button } from "../ui/button";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { register } from "@/actions/register";
+import { cn } from "@/lib/utils";
+import { Poppins } from 'next/font/google'
+
+
+const font = Poppins({
+  subsets: ['latin'],
+  weight: ['600']
+})
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
@@ -39,7 +47,6 @@ export const RegisterForm = () => {
     },
   });
 
-  // aq shegvidzlia gamovikenot axios axla vikenebt next servers logebistvis da shenaxvistvis infosi.
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
@@ -61,101 +68,109 @@ export const RegisterForm = () => {
   };
 
   return (
-    <CardWrapper
-      headerLabel="Create a Account"
-      backButtonLabel="Already have an account?"
-      backButtonHref="/auth/login"
-      showSocial
-    >
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <div className="space-y-4">
-            <FormField
-              control={form.control}
-              name="email"
-              disabled={isPending}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="email">Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder="jhon.doe@gmail.com"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="name"
-              disabled={isPending}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Jhon Doe" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />{" "}
-            <FormField
-              control={form.control}
-              name="number"
-              disabled={isPending}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="number">Number</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="tqveni nomeri" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              disabled={isPending}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="email">password</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="password" placeholder="********" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirm"
-              disabled={isPending}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="confirm">
-                    Confirm Password
-                  </FormLabel>
-                  <FormControl>
-                    <Input {...field} type="password" placeholder="********" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <FormError message={error} />
-          <FormSuccess message={success} />
+    <>
 
-          <Button typeof="submit" className="w-full" disabled={isPending}>
-            Create an account
-          </Button>
-        </form>
-      </Form>
-      A login form will go here
-    </CardWrapper>
+      <div className=" mt-5 flex items-center justify-center p-[60px]">
+
+        <CardWrapper
+
+          headerLabel="რეგისტრაცია"
+          backButtonLabel="გაქვთ უკვე ანგარიში?"
+          backButtonHref="/auth/login"
+
+        >
+
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  disabled={isPending}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="email">ელ-ფოსტა</FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="email"
+                          placeholder="ელ-ფოსტა"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="name"
+                  disabled={isPending}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="name">სახელი</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="სახელი" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />{" "}
+                <FormField
+                  control={form.control}
+                  name="number"
+                  disabled={isPending}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="number">ტელეფონი</FormLabel>
+                      <FormControl>
+                        <Input {...field} placeholder="ნომერი" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  disabled={isPending}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="password">პაროლი</FormLabel>
+                      <FormControl>
+                        <Input {...field} type="password" placeholder="********" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirm"
+                  disabled={isPending}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="confirm">
+                        გაიმეორეთ პაროლი
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} type="password" placeholder="********" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormError message={error} />
+              <FormSuccess message={success} />
+
+              <Button typeof="submit" className="w-full" disabled={isPending}>
+                რეგისტრაცია
+              </Button>
+            </form>
+          </Form>
+        </CardWrapper>
+      </div>
+    </>
   );
 };

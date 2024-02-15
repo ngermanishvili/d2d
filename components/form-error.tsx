@@ -11,7 +11,7 @@ export const FormError = ({ message }: FormErrorProps) => {
         <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive">
             <ExclamationTriangleIcon />
             <span>
-                No Permission
+                მოხდა შეცდომა: {message}
             </span>
         </div>
     )
