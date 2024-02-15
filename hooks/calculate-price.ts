@@ -10,8 +10,8 @@ interface CalculatorStore {
   range: string;
   setRange: (range: string) => void;
   setCity: (city: "Tbilisi" | "Rustavi") => void;
-  selectedParty: "Sender" | "Receiver";
-  setSelectedParty: (party: "Sender" | "Receiver") => void;
+  selectedParty: "Sender" | "Receiver" | "";
+  setSelectedParty: (party: "Sender" | "Receiver" | "") => void;
   itemPrice: string;
   setItemPrice: (itemPrice: number) => void;
   totalPrice: number; // New state for the total price (shipment + item price)
@@ -27,7 +27,7 @@ const useCalculatorStore = create<CalculatorStore>((set) => ({
   setCity: (city) => set({ selectedCity: city }),
   range: "",
   setRange: (range) => set({ range }),
-  selectedParty: "Sender",
+  selectedParty: "",
   setSelectedParty: (party) => set({ selectedParty: party }),
   itemPrice: "",
   setItemPrice: (itemPrice) => set({ itemPrice: itemPrice.toString() }),

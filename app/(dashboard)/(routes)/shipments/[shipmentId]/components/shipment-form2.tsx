@@ -42,7 +42,6 @@ import Logo from "@/assets/images/d2d.jpg";
 import { Alert, Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 
-
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1),
   gamgzavniFullName: z.string().min(1),
@@ -109,7 +108,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
-
       mimgebiFullName: "",
       gamgzavniFullName: "",
       city: selectedCity,
@@ -117,7 +115,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       phoneNumber: "",
       price: "0",
       itemPrice: null,
-
       mimgebisNumber: "",
       mimgebisAddress: "",
       mimgebiQalaqi: "თბილისი",
@@ -285,8 +282,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       <Separator />
 
       <>
-
-        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-slate-200 border-0">
+        <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg  border-0">
           <div className="rounded-t bg-red-500 mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <Image
@@ -300,14 +296,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
             </div>
           </div>
 
-          <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+          <div className="flex-auto min[410px]:px-4 lg:px-10 py-10 pt-0">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-8 w-full flex flex-col max-h-full"
               >
-                <div className="w-full flex flex-row">
-                  <div className="w-1/2">
+                <div className="w-full flex flex-col md:flex-row">
+                  <div className="md:w-1/2 w-4/5 self-center max-[410px]:w-full md:self-auto bg-slate-200 rounded-md mt-2">
                     <h2 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase ">
                       გამგზავნის მონაცემები
                     </h2>
@@ -350,8 +346,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                               </FormLabel>
                               <FormControl className="relative rounded-md shadow-sm">
                                 <div className="relative">
-
-
                                   <Input
                                     disabled={loading}
                                     placeholder="ტელეფონის ნომერი"
@@ -368,7 +362,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       </div>
 
                       <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
+                        <div className="relative w-full mb-8">
                           <FormField
                             control={form.control}
                             name="address"
@@ -422,13 +416,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
-
                       </div>
-
                     </div>
                   </div>
-                  <Divider type="vertical" className="h-auto bg-red-600 w-1.5 rounded-sm mt-4" />
-                  <div className="w-1/2">
+                  <Divider
+                    type="vertical"
+                    className="h-auto bg-red-600 w-1.5 rounded-sm mt-4"
+                  />
+                  <div className="md:w-1/2 w-4/5 max-[410px]:w-full self-center md:self-auto  bg-slate-200 rounded-md mt-2">
                     <h6 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase">
                       მიმღების მონაცემები
                     </h6>
@@ -452,7 +447,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
                                     />
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
-
                                   </div>
                                 </FormControl>
                                 <FormMessage />
@@ -472,7 +466,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                               </FormLabel>
                               <FormControl className="relative rounded-md shadow-sm">
                                 <div className="relative">
-
                                   <Input
                                     disabled={loading}
                                     placeholder="მისამართი"
@@ -480,7 +473,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                     className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
                                   />
                                   <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
-
                                 </div>
                               </FormControl>
                               <FormMessage />
@@ -488,7 +480,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           )}
                         />
                       </div>
-
 
                       <div className="w-full lg:w-6/12 px-4 relative mb-3">
                         <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
@@ -524,7 +515,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
-
                       </div>
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
@@ -553,7 +543,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-
                     </div>
 
                     <div className="flex flex-wrap">
@@ -720,7 +709,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                               </FormItem>
                             )}
                           />
-
                         </div>
                       </div>
                     </div>
