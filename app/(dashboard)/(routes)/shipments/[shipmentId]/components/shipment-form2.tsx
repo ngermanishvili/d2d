@@ -283,7 +283,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
       <>
         <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg  border-0">
-          <div className="rounded-t bg-red-500 mb-0 px-6 py-6">
+          {/* <div className="rounded-t bg-red-500 mb-0 px-6 py-6">
             <div className="text-center flex justify-between">
               <Image
                 width={100}
@@ -294,7 +294,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
               />
               <h2 className="text-white">D2D GEORGIA</h2>
             </div>
-          </div>
+          </div> */}
 
           <div className="flex-auto min[410px]:px-4 lg:px-10 py-10 pt-0">
             <Form {...form}>
@@ -303,11 +303,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 className="space-y-8 w-full flex flex-col max-h-full"
               >
                 <div className="w-full flex flex-col md:flex-row">
-                  <div className="md:w-1/2 w-4/5 self-center max-[410px]:w-full md:self-auto bg-slate-200 rounded-md mt-2">
+                  <div className="md:w-1/2 w-4/5 self-center max-[410px]:w-full md:self-auto bg-slate-200 rounded-2xl mt-2">
                     <h2 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase ">
                       გამგზავნის მონაცემები
                     </h2>
-                    <div className="flex flex-wrap mt-8">
+                    <div className="flex justify-end flex-wrap mt-8">
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
@@ -417,13 +417,35 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           )}
                         />
                       </div>
+                      <div className="w-full lg:w-6/12 px-4 relative mb-3">
+                        <FormField
+                          control={form.control}
+                          name="courierComment"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                კომენტარი
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm h-[50px]">
+                                <Input
+                                  disabled={loading}
+                                  placeholder="დაწერე კომენტარი.."
+                                  {...field}
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none"
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
                     </div>
                   </div>
                   <Divider
                     type="vertical"
-                    className="h-auto bg-red-600 w-1.5 rounded-sm mt-4"
+                    className="h-auto bg-transparent w-2.5 mt-4 border-none"
                   />
-                  <div className="md:w-1/2 w-4/5 max-[410px]:w-full self-center md:self-auto  bg-slate-200 rounded-md mt-2">
+                  <div className="md:w-1/2 w-4/5 max-[410px]:w-full self-center md:self-auto  bg-slate-200 rounded-2xl mt-2">
                     <h6 className="text-blueGray-400 text-lg ml-4 mt-6 font-bold uppercase">
                       მიმღების მონაცემები
                     </h6>
@@ -492,20 +514,20 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-                                  value={field.value}
-                                  onValueChange={(newValue) => {
-                                    field.onChange(newValue);
-                                  }}
+                                  value={selectedCity || ""}
+                                  onValueChange={(value) =>
+                                    setCity(value as "Tbilisi" | "Rustavi")
+                                  }
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
                                     <SelectValue>{field.value}</SelectValue>
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
-                                    <SelectItem value="თბილისი">
+                                    <SelectItem value="Tbilisi">
                                       თბილისი
                                     </SelectItem>
-                                    <SelectItem value="რუსთავი">
+                                    <SelectItem value="Rustavi">
                                       რუსთავი
                                     </SelectItem>
                                   </SelectContent>
@@ -687,30 +709,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-4/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            control={form.control}
-                            name="courierComment"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  კომენტარი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="დაწერე კომენტარი.."
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      </div>
+                      <div className="w-full lg:w-4/12 px-4"></div>
                     </div>
                   </div>
                 </div>

@@ -109,7 +109,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     range: WeightRange | null,
     usePackaging: boolean,
     city: string = selectedCity,
-    selectedPartyParam: "Sender" | "Receiver" = selectedParty,
+    selectedPartyParam: "Sender" | "Receiver" | "" = selectedParty,
     itemPrice: number = parseInt(useCalculatorStore.getState().itemPrice)
   ) => {
     let shipmentPrice = 0;

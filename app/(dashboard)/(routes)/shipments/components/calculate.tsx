@@ -182,14 +182,17 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   useEffect(() => {
     calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
   }, [setCity, selectedCity]);
-
   return (
     <>
       <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">
         <div className=" hidden xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className=" w-11/12 flex justify-center items-center"></div>
         </div>
-        <div className="w-4/5 self-center max-[410px]:w-full md:w-full md:self-auto rounded-md flex flex-col xl:w-1/2 xl:self-end md:p-2 xl:pb-2 bg-slate-200 mt-2 ">
+        <Divider
+          type="vertical"
+          className="h-auto bg-transparent w-1.5 mt-4 border-none"
+        />
+        <div className="w-4/5 self-center max-[410px]:w-full md:w-full md:self-auto rounded-2xl flex flex-col xl:w-1/2 xl:self-end md:p-2 xl:pb-2 bg-slate-200 mt-2 ">
           <div>
             <h2 className="w-full p-4 mt-10 scroll-m-20 border-b pb-6 text-xl md:text-3xl font-semibold tracking-tight transition-colors first:mt-0 text-center">
               გამოთვლა
@@ -226,7 +229,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                     id="item-price"
                     value={itemPrice === "0" ? "" : itemPrice}
                     placeholder="COD ნივთის საფასური"
-                    disabled={selectedParty === "Receiver" ? true : false}
+                    disabled={
+                      selectedParty === "Receiver" || selectedParty === "Sender"
+                        ? false
+                        : true
+                    }
                     onChange={(e) => {
                       handleItemPriceChange(Number(e.target.value));
                     }}
@@ -282,6 +289,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       ფასი წონის მიხედვით -
                     </Typography.Title>
                     <Badge
+                      color="gray"
                       className="text-md self-center"
                       status="processing"
                       count={shipmentCost}
@@ -305,6 +313,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         ნივთის საფასური -
                       </Typography.Title>
                       <Badge
+                        color="gray"
                         className="text-md self-center"
                         status="processing"
                         count={itemPrice === "" ? 0 : itemPrice}
@@ -328,9 +337,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           </div>
           <Divider />
           {selectedParty === "Sender" ? (
-            <div className="w-full text-center">
+            <div className="w-full text-center flex justify-center">
               <Alert
-                className="w-[600px] max-w-[100%] px-4 my-8"
+                className="w-[600px] max-w-[100%] px-4 my-8 self-center"
                 message="თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს"
                 type="error"
               />
@@ -343,6 +352,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               ჯამი
             </Typography.Title>
             <Badge
+              color="gray"
               className="text-md mt-3"
               status="success"
               count={`${totalPrice} ₾`}
