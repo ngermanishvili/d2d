@@ -10,16 +10,20 @@ import {
 
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { StaticImageData } from 'next/image';
+import { useParams } from "next/navigation";
+import Link from "next/link";
+
 
 
 interface BlogPostCardProps {
-
     img: string;
     title: string;
     desc: string;
+    blogpostId: string;
 }
 
-export function BlogPostCard({ img, title, desc }: BlogPostCardProps) {
+export function BlogPostCard({ img, title, desc, blogpostId }: BlogPostCardProps) {
+    const params = useParams();
     return (
         <Card placeholder="" color="transparent" shadow={false}>
             <CardHeader placeholder="" floated={false} className="mx-0 mt-0 mb-6 h-52">
@@ -38,7 +42,9 @@ export function BlogPostCard({ img, title, desc }: BlogPostCardProps) {
                     {desc}
                 </Typography>
                 <Button placeholder="" variant="text" color="gray" className="flex items-center gap-2">
-                    read more
+                    <Link href={`/blogposts/${blogpostId}`}>
+                        კითხვის გაგრძელება
+                    </Link>
                     <ArrowRightIcon
                         strokeWidth={3}
                         className="h-3.5 w-3.5 text-gray-900"

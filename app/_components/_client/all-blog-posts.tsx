@@ -44,7 +44,7 @@ export function AllBlogPosts() {
     <section className="py-40 px-8">
       <div className="container mx-auto mb-12">
         <Typography placeholder="" variant="h3" color="blue-gray">
-          Check my latest blog posts
+          Check my latest blog postss
         </Typography>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
