@@ -41,29 +41,31 @@ export const ConfirmModal: React.FC<AlertModalProps> = ({
 
   return (
     <>
-      <div>
-        <Modal
-
-          title="ინფორმაცია"
-          description="გთხოვთ თრექინგი და ქიუ არ კოდი გადაიტანოთ გზავნილზე"
-          isOpen={isOpen}
-          onClose={handleClose}
-        >
-          <div className="h-[300px] flex flex-col gap-4 relative">
-            <div className="pb-6 mt-6 space-x-2 flex flex-col items-center justify-end w-full ">
-              <div className="text-md font-bold flex justify-between gap-2 ">
-                თრექინგის კოდი - <span className="text-red-500"> {text}</span>
-              </div>
-
-              <QRCodeGenerator text={text} />
-
-              <Button className="absolute bottom-0 w-full" disabled={loading} variant="destructive" onClick={onConfirm}>
-                <Link href="/shipments">დახურვა</Link>
-              </Button>
+      <Modal
+        title="ინფორმაცია"
+        description="გთხოვთ თრექინგი და QR-კოდი გადაიტანოთ გზავნილზე"
+        isOpen={isOpen}
+        onClose={handleClose}
+      >
+        <div className="h-[300px] flex flex-col gap-4 relative">
+          <div className="pb-6 mt-6 space-x-2 flex flex-col items-center justify-end w-full ">
+            <div className="text-md font-bold flex justify-between gap-2 ">
+              თრექინგის კოდი - <span className="text-red-500"> {text}</span>
             </div>
+
+            <QRCodeGenerator text={text} />
+
+            <Button
+              className="absolute bottom-0 w-full"
+              disabled={loading}
+              variant="destructive"
+              onClick={onConfirm}
+            >
+              <Link href="/shipments">დახურვა</Link>
+            </Button>
           </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     </>
   );
 };

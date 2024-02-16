@@ -35,8 +35,6 @@ export type ShipmentColumn = {
   gamgzavniFullName: string;
 };
 
-
-
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
@@ -97,7 +95,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
 
   {
-    accessorKey: "trackingId",
+    accessorKey: "id",
     header: "თრექინგი",
 
     cell: ({ row }) => (
@@ -155,7 +153,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
 
   {
     accessorKey: "mimgebisNumber",
