@@ -15,7 +15,7 @@ export const QrCodeComponent = () => {
                     <CardDescription>ყველა შეკვეთას გააჩნია უნიკალური QR </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <QRCodeGenerator text={`${window.location.origin}/categories/${params.shipmentId}`} />
+                    <QRCodeGenerator text={`${window.location.origin}/shipments/${params.shipmentId}`} />
                 </CardContent>
             </Card>
         </>

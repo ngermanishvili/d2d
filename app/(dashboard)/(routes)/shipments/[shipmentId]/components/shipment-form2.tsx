@@ -24,6 +24,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { CreateModal } from "@/components/modals/shipment-create-modal";
+import { ConfirmModal } from "@/components/modals/shipment-confirmed-modal";
 
 import {
   Select,
@@ -79,7 +80,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const params = useParams();
   const [open, setOpen] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [qrText, setQrText] = useState("");
   const { address, setAddress } = useAddressStore();
 
   const title = initialData ? "შეცვალე შეკვეთა" : "შეკვეთის განთავსება";
@@ -212,7 +215,10 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
         data.chabarebisDro = chabareba;
 
         // Execute the post request
-        await axios.post(`/api/shipments`, data);
+        const response = await axios.post(`/api/shipments`, data);
+        const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
+        console.log("Shipment created with ID:", shipmentId);
+        setQrText(shipmentId);
       }
 
       if (initialData) {
@@ -725,18 +731,29 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   loading={loading}
                   onConfirm={async () => {
                     await onSubmit(form.getValues());
+                    if (!initialData) {
+                      setIsCreateOpen(false);
+                      setIsConfirmOpen(true);
+                    }
+                  }}
+                  isOpen={isCreateOpen}
+                  onClose={() => setIsCreateOpen(false)}
+                />
+                <ConfirmModal
+                  loading={loading}
+                  text={qrText.split("-")[0]}
+                  onConfirm={() => {
                     router.push("/shipments");
                     router.refresh();
                   }}
                   isOpen={isConfirmOpen}
                   onClose={() => setIsConfirmOpen(false)}
                 />
-
                 <Button
                   type="button"
                   disabled={loading}
                   className="ml-auto self-end"
-                  onClick={() => setIsConfirmOpen(true)}
+                  onClick={() => setIsCreateOpen(true)}
                 >
                   დადასტურება
                 </Button>

@@ -1,7 +1,8 @@
 import { NextResponse, NextRequest } from "next/server";
 import { db } from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
-
+import { generateCustomId } from "@/hooks/uuid";
+import { v4 as uuid } from "uuid";
 async function generateTrackingNumber() {
   // Retrieve current count
   let shipmentCounter = await db.shipmentCounter.findFirst();
@@ -10,7 +11,7 @@ async function generateTrackingNumber() {
   if (!shipmentCounter) {
     shipmentCounter = await db.shipmentCounter.create({
       data: {
-        count: 100, // Initial count value
+        count: 4000, // Initial count value
       },
     });
   }
@@ -33,7 +34,6 @@ async function generateTrackingNumber() {
 export async function POST(req: Request, { params }: { params: {} }) {
   try {
     const body = await req.json();
-
     const {
       mimgebiFullName,
       gamgzavniFullName,
@@ -44,7 +44,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
       packaging,
       price,
       markedByCourier,
-
       mimgebisNumber,
       mimgebisAddress,
       mimgebiQalaqi,
@@ -97,12 +96,9 @@ export async function POST(req: Request, { params }: { params: {} }) {
     if (!mimgebisAddress) {
       return new NextResponse("mimgebisAddress is required", { status: 400 });
     }
+    console.log("aloooooo");
     if (!whopays) {
       return new NextResponse("Who pays is required", { status: 400 });
-    }
-
-    if (whopays === "receiver" && !itemPrice) {
-      return new NextResponse("Item price is required", { status: 400 });
     }
 
     const trackingId = await generateTrackingNumber();
@@ -112,32 +108,40 @@ export async function POST(req: Request, { params }: { params: {} }) {
       });
     }
 
-    const shipment = await db.shipment.create({
-      data: {
-        phoneNumber,
-        address,
-        city,
-        brittle,
-        packaging,
-        price,
-        markedByCourier,
-        userId,
-        mimgebisNumber,
-        mimgebisAddress,
-        mimgebiQalaqi,
-        trackingId,
-        status,
-        courierComment,
-        label,
-        agebisDro,
-        chabarebisDro,
-        whopays, // Add whopays to the data
-        itemPrice, // Add itemPrice to the data
-        gamgzavnisqalaqi,
-        mimgebiFullName,
-        gamgzavniFullName,
-      },
-    });
+    const customId = generateCustomId(trackingId, uuid());
+
+    const shipmentId = await db.shipment
+      .create({
+        data: {
+          id: customId,
+          phoneNumber,
+          address,
+          city,
+          brittle,
+          packaging,
+          price,
+          markedByCourier,
+          userId,
+          mimgebisNumber,
+          mimgebisAddress,
+          mimgebiQalaqi,
+          trackingId,
+          status,
+          courierComment,
+          label,
+          agebisDro,
+          chabarebisDro,
+          whopays, // Add whopays to the data
+          itemPrice, // Add itemPrice to the data
+          gamgzavnisqalaqi,
+          mimgebiFullName,
+          gamgzavniFullName,
+        },
+      })
+      .then((createdShipment) => {
+        const id = createdShipment.id; // Accessing the id of the created shipment
+        return id;
+      });
     let savedAdress; // Declare the variable here
     const isSaved = await db.savedAddress.findMany({
       where: {},
@@ -150,8 +154,11 @@ export async function POST(req: Request, { params }: { params: {} }) {
         data: { userId: userId, address: address, mimgebisadress: address },
       });
     }
+    if (!shipmentId) {
+      return new NextResponse("Failed to create shipment", { status: 500 });
+    }
 
-    return NextResponse.json({ shipment, savedAdress });
+    return NextResponse.json({ shipmentId, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
     return new NextResponse("Internal error BROJ", { status: 500 });

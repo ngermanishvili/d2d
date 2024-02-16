@@ -198,7 +198,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               გამოთვლა
             </h2>
           </div>
-          <div className="w-4/5 self-center md:w-full md:self-auto flex flex-col md:flex-row xl:gap-8 justify-between gap-8  mb-8">
+          <div className="w-4/5 self-center md:w-full md:self-auto flex flex-col md:flex-row xl:gap-8 justify-center gap-8  mb-8">
             <div className="w-full md:w-2/5 xl:w-2/5">
               <div className="w-full flex gap-4 md:gap-8 flex-col">
                 <div>
@@ -262,7 +262,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               </div>
             </div>
 
-            <div className="w-full md:w-6/12 xl:w-3/5 mt-4 md:mt-0 ">
+            <div className="w-auto mt-4 md:mt-0 ">
               <div className="w-full flex flex-col justify-between">
                 <div className="flex w-full text-center md:text-start flex-col gap-10 text-wh md:ml-4">
                   <div className="flex md:justify-start text-center mt-4">

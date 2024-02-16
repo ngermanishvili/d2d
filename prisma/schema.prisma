@@ -97,7 +97,7 @@ model Billboard {
 
 
 model Shipment {
-  id                    String                  @id @default(uuid())
+  id                    String                  @id @unique
   gamgzavniFullName     String
   mimgebiFullName       String
   trackingId            String                  @unique
