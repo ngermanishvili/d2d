@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
     const { title,
       description,
-      imageUrl, } = body;
+      imageUrl, panjara1Title, panjara1Description, panjara2Title, panjara2Description, panjara3Title, panjara3Description, InformationText } = body;
 
 
     const landingPageInfo = await db.landingPageInfo.create({
@@ -15,6 +15,13 @@ export async function POST(req: Request) {
         title,
         description,
         imageUrl,
+        panjara1Title,
+        panjara1Description,
+        panjara2Title,
+        panjara2Description,
+        panjara3Title,
+        panjara3Description,
+        InformationText
       },
     });
 
@@ -24,6 +31,7 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
+
 
 
 export async function GET() {

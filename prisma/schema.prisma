@@ -169,6 +169,13 @@ model LandingPageInfo {
   title     String
   description     String @db.LongText
   imageUrl  String
+  panjara1Title String
+  panjara1Description String @db.LongText
+  panjara2Title String
+  panjara2Description String @db.LongText
+  panjara3Title String
+  panjara3Description String @db.LongText
+  InformationText String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

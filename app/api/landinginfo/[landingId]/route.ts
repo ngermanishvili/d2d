@@ -32,6 +32,13 @@ export async function PATCH(
     const { title,
       description,
       imageUrl,
+      panjara1Title,
+      panjara1Description,
+      panjara2Title,
+      panjara2Description,
+      panjara3Title,
+      panjara3Description,
+      InformationText
     } = body;
 
     const blogposts = await db.landingPageInfo.updateMany({
@@ -42,6 +49,13 @@ export async function PATCH(
         title,
         description,
         imageUrl,
+        panjara1Title,
+        panjara1Description,
+        panjara2Title,
+        panjara2Description,
+        panjara3Title,
+        panjara3Description,
+        InformationText
       },
     });
 
@@ -58,7 +72,7 @@ export async function DELETE(
 ) {
   try {
 
-    const landingPageInfo = await db.blogPosts.deleteMany({
+    const landingPageInfo = await db.landingPageInfo.deleteMany({
       where: {
         id: params.landingId,
       },

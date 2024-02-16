@@ -26,6 +26,7 @@ export const FormattedLandingPageInfoClient: React.FC<BillBoardClientProps> = ({
           description="მთავარ გვერდზე ემატება სათაური აღწერა და ფოტო რაც გვერდზე გამოჩნდება აქედან გამომდინარე თუ გსურს რაიმეს შეცვლა ან წაშლით და დაამატებთ ახლიდან ან უკვე არსებულს ჩაასწორებთ რადგანაც 2 რამის დამატების შემთხვევაში ალგორითმი უყურებს მხოლოდ პირველ დამატებულ ელემენტს რადგანაც მთავარ გვერდზე გვაქვს მხოლოდ 1 ფანჯარა (სათაური, აღწერა, ფოტო). "
         />
         <Button
+          className="bg-red-500"
           onClick={() => router.push(`/addlandinginfo/new`)}
         >
           <Plus className="mr-2 h-4 w-4 " />
@@ -33,12 +34,7 @@ export const FormattedLandingPageInfoClient: React.FC<BillBoardClientProps> = ({
         </Button>
       </div>
       <Separator />
-
       <DataTable searchKey="title" columns={columns} data={data} />
-
-      <Heading title="API" description="api calls for landingpage" />
-      <Separator />
-      <ApiList entityName="addlandinginfo" entityIdName="landingId" />
     </>
   );
 };

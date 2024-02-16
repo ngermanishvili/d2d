@@ -13,6 +13,13 @@ const BillboardsPage = async () => {
     title: item.title,
     description: item.description,
     imageUrl: item.imageUrl,
+    panjara1Title: item.panjara1Title,
+    panjara1Description: item.panjara1Description,
+    panjara2Title: item.panjara2Title,
+    panjara2Description: item.panjara2Description,
+    panjara3Title: item.panjara3Title,
+    panjara3Description: item.panjara3Description,
+    InformationText: item.InformationText,
 
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));

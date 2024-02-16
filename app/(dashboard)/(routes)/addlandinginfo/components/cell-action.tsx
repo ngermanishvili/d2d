@@ -1,10 +1,9 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
-
-import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
+import { Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -23,21 +22,16 @@ interface CellActionProps {
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
-  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const onCopy = (id: string) => {
-    navigator.clipboard.writeText(id);
-    toast.success("Landing ID copied to the clipboard.");
-  };
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/addlandinginfo/${data.id}`);
+      await axios.delete(`/api/landinginfo/${data.id}`);
       router.refresh();
-      toast.success("blogposts deleted.");
+      toast.success("მთავარი გვერდის ინფორმაცია წაშლილია.");
     } catch (error) {
       toast.error(
         "Make sure you removed all categories using this billboard first."
@@ -65,10 +59,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem onClick={() => onCopy(data.id)}>
-            <Copy className="mr-2 h-4 w-4" />
-            Copy ID
-          </DropdownMenuItem>
+
           <DropdownMenuItem
             onClick={() =>
               router.push(`/addlandinginfo/${data.id}`)

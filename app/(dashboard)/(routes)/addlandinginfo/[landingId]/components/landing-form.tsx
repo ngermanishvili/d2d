@@ -29,6 +29,14 @@ const formSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   imageUrl: z.string().min(1),
+  panjara1Title: z.string().min(1),
+  panjara1Description: z.string().min(1),
+  panjara2Title: z.string().min(1),
+  panjara2Description: z.string().min(1),
+  panjara3Title: z.string().min(1),
+  panjara3Description: z.string().min(1),
+  InformationText: z.string().min(1),
+
 });
 
 // This BlogPostFormValues is for the formik form values type definition.
@@ -56,6 +64,13 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
       title: "",
       description: "",
       imageUrl: "",
+      panjara1Title: "",
+      panjara1Description: "",
+      panjara2Title: "",
+      panjara2Description: "",
+      panjara3Title: "",
+      panjara3Description: "",
+      InformationText: "",
     },
   });
 
@@ -83,7 +98,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
       setLoading(true);
       await axios.delete(`/api/landinginfo/${params?.landingId}`);
       router.refresh();
-      router.push(`/landinginfo`);
+      router.push(`/addlanginginfo`);
       toast.success("Blog post deleted.");
     } catch (error) {
       toast.error("Error deleting the blog post.");
@@ -147,7 +162,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>სათაური</FormLabel>
+                <FormLabel className="font-bold">ქვემოთა ბლოკის (ფოტო და აღწერა სადაც არის) - სათაური</FormLabel>
                 <FormControl>
                   <Input
                     className="border-green-800"
@@ -168,7 +183,7 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>აღწერა</FormLabel>
+                <FormLabel className="font-bold">ქვემოთა ბლოკის (ფოტო და აღწერა სადაც არის) - აღწერა</FormLabel>
                 <FormControl>
                   <Input
                     className="border-purple-500 h-[100px]"
@@ -182,7 +197,141 @@ export const BlogPostForm: React.FC<BlogPostFormProps> = ({ initialData }) => {
             )}
           />
 
+          <FormField
+            control={form.control}
+            name="panjara1Title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">პირველი ბლოკის სათაური</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-green-800"
+                    disabled={loading}
+                    placeholder="პანჯარა 1 სათაური"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
 
+          />
+
+          <FormField
+            control={form.control}
+            name="panjara1Description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">პირველი ბლოკის აღწერა</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-purple-500 h-[100px]"
+                    disabled={loading}
+                    placeholder="პანჯარა 1 აღწერა"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="panjara2Title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">მე-2 ბლოკის სათაური</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-green-800"
+                    disabled={loading}
+                    placeholder="პანჯარა 2 სათაური"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="panjara2Description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">მე-2 ბლოკის აღწერა</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-purple-500 h-[100px]"
+                    disabled={loading}
+                    placeholder="პანჯარა 2 აღწერა"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="panjara3Title"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">მე-3 ბლოკის სათაური</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-green-800"
+                    disabled={loading}
+                    placeholder="პანჯარა 3 სათაური"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+
+          />
+
+          <FormField
+            control={form.control}
+            name="panjara3Description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">მე-3 ბლოკის აღწერა</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-purple-500 h-[100px]"
+                    disabled={loading}
+                    placeholder="პანჯარა 3 აღწერა"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+
+          />
+
+          <FormField
+            control={form.control}
+            name="InformationText"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold">მთავარი ინფორმაცია რომელიც D2D GEORGIA-ს დაბლა ჩანს.</FormLabel>
+                <FormControl>
+                  <Input
+                    className="border-purple-500 h-[100px]"
+                    disabled={loading}
+                    placeholder="მთავარი ინფორმაცია"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}

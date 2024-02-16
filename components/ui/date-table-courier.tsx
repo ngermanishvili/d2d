@@ -168,7 +168,7 @@ export function CourierDataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            უკან
           </Button>
           <Button
             variant="outline"
@@ -176,7 +176,7 @@ export function CourierDataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            შემდეგი გვერდი
           </Button>
         </div>
       </div>
