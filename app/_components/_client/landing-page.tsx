@@ -88,7 +88,7 @@ export default function Landing() {
                 </div>
               </div>
             </div>
-            <Features />
+
 
             <div className="flex flex-wrap items-center mt-32">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
