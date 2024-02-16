@@ -13,8 +13,8 @@ import LatestBlogPosts from "./blog-posts";
 import useLandingPageData from "@/hooks/use-landing-info";
 
 export default function Landing() {
-  const { imageUrl, loading, label } = useBillboardData();
-  const { title, loading2, description, imageUrl2 } = useLandingPageData();
+  const { imageUrl, loading, label, } = useBillboardData();
+  const { title, loading2, description, imageUrl2, panjara1Title, panjara1Description, panjara2Title, panjara2Description, panjara3Title, panjara3Description, InformationText } = useLandingPageData();
 
   return (
     <>
@@ -46,10 +46,9 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-black">
                       <TbTruckDelivery />
                     </div>
-                    <h6 className="text-xl font-semibold">მარტივი გადახდა</h6>
+                    <h6 className="text-xl font-semibold">{panjara1Title}</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      ჩვენთან გადახდა საკმაოდ მარტივია, შეკვეთის გაფორმების დროს
-                      დაიანგარიშე ფასი და მიუთითე გადამხდელი მხარე.
+                      {panjara1Description}
                     </p>
                   </div>
                 </div>
@@ -60,10 +59,9 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
                       <TbTruckDelivery />
                     </div>
-                    <h6 className="text-xl font-semibold">სწრაფი მიწოდება</h6>
+                    <h6 className="text-xl font-semibold">{panjara2Title}</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      ჩვენი გუნდი გთავაზობთ უსწრაფესს მიწოდებას საქართველოს
-                      მაშტაბით
+                      {panjara2Description}
                     </p>
                   </div>
                 </div>
@@ -75,14 +73,13 @@ export default function Landing() {
                       <TbTruckDelivery />
                     </div>
                     <h6 className="text-xl font-semibold">
-                      რას გთავაზობს D2D?
+                      {panjara3Title}
                     </h6>
                     <div>
                       <p className="mt-2 mb-4 text-blueGray-500">
-                        სანდო სერვისი, სწრაფი მიწოდება, მარტივი გადახდა,
-                        კურიერებზე მორგებული ფასები
+                        {panjara3Description}
                       </p>
-                      <Link href="/about">გაიგე მეტი ჩვენს შესახებ</Link>
+
                     </div>
                   </div>
                 </div>

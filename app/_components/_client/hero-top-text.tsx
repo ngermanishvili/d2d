@@ -1,11 +1,10 @@
-import VideoThumb from '@/assets/images/hero-image.png'
-import ModalVideo from "@/app/_components/_client/modal-video"
-import useBillboardData from '@/hooks/use-billboard-data';
-import BillBoardUi from "@/components/billboard/billboard-ui";
+
+import useLandingPageData from '@/hooks/use-landing-info';
 
 
 export default function TopText() {
-    const { imageUrl, loading, label } = useBillboardData();
+    const { InformationText } = useLandingPageData();
+
     return (
         <div className="relative">
 
@@ -37,26 +36,11 @@ export default function TopText() {
                         <h1 className="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4 uppercase" data-aos="zoom-y-out" >d2d <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-400">GEORGIA</span></h1>
 
                         <div className="max-w-3xl mx-auto">
-                            <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150"> ქვეყნის მაშტაბით, ჩვენ ვუზრუნველვყოფთ სწრაფ და უსაფრთხო მიწოდებას. თვალყური ადევნეთ თქვენს გვერდს  და ისიამოვნეთ უსწრაფესი მიწოდებით კონკურენტულ ფასებში. </p>
+                            <p className="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150"> {InformationText} </p>
                         </div>
                     </div>
-
-                    {/* Hero image */}
-                    {/* <ModalVideo
-                        thumb={VideoThumb}
-                        thumbWidth={768}
-                        thumbHeight={432}
-                        thumbAlt="Modal video thumbnail"
-                        video="https://www.youtube.com/watch?v=7JdSjdY6h7c"
-                        videoWidth={1920}
-                        videoHeight={1080} /> */}
-
                 </div>
-
-
             </div>
-
-
         </div>
     )
 }
