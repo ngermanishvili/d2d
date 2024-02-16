@@ -79,7 +79,7 @@ export default async function RootLayout({
               <ToasterProvider />
               <div id="fb-root"></div>
               <div id="fb-customer-chat" className="fb-customerchat"></div>
-              {/* 
+
               <Script strategy="afterInteractive" id="fb-chat">
                 {`
               var chatbox = document.getElementById('fb-customer-chat');
@@ -101,7 +101,7 @@ export default async function RootLayout({
                 fjs.parentNode.insertBefore(js, fjs);
               }(document, 'script', 'facebook-jssdk'));
               `}
-              </Script> */}
+              </Script>
               <Footer />
             </Providers>
           </body>
