@@ -4,18 +4,18 @@ import { TbTruckDelivery } from "react-icons/tb";
 import { FaTwitter } from "react-icons/fa";
 import { FaTruckArrowRight } from "react-icons/fa6";
 import Image from "next/image";
-import TeamImage from "@/assets/images/avatar1.jpg";
 
-import Features from "./features";
-import TrackingSearchContainer from "./tracking-search";
 import TopText from "./hero-top-text";
 
 import useBillboardData from "@/hooks/use-billboard-data";
 import BillBoardUi from "@/components/billboard/billboard-ui";
 import LatestBlogPosts from "./blog-posts";
+import useLandingPageData from "@/hooks/use-landing-info";
 
 export default function Landing() {
   const { imageUrl, loading, label } = useBillboardData();
+  const { title, loading2, description, imageUrl2 } = useLandingPageData();
+
   return (
     <>
       <div>
@@ -96,19 +96,12 @@ export default function Landing() {
                   <TbTruckDelivery />
                 </div>
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
-                  Working with us is a pleasure
+                  {title}
                 </h3>
                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
-                  Don&apos;t let your uses guess by attaching tooltips and
-                  popoves to any element. Just make sure you enable them first
-                  via JavaScript.
+                  {description}
                 </p>
-                <p className="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
-                  The kit comes with three pre-built pages to help you get
-                  started faster. You can change the text and images and
-                  you&apos;re good to go. Just make sure you enable them first
-                  via JavaScript.
-                </p>
+
                 <Link href="/">
                   <p className="font-bold text-blueGray-700 mt-8">
                     Check Notus NextJS!
@@ -122,7 +115,7 @@ export default function Landing() {
                     alt="..."
                     width={600}
                     height={600}
-                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80"
+                    src={imageUrl2}
                     className="w-full align-middle rounded-t-lg"
                   />
                   <blockquote className="relative p-8 mb-4">

@@ -46,6 +46,11 @@ export const NAV_MENU_ADMIN = [
         icon: IoIosAddCircle,
         to: "/shipments/new",
     },
+    {
+        name: "1",
+        icon: IoIosAddCircle,
+        to: "/addlandinginfo",
+    },
 ];
 
 export const NAV_MENU_USER = [

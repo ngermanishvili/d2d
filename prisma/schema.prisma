@@ -150,11 +150,9 @@ model BlogPosts {
   slug        String   @db.LongText
   qvesatauri String
   qvesatauri2 String
-
   excerpt     String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
   metaTitle       String?
   metaDescription String?
   metaKeywords    String?
@@ -163,4 +161,14 @@ model BlogPosts {
 model ShipmentCounter {
   id    Int     @id @default(autoincrement())
   count Int     @default(4000)
+}
+
+
+model LandingPageInfo {
+  id        String   @id @default(uuid())
+  title     String
+  description     String @db.LongText
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
