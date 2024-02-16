@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import QRCode from "qrcode";
 import html2canvas from "html2canvas";
 import jsPDF, { AcroFormField, AcroFormTextField } from "jspdf";
+import { Button } from "./button";
 interface QRCodeGeneratorProps {
   text: string;
 }
@@ -45,7 +46,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ text }) => {
   return (
     <div>
       <canvas ref={qrCodeRef} />
-      <button onClick={downloadPdf}>Download PDF</button>
+      <Button className="w-full" onClick={downloadPdf}>გადმოწერე QR</Button>
     </div>
   );
 };

@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import QRCodeGenerator from "../ui/qr-code";
-import { QrCodeComponent } from "@/app/(dashboard)/(routes)/shipments/[shipmentId]/components/qr-card";
+import { Alert } from "antd";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface AlertModalProps {
   isOpen: boolean;
@@ -22,6 +24,7 @@ export const ConfirmModal: React.FC<AlertModalProps> = ({
   text,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
@@ -31,28 +34,36 @@ export const ConfirmModal: React.FC<AlertModalProps> = ({
     return null;
   }
 
+  const handleClose = () => {
+    router.push("/shipments"); // Navigate to shipments page
+    onClose(); // Close the modal
+  };
+
   return (
-    <Modal
-      title="CONFIRMMODAL"
-      description="CONFIRMMODAL"
-      isOpen={isOpen}
-      onClose={onClose}
-    >
-      <div className="h-[350px] flex flex-col gap-8 pt-5">
-        <div className="pb-6 mt-6 space-x-2 flex flex-col items-center justify-end w-full">
-          <p>
-            თრექინგის კოდია {text}, გთხოვთ თრექინგი და ქიუ არ კოდი გადაიტანოთ
-            გზავნილზე
-          </p>
-          <QRCodeGenerator text={text} />
-          <Button disabled={loading} variant="outline" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button disabled={loading} variant="destructive" onClick={onConfirm}>
-            Continiue
-          </Button>
-        </div>
+    <>
+      <div>
+        <Modal
+
+          title="ინფორმაცია"
+          description="გთხოვთ თრექინგი და ქიუ არ კოდი გადაიტანოთ გზავნილზე"
+          isOpen={isOpen}
+          onClose={handleClose}
+        >
+          <div className="h-[300px] flex flex-col gap-4 relative">
+            <div className="pb-6 mt-6 space-x-2 flex flex-col items-center justify-end w-full ">
+              <div className="text-md font-bold flex justify-between gap-2 ">
+                თრექინგის კოდი - <span className="text-red-500"> {text}</span>
+              </div>
+
+              <QRCodeGenerator text={text} />
+
+              <Button className="absolute bottom-0 w-full" disabled={loading} variant="destructive" onClick={onConfirm}>
+                <Link href="/shipments">დახურვა</Link>
+              </Button>
+            </div>
+          </div>
+        </Modal>
       </div>
-    </Modal>
+    </>
   );
 };
