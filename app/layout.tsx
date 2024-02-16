@@ -83,7 +83,7 @@ export default async function RootLayout({
               <Script strategy="afterInteractive" id="fb-chat">
                 {`
               var chatbox = document.getElementById('fb-customer-chat');
-              chatbox.setAttribute("page_id", "115850238226188");
+              chatbox.setAttribute("page_id", "1015247488510827");
               chatbox.setAttribute("attribution", "biz_inbox");
 
               window.fbAsyncInit = function() {
