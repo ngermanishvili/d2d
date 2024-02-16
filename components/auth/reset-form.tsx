@@ -57,50 +57,57 @@ export const ResetForm = () => {
     };
 
     return (
-        <CardWrapper
-            headerLabel="Forgot Password?"
-            backButtonLabel="Back to login"
-            backButtonHref="/auth/login"
-        >
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
+        <>
+
+
+            <div className=" mt-5 flex items-center justify-center p-[60px]">
+
+                <CardWrapper
+                    headerLabel="დაგავიწყდა პაროლი?"
+                    backButtonLabel="უკან დაბრუნება"
+                    backButtonHref="/auth/login"
                 >
-                    <div className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="john.doe@example.com"
-                                            type="email"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-6"
+                        >
+                            <div className="space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>ელ-ფოსტა</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    disabled={isPending}
+                                                    placeholder="შეიყვანეთ ელ-ფოსტა "
+                                                    type="email"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
 
-                    </div>
-                    <FormError message={error} />
-                    <FormSuccess message={success} />
+                            </div>
+                            <FormError message={error} />
+                            <FormSuccess message={success} />
 
-                    <Button
-                        typeof="submit"
-                        className="w-full"
-                        disabled={isPending}
-                    >
-                        Send Reset Email
-                    </Button>
-                </form>
-            </Form>
-        </CardWrapper >
+                            <Button
+                                typeof="submit"
+                                className="w-full"
+                                disabled={isPending}
+                            >
+                                პაროლის აღდგენა
+                            </Button>
+                        </form>
+                    </Form>
+                </CardWrapper >
+            </div>
+        </>
     )
 }
 

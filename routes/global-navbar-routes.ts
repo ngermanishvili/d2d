@@ -19,5 +19,5 @@ export const NAV_MENU_GLOBAL = [
         name: "ბლოგი",
         to: "/blogposts",
     },
-  
+
 ];

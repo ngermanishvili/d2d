@@ -18,7 +18,7 @@ export const LoginSchema = z.object({
 
 export const ResetSchema = z.object({
   email: z.string().email({
-    message: "Email is required",
+    message: "არასწორი ელ-ფოსტა",
   }),
 });
 

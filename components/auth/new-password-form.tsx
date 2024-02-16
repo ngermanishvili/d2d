@@ -59,50 +59,54 @@ export const NewPasswordForm = () => {
     };
 
     return (
-        <CardWrapper
-            headerLabel="Enter a new password"
-            backButtonLabel="Back to login"
-            backButtonHref="/auth/login"
-        >
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
+        <>
+            <div className=" mt-5 flex items-center justify-center p-[60px]">
+                <CardWrapper
+                    headerLabel="შეიყვანეთ ახალი პაროლი"
+                    backButtonLabel="უკან დაბრუნება"
+                    backButtonHref="/auth/login"
                 >
-                    <div className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="********"
-                                            type="password"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-6"
+                        >
+                            <div className="space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>ახალი პაროლი</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    disabled={isPending}
+                                                    placeholder="********"
+                                                    type="password"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
 
-                    </div>
-                    <FormError message={error} />
-                    <FormSuccess message={success} />
+                            </div>
+                            <FormError message={error} />
+                            <FormSuccess message={success} />
 
-                    <Button
-                        typeof="submit"
-                        className="w-full"
-                        disabled={isPending}
-                    >
-                        პაროლის აღდგენა
-                    </Button>
-                </form>
-            </Form>
-        </CardWrapper >
+                            <Button
+                                typeof="submit"
+                                className="w-full"
+                                disabled={isPending}
+                            >
+                                პაროლის აღდგენა
+                            </Button>
+                        </form>
+                    </Form>
+                </CardWrapper >
+            </div>
+        </>
     )
 }
 

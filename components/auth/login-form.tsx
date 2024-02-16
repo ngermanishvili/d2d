@@ -63,75 +63,79 @@ export const LoginForm = () => {
     };
 
     return (
-        <CardWrapper
-            headerLabel="welcome back"
-            backButtonLabel="Don't have an account?"
-            backButtonHref="/auth/register"
-            showSocial
-        >
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}
-                    className="space-y-6"
+        <>
+            <div className=" mt-5 flex items-center justify-center p-[60px]">
+                <CardWrapper
+                    headerLabel="ავტორიზაცია"
+                    backButtonLabel="ჯერ არ გაქვთ ანგარიში?"
+                    backButtonHref="/auth/register"
+                // showSocial
                 >
-                    <div className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="john.doe@example.com"
-                                            type="email"
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            disabled={isPending}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            {...field}
-                                            disabled={isPending}
-                                            placeholder="******"
-                                            type="password"
-                                        />
-                                    </FormControl>
-                                    <Button size='sm' variant='link' asChild className="px-0 font-normal">
-                                        <Link href="/auth/reset">
-                                            Forgot Password?
-                                        </Link>
-                                    </Button>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}
+                            className="space-y-6"
+                        >
+                            <div className="space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>ელ-ფოსტა</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    disabled={isPending}
+                                                    placeholder="შეიყვანეთ ელ-ფოსტა"
+                                                    type="email"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    disabled={isPending}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>პაროლი</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    {...field}
+                                                    disabled={isPending}
+                                                    placeholder="******"
+                                                    type="password"
+                                                />
+                                            </FormControl>
+                                            <Button size='sm' variant='link' asChild className="px-0 font-normal">
+                                                <Link href="/auth/reset">
+                                                    დაგავიწყდა პაროლი?
+                                                </Link>
+                                            </Button>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
 
-                    </div>
-                    <FormError message={error || urlError} />
-                    <FormSuccess message={success} />
+                            </div>
+                            <FormError message={error || urlError} />
+                            <FormSuccess message={success} />
 
-                    <Button
-                        typeof="submit"
-                        className="w-full"
-                        disabled={isPending}
-                    >
-                        Login
-                    </Button>
-                </form>
-            </Form>
-            A login form will go here
-        </CardWrapper >
+                            <Button
+                                typeof="submit"
+                                className="w-full"
+                                disabled={isPending}
+                            >
+                                ავტორიზაცია
+                            </Button>
+                        </form>
+                    </Form>
+                </CardWrapper >
+            </div>
+        </>
     )
+
 }
 

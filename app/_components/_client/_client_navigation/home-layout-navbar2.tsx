@@ -64,27 +64,27 @@ export default function Header({ isSession }: { isSession: boolean }) {
             ))}
           </nav>
 
-          {/* Desktop sign in links */}
-          {!isMobile &&
-            (isSession ? (
-              <UserButton />
-            ) : (
-              <div className="p-2">
-                <Button size="sm">
-                  <Link href="/auth/login" passHref>
-                    ავტორიზაცია
-                  </Link>
-                </Button>
-                <Button className="ml-4" size="sm">
-                  <Link href="/auth/register" passHref>
-                    რეგისტრაცია
-                  </Link>
-                </Button>
-              </div>
-            ))}
-          <MobileMenu navItems={NAV_MENU_GLOBAL} />
+                    {/* Desktop sign in links */}
+                    {!isMobile && (
+                        isSession ? <UserButton />
+                            :
+                            <div className="p-2">
+                                <Button size="sm">
+                                    <Link href="/auth/login" passHref>
+                                        ავტორიზაცია
+                                    </Link>
+                                </Button>
+                                <Button className="ml-4" size="sm">
+                                    <Link href="/auth/register" passHref>
+                                        რეგისტრაცია
+                                    </Link>
+                                </Button>
+                            </div>
+                    )}
+                    <MobileMenu navItems={NAV_MENU_GLOBAL} />
+
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    )
 }

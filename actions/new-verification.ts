@@ -22,7 +22,7 @@ export const newVerification = async (token: string) => {
     const existingUser = await getUserByEmail(existingToken.email)
 
     if (!existingUser) {
-        return { error: "Email not found" }
+        return { error: "ელ-ფოსტა ვერ მოიძებნა" }
     }
 
     await db.user.update({
@@ -37,6 +37,6 @@ export const newVerification = async (token: string) => {
         where: { id: existingToken.id }
     })
 
-    return { success: "Email Verified" }
+    return { success: "თქვენ წარმატებით გაიარეთ ვერიფიკაცია." }
 }
 
