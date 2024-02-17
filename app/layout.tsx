@@ -63,7 +63,7 @@ export default async function RootLayout({
         <html lang="en">
           {/* Tawk.to Chat code */}
           <Script
-            src="https://embed.tawk.to/65d095f28d261e1b5f61c783/1hmrcjfk8"
+            src="https://embed.tawk.to/65d09dc78d261e1b5f61cb53/1hmregl4e"
             strategy="lazyOnload"
           />
           <body className="bg-slate-50">
