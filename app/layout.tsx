@@ -61,14 +61,14 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
-
+          {/* Tawk.to Chat code */}
+          <Script
+            src="https://embed.tawk.to/65d09dc78d261e1b5f61cb53/1hmregl4e"
+            strategy="lazyOnload"
+          />
           <body className="bg-slate-50">
             <Providers>
-              {/* Tawk.to Chat code */}
-              <Script
-                src="https://embed.tawk.to/65bcbaae8d261e1b5f5b3566/1hlkjieu7"
-                strategy="lazyOnload"
-              />
+
 
               <Header isSession={isSession} />
               <div className="p-2 w-full ">
@@ -77,31 +77,6 @@ export default async function RootLayout({
 
               {children}
               <ToasterProvider />
-              <div id="fb-root"></div>
-              <div id="fb-customer-chat" className="fb-customerchat"></div>
-              {/* 
-              <Script strategy="afterInteractive" id="fb-chat">
-                {`
-              var chatbox = document.getElementById('fb-customer-chat');
-              chatbox.setAttribute("page_id", "115850238226188");
-              chatbox.setAttribute("attribution", "biz_inbox");
-
-              window.fbAsyncInit = function() {
-                FB.init({
-                  xfbml: true,
-                  version: 'v18.0'
-                });
-              };
-
-              (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s); js.id = id;
-                js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-                fjs.parentNode.insertBefore(js, fjs);
-              }(document, 'script', 'facebook-jssdk'));
-              `}
-              </Script> */}
               <Footer />
             </Providers>
           </body>
