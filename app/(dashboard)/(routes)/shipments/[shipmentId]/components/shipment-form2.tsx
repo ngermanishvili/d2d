@@ -726,6 +726,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   hasInitialData={initialData ? true : false}
                 />
                 <CreateModal
+                  initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
                   chabarebis={chabareba ? chabareba : undefined}
                   loading={loading}
@@ -734,6 +735,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                     if (!initialData) {
                       setIsCreateOpen(false);
                       setIsConfirmOpen(true);
+                    } else {
+                      setIsCreateOpen(false);
+                      router.push("/shipments");
                     }
                   }}
                   isOpen={isCreateOpen}
