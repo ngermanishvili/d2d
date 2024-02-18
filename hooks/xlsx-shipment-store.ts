@@ -18,8 +18,8 @@ export type ShipmentColumn = {
   mimgebiQalaqi: string;
   trackingId: string;
   status: string;
-  courierComment: string | undefined;
-  orderComment: string | undefined;
+  courierComment: string | null | undefined;
+  orderComment: string | null | undefined;
   agebisDro: string | null;
   chabarebisDro: string | null;
 };

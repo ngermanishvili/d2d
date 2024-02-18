@@ -27,8 +27,8 @@ export type ShipmentColumn = {
   mimgebiQalaqi: string;
   trackingId: string;
   status: string;
-  orderComment: string | null;
-  courierComment: string | null;
+  orderComment: string | null | undefined;
+  courierComment: string | null | undefined;
   agebisDro: string | null;
   chabarebisDro: string | null;
   gamgzavnisqalaqi: string;

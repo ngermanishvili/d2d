@@ -41,8 +41,8 @@ const ShipmentPage = async () => {
       updatedAt: item.updatedAt.toISOString(), // Convert Date to string
       trackingId: item.trackingId,
       status: item.status,
-      orderComment: item.orderComment,
-      courierComment: item.courierComment,
+      orderComment: item?.orderComment,
+      courierComment: item?.courierComment,
       agebisDro: item?.agebisDro,
       chabarebisDro: item?.chabarebisDro,
       gamgzavnisqalaqi: item?.gamgzavnisqalaqi,

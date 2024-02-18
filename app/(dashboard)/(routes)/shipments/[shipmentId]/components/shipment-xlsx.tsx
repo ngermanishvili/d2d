@@ -24,7 +24,8 @@ export type ShipmentColumn = {
   mimgebiQalaqi: string;
   trackingId: string;
   status: string;
-  courierComment: string;
+  courierComment: string | null | undefined;
+  orderComment: string | null | undefined;
   agebisDro: string | null;
   chabarebisDro: string | null;
 };
@@ -36,21 +37,21 @@ const ShipmentFormXLSX = () => {
       "თრექინგი ID": data.trackingId,
       "სახელი / გვარი": data.gamgzavniFullName,
       "ტელეფონის ნომერი": data.phoneNumber,
-      "მისამართი": data.address,
-      "ქალაქი": data.city,
+      მისამართი: data.address,
+      ქალაქი: data.city,
       "შექმნის თარიღი": data.createdAt,
-      "მსხვრევადი": data.brittle,
-      "შეფუთვა": data.packaging,
-      "ფასი": data.price,
+      მსხვრევადი: data.brittle,
+      შეფუთვა: data.packaging,
+      ფასი: data.price,
       "მონიშნულია კურიერის მიერ": data.markedByCourier,
-      "აღწერა": data.courierComment,
+      აღწერა: data.courierComment,
       label: data.label,
       "ვინ იხდის?": data.whopays,
       "პროდუქტის ფასი": data.itemPrice,
       "აღწერის თარიღი": data.updatedAt,
       "მიმღები კურიერი": data.assignedCourier,
       "მიმდინარე სტატუსი": data.status,
-      'სავარაუდო აღების დრო': data.agebisDro,
+      "სავარაუდო აღების დრო": data.agebisDro,
       "სავარაუდო ჩაბარების დრო": data.chabarebisDro,
       "მიმღების სახელი / გვარი": data.mimgebiFullName,
 
