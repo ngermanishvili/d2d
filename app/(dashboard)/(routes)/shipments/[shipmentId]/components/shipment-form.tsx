@@ -62,7 +62,6 @@ const formSchema = z.object({
   mimgebisAddress: z.string().min(1),
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
-  courierComment: z.string().optional(),
   orderComment: z.string().optional(),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
@@ -123,7 +122,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       packaging: false,
       markedByCourier: false,
       status: "მიმდინარე",
-      courierComment: "",
+      orderComment: "",
       label: "0-5 kg",
       whopays: "sender",
       agebisDro: "",
@@ -204,7 +203,9 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
-
+      if (!form.getValues().orderComment) {
+        data.orderComment = "";
+      }
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
@@ -316,7 +317,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
             <FormField
               control={form.control}
-              name="courierComment"
+              name="orderComment"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>კომენტარი</FormLabel>

@@ -31,7 +31,6 @@ export async function PATCH(
     const body = await req.json();
     // Extract variables from the request body
     const {
-
       phoneNumber,
       address,
       city,
@@ -45,12 +44,12 @@ export async function PATCH(
       mimgebiQalaqi,
       status,
       courierComment,
+      orderComment,
       label,
       chabarebisDro,
       gamgzavnisqalaqi,
       mimgebiFullName,
-      gamgzavniFullName
-
+      gamgzavniFullName,
     } = body;
 
     // Validate if shipmentId is provided
@@ -92,12 +91,12 @@ export async function PATCH(
         mimgebiQalaqi,
         status,
         courierComment,
+        orderComment,
         label,
         chabarebisDro,
         gamgzavnisqalaqi,
         mimgebiFullName,
         gamgzavniFullName,
-
       },
     });
     if (!status) {

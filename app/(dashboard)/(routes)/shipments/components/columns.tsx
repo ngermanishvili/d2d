@@ -248,7 +248,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
   {
     accessorKey: "orderComment",
-    header: "კურიერის კომენტარი",
+    header: "შეკვეთის კომენტარი",
     cell: ({ row }) => (
       <Tag className="p-2" color="geekblue">
         {row.original.orderComment}

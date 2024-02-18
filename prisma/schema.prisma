@@ -116,8 +116,8 @@ model Shipment {
   mimgebiQalaqi         String                @default("თბილისი") 
   mimgebisAddress       String
   status                String                  @default("მიმდინარე") 
-  courierComment        String?
-  orderComment          String?
+  courierComment        String
+  orderComment          String
   label                 String
   whopays               String
   itemPrice             String?
