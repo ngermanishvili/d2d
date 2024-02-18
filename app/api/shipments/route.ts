@@ -111,7 +111,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
 
     const customId = generateCustomId(trackingId, uuid());
 
-    const shipmentId = await db.shipment
+    const shipment = await db.shipment
       .create({
         data: {
           id: customId,
@@ -128,8 +128,8 @@ export async function POST(req: Request, { params }: { params: {} }) {
           mimgebiQalaqi,
           trackingId,
           status,
-          courierComment,
           orderComment,
+          courierComment,
           label,
           agebisDro,
           chabarebisDro,
@@ -156,11 +156,11 @@ export async function POST(req: Request, { params }: { params: {} }) {
         data: { userId: userId, address: address, mimgebisadress: address },
       });
     }
-    if (!shipmentId) {
+    if (!shipment) {
       return new NextResponse("Failed to create shipment", { status: 500 });
     }
 
-    return NextResponse.json({ shipmentId, savedAdress });
+    return NextResponse.json({ shipment, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
     return new NextResponse("Internal error BROJ", { status: 500 });

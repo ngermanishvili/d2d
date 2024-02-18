@@ -115,9 +115,9 @@ model Shipment {
   mimgebisNumber        String
   mimgebiQalaqi         String                @default("თბილისი") 
   mimgebisAddress       String
-  status                String                  @default("მიმდინარე") 
-  courierComment        String
+  status                String                @default("მიმდინარე")   
   orderComment          String
+  courierComment        String
   label                 String
   whopays               String
   itemPrice             String?
@@ -133,7 +133,8 @@ model Shipment {
 model ShipmentStatusHistory {
   id         String   @id @default(uuid())
   shipmentId String
-  status     String
+  status     String  
+  courierComment        String
   timestamp  DateTime @default(now())
 
   Shipment Shipment @relation(fields: [shipmentId], references: [id])

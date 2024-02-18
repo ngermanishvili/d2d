@@ -212,6 +212,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
+      console.log(data);
+      if (!form.getValues().orderComment) {
+        data.orderComment = "";
+        data.courierComment = "";
+      }
+      data.courierComment = "";
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
