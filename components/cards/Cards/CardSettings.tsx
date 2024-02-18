@@ -81,7 +81,6 @@ export default function CardSettings() {
     if (user?.image) {
       setPhotoUrl(user?.image);
     }
-    console.log(user?.input1, user?.input2);
   }, []);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -244,12 +243,13 @@ export default function CardSettings() {
                   ) : (
                     <div className="p-2 relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        რაღაც
+                        იურიდიული მისამართი
                       </FormLabel>
                       <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-between">
-                        Lorem ipsum dolor sit amet. {user?.input1}
+                        <p className="w-1/5">{user?.input1}</p>
                         <Badge
-                          text="საიდენთიფიკაციო ნომრის შესაცვლელად მიმართეთ ადმინისტრაციას"
+                          className="w-auto"
+                          text="იურიდიული მისამართის შესაცვლელად მიმართეთ ადმინისტრაციას"
                           color="red"
                         ></Badge>
                       </div>
@@ -263,7 +263,7 @@ export default function CardSettings() {
                         render={({ field }) => (
                           <FormItem className="relative w-full mb-3">
                             <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                              საიდენტიფიკაციო კოდი
+                              საიდენტიფიკაციო კოდი/პირადი ნომერი
                             </FormLabel>
                             <FormControl className="relative rounded-md shadow-sm">
                               <Input
@@ -282,12 +282,12 @@ export default function CardSettings() {
                   ) : (
                     <div className="p-2 relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        პირადი ნომერი
+                        საიდენტიფიკაციო კოდი/პირადი ნომერი
                       </FormLabel>
                       <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-between">
-                        {user?.input2}
+                        <p className="w-1/5">{user?.input2}</p>
                         <Badge
-                          text="საიდენთიფიკაციო ნომრის შესაცვლელად მიმართეთ ადმინისტრაციას"
+                          text="საიდენთიფიკაციო კოდის / პირადი ნომრის შესაცვლელად მიმართეთ ადმინისტრაციას"
                           color="red"
                         ></Badge>
                       </div>

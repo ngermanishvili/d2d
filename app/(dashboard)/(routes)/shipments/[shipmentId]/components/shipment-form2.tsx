@@ -60,7 +60,7 @@ const formSchema = z.object({
   mimgebisAddress: z.string().min(1),
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
-  courierComment: z.string().min(1),
+  orderComment: z.string().min(1).optional(),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
@@ -106,6 +106,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     itemPrice,
     setItemPrice,
     totalPrice,
+    calculated,
+    setCalculated,
   } = useCalculatorStore();
 
   const form = useForm<ShipmentFormValues>({
@@ -125,7 +127,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       packaging: false,
       markedByCourier: false,
       status: "მიმდინარე",
-      courierComment: "",
+      orderComment: "",
       label: "0-5 kg",
       whopays: "sender",
       agebisDro: "",
@@ -199,14 +201,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const onSubmit = async (data: ShipmentFormValues) => {
     console.log(address);
     data.address = address;
-    //  const aris = aq iqneba check
     try {
       data.packaging = packagingUsed;
       data.label = range;
       data.city = selectedCity;
       data.whopays = selectedParty;
       data.price = totalPrice.toString();
-      if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
+      data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
       if (!initialData) {
@@ -252,15 +253,16 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "Tbilisi") || "Rustavi");
-      setRange(initialData.label);
+      setCity((initialData.city as "თბილისი") || "რუსთავი");
       setPackagingUsed(initialData.packaging);
-      setSelectedParty((initialData.whopays as "Sender") || "Receiver");
+      setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
       }
+      setRange(initialData?.label);
     }
-  }, []); // Dependency array ensures that the effect runs when initialData changes
+    setCalculated(true);
+  }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes
 
   return (
     <>
@@ -426,7 +428,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       <div className="w-full lg:w-6/12 px-4 relative mb-3">
                         <FormField
                           control={form.control}
-                          name="courierComment"
+                          name="orderComment"
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3">
                               <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -520,20 +522,25 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-                                  value={selectedCity || ""}
-                                  onValueChange={(value) =>
-                                    setCity(value as "Tbilisi" | "Rustavi")
+                                  value={
+                                    initialData?.mimgebiQalaqi || selectedCity
                                   }
+                                  onValueChange={(value) => {
+                                    setCity(value as "თბილისი" | "რუსთავი");
+                                    field.onChange(
+                                      value as "თბილისი" | "რუსთავი"
+                                    );
+                                  }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
                                     <SelectValue>{field.value}</SelectValue>
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
-                                    <SelectItem value="Tbilisi">
+                                    <SelectItem value="თბილისი">
                                       თბილისი
                                     </SelectItem>
-                                    <SelectItem value="Rustavi">
+                                    <SelectItem value="რუსთავი">
                                       რუსთავი
                                     </SelectItem>
                                   </SelectContent>

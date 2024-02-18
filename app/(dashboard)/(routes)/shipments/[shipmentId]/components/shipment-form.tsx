@@ -156,7 +156,10 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   };
 
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString("en-US", { day: "numeric", month: "numeric" });
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "numeric",
+    });
   };
   function formatDateInGeorgian(pickupDate: string): string {
     // Split the date into parts
@@ -244,7 +247,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "Tbilisi") || "Rustavi");
+      setCity((initialData.city as "თბილისი") || "რუსთავი");
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver");
@@ -294,10 +297,16 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
               name="name"
               render={({ field }) => (
                 <FormItem className="relative w-full mb-3">
-                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                  >სახელი</FormLabel>
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    სახელი
+                  </FormLabel>
                   <FormControl className="relative rounded-md shadow-sm">
-                    <Input disabled={loading} placeholder="სახელი" {...field} className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150" />
+                    <Input
+                      disabled={loading}
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -619,7 +628,6 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           </Card>
         </form>
       </Form>
-
     </>
   );
 };

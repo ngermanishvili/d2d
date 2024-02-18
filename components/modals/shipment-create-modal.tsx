@@ -47,7 +47,7 @@ export const CreateModal: React.FC<AlertModalProps> = ({
       onClose={onClose}
     >
       <div className="h-[250px] flex flex-col gap-8 pt-5">
-        {agebis && chabarebis && (
+        {!initialData && agebis && chabarebis && (
           <>
             <div className="w-full flex justify-between">
               <span className="w-3/4  ">შეკვეთის აღების თარიღი</span>

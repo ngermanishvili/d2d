@@ -8,7 +8,7 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json();
-
+    console.log(body);
     const {
       name,
       number,
@@ -31,10 +31,6 @@ export async function PATCH(
 
     if (!email) {
       return new NextResponse("address is required", { status: 400 });
-    }
-
-    if (!image) {
-      return new NextResponse("city is required", { status: 400 });
     }
 
     if (!role) {

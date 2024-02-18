@@ -44,6 +44,7 @@ import { db } from "@/lib/db";
 import { error } from "console";
 import ImageUpload from "@/components/ui/image-upload";
 import Image from "next/image";
+import { init } from "next/dist/compiled/webpack/webpack";
 const isValidUrl = (url: string): boolean => {
   try {
     new URL(url);
@@ -123,6 +124,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
     }
   };
 
+  console.log(initialData);
   return (
     <>
       <Separator />
@@ -168,7 +170,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 render={({ field }) => (
                   <FormItem className="relative w-full mb-3">
                     <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      სახელი
+                      სახელი და გვარი
                     </FormLabel>
                     <FormControl className="relative rounded-md shadow-sm">
                       <Input
@@ -190,7 +192,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 render={({ field }) => (
                   <FormItem className="relative w-full mb-3">
                     <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      nomeri
+                      ტელეფონის ნომერი
                     </FormLabel>
                     <FormControl className="relative rounded-md shadow-sm">
                       <Input
@@ -212,12 +214,12 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 render={({ field }) => (
                   <FormItem className="relative w-full mb-3">
                     <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      სახელი
+                      იმეილი
                     </FormLabel>
                     <FormControl className="relative rounded-md shadow-sm">
                       <Input
                         disabled={loading}
-                        placeholder="სახელი"
+                        placeholder="თქვენი იმეილი"
                         {...field}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       />
@@ -289,7 +291,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 render={({ field }) => (
                   <FormItem className="relative w-full mb-3">
                     <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      input1
+                      input2
                     </FormLabel>
                     <FormControl className="relative rounded-md shadow-sm">
                       <Input
