@@ -27,15 +27,14 @@ export type ShipmentColumn = {
   mimgebiQalaqi: string;
   trackingId: string;
   status: string;
-  courierComment: string;
+  orderComment: string | null;
+  courierComment: string | null;
   agebisDro: string | null;
   chabarebisDro: string | null;
   gamgzavnisqalaqi: string;
   mimgebiFullName: string;
   gamgzavniFullName: string;
 };
-
-
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -155,7 +154,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
 
   {
     accessorKey: "mimgebisNumber",

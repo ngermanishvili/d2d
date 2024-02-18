@@ -3,7 +3,6 @@ import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
 
-
 const ShipmentPage = async () => {
   const userRole = await currentRole();
 
@@ -94,11 +93,11 @@ const ShipmentPage = async () => {
     updatedAt: item.updatedAt.toISOString(), // Convert Date to string
     trackingId: item.trackingId,
     status: item.status,
-    courierComment: item.courierComment,
+    orderComment: item?.orderComment,
+    courierComment: item?.courierComment,
     agebisDro: item?.agebisDro,
     chabarebisDro: item?.chabarebisDro,
-    gamgzavnisqalaqi: item?.gamgzavnisqalaqi
-
+    gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
   }));
 
   return (

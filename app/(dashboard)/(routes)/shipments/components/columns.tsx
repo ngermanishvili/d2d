@@ -27,7 +27,8 @@ export type ShipmentColumn = {
   mimgebiQalaqi: string;
   trackingId: string;
   status: string;
-  courierComment: string;
+  orderComment: string | undefined;
+  courierComment: string | undefined;
   agebisDro: string | null;
   chabarebisDro: string | null;
   gamgzavnisqalaqi: string;
@@ -245,6 +246,15 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
+  {
+    accessorKey: "orderComment",
+    header: "კურიერის კომენტარი",
+    cell: ({ row }) => (
+      <Tag className="p-2" color="geekblue">
+        {row.original.orderComment}
+      </Tag>
+    ),
+  },
   {
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
