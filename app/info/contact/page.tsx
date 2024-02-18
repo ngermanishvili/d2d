@@ -25,7 +25,7 @@ export default function Maps() {
                         სათაური
                     </h3>
                     <p className="leading-7 [&:not(:first-child)]:mt-6">
-                        The king's subjects were not amused. They grumbled and complained, but
+                        The kings subjects were not amused. They grumbled and complained, but
                         the king was firm:
                     </p>
                     <ul className="my-6 ml-6 list-disc [&>li]:mt-2">
@@ -35,7 +35,7 @@ export default function Maps() {
                     </ul>
                     <p className="leading-7 [&:not(:first-child)]:mt-6">
                         As a result, people stopped telling jokes, and the kingdom fell into a
-                        gloom. But there was one person who refused to let the king's
+                        gloom. But there was one person who refused to let the kings
                         foolishness get him down: a court jester named Jokester.
                     </p>
                 </div>
