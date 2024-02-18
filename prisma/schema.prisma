@@ -179,3 +179,34 @@ model LandingPageInfo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+
+model AboutPageInfo {
+  id        String   @id @default(uuid())
+  title     String
+  description     String @db.LongText
+  coverImageUrl  String
+  boxImageUrl String
+  boxTitle String
+  boxDescription String @db.LongText
+  panjara1Description String @db.LongText
+  freqAskedQuestionsTitle String
+  freqAskedQuestionsDescription String @db.LongText
+  freqAskedQuestions2Title String @db.LongText
+  freqAskedQuestions2Description String @db.LongText
+  freqAskedQuestions3Title String @db.LongText
+  freqAskedQuestions3Description String @db.LongText
+  freqAskedQuestions4Title String @db.LongText
+  freqAskedQuestions4Description String @db.LongText
+  whatWeOfferTitle String
+  whatWeOfferDescription String @db.LongText
+  whatWeOffer2Title String @db.LongText
+  whatWeOffer2Description String @db.LongText
+  whatWeOffer3Title String @db.LongText
+  whatWeOffer3Description String @db.LongText
+  whatWeOfferToCourierTitle String @db.LongText
+  whatWeOfferToCourierDescription String @db.LongText
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

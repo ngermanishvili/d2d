@@ -14,16 +14,11 @@ import { IoIosAddCircle } from "react-icons/io";
 export const NAV_MENU_ADMIN = [
 
     {
-        name: "ბილბორდები",
+        name: "ბილბორის დამატება",
         icon: GiTatteredBanner,
         to: "/billboards",
     },
-    {
-        name: "ბილბორდების დამატება",
-        to: "/billboards/new",
-        icon: MdAddchart,
 
-    },
     {
         name: "ჩემი კურიერები",
         icon: CiDeliveryTruck,
@@ -50,6 +45,11 @@ export const NAV_MENU_ADMIN = [
         name: "1",
         icon: IoIosAddCircle,
         to: "/addlandinginfo",
+    },
+    {
+        name: "2",
+        to: "/addaboutinfo",
+        icon: IoIosAddCircle,
     },
 ];
 
