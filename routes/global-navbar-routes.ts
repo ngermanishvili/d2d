@@ -8,12 +8,8 @@ export const NAV_MENU_GLOBAL = [
         to: "/about",
     },
     {
-        name: "სერვისები",
-        to: "/",
-    },
-    {
         name: "კონტაქტი",
-        to: "/",
+        to: "/info/contact",
     },
     {
         name: "ბლოგი",
