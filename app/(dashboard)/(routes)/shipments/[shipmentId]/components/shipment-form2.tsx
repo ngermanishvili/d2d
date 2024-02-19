@@ -225,7 +225,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
-        const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
+        const shipmentId = response.data.shipment; // Accessing the shipmentId from the response
         console.log("Shipment created with ID:", shipmentId);
         setQrText(shipmentId);
       }
