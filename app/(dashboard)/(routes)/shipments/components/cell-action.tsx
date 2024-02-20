@@ -118,7 +118,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
+            <span className="sr-only">გახსენი მენიუ</span>
             <MoreHorizontal className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -127,7 +127,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem onClick={() => onCopy(data.id)}>
               <Copy className="mr-2 h-4 w-4" />
-              Copy ID
+              დააკოპირე ID
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
@@ -136,11 +136,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
               }}
             >
               <Edit className="mr-2 h-4 w-4" />
-              Update
+              შეცვლა
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setOpen(true)}>
               <Trash className="mr-2 h-4 w-4" />
-              Delete
+              წაშლა
             </DropdownMenuItem>
           </DropdownMenuContent>
         </RoleGate>

@@ -268,7 +268,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     colSpan={columns.length}
                     className="h-24 text-center"
                   >
-                    No results.
+                    ინფორმაცია ვერ მოიძებნა.
                   </TableCell>
                 </TableRow>
               )}
