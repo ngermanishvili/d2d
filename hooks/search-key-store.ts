@@ -6,6 +6,6 @@ interface SearchKeyStore {
 }
 
 export const useSearchKeyStore = create<SearchKeyStore>((set) => ({
-    searchKeyStore: "name",
+    searchKeyStore: "gamgzavniFullName",
     setSearchKeyStore: (key) => set({ searchKeyStore: key }),
 }));

@@ -40,6 +40,10 @@ export const RegisterSchema = z
     number: z.string().min(1, {
       message: "min 1 nomriani ",
     }),
+    userType: z.string().min(1, {
+      message: "გთხოვთ აირჩიოთ ანგარიშის ტიპი ",
+    }),
+
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords don't match",
@@ -69,6 +73,7 @@ export const SettingsSchema = z
         message: "Invalid URL",
       })
     ),
+    userType: z.optional(z.string()),
     input1: z.optional(z.string()),
     input2: z.optional(z.string()),
     input3: z.optional(z.string()),

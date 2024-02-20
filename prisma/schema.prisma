@@ -29,6 +29,7 @@ model SavedAddress {
 
 model User {
   id            String     @id @default(cuid())
+  userType      String?
   name          String?
   number        String?
   email         String?    @unique
@@ -103,7 +104,7 @@ model Shipment {
   trackingId            String                  @unique
   userId                String
   phoneNumber           String
-  gamgzavnisqalaqi      String                  @default("თბილისი") 
+  gamgzavnisqalaqi      String                @default("თბილისი") 
   address               String 
   city                  String 
   brittle               Boolean                 @default(false) 
@@ -113,8 +114,8 @@ model Shipment {
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   mimgebisNumber        String
-  mimgebiQalaqi         String                  @default("თბილისი") 
-  mimgebisAddress       String 
+  mimgebiQalaqi         String                   @default("თბილისი") 
+  mimgebisAddress       String
   status                String                  @default("მიმდინარე") 
   courierComment        String
   label                 String

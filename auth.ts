@@ -53,6 +53,7 @@ export const {
         session.user.name = token.name as string;
         session.user.email = token.email;
         session.user.isOAuth = token.isOAuth as boolean;
+        session.user.userType = token.userType as string;
         session.user.number = token.number as string;
         session.user.input1 = token.input1 as string;
         session.user.input2 = token.input2 as string;
@@ -82,6 +83,7 @@ export const {
       token.role = existingUser.role;
       token.number = existingUser.number;
       token.input1 = existingUser.input1;
+      token.userType = existingUser.userType;
       token.input2 = existingUser.input2;
       token.input3 = existingUser.input3;
       token.input4 = existingUser.input4;

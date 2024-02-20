@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCalculatorStore from "@/hooks/calculate-price";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 import {
   Form,
@@ -108,11 +109,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     totalPrice,
   } = useCalculatorStore();
 
+  const user = useCurrentUser();
+  console.log(user);
+
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       mimgebiFullName: "",
-      gamgzavniFullName: "",
+      gamgzavniFullName: user?.userType === "იურიდიული პირი" ? user?.input3 : "",
       city: selectedCity,
       address: "",
       phoneNumber: "",
@@ -262,6 +266,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     }
   }, []); // Dependency array ensures that the effect runs when initialData changes
 
+
+
   return (
     <>
       <AlertModal
@@ -317,21 +323,28 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
+
                             control={form.control}
                             name="gamgzavniFullName"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  გამგზავნის სახელი / გვარი
+                                  {user?.userType === "იურიდიული პირი" ? "კომპანიის დასახელება" : "გამგზავნის სახელი / გვარი"}
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
                                   <div className="relative">
-                                    <Input
-                                      disabled={loading}
-                                      placeholder="სახელი"
-                                      {...field}
-                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0"
-                                    />
+                                    {user?.userType === "იურიდიული პირი" ? <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0">
+                                      {user?.input3}
+
+                                    </div>
+                                      : <Input
+                                        disabled={loading}
+                                        placeholder="სახელი"
+                                        {...field}
+                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0"
+                                      />
+                                    }
+
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
                                   </div>
                                 </FormControl>

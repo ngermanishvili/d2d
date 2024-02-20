@@ -24,6 +24,14 @@ import { register } from "@/actions/register";
 import { cn } from "@/lib/utils";
 import { Poppins } from 'next/font/google'
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 
 const font = Poppins({
   subsets: ['latin'],
@@ -33,6 +41,8 @@ const font = Poppins({
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+
+  const [type, setType] = useState("ფიზიკური პირი")
 
   const [isPending, startTransition] = useTransition();
 
@@ -44,12 +54,14 @@ export const RegisterForm = () => {
       confirm: "", // Add this line
       name: "",
       number: "",
+      userType: "ფიზიკური პირი",
     },
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
+    values.userType = type;
     startTransition(() => {
       register(values)
         .then((data) => {
@@ -150,6 +162,43 @@ export const RegisterForm = () => {
                       </FormLabel>
                       <FormControl>
                         <Input {...field} type="password" placeholder="********" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+
+                <FormField
+                  control={form.control}
+                  name="userType"
+                  render={({ field }) => (
+                    <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
+                      <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
+                        აირჩიეთ თქვენი ანგარიშის ტიპი
+                      </FormLabel>
+                      <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
+                        <Select
+                          value={field.value}
+                          onValueChange={(newValue) => {
+                            field.onChange(newValue);
+                            setType(newValue);
+
+                          }}
+                        >
+                          <SelectTrigger className="h-[50px]">
+                            <SelectValue>{field.value}</SelectValue>
+                          </SelectTrigger>
+                          <SelectContent>
+                            {/* {ADMIN როლგეითი} */}
+                            <SelectItem value="ფიზიკური პირი">
+                              ფიზიკური პირი
+                            </SelectItem>
+                            <SelectItem value="იურიდიული პირი">
+                              იურიდიული პირი
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
