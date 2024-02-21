@@ -57,7 +57,7 @@ export const NAV_MENU_ACCOUNTANT = [
     {
         name: "შეკვეთები",
         icon: MdWorkHistory,
-        to: "/shipments",
+        to: "/accountantshipments",
     },
     {
         name: "ბუღალტერი",
