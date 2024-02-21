@@ -227,15 +227,16 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 0 ? "sticky left-0 text-white" : "" // Apply sticky style to the first column
-                        } text-white bg-gray-900 text-sm border-black `}
+                      className={`${
+                        index === 0 ? "sticky left-0 text-white" : "" // Apply sticky style to the first column
+                      } text-white bg-gray-900 text-sm border-black `}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -251,8 +252,9 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                          } p-2 border`}
+                        className={`${
+                          index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                        } p-2 border`}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

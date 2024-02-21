@@ -3,7 +3,6 @@ import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
 
-
 const ShipmentPage = async () => {
   const userRole = await currentRole();
 
@@ -12,17 +11,17 @@ const ShipmentPage = async () => {
   const userEmail = await currentUserByEmail();
   const shipments = await db.shipment.findMany({
     where: {
-      assignedCourier: userEmail,
+      status: "ჩაბარებული" || "დაუბრუნდა გამგზავნს, დასრულება",
     },
     include: {
       ShipmentStatusHistory: true, // Include shipment status history
     },
   });
-  const amountInTotal = shipments
-    .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
-    })
-    .map((shipmentToMap) => shipmentToMap.price);
+  // const amountInTotal = shipments
+  //   .filter((shipmentsTofilter) => {
+  //     return shipmentsTofilter.status === "ჩაბარებული";
+  //   })
+  //   .map((shipmentToMap) => shipmentToMap.price);
   const sumOfNumbersInArray = (numberStrings: string[]): number => {
     let total = 0;
 
@@ -68,14 +67,14 @@ const ShipmentPage = async () => {
       return shipmentToFilter.status === "ჩაბარებული" && updatedWithinToday;
     })
     .map((shipmentToMap) => shipmentToMap.price);
-  const sumOfTotals = sumOfNumbersInArray(amountInTotal);
+  // const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
-  console.log(
-    "🚀 ~ ShipmentPage ~ sumofTotal:",
-    sumOfTotals,
-    "sum of this day",
-    sumOfToday
-  );
+  // console.log(
+  //   "🚀 ~ ShipmentPage ~ sumofTotal:",
+  //   sumOfTotals,
+  //   "sum of this day",
+  //   sumOfToday
+  // );
   formattedShipments = shipments.map((item) => ({
     id: item.id,
     mimgebiFullName: item?.mimgebiFullName,
@@ -97,17 +96,18 @@ const ShipmentPage = async () => {
     courierComment: item.courierComment,
     agebisDro: item?.agebisDro,
     chabarebisDro: item?.chabarebisDro,
-    gamgzavnisqalaqi: item?.gamgzavnisqalaqi
-
+    gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
   }));
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        {userRole === "ADMIN" || userRole === "COURIER" || userRole === "ACCOUNTANT" ? (
+        {userRole === "ADMIN" ||
+        userRole === "COURIER" ||
+        userRole === "ACCOUNTANT" ? (
           <ShipmentClient data={formattedShipments} />
         ) : (
-          <p>არ არის კურიერი მიბმული</p>
+          <p>დავალიანება არ მოიძებნა</p>
         )}
       </div>
     </div>

@@ -568,6 +568,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                       <SelectValue>{field.value}</SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
+                                      <RoleGate allowedRole="ACCOUNTANT">
+                                        <SelectItem value="დასრულებული">
+                                          დასრულებული
+                                        </SelectItem>
+                                      </RoleGate>
                                       {/* {ADMIN როლგეითი} */}
                                       <RoleGate allowedRole="ADMIN">
                                         <SelectItem value="მიმდინარე">
@@ -722,7 +727,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   loading={loading}
                   onConfirm={async () => {
                     await onSubmit(form.getValues());
-                    router.push("/shipments");
+                    router.push("/accountantshipments");
                     router.refresh();
                   }}
                   isOpen={isConfirmOpen}
