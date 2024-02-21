@@ -16,6 +16,7 @@ import {
   NAV_MENU_ADMIN,
   NAV_MENU_USER,
   NAV_MENU_COURIER,
+  NAV_MENU_ACCOUNTANT,
 } from "@/routes/panel-navbar-routes";
 
 interface NavItemProps {
@@ -78,6 +79,15 @@ export function PanelNavbar() {
               </RoleGate>
               <RoleGate allowedRole="COURIER">
                 {NAV_MENU_COURIER.map(({ name, icon: Icon, to }) => (
+                  <NavItem key={name} href={to}>
+                    <Icon className="h-5 w-5" />
+                    {name}
+                  </NavItem>
+                ))}
+              </RoleGate>
+
+              <RoleGate allowedRole="ACCOUNTANT">
+                {NAV_MENU_ACCOUNTANT.map(({ name, icon: Icon, to }) => (
                   <NavItem key={name} href={to}>
                     <Icon className="h-5 w-5" />
                     {name}

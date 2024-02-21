@@ -53,6 +53,19 @@ export const NAV_MENU_ADMIN = [
     },
 ];
 
+export const NAV_MENU_ACCOUNTANT = [
+    {
+        name: "შეკვეთები",
+        icon: MdWorkHistory,
+        to: "/shipments",
+    },
+    {
+        name: "ბუღალტერი",
+        icon: MdWorkHistory,
+        to: "/shipments/new",
+    },
+
+];
 export const NAV_MENU_USER = [
 
     {

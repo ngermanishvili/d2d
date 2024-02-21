@@ -12,6 +12,7 @@ enum UserRole {
   USER
   ADMIN
   COURIER
+  ACCOUNTANT
 }
 model SavedAddress {
   id        String   @id @default(uuid())

@@ -477,11 +477,16 @@ export default function CardSettings() {
                           </FormControl>
                           <SelectContent>
                             <SelectItem value={UserRole.ADMIN}>
-                              Admin
+                              ადმინი
                             </SelectItem>
-                            <SelectItem value={UserRole.USER}>User</SelectItem>
+                            <SelectItem value={UserRole.USER}>
+                              მომხმარებელი
+                            </SelectItem>
                             <SelectItem value={UserRole.COURIER}>
-                              Courier
+                              კურიერი
+                            </SelectItem>
+                            <SelectItem value={UserRole.ACCOUNTANT}>
+                              ბუღალტერი
                             </SelectItem>
                           </SelectContent>
                         </Select>
