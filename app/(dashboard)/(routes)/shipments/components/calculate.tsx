@@ -73,34 +73,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCity,
     totalPrice,
     setTotalPrice,
+    calculated,
+    setCalculated,
   } = useCalculatorStore();
 
-  useEffect(() => {
-    // Check if initialData is true
-    if (hasInitialData) {
-      // Find the WeightRange object with the matching label
-      const initialSelectedRange = weightRanges.find((r) => r.label === range);
-
-      // Set the selected range based on the found object or null
-      setSelectedRange(initialSelectedRange || null);
-      console.log("calculates LOG");
-      setCity(selectedCity);
-      setPackagingUsed(packagingUsed);
-      calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
-    }
-  }, [
-    range,
-    setRange,
-    selectedCity,
-    setCity,
-    packagingUsed,
-    setPackagingUsed,
-    selectedRange,
-    selectedParty,
-    setSelectedParty,
-    itemPrice,
-    setItemPrice,
-  ]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
@@ -113,10 +89,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setPackagingUsed(isChecked); // Update the global state
     calculateTotalPrice(selectedRange, isChecked); // Recalculate total price
   };
-  // const handleCityChange = (newCity: "Tbilisi" | "Rustavi") => {
-  //   setCity(newCity);
-  //   calculateTotalPrice(selectedRange, packagingUsed, newCity);
-  // };
+
   const calculateTotalPrice = (
     range: WeightRange | null,
     usePackaging: boolean,
@@ -130,7 +103,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
     if (range) {
       shipmentPrice +=
-        city === "Tbilisi" ? range.tbilisiPrice : range.rustaviPrice;
+        city === "თბილისი" ? range.tbilisiPrice : range.rustaviPrice;
     }
 
     if (usePackaging) {
@@ -153,19 +126,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const selectedRange =
       weightRanges.find((range) => range.label === selectedLabel) || null;
     setSelectedRange(selectedRange);
+
     calculateTotalPrice(selectedRange, packagingUsed);
     setRange(selectedLabel);
   };
 
   const handlePartyChange = (newParty: "Sender" | "Receiver") => {
-    if (selectedParty === "Sender" && newParty === "Receiver") {
-      setTotalPrice(totalPrice - parseFloat(itemPrice));
-      setItemPrice(0);
-      setSelectedParty(newParty);
-      return;
-    }
     setSelectedParty(newParty);
-    calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
   };
 
   const handleItemPriceChange = (newItemPrice: number) => {
@@ -179,9 +146,30 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       newItemPrice
     );
   };
+
   useEffect(() => {
-    calculateTotalPrice(selectedRange, packagingUsed, selectedCity);
-  }, [setCity, selectedCity]);
+    // Check if initialData is true
+    if (hasInitialData) {
+      // Find the WeightRange object with the matching label
+
+      setCity(selectedCity);
+      setPackagingUsed(packagingUsed);
+    }
+  }, []);
+  useEffect(() => {
+    if (calculated) {
+      const initialSelectedRange = weightRanges.find((r) => r.label === range);
+      if (!initialSelectedRange) return;
+      // Set the selected range based on the found object or null
+      console.log(
+        "🚀 ~ useEffect ~ initialSelectedRange:",
+        initialSelectedRange
+      );
+      setSelectedRange(initialSelectedRange);
+      handleWeightRangeChange(range);
+    }
+  }, [calculated, setCalculated]);
+
   return (
     <>
       <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">

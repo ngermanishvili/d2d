@@ -107,6 +107,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     itemPrice,
     setItemPrice,
     totalPrice,
+    calculated,
+    setCalculated,
   } = useCalculatorStore();
 
   const user = useCurrentUser();
@@ -116,7 +118,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       mimgebiFullName: "",
-      gamgzavniFullName: user?.userType === "იურიდიული პირი" ? user?.input3 : "",
+      gamgzavniFullName:
+        user?.userType === "იურიდიული პირი" ? user?.input3 : "",
       city: selectedCity,
       address: "",
       phoneNumber: "",
@@ -256,17 +259,16 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "Tbilisi") || "Rustavi");
-      setRange(initialData.label);
+      setCity((initialData.city as "თბილისი") || "რუსთავი");
       setPackagingUsed(initialData.packaging);
-      setSelectedParty((initialData.whopays as "Sender") || "Receiver");
+      setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
       }
+      setRange(initialData?.label);
     }
-  }, []); // Dependency array ensures that the effect runs when initialData changes
-
-
+    setCalculated(true);
+  }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes
 
   return (
     <>
@@ -323,27 +325,29 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
-
                             control={form.control}
                             name="gamgzavniFullName"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  {user?.userType === "იურიდიული პირი" ? "კომპანიის დასახელება" : "გამგზავნის სახელი / გვარი"}
+                                  {user?.userType === "იურიდიული პირი"
+                                    ? "კომპანიის დასახელება"
+                                    : "გამგზავნის სახელი / გვარი"}
                                 </FormLabel>
                                 <FormControl className="relative rounded-md shadow-sm">
                                   <div className="relative">
-                                    {user?.userType === "იურიდიული პირი" ? <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0">
-                                      {user?.input3}
-
-                                    </div>
-                                      : <Input
+                                    {user?.userType === "იურიდიული პირი" ? (
+                                      <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0">
+                                        {user?.input3}
+                                      </div>
+                                    ) : (
+                                      <Input
                                         disabled={loading}
                                         placeholder="სახელი"
                                         {...field}
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0"
                                       />
-                                    }
+                                    )}
 
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
                                   </div>
@@ -533,20 +537,25 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-                                  value={selectedCity || ""}
-                                  onValueChange={(value) =>
-                                    setCity(value as "Tbilisi" | "Rustavi")
+                                  value={
+                                    initialData?.mimgebiQalaqi || selectedCity
                                   }
+                                  onValueChange={(value) => {
+                                    setCity(value as "თბილისი" | "რუსთავი");
+                                    field.onChange(
+                                      value as "თბილისი" | "რუსთავი"
+                                    );
+                                  }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
                                     <SelectValue>{field.value}</SelectValue>
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
-                                    <SelectItem value="Tbilisi">
+                                    <SelectItem value="თბილისი">
                                       თბილისი
                                     </SelectItem>
-                                    <SelectItem value="Rustavi">
+                                    <SelectItem value="რუსთავი">
                                       რუსთავი
                                     </SelectItem>
                                   </SelectContent>
@@ -739,6 +748,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   hasInitialData={initialData ? true : false}
                 />
                 <CreateModal
+                  initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
                   chabarebis={chabareba ? chabareba : undefined}
                   loading={loading}
@@ -747,6 +757,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                     if (!initialData) {
                       setIsCreateOpen(false);
                       setIsConfirmOpen(true);
+                    } else {
+                      setIsCreateOpen(false);
+                      router.push("/shipments");
                     }
                   }}
                   isOpen={isCreateOpen}

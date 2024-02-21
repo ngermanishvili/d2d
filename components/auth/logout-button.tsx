@@ -1,21 +1,22 @@
-"use client"
+"use client";
 
-import { logout } from "@/actions/logout"
+import { logout } from "@/actions/logout";
+import { useRouter } from "next/navigation";
 
 interface LogoutButtonProps {
-    children: React.ReactNode
+  children: React.ReactNode;
 }
 
 export const LogoutButton = ({ children }: LogoutButtonProps) => {
-    const onClick = () => {
+  const router = useRouter();
+  const onClick = () => {
+    logout();
+    router.push("/");
+  };
 
-        logout();
-
-    }
-
-    return (
-        <span onClick={onClick} className="cursor-pointer">
-            {children}
-        </span>
-    )
-}
+  return (
+    <span onClick={onClick} className="cursor-pointer">
+      {children}
+    </span>
+  );
+};

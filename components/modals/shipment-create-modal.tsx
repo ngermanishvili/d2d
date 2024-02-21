@@ -11,6 +11,7 @@ interface AlertModalProps {
   onConfirm: () => void;
   loading: boolean;
   agebis: string | undefined;
+  initialData: boolean;
   chabarebis: string | undefined;
 }
 export const CreateModal: React.FC<AlertModalProps> = ({
@@ -20,6 +21,7 @@ export const CreateModal: React.FC<AlertModalProps> = ({
   loading,
   agebis,
   chabarebis,
+  initialData,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -30,16 +32,22 @@ export const CreateModal: React.FC<AlertModalProps> = ({
   if (!isMounted) {
     return null;
   }
+  const title = initialData
+    ? "შეკვეთის დეტალების შეცვლა"
+    : "შეკვეთის გასაფორმებლად დაადასტურეთ ინფორმაცია";
+  const description = initialData
+    ? "შეკვეთის დეტალების შეცვლა"
+    : "შეკვეთის გასაფორმებლად დაადასტურეთ ინფორმაცია";
 
   return (
     <Modal
-      title="შეკვეთის გასაფორმებლად დაადასტურეთ ინფორმაცია"
-      description="შეკვეთის გასაფორმებლად დაადასტურეთ ინფორმაცია"
+      title={title}
+      description={description}
       isOpen={isOpen}
       onClose={onClose}
     >
       <div className="h-[250px] flex flex-col gap-8 pt-5">
-        {agebis && chabarebis && (
+        {!initialData && agebis && chabarebis && (
           <>
             <div className="w-full flex justify-between">
               <span className="w-3/4  ">შეკვეთის აღების თარიღი</span>
@@ -47,8 +55,7 @@ export const CreateModal: React.FC<AlertModalProps> = ({
             </div>
             <div className="w-full flex justify-between">
               <span className="w-3/4">შეკვეთის ჩაბარების თარიღი</span>
-              <p>:</p>{" "}
-              <p className="w-6/12"> {chabarebis.replace(" ", "-")}</p>
+              <p>:</p> <p className="w-6/12"> {chabarebis.replace(" ", "-")}</p>
             </div>
           </>
         )}
