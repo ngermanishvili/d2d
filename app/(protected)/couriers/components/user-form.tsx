@@ -44,6 +44,7 @@ import { db } from "@/lib/db";
 import { error } from "console";
 import ImageUpload from "@/components/ui/image-upload";
 import Image from "next/image";
+import XlsxUpload from "@/components/ui/xlsx-upload";
 const isValidUrl = (url: string): boolean => {
   try {
     new URL(url);
@@ -54,7 +55,12 @@ const isValidUrl = (url: string): boolean => {
 };
 const formSchema = z.object({
   name: z.optional(z.string()),
-  role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.COURIER]),
+  role: z.enum([
+    UserRole.ADMIN,
+    UserRole.USER,
+    UserRole.COURIER,
+    UserRole.ACCOUNTANT,
+  ]),
   email: z.optional(z.string().email()),
   number: z.optional(z.string()),
 
@@ -126,6 +132,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   return (
     <>
       <Separator />
+      <XlsxUpload user={initialData.id} />
 
       <Form {...form}>
         <form
@@ -133,34 +140,6 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
           className="space-y-8 w-full"
         >
           <div className="flex flex-wrap">
-            {/* <div className="w-full px-4">
-              <FormField
-                control={form.control}
-                name="image"
-                render={({ field }) => (
-                  <FormItem className="relative w-full mb-3">
-                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                      surati
-                    </FormLabel>
-                    <FormControl className="relative rounded-md shadow-sm">
-                      <Input
-                        disabled={loading}
-                        placeholder="surat"
-                        {...field}
-                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Image
-                height={100}
-                width={100}
-                src={initialData?.image ? initialData.image : ""}
-                alt="Company Picture"
-              />
-            </div> */}
             <div className="w-full lg:w-6/12 px-4">
               <FormField
                 control={form.control}
@@ -505,3 +484,33 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
     </>
   );
 };
+{
+  /* <div className="w-full px-4">
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <FormItem className="relative w-full mb-3">
+                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                      surati
+                    </FormLabel>
+                    <FormControl className="relative rounded-md shadow-sm">
+                      <Input
+                        disabled={loading}
+                        placeholder="surat"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Image
+                height={100}
+                width={100}
+                src={initialData?.image ? initialData.image : ""}
+                alt="Company Picture"
+              />
+            </div> */
+}
