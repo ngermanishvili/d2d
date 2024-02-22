@@ -18,4 +18,15 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
+export async function GET(req: Request) {
+  try {
+    const invoices = await db.urlsOfXlsx.findMany({
+      where: {},
+    });
 
+    return NextResponse.json(invoices);
+  } catch (error) {
+    console.log("[BILLBOARDS_GET]", error);
+    return new NextResponse("Internal error BROJ", { status: 500 });
+  }
+}
