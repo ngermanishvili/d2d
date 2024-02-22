@@ -2,14 +2,12 @@
 import * as z from "zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Shipment, UserRole } from "@prisma/client";
-import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import QRCodeGenerator from "@/components/ui/qr-code";
-import useCalculatorStore from "@/hooks/calculate-price";
+
 
 import {
   Form,
@@ -253,7 +251,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input1"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -276,7 +274,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input2"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -299,7 +297,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input3"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -322,7 +320,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input4"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -345,7 +343,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input5"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -368,7 +366,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input6"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -391,7 +389,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input7"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
@@ -414,7 +412,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         placeholder="input8"
                         disabled={isPending}
                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                      // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                       />
                     </FormControl>
                     <FormMessage className="mt-1 text-xs text-red-500" />
