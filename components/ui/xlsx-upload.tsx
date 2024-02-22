@@ -18,6 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 interface XlsxUploadProps {
   user: string;
@@ -55,7 +56,13 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
   const onSubmit = async (data: UploadXlsxValues) => {
     data.url = url;
     data.userId = user;
-    const response = await axios.post(`/api/invoices`, data);
+    try {
+      const response = await axios.post(`/api/invoices`, data);
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      toast.success("xlsx atvirtulia");
+    }
   };
   return (
     <div>

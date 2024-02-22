@@ -213,7 +213,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       data.city = selectedCity;
       data.whopays = selectedParty;
       data.price = totalPrice.toString();
-      if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
+      data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
       if (!initialData) {

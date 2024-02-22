@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useCurrentId } from "@/hooks/use-current-role";
+import { InvoiceTable } from "@/components/ui/invoice-table";
 
 const MyInvoicesPage = () => {
   const [data, setdata] = useState("");
@@ -10,9 +11,7 @@ const MyInvoicesPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/invoices/${id}`
-        );
+        const response = await axios.get(`/api/invoices/${id}`);
         setdata(response.data);
         // Assuming the response.data is an array of users
       } catch (error) {
@@ -26,6 +25,7 @@ const MyInvoicesPage = () => {
   return (
     <div style={{ marginTop: "70px" }}>
       {data.length > 1 ? "daifetcha" : "aaraa"}
+      
     </div>
   );
 };

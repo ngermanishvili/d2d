@@ -107,7 +107,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     }
 
     if (usePackaging) {
-      shipmentPrice += 1; // Add 1 GEL for packaging service
+      shipmentPrice += 5; // Add 1 GEL for packaging service
     }
 
     let TotalPrice = shipmentPrice;
@@ -259,7 +259,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         level={5}
                         style={{ marginTop: "4px", marginRight: "10px" }}
                       >
-                        შეფუთვის სერვისი +1 ლარი
+                        შეფუთვის სერვისი +5 ლარი
                       </Typography.Title>
                     </div>
                     <input

@@ -1,10 +1,17 @@
 import { db } from "@/lib/db";
 import { UserForm } from "../components/user-form";
+import { InvoiceTable } from "@/components/ui/invoice-table";
+import { InvoiceClient } from "./components/client";
 
 const UserEditPage = async ({ params }: { params: { id: string } }) => {
   const user = await db.user.findUnique({
     where: { id: params.id },
   });
+  const invoices = await db.urlsOfXlsx.findMany({
+    where:{
+      userId:user?.id
+    }
+  })
 
   if (!user) return { error: "User ar moidzebna" };
 
@@ -31,6 +38,7 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
             }}
           />
         )}
+       <InvoiceClient data={invoices} />
       </div>
     </div>
   );
