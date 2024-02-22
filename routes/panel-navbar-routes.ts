@@ -64,6 +64,11 @@ export const NAV_MENU_ACCOUNTANT = [
         icon: MdWorkHistory,
         to: "/shipments/new",
     },
+    {
+        name: "ჩემი კურიერები",
+        icon: CiDeliveryTruck,
+        to: "/couriers",
+    },
 
 ];
 export const NAV_MENU_USER = [
