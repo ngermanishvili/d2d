@@ -31,7 +31,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import usePhotoStore from "@/hooks/photo-store";
 import { RoleGate } from "@/components/auth/role-gate";
-import { Badge } from "antd";
+import { Badge, Divider } from "antd";
 
 // components
 
@@ -43,6 +43,11 @@ export default function CardSettings() {
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleClick = () => {
+    setShowForm(true);
+  };
 
   const form = useForm<z.infer<typeof SettingsSchema>>({
     resolver: zodResolver(SettingsSchema),
@@ -76,16 +81,16 @@ export default function CardSettings() {
     user?.input5 &&
     user?.input6 &&
     user?.input7 &&
-    user?.input8;
 
-  useEffect(() => {
-    if (user?.image) {
-      setPhotoUrl(user?.image);
-    }
-  }, []);
+    useEffect(() => {
+      if (user?.image) {
+        setPhotoUrl(user?.image);
+      }
+    }, []);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     values.image = photoUrl;
+    console.log(values);
     startTransition(() => {
       settings(values)
         .then((data) => {
@@ -108,35 +113,34 @@ export default function CardSettings() {
       <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-100 border-0">
         <div className="rounded-t bg-white mb-0 px-6 py-6">
           <div className="text-center flex justify-between">
-            <h6 className="text-blueGray-700 text-xl font-bold">
+            <h6 className="text-blueGray-700 text-xl font-bold mt-4">
               ჩემი კაბინეტი
             </h6>
-            {/* <button
-              className="bg-blueGray-700 active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="button"
-            >
-              აქტიური
-            </button>
-            <button
-              className="bg-blueGray-700 active:bg-blueGray-600 text-black bg-red-400 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-              type="button"
-            >
-              არა აქტიური
-            </button> */}
+
+
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+
           <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             პირადი ინფორმაცია
           </h6>
-          <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-            {isActive
-              ? "ანგარიში აქტიურია"
-              : "ანგარიში არ არის აქტიური, გასააქტიურებლად შეავსეთ ყველა საჭირო ველი"}
-          </h6>
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-wrap">
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  {isActive ? (
+                    <div className="bg-blueGray-700 active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                      ანგარიში აქტიურია
+                    </div>
+                  ) : (
+                    <div className="bg-blueGray-700 active:bg-blueGray-600 text-white bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                      ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული ყველა ველი.
+                    </div>
+                  )}
+
+                </h6>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -152,7 +156,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -175,7 +179,6 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -209,10 +212,6 @@ export default function CardSettings() {
                 </div>
               </div>
               <hr className="mt-6 border-b-1 border-blueGray-300" />
-              <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                ანგარიშის გასააქტიურებლად შეავსეთ ყველა ველი ვალიდური
-                ინფორმაციით
-              </h6>
               <div className="flex flex-wrap">
                 <RoleGate allowedRole="USER">
                   {user?.input1 === null || user?.input1.length === 0 ? (
@@ -234,7 +233,6 @@ export default function CardSettings() {
                                   placeholder="input1"
                                   disabled={isPending}
                                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                  // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                                 />
                               </FormControl>
                               <FormMessage className="mt-1 text-xs text-red-500" />
@@ -281,7 +279,7 @@ export default function CardSettings() {
                                 placeholder="input2"
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                              // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                               />
                             </FormControl>
                             <FormMessage className="mt-1 text-xs text-red-500" />
@@ -325,7 +323,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დასახელება"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -348,7 +346,7 @@ export default function CardSettings() {
                             placeholder="საბანკო ანგარიშის ნომერი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -371,7 +369,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დირექტორი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -394,7 +392,7 @@ export default function CardSettings() {
                             placeholder="საკონტაქტო ტელეფონი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -417,7 +415,7 @@ export default function CardSettings() {
                             placeholder="საქმიანობის სფერო"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -440,7 +438,7 @@ export default function CardSettings() {
                             placeholder="input8"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -508,53 +506,55 @@ export default function CardSettings() {
                     )}
                   />
                 </div>
-                <div className="w-full lg:w-6/12 px-4 gap-10">
-                  <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                    პაროლის შეცვლა
-                  </h6>
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem className="relative w-full mb-3">
-                        <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          თქვენი პაროლი
-                        </FormLabel>
-                        <FormControl className="relative rounded-md shadow-sm">
-                          <Input
-                            {...field}
-                            placeholder="******"
-                            type="password"
-                            disabled={isPending}
-                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          />
-                        </FormControl>
-                        <FormMessage className="mt-1 text-xs text-red-500" />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="newPassword"
-                    render={({ field }) => (
-                      <FormItem className="relative w-full mb-3">
-                        <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          ახალი პაროლი
-                        </FormLabel>
-                        <FormControl className="relative rounded-md shadow-sm">
-                          <Input
-                            {...field}
-                            placeholder="******"
-                            type="password"
-                            disabled={isPending}
-                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          />
-                        </FormControl>
-                        <FormMessage className="mt-1 text-xs text-red-500" />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+              </div>
+              <Divider />
+              <div className="w-full lg:w-6/12 px-4 gap-10">
+                <h6 className="text-blueGray-400 text-sm mt-3 mb-6  uppercase font-bold text-md">
+                  პაროლის შეცვლა
+                </h6>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="relative w-full mb-3">
+                      <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                        თქვენი პაროლი
+                      </FormLabel>
+                      <FormControl className="relative rounded-md shadow-sm">
+                        <Input
+                          {...field}
+                          placeholder="******"
+                          type="password"
+                          disabled={isPending}
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        />
+                      </FormControl>
+                      <FormMessage className="mt-1 text-xs text-red-500" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="newPassword"
+                  render={({ field }) => (
+                    <FormItem className="relative w-full mb-3">
+                      <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                        ახალი პაროლი
+                      </FormLabel>
+                      <FormControl className="relative rounded-md shadow-sm">
+                        <Input
+                          {...field}
+                          placeholder="******"
+                          type="password"
+                          disabled={isPending}
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        />
+                      </FormControl>
+                      <FormMessage className="mt-1 text-xs text-red-500" />
+                    </FormItem>
+                  )}
+                />
+
               </div>
               <FormError message={error} />
               <FormSuccess message={success} />

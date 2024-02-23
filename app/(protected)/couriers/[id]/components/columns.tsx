@@ -9,25 +9,39 @@ export type InvoiceColumn = {
   name: string;
   url: string;
   userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  sruliPasebisjami: string;
+  sruliPasebisMinusJami: string;
+  wonisPasebisJami: string;
+  servisisPasebisJami: string;
+
 };
 
+
 export const columns: ColumnDef<InvoiceColumn>[] = [
-  {
-    accessorKey: "id",
-    header: "id",
-  },
+
   {
     accessorKey: "name",
-    header: "name",
+    header: "ჩემი ინვოისები ",
   },
+
+
   {
-    accessorKey: "url",
-    header: "url",
+    accessorKey: "createdAt",
+    header: "შექმნის თარიღი",
+    cell: ({ row }) => (
+      <div className="w-[140px]">
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
+      </div>
+    ),
+
   },
-  {
-    accessorKey: "userId",
-    header: "userId",
-  },
+
 
   {
     id: "actions",

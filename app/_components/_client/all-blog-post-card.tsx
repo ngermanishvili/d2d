@@ -11,7 +11,8 @@ import {
 import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { StaticImageData } from 'next/image';
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+
 
 
 
@@ -25,12 +26,20 @@ interface BlogPostCardProps {
 
 
 
+
 export function AllBlogPostCard({ img, title, desc, blogpostId }: BlogPostCardProps) {
+
     const params = useParams();
+    const router = useRouter();
+
+    const onClickPageChange = () => {
+        router.push(`/blogposts/${blogpostId}`);
+    };
+
     return (
         <Card placeholder="" color="transparent" shadow={false}>
             <CardHeader placeholder="" floated={false} className="mx-0 mt-0 mb-6 h-52">
-                <Image width={768} height={768} src={img} alt={title} className="h-full w-full object-cover" />
+                <Image width={768} height={768} src={img} alt={title} className="h-full w-full object-cover cursor-pointer" onClick={onClickPageChange} />
             </CardHeader>
             <CardBody placeholder="" className="p-0">
                 <a
@@ -46,7 +55,7 @@ export function AllBlogPostCard({ img, title, desc, blogpostId }: BlogPostCardPr
                 </Typography>
                 <Button placeholder="" variant="text" color="gray" className="flex items-center gap-2">
                     <Link href={`/blogposts/${blogpostId}`}>
-                        read more
+                        მეტის ნახვა
                     </Link>
                     <ArrowRightIcon
                         strokeWidth={3}

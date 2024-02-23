@@ -8,8 +8,9 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
     where: { id: params.id },
   });
   const invoices = await db.urlsOfXlsx.findMany({
-    where:{
-      userId:user?.id
+    where: {
+      userId: user?.id
+
     }
   })
 
@@ -35,10 +36,11 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
               input6: user.input6 || "",
               input7: user.input7 || "",
               input8: user.input8 || "",
+
             }}
           />
         )}
-       <InvoiceClient data={invoices} />
+        <InvoiceClient data={invoices} />
       </div>
     </div>
   );

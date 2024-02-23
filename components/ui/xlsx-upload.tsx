@@ -28,6 +28,11 @@ const formSchema = z.object({
   name: z.string(),
   url: z.string(),
   userId: z.string(),
+  sruliPasebisjami: z.string(),
+  sruliPasebisMinusJami: z.string(),
+  wonisPasebisJami: z.string(),
+  servisisPasebisJami: z.string(),
+
 });
 const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
   const [isMounted, setIsMounted] = useState(false);
@@ -39,6 +44,12 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
       url: "",
       name: "",
       userId: user,
+      sruliPasebisjami: "",
+      sruliPasebisMinusJami: "",
+      wonisPasebisJami: "",
+      servisisPasebisJami: "",
+
+
     },
   });
   useEffect(() => {
@@ -93,6 +104,84 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="sruliPasebisMinusJami"
+              render={({ field }) => (
+                <FormItem className="relative mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    სრული ფასებს მინუს ჯამი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="sruliPasebisjami"
+              render={({ field }) => (
+                <FormItem className="relative mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    სრული ფასების ჯამი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="wonisPasebisJami"
+              render={({ field }) => (
+                <FormItem className="relative mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    წონის ფასების ჯამი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="servisisPasebisJami"
+              render={({ field }) => (
+                <FormItem className="relative mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    სერვისის ფასების ჯამი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
           </div>
           <CldUploadWidget onUpload={onUpload} uploadPreset="setazgik">
             {({ open }) => {

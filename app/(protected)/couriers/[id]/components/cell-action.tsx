@@ -32,7 +32,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     console.log(id);
   };
 
- 
+
   return (
     <>
       <InvoiceModal
@@ -50,8 +50,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       />
       <DropdownMenu>
         <DropdownMenuTrigger onClick={() => setOpen(true)}>
-          <span className=" ml-8 inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 rounded-md px-6 bg-primary text-primary-foreground shadow hover:bg-primary/90 self-center">
-            დეტალები
+          <span className=" ml-8 w-full inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-10 rounded-md px-6 bg-primary text-primary-foreground shadow hover:bg-primary/90 self-center">
+            ინვოისის ნახვა
           </span>
         </DropdownMenuTrigger>
       </DropdownMenu>

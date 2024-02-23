@@ -16,6 +16,11 @@ import {
 } from "@/components/ui/pagination";
 
 export function AllBlogPosts() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     // Scroll to the top when the component mounts
     window.scroll(0, 0);
@@ -26,7 +31,7 @@ export function AllBlogPosts() {
 
   // Assuming you have these values from your API
   const totalPosts = blogPostsData?.length || 0;
-  const postsPerPage = 3; // Adjust this value as needed
+  const postsPerPage = 8; // Adjust this value as needed
   const [currentPage, setCurrentPage] = useState(1);
 
   // Calculate the indexes of the current page
@@ -41,10 +46,10 @@ export function AllBlogPosts() {
   };
 
   return (
-    <section className="py-40 px-8">
+    <section className="px-8">
       <div className="container mx-auto mb-12">
         <Typography placeholder="" variant="h3" color="blue-gray">
-          Check my latest blog postss
+          ახალ დამატებული სტატიები
         </Typography>
       </div>
       <div className="container mx-auto grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">

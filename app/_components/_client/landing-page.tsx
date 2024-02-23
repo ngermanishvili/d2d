@@ -1,8 +1,8 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { TbTruckDelivery } from "react-icons/tb";
-import { FaTwitter } from "react-icons/fa";
-import { FaTruckArrowRight } from "react-icons/fa6";
+
 import Image from "next/image";
 
 import TopText from "./hero-top-text";
@@ -13,6 +13,11 @@ import LatestBlogPosts from "./blog-posts";
 import useLandingPageData from "@/hooks/use-landing-info";
 
 export default function Landing() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { imageUrl, loading, label, } = useBillboardData();
   const { title, loading2, description, imageUrl2, panjara1Title, panjara1Description, panjara2Title, panjara2Description, panjara3Title, panjara3Description, InformationText } = useLandingPageData();
 
