@@ -1,4 +1,3 @@
-// PhotoStore.ts
 import create from "zustand";
 
 interface addressStore {
