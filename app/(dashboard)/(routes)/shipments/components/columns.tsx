@@ -17,6 +17,9 @@ export type ShipmentColumn = {
   address: string;
   city: string;
   price: string;
+  priceDif: string|null;
+  weightPrice: string|null;
+  packagePrice: string|null;
   brittle: string;
   packaging: string;
   createdAt: string | Date;
@@ -34,8 +37,6 @@ export type ShipmentColumn = {
   mimgebiFullName: string;
   gamgzavniFullName: string;
 };
-
-
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -155,7 +156,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
 
   {
     accessorKey: "mimgebisNumber",

@@ -3,6 +3,7 @@ import * as XLSX from "xlsx";
 import { Shipment } from "@prisma/client";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import { FaFileExcel } from "react-icons/fa";
+import useInvoiceStore from "@/hooks/invoice-store";
 
 export type ShipmentColumn = {
   id: string;
@@ -30,48 +31,93 @@ export type ShipmentColumn = {
 };
 
 const ShipmentFormXLSX = () => {
+  const { totalDifs, totalPackagePrices, totalWeigtPrices, totaloftotals } =
+    useInvoiceStore();
+  console.log(totalDifs, totalPackagePrices, totalWeigtPrices, totaloftotals);
   const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
-  const renameKeys = (data: any) => {
+  const renameKeys = (data: any, index: number) => {
     return {
       "თრექინგი ID": data.trackingId,
       "სახელი / გვარი": data.gamgzavniFullName,
       "ტელეფონის ნომერი": data.phoneNumber,
-      "მისამართი": data.address,
-      "ქალაქი": data.city,
+      მისამართი: data.address,
+      ქალაქი: data.city,
       "შექმნის თარიღი": data.createdAt,
-      "მსხვრევადი": data.brittle,
-      "შეფუთვა": data.packaging,
-      "ფასი": data.price,
+      მსხვრევადი: data.brittle,
+      შეფუთვა: data.packaging,
+      ფასი: data.price,
       "მონიშნულია კურიერის მიერ": data.markedByCourier,
-      "აღწერა": data.courierComment,
+      აღწერა: data.courierComment,
       label: data.label,
       "ვინ იხდის?": data.whopays,
       "პროდუქტის ფასი": data.itemPrice,
       "აღწერის თარიღი": data.updatedAt,
       "მიმღები კურიერი": data.assignedCourier,
       "მიმდინარე სტატუსი": data.status,
-      'სავარაუდო აღების დრო': data.agebisDro,
+      "სავარაუდო აღების დრო": data.agebisDro,
       "სავარაუდო ჩაბარების დრო": data.chabarebisDro,
       "მიმღების სახელი / გვარი": data.mimgebiFullName,
-
       "მიმღების  ნომერი": data.mimgebisNumber,
       "მიმღების  ქალაქი": data.mimgebiQalaqi,
       "მიმღების მისამართი": data.mimgebisAddress,
+      "სრული ფასების ჯამი": index === 0 ? totaloftotals : "",
+      "სრულ ფასს მინუს ნივთის ფასების ჯამი": index === 0 ? totalDifs : "",
+      "წონის ფასების ჯამი": index === 0 ? totalWeigtPrices : "",
+      "სერვისის ფასების ჯამი": index === 0 ? totalPackagePrices : "",
     };
   };
 
   const downloadXLSX = () => {
     if (filteredDataxlsx) {
-      const transformedShipmentData = filteredDataxlsx.map((shipment) =>
-        renameKeys(shipment)
+      const transformedShipmentData = filteredDataxlsx.map((shipment, i) =>
+        renameKeys(shipment, i)
       );
-
       const worksheet = XLSX.utils.json_to_sheet(transformedShipmentData);
+
+      // Adjust column widths
+      const columnWidths = [
+        { wch: 30 }, // Example width for the first column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        { wch: 30 }, // Example width for the second column
+        // Add more widths for other columns as needed
+      ];
+
+      // Set the column widths
+      worksheet["!cols"] = columnWidths;
+
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "ShipmentData");
 
       // Use XLSX.write instead of XLSX.writeFile
-      const blob = XLSX.writeFile(workbook, "შეკვეთების-ისტორია.xlsx");
+      const blob = XLSX.writeFile(workbook, "ინვოისი.xlsx");
     }
   };
   return (

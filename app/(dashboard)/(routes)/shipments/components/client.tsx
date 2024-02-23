@@ -16,6 +16,7 @@ import { useSearchKeyStore } from "@/hooks/search-key-store";
 import { set } from "nprogress";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import ShipmentFormXLSX from "../[shipmentId]/components/shipment-xlsx";
+import useInvoiceStore from "@/hooks/invoice-store";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -24,7 +25,13 @@ interface ShipmentClientProps {
 export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
-
+  const {
+    totalDifs,
+    setTotalDifs,
+    setTotalPackagePrices,
+    setTotalWeightPrices,
+    setTotalOfTotals,
+  } = useInvoiceStore();
   const [initialData, setInitialData] = useState<ShipmentColumn[]>(data);
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
   useState<ShipmentColumn[]>(data);
@@ -47,6 +54,27 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
       return shipmentsTofilter.status === "ჩაბარებული";
     })
     .map((shipmentToMap) => shipmentToMap.price);
+  const amountInTotalOfDifs = filteredData
+    .filter((shipmentsTofilter) => {
+      return shipmentsTofilter.status === "ჩაბარებული";
+    })
+    .map((shipmentToMap) =>
+      shipmentToMap.priceDif ? shipmentToMap.priceDif : "0"
+    );
+  const amountInTotalOfWeightPrices = filteredData
+    .filter((shipmentsTofilter) => {
+      return shipmentsTofilter.status === "ჩაბარებული";
+    })
+    .map((shipmentToMap) => {
+      return shipmentToMap.weightPrice ? shipmentToMap.weightPrice : "0";
+    });
+  const amountInTotalOfPackagePrices = filteredData
+    .filter((shipmentsTofilter) => {
+      return shipmentsTofilter.status === "ჩაბარებული";
+    })
+    .map((shipmentToMap) => {
+      return shipmentToMap.packagePrice ? shipmentToMap.packagePrice : "0";
+    });
   const sumOfNumbersInArray = (numberStrings: string[]): number => {
     let total = 0;
 
@@ -94,23 +122,9 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     .map((shipmentToMap) => shipmentToMap.price);
   const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
-  console.log(
-    "🚀 ~ ShipmentPage ~ sumofTotal:",
-    sumOfTotals,
-    "sum of this day",
-    sumOfToday
-  );
-  useEffect(() => {
-    // Calculate the sum of totals whenever filteredData or dateRange changes
-    const sumOfTotals = sumOfNumbersInArray(
-      filteredData
-        .filter((shipmentsTofilter) => {
-          return shipmentsTofilter.status === "ჩაბარებული";
-        })
-        .map((shipmentToMap) => shipmentToMap.price)
-    );
-  }, [filteredData]);
-
+  const sumOfDifs = sumOfNumbersInArray(amountInTotalOfDifs);
+  const sumOfWeightPrices = sumOfNumbersInArray(amountInTotalOfWeightPrices);
+  const sumOfPackagePrices = sumOfNumbersInArray(amountInTotalOfPackagePrices);
   const handleSearchKeyChange = () => {
     // Reset the filteredData whenever the searchKey changes
     setFilteredData(initialData);
@@ -119,7 +133,13 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   useEffect(() => {
     // Listen for changes in the searchKey and reset filteredData
     handleSearchKeyChange();
-  }, [searchKeyStore,]); // Add any other dependencies as needed
+  }, [searchKeyStore]); // Add any other dependencies as needed
+  useEffect(() => {
+    setTotalDifs(sumOfDifs.toString());
+    setTotalPackagePrices(sumOfPackagePrices.toString());
+    setTotalWeightPrices(sumOfWeightPrices.toString());
+    setTotalOfTotals(sumOfTotals.toString());
+  }, [filteredData]);
 
   return (
     <>
@@ -132,39 +152,55 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
           <Plus className="mr-2 h-4 w-4 " />
           შეკვეთის დამატება
         </Button> */}
-        <div >
+        <div>
           <ShipmentFormXLSX />
         </div>
-      </div >
+      </div>
 
       <Separator />
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
       <Heading
-        title={`დროის ამ მონაკვეთში ჩაბარებული შეკვეთებით აღებული თანხა შეადგენს ${sumOfTotals} ლარს`}
+        title={`${sumOfTotals},${sumOfDifs},${sumOfPackagePrices},${sumOfWeightPrices} -დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
         description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
       />
 
-      {
-        filteredData.length > 0 ? (
-          <>
-            <DataTable
-              searchKey={searchKeyStore}
-              columns={columns}
-              data={filteredData}
-            />
-
-            <Heading title="APIss" description="api calls for shipmensdts" />
-            <Separator />
-            <ApiList entityName="shipments" entityIdName="shipmentId" />
-          </>
-        ) : (
+      {filteredData.length > 0 ? (
+        <>
           <DataTable
             searchKey={searchKeyStore}
             columns={columns}
             data={filteredData}
           />
-        )
-      }
+
+          <Heading title="APIss" description="api calls for shipmensdts" />
+          <Separator />
+          <ApiList entityName="shipments" entityIdName="shipmentId" />
+        </>
+      ) : (
+        <DataTable
+          searchKey={searchKeyStore}
+          columns={columns}
+          data={filteredData}
+        />
+      )}
     </>
   );
 };
+
+// useEffect(() => {
+//   const sumOfDifs = sumOfNumbersInArray(
+//     filteredData
+//       .filter((shipmentsTofilter) => {
+//         return shipmentsTofilter.status === "ჩაბარებული";
+//       })
+//       .map((shipmentToMap) => shipmentToMap.price)
+//   );
+//   // Calculate the sum of totals whenever filteredData or dateRange changes
+//   const sumOfTotals = sumOfNumbersInArray(
+//     filteredData
+//       .filter((shipmentsTofilter) => {
+//         return shipmentsTofilter.status === "ჩაბარებული";
+//       })
+//       .map((shipmentToMap) => shipmentToMap.price)
+//   );
+// }, [filteredData]);

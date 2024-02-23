@@ -18,8 +18,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -32,6 +32,9 @@ const ShipmentPage = async () => {
       brittle: item.brittle ? "კი" : "არა",
       packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
       price: item.price,
+      priceDif: item.priceDif,
+      weightPrice: item.weightPrice,
+      packagePrice: item.packagePrice,
       phoneNumber: item.phoneNumber,
       address: item.address,
       mimgebisNumber: item.mimgebisNumber,
@@ -44,10 +47,9 @@ const ShipmentPage = async () => {
       courierComment: item.courierComment,
       agebisDro: item?.agebisDro,
       chabarebisDro: item?.chabarebisDro,
-      gamgzavnisqalaqi: item?.gamgzavnisqalaqi
+      gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
     })
   );
-
 
   return (
     <div className="flex-col">
@@ -59,8 +61,7 @@ const ShipmentPage = async () => {
           <ShipmentClient data={formattedShipments} />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
-          <div className="flex items-center justify-center h-[50vh]">
-          </div>
+          <div className="flex items-center justify-center h-[50vh]"></div>
         )}
       </div>
     </div>
