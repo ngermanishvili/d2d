@@ -53,11 +53,14 @@ export async function POST(req: Request, { params }: { params: {} }) {
       whopays,
       agebisDro,
       chabarebisDro,
+      priceDif,
+      weightPrice,
+      packagePrice,
       itemPrice, // Add itemPrice to the destructuring
       gamgzavnisqalaqi,
     } = body;
     const userId = await currentUserId();
-
+    console.log(body);
     if (!userId) {
       return new NextResponse("User ID is required", { status: 400 });
     }
@@ -133,6 +136,9 @@ export async function POST(req: Request, { params }: { params: {} }) {
           chabarebisDro,
           whopays, // Add whopays to the data
           itemPrice, // Add itemPrice to the data
+          priceDif,
+          weightPrice,
+          packagePrice,
           gamgzavnisqalaqi,
           mimgebiFullName,
           gamgzavniFullName,

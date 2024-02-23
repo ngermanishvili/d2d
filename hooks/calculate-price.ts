@@ -9,6 +9,8 @@ interface CalculatorStore {
   selectedCity: "თბილისი" | "რუსთავი";
   range: string;
   setRange: (range: string) => void;
+  weightPrice: string;
+  setWeightPrice: (weightPrice: string) => void;
   setCity: (city: "თბილისი" | "რუსთავი") => void;
   selectedParty: "Sender" | "Receiver" | "";
   setSelectedParty: (party: "Sender" | "Receiver" | "") => void;
@@ -21,6 +23,8 @@ interface CalculatorStore {
 }
 
 const useCalculatorStore = create<CalculatorStore>((set) => ({
+  weightPrice: "0",
+  setWeightPrice: (weightPrice) => set({ weightPrice }),
   calculated: false,
   setCalculated: (isit) => set({ calculated: isit }),
   shipmentCost: 0,

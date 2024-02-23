@@ -65,6 +65,9 @@ const formSchema = z.object({
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
+  priceDif: z.string().nullable().optional(),
+  weightPrice: z.string().nullable().optional(),
+  packagePrice: z.string().nullable().optional(),
   chabarebisDro: z.string().nullable().optional(),
   gamgzavnisqalaqi: z.string().min(1),
 });
@@ -109,6 +112,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     totalPrice,
     calculated,
     setCalculated,
+    weightPrice,
   } = useCalculatorStore();
 
   const user = useCurrentUser();
@@ -216,6 +220,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
+      data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
+      data.weightPrice = weightPrice;
+      data.packagePrice = packagingUsed ? "5" : "0";
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;

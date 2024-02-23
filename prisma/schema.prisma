@@ -137,6 +137,9 @@ model Shipment {
   label                 String
   whopays               String
   itemPrice             String?
+  priceDif              String?
+  packagePrice          String?
+  weightPrice           String?
   agebisDro             String?
   chabarebisDro         String?
   assignedCourier       String? 

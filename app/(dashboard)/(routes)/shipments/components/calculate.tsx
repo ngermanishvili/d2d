@@ -75,12 +75,37 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setTotalPrice,
     calculated,
     setCalculated,
+    weightPrice,
+    setWeightPrice,
   } = useCalculatorStore();
-
+  let wPrice;
+  useEffect(() => {
+    // Check if initialData is true
+    if (hasInitialData) {
+      // Find the WeightRange object with the matching label
+      const selectedRange =
+        weightRanges.find((rang) => rang.label === range) || null;
+      setSelectedRange(selectedRange);
+      setCity(selectedCity);
+      wPrice =
+        selectedCity === "თბილისი"
+          ? selectedRange?.tbilisiPrice.toString()
+          : selectedRange?.rustaviPrice.toString();
+      if (!wPrice) return;
+      setWeightPrice(wPrice);
+      setPackagingUsed(packagingUsed);
+    }
+  }, []);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
     setSelectedRange(newRange);
+    wPrice =
+      selectedCity === "თბილისი"
+        ? selectedRange?.tbilisiPrice.toString()
+        : selectedRange?.rustaviPrice.toString();
+    if (!wPrice) return;
+    setWeightPrice(wPrice);
     calculateTotalPrice(newRange, packagingUsed);
     setRange(range.label);
   };
@@ -126,7 +151,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const selectedRange =
       weightRanges.find((range) => range.label === selectedLabel) || null;
     setSelectedRange(selectedRange);
-
+    wPrice =
+      selectedCity === "თბილისი"
+        ? selectedRange?.tbilisiPrice.toString()
+        : selectedRange?.rustaviPrice.toString();
+    if (!wPrice) return;
+    setWeightPrice(wPrice);
     calculateTotalPrice(selectedRange, packagingUsed);
     setRange(selectedLabel);
   };
@@ -148,15 +178,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   };
 
   useEffect(() => {
-    // Check if initialData is true
-    if (hasInitialData) {
-      // Find the WeightRange object with the matching label
-
-      setCity(selectedCity);
-      setPackagingUsed(packagingUsed);
-    }
-  }, []);
-  useEffect(() => {
     if (calculated) {
       const initialSelectedRange = weightRanges.find((r) => r.label === range);
       if (!initialSelectedRange) return;
@@ -166,6 +187,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         initialSelectedRange
       );
       setSelectedRange(initialSelectedRange);
+      wPrice =
+        selectedCity === "თბილისი"
+          ? selectedRange?.tbilisiPrice.toString()
+          : selectedRange?.rustaviPrice.toString();
+      if (!wPrice) return;
+      setWeightPrice(wPrice);
       handleWeightRangeChange(range);
     }
   }, [calculated, setCalculated]);
