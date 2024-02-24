@@ -5,7 +5,13 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { name, url, userId, createdAt, updatedAt, sruliPasebisjami,
+    const {
+      name,
+      url,
+      userId,
+      createdAt,
+      updatedAt,
+      sruliPasebisjami,
       sruliPasebisMinusJami,
       wonisPasebisJami,
       servisisPasebisJami,
@@ -14,7 +20,13 @@ export async function POST(req: Request) {
 
     const urlsOfXlsx = await db.urlsOfXlsx.create({
       data: {
-        name, url, userId, createdAt, updatedAt, sruliPasebisjami,
+
+        name,
+        url,
+        userId,
+        createdAt,
+        updatedAt,
+        sruliPasebisjami,
         sruliPasebisMinusJami,
         wonisPasebisJami,
         servisisPasebisJami,
@@ -84,3 +96,5 @@ export async function PATCH(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
+
+

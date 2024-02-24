@@ -26,6 +26,11 @@ export const columns: ColumnDef<InvoiceColumn>[] = [
     header: "ჩემი ინვოისები ",
   },
 
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+
 
   {
     accessorKey: "createdAt",

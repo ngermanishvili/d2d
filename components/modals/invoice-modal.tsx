@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { InvoiceColumn } from "@/app/(protected)/couriers/[id]/components/columns";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { RocketIcon } from "@radix-ui/react-icons"
+import { FaPrint } from "react-icons/fa";
+
 
 import {
   Alert,
@@ -80,10 +82,11 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
       onClose={onClose}
 
     >
-      <div className="overflow-y-auto max-h-[70vh]"> {/* Add max height and overflow-y-auto for scrolling */}
+      <div className="overflow-y-auto max-h-[70vh] w-full">
+
         <Alert>
           <RocketIcon className="h-4 w-4" />
-          <AlertTitle className="mt-1">
+          <AlertTitle className="mt-1 w-full">
             ინვოისის გენერირების თარიღი - &nbsp;
             {new Date(data?.createdAt).toLocaleDateString("en-US", {
               year: "2-digit",
@@ -92,7 +95,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
             })}
           </AlertTitle>
         </Alert>
-        <Button onClick={handlePrint}>amobechde </Button>
+
         <div className="w-full p-4">
           <div className="flex gap-4">
             <p className="text-md text-muted-foreground">ინვოისის ნომერი - </p>
@@ -157,6 +160,9 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
           <Link className="flex w-full p-1 bg-red-500 text-white  items-center justify-center rounded-sm" href={data.url}>
             ინვოისის გადმოწერა
           </Link>
+          <Button className=" w-full" onClick={handlePrint}>
+            <FaPrint className="mr-2" />
+          </Button>
         </div>
         <div className="flex justify-center items-center w-full">
           <Button onClick={handleSave}>შენახვა</Button>

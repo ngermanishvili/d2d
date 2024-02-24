@@ -25,13 +25,28 @@ interface XlsxUploadProps {
 }
 type UploadXlsxValues = z.infer<typeof formSchema>;
 const formSchema = z.object({
-  name: z.string(),
+
+  name: z.string().min(1, {
+    message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
+  }),
+
   url: z.string(),
   userId: z.string(),
-  sruliPasebisjami: z.string(),
-  sruliPasebisMinusJami: z.string(),
-  wonisPasebisJami: z.string(),
-  servisisPasebisJami: z.string(),
+  sruliPasebisjami: z.string().min(1, {
+    message: "სრული ფასების ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
+  }),
+  sruliPasebisMinusJami: z.string().min(1, {
+    message: "სრული ფასების მინუს ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
+
+  }),
+  wonisPasebisJami: z.string().min(1, {
+    message: "წონის ფასების ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
+
+  }),
+  servisisPasebisJami: z.string().min(1, {
+    message: "სერვისის ფასების ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
+
+  }),
 
 });
 const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
@@ -76,14 +91,15 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
     }
   };
   return (
-    <div>
-      <div className="w-full gap-4"></div>
+    <div className="bg-gray-200 p-8 rounded-sm">
+      <div className="w-full gap-4">
+        <h2 className="flex justify-center items-center">ინვოისის ატვირთვა</h2>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full flex flex-col"
         >
-          {" "}
           <div className="w-full md:w-1/2 self-center">
             <FormField
               control={form.control}
@@ -201,7 +217,7 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
               );
             }}
           </CldUploadWidget>
-          <Button className="ml-auto self-center" type="submit">
+          <Button className="flex justify-center w-full bg-red-400 items-center self-center" type="submit">
             ატვირთვა
           </Button>
         </form>

@@ -59,7 +59,7 @@ const formSchema = z.object({
   mimgebisAddress: z.string().min(1),
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
-  courierComment: z.string().min(1),
+  courierComment: z.string().min(1).optional(),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
@@ -115,7 +115,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       phoneNumber: "",
       price: "0",
       itemPrice: null,
-
       mimgebisNumber: "",
       mimgebisAddress: "",
       mimgebiQalaqi: "თბილისი",
@@ -247,7 +246,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "Tbilisi") || "Rustavi");
+      setCity((initialData.city as "თბილისი") || "რუსთავი");
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver");
@@ -717,6 +716,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 </div>
 
                 <CreateModal
+                  initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
                   chabarebis={chabareba ? chabareba : undefined}
                   loading={loading}
