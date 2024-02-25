@@ -113,6 +113,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     calculated,
     setCalculated,
     weightPrice,
+    shipmentCost,
+    setShipmentCost,
+    setTotalPrice,
   } = useCalculatorStore();
 
   const user = useCurrentUser();
@@ -269,10 +272,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       setCity((initialData.city as "თბილისი") || "რუსთავი");
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
+
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
       }
       setRange(initialData?.label);
+      if (!initialData.weightPrice) return;
+      setShipmentCost(parseFloat(initialData?.weightPrice));
+      setTotalPrice(parseFloat(initialData.price));
     }
     setCalculated(true);
   }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes

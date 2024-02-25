@@ -194,6 +194,14 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       if (!wPrice) return;
       setWeightPrice(wPrice);
       handleWeightRangeChange(range);
+      setSelectedParty(selectedParty);
+      calculateTotalPrice(
+        initialSelectedRange,
+        packagingUsed,
+        selectedCity,
+        selectedParty,
+        parseFloat(itemPrice)
+      );
     }
   }, [calculated, setCalculated]);
 
