@@ -28,6 +28,7 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json();
+    console.log(body);
 
     const { city, village, price, weightRange, villagePrice } = body;
 
@@ -43,7 +44,6 @@ export async function PATCH(
         villagePrice,
       },
     });
-
     return NextResponse.json(shippingPrice);
   } catch (error) {
     console.log("[BILLBOARD_PATCH]", error);

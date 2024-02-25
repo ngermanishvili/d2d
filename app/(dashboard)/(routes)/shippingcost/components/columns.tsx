@@ -7,8 +7,8 @@ export type ShippingPriceColumn = {
   city: String;
   village: String | null;
   weightRange: String;
-  price: Number;
-  villagePrice: Number | null;
+  price: String;
+  villagePrice: String | null;
 };
 
 export const columns: ColumnDef<ShippingPriceColumn>[] = [

@@ -51,16 +51,22 @@ const ShipmentPage = async () => {
     })
   );
 
-  
-
+  const shipmentCosts = await db.shippingPrice.findMany({});
+  const formattedCosts = shipmentCosts.map((e) => e);
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
-          <ShipmentClient data={formattedShipments} />
+          <ShipmentClient
+            formattedCosts={formattedCosts}
+            data={formattedShipments}
+          />
         </RoleGate>
         <RoleGate allowedRole="USER">
-          <ShipmentClient data={formattedShipments} />
+          <ShipmentClient
+            formattedCosts={formattedCosts}
+            data={formattedShipments}
+          />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
           <div className="flex items-center justify-center h-[50vh]"></div>

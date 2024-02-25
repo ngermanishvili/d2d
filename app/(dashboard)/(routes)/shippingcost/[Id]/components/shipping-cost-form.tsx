@@ -36,9 +36,9 @@ const formSchema = z.object({
   id: z.string().min(1),
   city: z.string().min(1),
   weightRange: z.string().min(1),
-  village: z.string().min(0).nullable(),
+  village: z.string().min(0),
   price: z.string().min(0),
-  villagePrice: z.string().min(0).nullable(),
+  villagePrice: z.string().min(0),
 });
 
 type ShippingCostFormValues = z.infer<typeof formSchema>;
@@ -65,7 +65,7 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [first, setfirst] = useState(0);
+
   const [weight, setWeight] = useState("0-5 კგ");
   const title = initialData ? "ჩეცვალე ბლოგ პოსტი" : "შექმენი ბლოგ პოსტი";
   const description = initialData
@@ -95,8 +95,6 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
       if (initialData) {
         await axios.patch(`/api/shippingcost/${params?.id}`, data);
       } else {
-        first === 0 ? (data.villagePrice = null) : data.villagePrice;
-
         await axios.post(`/api/shippingcost`, data);
       }
       router.refresh();
@@ -123,7 +121,9 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
       setOpen(false);
     }
   };
-  console.log(initialData);
+  if (initialData?.villagePrice === null) {
+    initialData.villagePrice = "";
+  }
 
   return (
     <>
@@ -192,21 +192,19 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
               control={form.control}
               name="price"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-bold">ფასი</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      className="border-green-800"
-                      disabled={loading}
-                      placeholder="ფასი"
-                      value={initialData ? initialData.price : first}
-                      onChange={(e) => {
-                        setfirst(parseFloat(e.target.value));
-
-                        console.log(first);
-                      }}
-                    />
+                <FormItem className="relative w-full mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    ფასი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <div className="relative">
+                      <Input
+                        disabled={loading}
+                        placeholder="ფასი"
+                        {...field}
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -224,32 +222,30 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
                       className="border-green-800"
                       disabled={loading}
                       placeholder="სოფელი"
-                      value={field.value ?? ""} // Handle null value
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="villagePrice"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-bold">სოფელის ფასი</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      className="border-green-800"
-                      disabled={loading}
-                      placeholder="სოფელის ფასი"
-                      value={field.value ?? ""} // Handle null value
-                      onChange={field.onChange}
-                      onBlur={field.onBlur}
-                    />
+                <FormItem className="relative w-full mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    სოფლის ფასი
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <div className="relative">
+                      <Input
+                        disabled={loading}
+                        placeholder="სოფლის ფასი"
+                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

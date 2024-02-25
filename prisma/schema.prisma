@@ -152,10 +152,10 @@ model Shipment {
 model ShippingPrice {
   id           String   @id @default(uuid())
   city         String
-  village      String?
+  village      String
   weightRange  String
   price        String    // Adjust the data type as needed
-  villagePrice String?   // Optional village-specific price
+  villagePrice String   // Optional village-specific price
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

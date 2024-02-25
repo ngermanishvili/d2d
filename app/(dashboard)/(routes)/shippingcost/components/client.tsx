@@ -12,7 +12,7 @@ import { ApiList } from "@/components/ui/api-list";
 import Container from "@/components/ui/container";
 
 interface ShippingPriceClientProps {
-  data: ShippingPriceColumn[];
+  data: ShippingPriceColumn[] | [];
 }
 
 export const ShippingCostClient: React.FC<ShippingPriceClientProps> = ({

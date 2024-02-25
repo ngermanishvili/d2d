@@ -20,9 +20,85 @@ import useInvoiceStore from "@/hooks/invoice-store";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
+  formattedCosts: {
+    id: string;
+    city: string;
+    village: string;
+    weightRange: string;
+    price: string;
+    villagePrice: string;
+    createdAt: Date;
+    updatedAt: Date;
+  }[];
+}
+interface Cost {
+  id: string;
+  city: string;
+  village: string;
+  weightRange: string;
+  price: string;
+  villagePrice: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
+interface GroupedCosts {
+  [key: string]: {
+    weightRanges: {
+      weightRange: string;
+      price: string;
+      villagePrice: string;
+    }[];
+    villages?: {
+      name: string;
+      weightRanges: {
+        weightRange: string;
+        price: string;
+        villagePrice: string;
+      }[];
+    }[];
+  };
+}
+
+export const ShipmentClient: React.FC<ShipmentClientProps> = ({
+  data,
+  formattedCosts,
+}) => {
+  const groupCostsByCity = (formattedCosts: Cost[]): GroupedCosts => {
+    return formattedCosts.reduce<GroupedCosts>((acc, cost) => {
+      const { city, village, weightRange, price, villagePrice } = cost;
+      const key = city;
+
+      if (!acc[key]) {
+        acc[key] = { weightRanges: [], villages: [] };
+      }
+
+      if (village) {
+        const existingVillage = acc[key].villages?.find(
+          (v) => v.name === village
+        );
+        if (existingVillage) {
+          existingVillage.weightRanges.push({
+            weightRange,
+            price,
+            villagePrice,
+          });
+        } else {
+          acc[key].villages?.push({
+            name: village,
+            weightRanges: [{ weightRange, price, villagePrice }],
+          });
+        }
+      } else {
+        acc[key].weightRanges.push({ weightRange, price, villagePrice });
+      }
+
+      return acc;
+    }, {});
+  };
+  // Usage
+  const groupedCosts: GroupedCosts = groupCostsByCity(formattedCosts);
+  console.log(groupedCosts);
   const router = useRouter();
   const params = useParams();
   const {
