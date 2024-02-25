@@ -101,7 +101,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setPackagingUsed(isChecked); // Update the global state
     calculateTotalPrice(selectedRange, isChecked); // Recalculate total price
   };
-  const handleCityChange = (newCity: "Tbilisi" | "Rustavi") => {
+  const handleCityChange = (newCity: "თბილისი" | "რუსთავი") => {
     setCity(newCity);
     calculateTotalPrice(selectedRange, packagingUsed, newCity);
   };
@@ -192,11 +192,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           id="city-select"
           value={selectedCity}
           onChange={(e) =>
-            handleCityChange(e.target.value as "Tbilisi" | "Rustavi")
+            handleCityChange(e.target.value as "თბილისი" | "რუსთავი")
           }
         >
-          <option value="Tbilisi">Tbilisi</option>
-          <option value="Rustavi">Rustavi</option>
+          <option value="თბილისი">Tbilisi</option>
+          <option value="რუსთავი">Rustavi</option>
         </select>
       </div>
       <div>
