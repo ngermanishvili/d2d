@@ -717,6 +717,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                 </div>
 
                 <CreateModal
+                  initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
                   chabarebis={chabareba ? chabareba : undefined}
                   loading={loading}
