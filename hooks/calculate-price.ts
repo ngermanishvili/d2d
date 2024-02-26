@@ -1,6 +1,10 @@
 // Inside useCalculatorStore.ts
 
 import create from "zustand";
+interface WeightRanges {
+  label: string;
+  prices: Record<string, number>;
+}
 interface CalculatorStore {
   shipmentCost: number;
   setShipmentCost: (cost: number) => void;
@@ -20,9 +24,17 @@ interface CalculatorStore {
   setTotalPrice: (totalPrice: number) => void; // Add setTotalPrice function
   calculated: boolean;
   setCalculated: (isit: boolean) => void;
+  ranges: WeightRanges[];
+  citiesNames: string[];
+  setCitiesNames: (cities: string[]) => void;
+  setRanges: (ranges: WeightRanges[]) => void;
 }
 
 const useCalculatorStore = create<CalculatorStore>((set) => ({
+  citiesNames: [],
+  setCitiesNames: (cities) => set({ citiesNames: cities }),
+  ranges: [],
+  setRanges: (ranges) => set({ ranges: ranges }),
   weightPrice: "0",
   setWeightPrice: (weightPrice) => set({ weightPrice }),
   calculated: false,

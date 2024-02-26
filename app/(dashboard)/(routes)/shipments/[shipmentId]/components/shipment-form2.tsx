@@ -108,6 +108,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
+  const [showCalc, setShowCalc] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -141,6 +142,10 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     shipmentCost,
     setShipmentCost,
     setTotalPrice,
+    ranges,
+    setRanges,
+    setCitiesNames,
+    citiesNames,
   } = useCalculatorStore();
 
   const user = useCurrentUser();
@@ -290,8 +295,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       setOpen(false);
     }
   };
-  let weightRanges: WeightRanges[] = [];
-  let cityNames = Object.keys(shipmentCosts);
+
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
@@ -309,7 +313,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     }
     setCalculated(true);
 
-    cityNames = Object.keys(shipmentCosts);
+    const weightRanges: WeightRanges[] = [];
+    const cityNames = Object.keys(shipmentCosts);
 
     // Initialize prices object with default price 0 for all cities
     const prices: Record<string, number> = {};
@@ -340,7 +345,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         }
       });
     }
-    console.log(weightRanges);
+    setRanges(weightRanges);
+    setCitiesNames(cityNames);
+    setShowCalc(true);
   }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes
 
   return (
@@ -614,10 +621,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                     initialData?.mimgebiQalaqi || selectedCity
                                   }
                                   onValueChange={(value) => {
-                                    setCity(value as "თბილისი" | "რუსთავი");
-                                    field.onChange(
-                                      value as "თბილისი" | "რუსთავი"
-                                    );
+                                    setCity(value);
+                                    field.onChange(value);
                                   }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
@@ -625,12 +630,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
-                                    <SelectItem value="თბილისი">
-                                      თბილისი
-                                    </SelectItem>
-                                    <SelectItem value="რუსთავი">
-                                      რუსთავი
-                                    </SelectItem>
+                                    {citiesNames.map((item) => {
+                                      return (
+                                        <SelectItem value={item}>
+                                          {item}
+                                        </SelectItem>
+                                      );
+                                    })}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
@@ -817,11 +823,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                     </div>
                   </div>
                 </div>
-                <ShippingCostGraph
-                  hasInitialData={initialData ? true : false}
-                  weightRanges={weightRanges}
-                  cityNames={cityNames}
-                />
+                {showCalc && (
+                  <ShippingCostGraph
+                    hasInitialData={initialData ? true : false}
+                  />
+                )}
+
                 <CreateModal
                   initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
