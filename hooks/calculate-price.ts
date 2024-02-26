@@ -6,12 +6,12 @@ interface CalculatorStore {
   setShipmentCost: (cost: number) => void;
   packagingUsed: boolean;
   setPackagingUsed: (packagingUsed: boolean) => void;
-  selectedCity: "თბილისი" | "რუსთავი";
+  selectedCity: string;
   range: string;
   setRange: (range: string) => void;
   weightPrice: string;
   setWeightPrice: (weightPrice: string) => void;
-  setCity: (city: "თბილისი" | "რუსთავი") => void;
+  setCity: (city: string) => void;
   selectedParty: "Sender" | "Receiver" | "";
   setSelectedParty: (party: "Sender" | "Receiver" | "") => void;
   itemPrice: string;
@@ -31,7 +31,7 @@ const useCalculatorStore = create<CalculatorStore>((set) => ({
   setShipmentCost: (cost) => set({ shipmentCost: cost }),
   packagingUsed: false,
   setPackagingUsed: (packagingUsed) => set({ packagingUsed }),
-  selectedCity: "თბილისი",
+  selectedCity: "",
   setCity: (city) => set({ selectedCity: city }),
   range: "",
   setRange: (range) => set({ range }),

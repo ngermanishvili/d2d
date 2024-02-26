@@ -58,13 +58,13 @@ const ShipmentPage = async () => {
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
           <ShipmentClient
-            formattedCosts={formattedCosts}
+            
             data={formattedShipments}
           />
         </RoleGate>
         <RoleGate allowedRole="USER">
           <ShipmentClient
-            formattedCosts={formattedCosts}
+            
             data={formattedShipments}
           />
         </RoleGate>

@@ -25,17 +25,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
-
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/landinginfo/${data.id}`);
+      await axios.delete(`/api/shippingcost/${data.id}`);
       router.refresh();
-      toast.success("მთავარი გვერდის ინფორმაცია წაშლილია.");
+      toast.success("ფასის განმსაზრვრელი წაშლილია");
     } catch (error) {
-      toast.error(
-        "Make sure you removed all categories using this billboard first."
-      );
+      toast.error("დაფიქსირდა შეცდომა");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -61,9 +58,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem
-            onClick={() =>
-              router.push(`/shippingcost/${data.id}`)
-            }
+            onClick={() => router.push(`/shippingcost/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" />
             Update

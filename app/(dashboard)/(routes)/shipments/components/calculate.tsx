@@ -1,4 +1,4 @@
-"use client";
+("use client");
 import useCalculatorStore from "@/hooks/calculate-price"; // Adjust the path as
 import React, { useEffect, useState } from "react";
 import {
@@ -49,12 +49,18 @@ const weightRanges: WeightRange[] = [
   { label: "75-100 კგ", tbilisiPrice: 38, rustaviPrice: 47 },
   { label: "100-150 კგ", tbilisiPrice: 50, rustaviPrice: 62 },
 ];
+interface WeightRanges {
+  label: string;
+  prices: Record<string, number>;
+}
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
+  cityNames: string[];
+  newWeightRanges: WeightRanges[];
 }
 
 const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
-  hasInitialData,
+  hasInitialData,cityNames,newWeightRanges
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
@@ -78,7 +84,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     weightPrice,
     setWeightPrice,
   } = useCalculatorStore();
-  let wPrice;
+  let weightCost;
   useEffect(() => {
     // Check if initialData is true
     if (hasInitialData) {
@@ -87,12 +93,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         weightRanges.find((rang) => rang.label === range) || null;
       setSelectedRange(selectedRange);
       setCity(selectedCity);
-      wPrice =
+      weightCost =
         selectedCity === "თბილისი"
           ? selectedRange?.tbilisiPrice.toString()
           : selectedRange?.rustaviPrice.toString();
-      if (!wPrice) return;
-      setWeightPrice(wPrice);
+      if (!weightCost) return;
+      setWeightPrice(weightCost);
       setPackagingUsed(packagingUsed);
     }
   }, []);
@@ -100,12 +106,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
     setSelectedRange(newRange);
-    wPrice =
+    weightCost =
       selectedCity === "თბილისი"
         ? selectedRange?.tbilisiPrice.toString()
         : selectedRange?.rustaviPrice.toString();
-    if (!wPrice) return;
-    setWeightPrice(wPrice);
+    if (!weightCost) return;
+    setWeightPrice(weightCost);
     calculateTotalPrice(newRange, packagingUsed);
     setRange(range.label);
   };
@@ -151,12 +157,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const selectedRange =
       weightRanges.find((range) => range.label === selectedLabel) || null;
     setSelectedRange(selectedRange);
-    wPrice =
+    weightCost =
       selectedCity === "თბილისი"
         ? selectedRange?.tbilisiPrice.toString()
         : selectedRange?.rustaviPrice.toString();
-    if (!wPrice) return;
-    setWeightPrice(wPrice);
+    if (!weightCost) return;
+    setWeightPrice(weightCost);
     calculateTotalPrice(selectedRange, packagingUsed);
     setRange(selectedLabel);
   };
@@ -187,12 +193,12 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         initialSelectedRange
       );
       setSelectedRange(initialSelectedRange);
-      wPrice =
+      weightCost =
         selectedCity === "თბილისი"
           ? selectedRange?.tbilisiPrice.toString()
           : selectedRange?.rustaviPrice.toString();
-      if (!wPrice) return;
-      setWeightPrice(wPrice);
+      if (!weightCost) return;
+      setWeightPrice(weightCost);
       handleWeightRangeChange(range);
       setSelectedParty(selectedParty);
       calculateTotalPrice(

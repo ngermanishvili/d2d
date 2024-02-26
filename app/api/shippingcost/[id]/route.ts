@@ -50,3 +50,20 @@ export async function PATCH(
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const shipPrice = await db.shippingPrice.deleteMany({
+      where: {
+        id: params.id,
+      },
+    });
+
+    return NextResponse.json(shipPrice);
+  } catch (error) {
+    console.log("[landingPageInfo_DELETE]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
