@@ -20,8 +20,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -34,6 +34,9 @@ const ShipmentPage = async () => {
       brittle: item.brittle ? "კი" : "არა",
       packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
       price: item.price,
+      priceDif: item.priceDif,
+      weightPrice: item.weightPrice,
+      packagePrice: item.packagePrice,
       phoneNumber: item.phoneNumber,
       address: item.address,
       mimgebisNumber: item.mimgebisNumber,
@@ -46,7 +49,7 @@ const ShipmentPage = async () => {
       courierComment: item.courierComment,
       agebisDro: item?.agebisDro,
       chabarebisDro: item?.chabarebisDro,
-      gamgzavnisqalaqi: item?.gamgzavnisqalaqi
+      gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
     })
   );
 
@@ -55,19 +58,25 @@ const ShipmentPage = async () => {
   if (userRole !== "ADMIN" && userRole !== "USER") {
     return <Error404Page />;
   }
-
+  const shipmentCosts = await db.shippingPrice.findMany({});
+  const formattedCosts = shipmentCosts.map((e) => e);
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
-          <ShipmentClient data={formattedShipments} />
+          <ShipmentClient
+            
+            data={formattedShipments}
+          />
         </RoleGate>
         <RoleGate allowedRole="USER">
-          <ShipmentClient data={formattedShipments} />
+          <ShipmentClient
+            
+            data={formattedShipments}
+          />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
-          <div className="flex items-center justify-center h-[50vh]">
-          </div>
+          <div className="flex items-center justify-center h-[50vh]"></div>
         )}
       </div>
     </div>

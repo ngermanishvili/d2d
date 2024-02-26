@@ -31,7 +31,6 @@ export async function PATCH(
     const body = await req.json();
     // Extract variables from the request body
     const {
-
       phoneNumber,
       address,
       city,
@@ -49,8 +48,7 @@ export async function PATCH(
       chabarebisDro,
       gamgzavnisqalaqi,
       mimgebiFullName,
-      gamgzavniFullName
-
+      gamgzavniFullName,
     } = body;
 
     // Validate if shipmentId is provided
@@ -97,7 +95,6 @@ export async function PATCH(
         gamgzavnisqalaqi,
         mimgebiFullName,
         gamgzavniFullName,
-
       },
     });
     if (!status) {
@@ -120,23 +117,43 @@ export async function PATCH(
     return new NextResponse("Internal error", { status: 500 });
   }
 }
-
 export async function DELETE(
   req: Request,
   { params }: { params: { shipmentId: string } }
 ) {
   try {
     if (!params.shipmentId) {
-      return new NextResponse("billboardId ID is required", { status: 400 });
+      return new NextResponse("Shipment ID is required", { status: 400 });
+    }
+    
+    console.log(params.shipmentId);
+
+    // Check if there are any related ShipmentStatusHistory records
+    const relatedStatusHistory = await db.shipmentStatusHistory.findMany({
+      where: {
+        shipmentId: params.shipmentId,
+      },
+    });
+
+    // If there are related ShipmentStatusHistory records, delete them first
+    if (relatedStatusHistory.length > 0) {
+      await db.shipmentStatusHistory.deleteMany({
+        where: {
+          shipmentId: params.shipmentId,
+        },
+      });
     }
 
-    const shipment = await db.shipment.deleteMany({
+    // Now, delete the shipment itself
+    const deletedShipment = await db.shipment.deleteMany({
       where: {
         id: params.shipmentId,
       },
     });
 
-    return NextResponse.json(shipment);
+    console.log(deletedShipment);
+
+    return NextResponse.json(deletedShipment);
   } catch (error) {
     console.log("[SHIPMENT_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });

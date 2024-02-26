@@ -138,6 +138,9 @@ model Shipment {
   label                 String
   whopays               String
   itemPrice             String?
+  priceDif              String?
+  packagePrice          String?
+  weightPrice           String?
   agebisDro             String?
   chabarebisDro         String?
   assignedCourier       String?
@@ -145,6 +148,19 @@ model Shipment {
   ShipmentStatusHistory ShipmentStatusHistory[]
 
   @@index([userId])
+}
+
+model ShippingPrice {
+  id           String   @id @default(uuid())
+  city         String
+  village      String
+  weightRange  String
+  price        String    // Adjust the data type as needed
+  villagePrice String   // Optional village-specific price
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([city])
 }
 
 model ShipmentStatusHistory {

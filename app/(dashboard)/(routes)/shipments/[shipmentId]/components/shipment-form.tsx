@@ -244,7 +244,7 @@ export const ShipmentForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "Tbilisi") || "Rustavi");
+      setCity((initialData.city as "თბილისი") || "რუსთავი");
       setRange(initialData.label);
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver");

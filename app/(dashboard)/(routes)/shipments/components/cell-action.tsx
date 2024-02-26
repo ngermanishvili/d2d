@@ -48,10 +48,10 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       setLoading(true);
       await axios.delete(`/api/shipments/${data.id}`);
       router.refresh();
-      toast.success("Billboard deleted.");
+      toast.success("შეკვეთა წაშლილია");
     } catch (error) {
       toast.error(
-        "Make sure you removed all categories using this billboard first."
+        "დაფიქსირდა შეცდომა შეკვეთის წაშლისას"
       );
     } finally {
       setLoading(false);

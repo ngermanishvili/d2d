@@ -65,6 +65,9 @@ const formSchema = z.object({
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
+  priceDif: z.string().nullable().optional(),
+  weightPrice: z.string().nullable().optional(),
+  packagePrice: z.string().nullable().optional(),
   chabarebisDro: z.string().nullable().optional(),
   gamgzavnisqalaqi: z.string().min(1),
 });
@@ -72,14 +75,40 @@ const formSchema = z.object({
 // This ShipmentFormValues is for the formik form values type definition.
 type ShipmentFormValues = z.infer<typeof formSchema>;
 
+interface GroupedCosts {
+  [key: string]: {
+    weightRanges: {
+      weightRange: string;
+      price: string;
+      villagePrice: string;
+    }[];
+    villages?: {
+      name: string;
+      weightRanges: {
+        weightRange: string;
+        price: string;
+        villagePrice: string;
+      }[];
+    }[];
+  };
+}
 interface ShipmentFormProps {
   initialData: Shipment | null;
+  shipmentCosts: GroupedCosts;
+}
+interface WeightRanges {
+  label: string;
+  prices: Record<string, number>;
 }
 
-export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
+export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
+  initialData,
+  shipmentCosts,
+}) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
+  const [showCalc, setShowCalc] = useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -109,10 +138,17 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
     totalPrice,
     calculated,
     setCalculated,
+    weightPrice,
+    shipmentCost,
+    setShipmentCost,
+    setTotalPrice,
+    ranges,
+    setRanges,
+    setCitiesNames,
+    citiesNames,
   } = useCalculatorStore();
 
   const user = useCurrentUser();
-  console.log(user);
 
   const form = useForm<ShipmentFormValues>({
     resolver: zodResolver(formSchema),
@@ -216,6 +252,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       data.itemPrice = itemPrice.toString();
       setLoading(true);
       console.log(data);
+      data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
+      data.weightPrice = weightPrice;
+      data.packagePrice = packagingUsed ? "5" : "0";
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
@@ -256,18 +295,59 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       setOpen(false);
     }
   };
+
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
       setCity((initialData.city as "თბილისი") || "რუსთავი");
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
+
       if (initialData.itemPrice !== null) {
         setItemPrice(parseFloat(initialData.itemPrice));
       }
       setRange(initialData?.label);
+      if (!initialData.weightPrice) return;
+      setShipmentCost(parseFloat(initialData?.weightPrice));
+      setTotalPrice(parseFloat(initialData.price));
     }
     setCalculated(true);
+
+    const weightRanges: WeightRanges[] = [];
+    const cityNames = Object.keys(shipmentCosts);
+
+    // Initialize prices object with default price 0 for all cities
+    const prices: Record<string, number> = {};
+    cityNames.forEach((city) => {
+      prices[city] = 0;
+    });
+
+    for (const city in shipmentCosts) {
+      shipmentCosts[city].weightRanges.forEach((rangeData) => {
+        const { weightRange, price } = rangeData;
+        const [minWeight, maxWeight] = weightRange
+          .split("-")
+          .map((str) => parseInt(str, 10));
+        const index = weightRanges.findIndex(
+          (range) => range.label === weightRange
+        );
+        if (index === -1) {
+          // Initialize the prices property for each weightRange
+          const newWeightRange: WeightRanges = {
+            label: weightRange,
+            prices: { ...prices },
+          };
+          newWeightRange.prices[city] = parseInt(price);
+          weightRanges.push(newWeightRange);
+        } else {
+          // Update the price for the current city
+          weightRanges[index].prices[city] = parseInt(price);
+        }
+      });
+    }
+    setRanges(weightRanges);
+    setCitiesNames(cityNames);
+    setShowCalc(true);
   }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes
 
   return (
@@ -541,10 +621,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                     initialData?.mimgebiQalaqi || selectedCity
                                   }
                                   onValueChange={(value) => {
-                                    setCity(value as "თბილისი" | "რუსთავი");
-                                    field.onChange(
-                                      value as "თბილისი" | "რუსთავი"
-                                    );
+                                    setCity(value);
+                                    field.onChange(value);
                                   }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
@@ -552,12 +630,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
-                                    <SelectItem value="თბილისი">
-                                      თბილისი
-                                    </SelectItem>
-                                    <SelectItem value="რუსთავი">
-                                      რუსთავი
-                                    </SelectItem>
+                                    {citiesNames.map((item) => {
+                                      return (
+                                        <SelectItem value={item}>
+                                          {item}
+                                        </SelectItem>
+                                      );
+                                    })}
                                   </SelectContent>
                                 </Select>
                               </FormControl>
@@ -744,9 +823,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                     </div>
                   </div>
                 </div>
-                <ShippingCostGraph
-                  hasInitialData={initialData ? true : false}
-                />
+                {showCalc && (
+                  <ShippingCostGraph
+                    hasInitialData={initialData ? true : false}
+                  />
+                )}
+
                 <CreateModal
                   initialData={initialData ? true : false}
                   agebis={agebis ? agebis : undefined}
