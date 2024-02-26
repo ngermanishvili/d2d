@@ -15,19 +15,14 @@ export type InvoiceColumn = {
   sruliPasebisMinusJami: string;
   wonisPasebisJami: string;
   servisisPasebisJami: string;
-  invoiceNumber: string
-
+  invoiceNumber: string | null;
 };
 
-
 export const columns: ColumnDef<InvoiceColumn>[] = [
-
   {
     accessorKey: "name",
     header: "ჩემი ინვოისები ",
   },
-
-
 
   {
     accessorKey: "createdAt",
@@ -41,9 +36,7 @@ export const columns: ColumnDef<InvoiceColumn>[] = [
         })}
       </div>
     ),
-
   },
-
 
   {
     id: "actions",

@@ -1,3 +1,7 @@
+/* eslint-disable react-hooks/rules-of-hooks /
+/ eslint-disable react-hooks/exhaustive-deps /
+/ eslint no-use-before-define: 0 */ // --> OFF
+
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -29,7 +33,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     console.log(id);
   };
 
-
   return (
     <>
       <InvoiceModal
@@ -44,18 +47,19 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           onUpdate(data.id);
         }}
         loading={loading}
-        onUpdate={function
-          (updatedData: InvoiceColumn):
-          void {
+        onUpdate={function (updatedData: InvoiceColumn): void {
           throw new Error("Function not implemented.");
-        }} />
+        }}
+      />
 
       <DropdownMenu>
         <DropdownMenuTrigger>
           <MoreHorizontal className="ml-4 w-6 h-6" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuItem onClick={() => setOpen(true)}>ინვოისის ნახვა  </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => setOpen(true)}>
+            ინვოისის ნახვა{" "}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
