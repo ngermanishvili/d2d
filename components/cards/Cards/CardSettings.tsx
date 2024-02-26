@@ -40,6 +40,7 @@ export default function CardSettings() {
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+  const [isActive, setIsActive] = useState(false);
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -73,18 +74,19 @@ export default function CardSettings() {
   const { setPhotoUrl, photoUrl } = usePhotoStore();
 
   const router = useRouter();
-  const isActive =
-    user?.input1 &&
-    user?.input2 &&
-    user?.input3 &&
-    user?.input4 &&
-    user?.input5 &&
-    user?.input6 &&
-    user?.input7 &&
-    useEffect(() => {
-      setPhotoUrl(user?.image);
-    }, []);
-
+  useEffect(() => {
+    if (
+      user?.input1 &&
+      user?.input2 &&
+      user?.input3 &&
+      user?.input4 &&
+      user?.input5 &&
+      user?.input6 &&
+      user?.input7
+    ) {
+      setIsActive(true);
+    }
+  }, [user, setPhotoUrl]);
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     values.image = photoUrl;
     console.log(values);
