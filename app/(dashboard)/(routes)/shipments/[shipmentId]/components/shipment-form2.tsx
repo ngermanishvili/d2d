@@ -632,7 +632,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                     {/* {ADMIN როლგეითი} */}
                                     {citiesNames.map((item) => {
                                       return (
-                                        <SelectItem value={item}>
+                                        <SelectItem key={item} value={item}>
                                           {item}
                                         </SelectItem>
                                       );
