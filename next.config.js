@@ -7,6 +7,8 @@ const nextConfig = {
             "png.pngtree.com",
             "encrypted-tbn0.gstatic.com",
             "images.unsplash.com",
+            "plus.unsplash.com",
+
         ],
     },
 };

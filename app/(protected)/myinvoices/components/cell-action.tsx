@@ -22,26 +22,12 @@ interface CellActionProps {
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-  const router = useRouter();
-  const params = useParams();
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const [open2, set2Open] = useState(false);
 
   const onUpdate = async (id: string | null) => {
     console.log(id);
   };
-
-  const onDelete = async () => {
-    try {
-      await axios.delete(`/api/invoices/${data.id}`);
-      toast.success("Item deleted successfully");
-    } catch (error) {
-      console.error("Error deleting item:", error);
-      toast.error("Error deleting item");
-    }
-  }
-
 
 
   return (
@@ -59,7 +45,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         }}
         loading={loading}
         onUpdate={function
-          (updatedData: InvoiceColumn): void {
+          (updatedData: InvoiceColumn):
+          void {
           throw new Error("Function not implemented.");
         }} />
 
@@ -69,7 +56,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem onClick={() => setOpen(true)}>ინვოისის ნახვა  </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => onDelete()}>წაშლა</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

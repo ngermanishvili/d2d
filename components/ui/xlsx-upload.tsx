@@ -19,6 +19,8 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 interface XlsxUploadProps {
   user: string;
@@ -50,6 +52,7 @@ const formSchema = z.object({
 
 });
 const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
+  const router = useRouter();
   const [isMounted, setIsMounted] = useState(false);
   const [url, setUrl] = useState("");
 
@@ -84,6 +87,7 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
     data.userId = user;
     try {
       const response = await axios.post(`/api/invoices`, data);
+      router.refresh();
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {

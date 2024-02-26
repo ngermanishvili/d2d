@@ -5,6 +5,8 @@ import { currentRole, currentUserId } from "@/lib/auth";
 import { RoleGate } from "@/components/auth/role-gate";
 import ShipmentFormXLSX from "./[shipmentId]/components/shipment-xlsx";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import Link from "next/link";
+import Error404Page from "@/providers/error-page";
 
 const ShipmentPage = async () => {
   const shipments = await db.shipment.findMany({
@@ -48,6 +50,11 @@ const ShipmentPage = async () => {
     })
   );
 
+
+
+  if (userRole !== "ADMIN" && userRole !== "USER") {
+    return <Error404Page />;
+  }
 
   return (
     <div className="flex-col">

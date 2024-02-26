@@ -24,6 +24,8 @@ interface NavItemProps {
   href: string;
 }
 
+
+
 function NavItem({ children, href }: NavItemProps) {
   return (
     <li>
@@ -49,6 +51,8 @@ export function PanelNavbar() {
       () => window.innerWidth >= 960 && setOpen(false)
     );
   }, []);
+
+
 
   return (
     <div className=" sticky top-4 z-0 mt-[100px]">

@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
+
+
+function generateTrackingNumber(): string {
+  const randomNumber = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+  return `INV-${randomNumber}`;
+}
+
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -18,9 +26,12 @@ export async function POST(req: Request) {
     } = body;
     console.log("🚀 ~ POST ~ body:", body);
 
+    const invoiceNumber = generateTrackingNumber();
+
+
     const urlsOfXlsx = await db.urlsOfXlsx.create({
       data: {
-
+        invoiceNumber,
         name,
         url,
         userId,

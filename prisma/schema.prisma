@@ -14,58 +14,61 @@ enum UserRole {
   COURIER
   ACCOUNTANT
 }
+
 model SavedAddress {
-  id        String   @id @default(uuid())
-  address   String
-  mimgebisadress      String
+  id             String @id @default(uuid())
+  address        String
+  mimgebisadress String
   // Add other relevant fields as needed
-  userId    String   // Reference to User
+  userId         String // Reference to User
+
+  user User @relation(fields: [userId], references: [id])
 
   // Add index to userId field
   @@index([userId])
-  
-  user      User     @relation(fields: [userId], references: [id])
 }
-
 
 model User {
-  id            String     @id @default(cuid())
-  userType      String?
-  name          String?
-  number        String?
-  email         String?    @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  input1      String?
-  input2      String?
-  input3      String?
-  input4      String?
-  input5      String?
-  input6      String?
-  input7      String?
-  input8      String?
-  role          UserRole   @default(USER)
-  accounts      Account[]
-  shipments     Shipment[] // Back-reference to Shipment
+  id             String         @id @default(cuid())
+  userType       String?
+  name           String?
+  number         String?
+  email          String?        @unique
+  emailVerified  DateTime?
+  image          String?
+  password       String?
+  input1         String?
+  input2         String?
+  input3         String?
+  input4         String?
+  input5         String?
+  input6         String?
+  input7         String?
+  input8         String?
+  role           UserRole       @default(USER)
+  accounts       Account[]
+  shipments      Shipment[] // Back-reference to Shipment
   savedAddresses SavedAddress[]
-  urlsOfXlsx      UrlsOfXlsx[]
+  urlsOfXlsx     UrlsOfXlsx[]
 }
-model UrlsOfXlsx {
-  id       String  @id @default(cuid())
-  name     String
-  sruliPasebisjami String
-  sruliPasebisMinusJami String
-  wonisPasebisJami String
-servisisPasebisJami String
-  url      String
-  user     User    @relation(fields: [userId], references: [id])
-  userId   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  @@index([userId]) 
 
+model UrlsOfXlsx {
+  id                    String   @id @default(cuid())
+  invoiceNumber         String?  @unique
+  name                  String
+  sruliPasebisjami      String
+  sruliPasebisMinusJami String
+  wonisPasebisJami      String
+  servisisPasebisJami   String
+  url                   String
+  user                  User     @relation(fields: [userId], references: [id])
+  userId                String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([userId])
 }
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -111,8 +114,6 @@ model Billboard {
   updatedAt DateTime @updatedAt
 }
 
-
-
 model Shipment {
   id                    String                  @id @unique
   gamgzavniFullName     String
@@ -120,32 +121,31 @@ model Shipment {
   trackingId            String                  @unique
   userId                String
   phoneNumber           String
-  gamgzavnisqalaqi      String                @default("თბილისი") 
-  address               String 
-  city                  String 
-  brittle               Boolean                 @default(false) 
-  packaging             Boolean                 @default(false) 
+  gamgzavnisqalaqi      String                  @default("თბილისი")
+  address               String
+  city                  String
+  brittle               Boolean                 @default(false)
+  packaging             Boolean                 @default(false)
   price                 String
-  markedByCourier       Boolean                 @default(false) 
+  markedByCourier       Boolean                 @default(false)
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
   mimgebisNumber        String
-  mimgebiQalaqi         String                   @default("თბილისი") 
+  mimgebiQalaqi         String                  @default("თბილისი")
   mimgebisAddress       String
-  status                String                  @default("მიმდინარე") 
+  status                String                  @default("მიმდინარე")
   courierComment        String
   label                 String
   whopays               String
   itemPrice             String?
   agebisDro             String?
   chabarebisDro         String?
-  assignedCourier       String? 
+  assignedCourier       String?
   User                  User                    @relation(fields: [userId], references: [id])
   ShipmentStatusHistory ShipmentStatusHistory[]
 
   @@index([userId])
 }
-
 
 model ShipmentStatusHistory {
   id         String   @id @default(uuid())
@@ -154,75 +154,71 @@ model ShipmentStatusHistory {
   timestamp  DateTime @default(now())
 
   Shipment Shipment @relation(fields: [shipmentId], references: [id])
-  
-  @@index([shipmentId])
 
+  @@index([shipmentId])
 }
 
-
 model BlogPosts {
-  id          String   @id @default(uuid())
-  title       String
-  content     String   @db.LongText
-  imageUrl    String
-  slug        String   @db.LongText
-  qvesatauri String
-  qvesatauri2 String
-  excerpt     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String   @id @default(uuid())
+  title           String
+  content         String   @db.LongText
+  imageUrl        String
+  slug            String   @db.LongText
+  qvesatauri      String
+  qvesatauri2     String
+  excerpt         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
   metaTitle       String?
   metaDescription String?
   metaKeywords    String?
 }
 
 model ShipmentCounter {
-  id    Int     @id @default(autoincrement())
-  count Int     @default(4000)
+  id    Int @id @default(autoincrement())
+  count Int @default(4000)
 }
-
 
 model LandingPageInfo {
-  id        String   @id @default(uuid())
-  title     String
-  description     String @db.LongText
-  imageUrl  String
-  panjara1Title String
-  panjara1Description String @db.LongText
-  panjara2Title String
-  panjara2Description String @db.LongText
-  panjara3Title String
-  panjara3Description String @db.LongText
-  InformationText String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String   @id @default(uuid())
+  title               String
+  description         String   @db.LongText
+  imageUrl            String
+  panjara1Title       String
+  panjara1Description String   @db.LongText
+  panjara2Title       String
+  panjara2Description String   @db.LongText
+  panjara3Title       String
+  panjara3Description String   @db.LongText
+  InformationText     String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
-
 model AboutPageInfo {
-  id        String   @id @default(uuid())
-  title     String
-  description     String @db.LongText
-  coverImageUrl  String
-  boxImageUrl String
-  boxTitle String
-  boxDescription String @db.LongText
-  panjara1Description String @db.LongText
-  freqAskedQuestionsTitle String
-  freqAskedQuestionsDescription String @db.LongText
-  freqAskedQuestions2Title String @db.LongText
-  freqAskedQuestions2Description String @db.LongText
-  freqAskedQuestions3Title String @db.LongText
-  freqAskedQuestions3Description String @db.LongText
-  freqAskedQuestions4Title String @db.LongText
-  freqAskedQuestions4Description String @db.LongText
-  whatWeOfferTitle String
-  whatWeOfferDescription String @db.LongText
-  whatWeOffer2Title String @db.LongText
-  whatWeOffer2Description String @db.LongText
-  whatWeOffer3Title String @db.LongText
-  whatWeOffer3Description String @db.LongText
-  whatWeOfferToCourierTitle String @db.LongText
+  id                              String @id @default(uuid())
+  title                           String
+  description                     String @db.LongText
+  coverImageUrl                   String
+  boxImageUrl                     String
+  boxTitle                        String
+  boxDescription                  String @db.LongText
+  panjara1Description             String @db.LongText
+  freqAskedQuestionsTitle         String
+  freqAskedQuestionsDescription   String @db.LongText
+  freqAskedQuestions2Title        String @db.LongText
+  freqAskedQuestions2Description  String @db.LongText
+  freqAskedQuestions3Title        String @db.LongText
+  freqAskedQuestions3Description  String @db.LongText
+  freqAskedQuestions4Title        String @db.LongText
+  freqAskedQuestions4Description  String @db.LongText
+  whatWeOfferTitle                String
+  whatWeOfferDescription          String @db.LongText
+  whatWeOffer2Title               String @db.LongText
+  whatWeOffer2Description         String @db.LongText
+  whatWeOffer3Title               String @db.LongText
+  whatWeOffer3Description         String @db.LongText
+  whatWeOfferToCourierTitle       String @db.LongText
   whatWeOfferToCourierDescription String @db.LongText
 
   createdAt DateTime @default(now())

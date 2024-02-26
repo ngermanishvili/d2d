@@ -37,6 +37,7 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
               input7: user.input7 || "",
               input8: user.input8 || "",
 
+
             }}
           />
         )}

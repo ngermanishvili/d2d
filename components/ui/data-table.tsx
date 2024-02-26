@@ -79,8 +79,8 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
-                    className={`${index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
-                      } bg-black text-white font-semibold`}
+                    className={`${index === 0 || index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
+                    style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                   >
                     {header.isPlaceholder
                       ? null

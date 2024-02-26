@@ -37,6 +37,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     setOpen(false);
     router.refresh();
   };
+
   return (
     <>
       <AlertModal
@@ -71,15 +72,14 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
           <DropdownMenuItem onClick={() => set2Open(true)}>
             <Edit className="mr-2 h-4 w-4" />
-            Update
+            დეტალების ნახვა
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setOpen(true)}>
             <Trash className="mr-2 h-4 w-4" />
-            Delete
+            წაშლა
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

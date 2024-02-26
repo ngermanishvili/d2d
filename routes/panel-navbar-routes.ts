@@ -7,10 +7,6 @@ import { IoIosAddCircle } from "react-icons/io";
 
 
 
-
-
-
-
 export const NAV_MENU_ADMIN = [
 
     {
@@ -54,21 +50,14 @@ export const NAV_MENU_ADMIN = [
 ];
 
 export const NAV_MENU_ACCOUNTANT = [
+
+
     {
-        name: "შეკვეთები",
-        icon: MdWorkHistory,
-        to: "/accountantshipments",
-    },
-    {
-        name: "ბუღალტერი",
-        icon: MdWorkHistory,
-        to: "/shipments/new",
-    },
-    {
-        name: "ჩემი კურიერები",
+        name: "მომხმარებლები და კურიერები",
         icon: CiDeliveryTruck,
         to: "/couriers",
     },
+
 
 ];
 export const NAV_MENU_USER = [
@@ -84,6 +73,11 @@ export const NAV_MENU_USER = [
         icon: IoIosAddCircle,
         to: "/shipments/new",
     },
+    {
+        name: "ფინანსები",
+        icon: MdWorkHistory,
+        to: "/myinvoices"
+    }
 ];
 
 

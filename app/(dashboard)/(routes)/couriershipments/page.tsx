@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
+import Error404Page from "@/providers/error-page";
 
 
 const ShipmentPage = async () => {
@@ -101,14 +102,16 @@ const ShipmentPage = async () => {
 
   }));
 
+
+
+  if (userRole !== "ADMIN" && userRole !== "COURIER") {
+    return <Error404Page />;
+  }
+
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        {userRole === "ADMIN" || userRole === "COURIER" ? (
-          <ShipmentClient data={formattedShipments} />
-        ) : (
-          <p>არ არის კურიერი მიბმული</p>
-        )}
+        <ShipmentClient data={formattedShipments} />
       </div>
     </div>
   );

@@ -4,9 +4,14 @@ import { FormattedLandingPageInfoClient } from "./components/client";
 import { BillboardColumn } from "./components/columns";
 import { db } from "@/lib/db";
 import { RoleGate } from "@/components/auth/role-gate";
+import { currentRole } from "@/lib/auth";
+import Error404Page from "@/providers/error-page";
+
 
 const BillboardsPage = async () => {
   const landingPageInfo = await db.landingPageInfo.findMany();
+  const userRole = await currentRole();
+
 
   const formattedLandingPageInfo: BillboardColumn[] = landingPageInfo.map((item) => ({
     id: item.id,
@@ -23,14 +28,16 @@ const BillboardsPage = async () => {
 
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
+
+  if (userRole !== "ADMIN") {
+    return <Error404Page />;
+  }
   return (
-    <RoleGate allowedRole="ADMIN">
-      <div className="flex-col">
-        <div className="flex-1 space-y-4 p-8 pt-6">
-          <FormattedLandingPageInfoClient data={formattedLandingPageInfo} />
-        </div>
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <FormattedLandingPageInfoClient data={formattedLandingPageInfo} />
       </div>
-    </RoleGate>
+    </div>
   );
 };
 

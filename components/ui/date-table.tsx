@@ -31,6 +31,8 @@ import { RoleGate } from "../auth/role-gate";
 import { useSearchKeyStore } from "@/hooks/search-key-store";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import { ShipmentColumn } from "@/hooks/xlsx-shipment-store";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 interface DataTableProps<TData extends ShipmentColumn, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -38,6 +40,7 @@ interface DataTableProps<TData extends ShipmentColumn, TValue> {
 }
 
 export function DataTable<TData extends ShipmentColumn, TValue>({
+
   columns,
   data,
   searchKey,
@@ -46,6 +49,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
   const [gatana, setGatana] = useState(false); // Add state for the action
   const [shemotana, setShemotana] = useState(true); // Add state for the action
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const table = useReactTable({
     data,
@@ -169,7 +173,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
       <div>
         <div className="flex items-center py-4 w-full">
           <Input
-            placeholder="Search"
+            placeholder="ძებნა"
             value={
               (table.getColumn(searchKeyStore)?.getFilterValue() as string) ??
               ""
@@ -199,10 +203,13 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               <Button
                 onClick={() => {
                   onDelete();
+                  toast.success("შეკვეთები წაიშლა");
+                  router.refresh()
                 }}
+
                 className="m-2"
               >
-                {" "}
+
                 წაშლა
               </Button>
               <Button className="m-2" onClick={() => handleUpdateToTrue()}>
@@ -227,21 +234,21 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${
-                        index === 0 ? "sticky left-0 text-white" : "" // Apply sticky style to the first column
-                      } text-white bg-gray-900 text-sm border-black `}
+                      className={`${index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
+                      style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
               ))}
             </TableHeader>
+
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
@@ -252,9 +259,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${
-                          index === 0 ? "sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                        } p-2 border`}
+                        className={`${index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                          } p-2 border`}
+                        style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

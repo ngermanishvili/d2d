@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { UsersClient } from "./components/client";
 import { UsersColumn } from "./components/columns";
+import Image from "next/image";
 
 
 const CouriersPage = () => {
@@ -38,11 +39,13 @@ const CouriersPage = () => {
     input6: item.input6 || "",
     input7: item.input7 || "",
     input8: item.input8 || "",
-
   }));
 
   return (
     <div style={{ marginTop: "70px" }}>
+      <div>
+        <Image src="/couriers.svg" alt="couriers" width={100} height={100} />
+      </div>
       <UsersClient data={formattedUsers} />
     </div>
   );

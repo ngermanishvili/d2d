@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
+import Error404Page from "@/providers/error-page";
 
 const ShipmentPage = async () => {
   const userRole = await currentRole();
@@ -103,11 +104,10 @@ const ShipmentPage = async () => {
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         {userRole === "ADMIN" ||
-        userRole === "COURIER" ||
-        userRole === "ACCOUNTANT" ? (
+          userRole === "ACCOUNTANT" ? (
           <ShipmentClient data={formattedShipments} />
         ) : (
-          <p>დავალიანება არ მოიძებნა</p>
+          <Error404Page />
         )}
       </div>
     </div>

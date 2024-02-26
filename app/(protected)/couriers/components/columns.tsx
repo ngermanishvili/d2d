@@ -1,8 +1,7 @@
 "use client";
-
-import {ColumnDef} from "@tanstack/react-table";
-import {CellAction} from "./cell-action";
-import {UserRole} from "@prisma/client";
+import { ColumnDef } from "@tanstack/react-table";
+import { CellAction } from "./cell-action";
+import { UserRole } from "@prisma/client";
 
 export type UsersColumn = {
   id: string;
@@ -24,31 +23,25 @@ export type UsersColumn = {
 export const columns: ColumnDef<UsersColumn>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "სახელი / გვარი ",
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: "ელ-ფოსტა",
   },
   {
     accessorKey: "number",
-    header: "Email",
-  },
-  {
-    accessorKey: "image",
-    header: "Email",
-  },
-  {
-    accessorKey: "role",
-    header: "Email",
-  },
-  {
-    accessorKey: "id",
-    header: "Email",
+    header: "ნომერი",
   },
 
   {
+    accessorKey: "role",
+    header: "ექაუნთის სტატუსი",
+  },
+
+
+  {
     id: "actions",
-    cell: ({row}) => <CellAction data={row.original} />,
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];

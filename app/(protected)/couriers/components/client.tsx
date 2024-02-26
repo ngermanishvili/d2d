@@ -10,18 +10,18 @@ interface UserClientProps {
 }
 
 export const UsersClient: React.FC<UserClientProps> = ({ data }) => {
-
-
   return (
     <>
-      <div className="flex  w-full justify-between">
+      <div className="flex mx-2 w-full justify-between p-8">
         <Heading
           title={`კურიერები / მომხმარებლები (${data.length})`}
           description="ამ გვერდზე შეძლებთ მომხმარებლების და კურიერების წაშლას."
         />
       </div>
       <Separator />
-      <DataTable searchKey="email" columns={columns} data={data} />
+      <div className="p-8">
+        <DataTable searchKey="email" columns={columns} data={data} />
+      </div>
     </>
   );
 };

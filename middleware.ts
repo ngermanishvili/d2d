@@ -20,18 +20,6 @@ export default auth((req) => {
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
     const isPrivateRoute = privateRoutes.includes(nextUrl.pathname);
 
-    // const hasAcceptedCookies = getCookie('acceptedCookies', { req });
-
-    // if (!hasAcceptedCookies && !isPublicRoute) {
-    //     // Redirect to cookies policy route if cookies are not accepted
-    //     return NextResponse.redirect(new URL(COOKIES_POLICY_ROUTE, nextUrl));
-    // }
-
-    // const hasExplicitlyAcceptedCookies = nextUrl.searchParams.get('acceptedCookie');
-    // if (!hasAcceptedCookies && hasExplicitlyAcceptedCookies) {
-    //     setCookie('acceptedCookies', 'true', { req });
-    // }
-
 
 
     if (isApiAuthRoute) {

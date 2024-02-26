@@ -101,28 +101,40 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "თრექინგი",
 
     cell: ({ row }) => (
-      <Tag className="p-2" color="geekblue">
+      <Tag className="p-2  text-md w-[88px]" color="purple">
         {row.original.trackingId}
       </Tag>
     ),
   },
   {
     accessorKey: "status",
-    header: "სტატუსიიიი",
-    cell: ({ row }) => (
-      <div>
-        {/* <Alert message={row.original.status} type="success" /> */}
-        <Tag className="p-2" color="green">
-          {row.original.status}
-        </Tag>
-      </div>
-    ),
+    header: "სტატუსი",
+    cell: ({ row }) => {
+      const statusColors: { [key: string]: string } = {
+        "ჩაბარებული": "green",
+        "მიმდინარე": "orange",
+        "უარი ჩაბარებაზე": "red",
+        "გაუქმებულია გამგზავნის მიერ": "red",
+        "ვერ ხერხდება დაკავშირება": "blue",
+        "ასაღები": "orange",
+      };
+
+      const color = statusColors[row.original.status] || "blue";
+
+      return (
+        <div>
+          <Tag className="p-2" color={color}>
+            {row.original.status}
+          </Tag>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "createdAt",
     header: "შეკვეთის თარიღი",
     cell: ({ row }) => (
-      <div className="w-[140px]">
+      <div >
         {new Date(row.original.createdAt).toLocaleDateString("en-US", {
           year: "2-digit",
           month: "2-digit",
@@ -135,8 +147,8 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebiFullName",
     header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="w-[250px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold">
+      <div className="w-full">
+        <p className="text-gray-900 font-semibold w-full">
           {" "}
           {row.original.mimgebiFullName}
         </p>
@@ -147,9 +159,8 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "gamgzavnisqalaqi",
     header: "გამგზავნის ქალაქი",
     cell: ({ row }) => (
-      <div className="w-[140px]" style={{ display: "flex" }}>
+      <div>
         <p className="text-gray-900 font-semibold">
-          {" "}
           {row.original.gamgzavnisqalaqi}
         </p>
       </div>
@@ -161,7 +172,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
     cell: ({ row }) => (
-      <div className="w-[150px]">
+      <div >
         <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
       </div>
     ),
@@ -170,9 +181,9 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebiQalaqi",
     header: "მიმღების ქალაქი",
     cell: ({ row }) => (
-      <div className="w-[120px]" style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
-          {" "}
+
           {row.original.mimgebiQalaqi}
         </p>
       </div>
@@ -182,9 +193,9 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebisAddress",
     header: "მიმღების მისამართი",
     cell: ({ row }) => (
-      <div className="w-[200px]" style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
-          {" "}
+
           {row.original.mimgebisAddress}
         </p>
       </div>
@@ -195,7 +206,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "gamgzavniFullName",
     header: "სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="p-2 w-[200px]" style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
         <p> {row.original.gamgzavniFullName}</p>
       </div>
     ),
@@ -205,7 +216,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",
     cell: ({ row }) => (
-      <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
+      <div>{`+995 ${row.original.phoneNumber}`}</div>
     ),
   },
   {
@@ -226,7 +237,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "packaging",
     header: "D2D შეფუთვა",
     cell: ({ row }) => (
-      <div className="w-[100px]">{`${row.original.packaging}`}</div>
+      <div>{`${row.original.packaging}`}</div>
     ),
   },
   {
@@ -242,7 +253,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "agebisDro",
     header: "ამანათის აღების დრო",
     cell: ({ row }) => (
-      <Tag className="p-2 w-[150px]" color="geekblue">
+      <Tag className="p-2 w-full" color="green">
         {row.original.agebisDro}
       </Tag>
     ),
@@ -252,7 +263,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "courierComment",
     header: "კურიერის კომენტარი",
     cell: ({ row }) => (
-      <Tag className="p-2" color="geekblue">
+      <Tag className="p-2 w-full" color="orange">
         {row.original.courierComment}
       </Tag>
     ),
