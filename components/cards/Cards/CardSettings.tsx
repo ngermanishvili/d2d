@@ -81,11 +81,8 @@ export default function CardSettings() {
     user?.input5 &&
     user?.input6 &&
     user?.input7 &&
-
     useEffect(() => {
-      if (user?.image) {
-        setPhotoUrl(user?.image);
-      }
+      setPhotoUrl(user?.image);
     }, []);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -116,12 +113,9 @@ export default function CardSettings() {
             <h6 className="text-blueGray-700 text-xl font-bold mt-4">
               ჩემი კაბინეტი
             </h6>
-
-
           </div>
         </div>
         <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-
           <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
             პირადი ინფორმაცია
           </h6>
@@ -136,10 +130,10 @@ export default function CardSettings() {
                     </div>
                   ) : (
                     <div className="bg-blueGray-700 active:bg-blueGray-600 text-white bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                      ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული ყველა ველი.
+                      ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული
+                      ყველა ველი.
                     </div>
                   )}
-
                 </h6>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
@@ -156,7 +150,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -279,7 +273,7 @@ export default function CardSettings() {
                                 placeholder="input2"
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                              // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                               />
                             </FormControl>
                             <FormMessage className="mt-1 text-xs text-red-500" />
@@ -323,7 +317,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დასახელება"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -346,7 +340,7 @@ export default function CardSettings() {
                             placeholder="საბანკო ანგარიშის ნომერი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -369,7 +363,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დირექტორი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -392,7 +386,7 @@ export default function CardSettings() {
                             placeholder="საკონტაქტო ტელეფონი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -415,7 +409,7 @@ export default function CardSettings() {
                             placeholder="საქმიანობის სფერო"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -438,7 +432,7 @@ export default function CardSettings() {
                             placeholder="input8"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -554,7 +548,6 @@ export default function CardSettings() {
                     </FormItem>
                   )}
                 />
-
               </div>
               <FormError message={error} />
               <FormSuccess message={success} />
