@@ -43,6 +43,7 @@ import Image from "next/image";
 import Logo from "@/assets/images/d2d.jpg";
 import { Alert, Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
+import SpaceImage from "@/assets/images/space.png"
 
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1),
@@ -816,10 +817,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                         </div>
                       </RoleGate>
 
-                      <div className="w-full lg:w-4/12 px-4"></div>
+                      <div className="w-full lg:w-4/12 px-4">
+
+                      </div>
                     </div>
                   </div>
                 </div>
+
                 {showCalc && (
                   <ShippingCostGraph
                     hasInitialData={initialData ? true : false}
@@ -857,7 +861,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                 <Button
                   type="button"
                   disabled={loading}
-                  className="ml-auto self-end"
+                  className="ml-auto self-end w-full h-[50px]"
                   onClick={() => setIsCreateOpen(true)}
                 >
                   დადასტურება

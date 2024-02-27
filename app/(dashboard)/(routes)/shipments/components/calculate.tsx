@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
+import SpaceImage from "@/assets/images/space.png"
 
 interface WeightRange {
   label: string;
@@ -198,8 +199,10 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   return (
     <>
       <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">
-        <div className=" hidden xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
-          <div className=" w-11/12 flex justify-center items-center"></div>
+        <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
+          <div className="w-11/12 flex justify-center items-center ">
+            <Image className="hidden lg:hidden" src={SpaceImage} alt="space" width={500} height={500} />
+          </div>
         </div>
         <Divider
           type="vertical"

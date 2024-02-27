@@ -19,8 +19,9 @@ export const FormattedAboutPageInfoClient: React.FC<AboutPageProps> = ({ data })
 
   return (
     <>
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between  ">
         <Heading
+
           title={`მთავარ გვერდზე კონტენტის შეცვლა`}
           description="მთავარ გვერდზე ემატება სათაური აღწერა და ფოტო რაც გვერდზე გამოჩნდება აქედან გამომდინარე თუ გსურს რაიმეს შეცვლა ან წაშლით და დაამატებთ ახლიდან ან უკვე არსებულს ჩაასწორებთ რადგანაც 2 რამის დამატების შემთხვევაში ალგორითმი უყურებს მხოლოდ პირველ დამატებულ ელემენტს რადგანაც მთავარ გვერდზე გვაქვს მხოლოდ 1 ფანჯარა (სათაური, აღწერა, ფოტო). "
         />
