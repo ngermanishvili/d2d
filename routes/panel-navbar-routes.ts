@@ -4,8 +4,6 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { MdWorkHistory } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
 
-
-
 export const NAV_MENU_ADMIN = [
   {
     name: "ბილბორის დამატება",
@@ -53,15 +51,21 @@ export const NAV_MENU_ADMIN = [
 ];
 
 export const NAV_MENU_ACCOUNTANT = [
-
-
-    {
-        name: "მომხმარებლები და კურიერები",
-        icon: CiDeliveryTruck,
-        to: "/couriers",
-    },
-
-
+  {
+    name: "მომხმარებლები და კურიერები",
+    icon: CiDeliveryTruck,
+    to: "/couriers",
+  },
+  {
+    name: "შეკვეთების ისტორია",
+    icon: MdWorkHistory,
+    to: "/accountantshipments",
+  },
+  {
+    name: "დასრულებული შეკვეთების ისტორია",
+    icon: MdWorkHistory,
+    to: "/accountantfinished",
+  },
 ];
 export const NAV_MENU_USER = [
   {
@@ -70,16 +74,16 @@ export const NAV_MENU_USER = [
     to: "/shipments",
   },
 
-    {
-        name: "შეკვეთის განთავსება",
-        icon: IoIosAddCircle,
-        to: "/shipments/new",
-    },
-    {
-        name: "ფინანსები",
-        icon: MdWorkHistory,
-        to: "/myinvoices"
-    }
+  {
+    name: "შეკვეთის განთავსება",
+    icon: IoIosAddCircle,
+    to: "/shipments/new",
+  },
+  {
+    name: "ფინანსები",
+    icon: MdWorkHistory,
+    to: "/myinvoices",
+  },
 ];
 
 export const NAV_MENU_COURIER = [

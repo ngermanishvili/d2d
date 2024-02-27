@@ -40,7 +40,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`ჩაბარებული შეკვეთები (${data.length})`}
+          title={`დასრულებული შეკვეთები (${data.length})`}
           description="აკონტროლე ყველა შეკვეთა ადმინკადან უსდტ"
         />
         <div>
