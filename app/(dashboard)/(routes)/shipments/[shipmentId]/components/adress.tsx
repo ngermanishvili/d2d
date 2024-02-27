@@ -8,13 +8,12 @@ import axios from "axios";
 import useAddressStore from "@/hooks/adress-store";
 import { FaAddressBook } from "react-icons/fa";
 
-
 const AdressInput: React.FC = () => {
   const [items, setItems] = useState<string[]>([]);
   const [name, setName] = useState("");
-  const [address, setMisamarti] = useState<string>(""); // Separate state for selected address
+  const [misamarti, setMisamarti] = useState<string>(""); // Separate state for selected address
   const inputRef = useRef<InputRef>(null);
-  const { setAddress } = useAddressStore(); // Destructure setMisamarti from useAddressStore if needed
+  const { setAddress, address } = useAddressStore(); // Destructure setMisamarti from useAddressStore if needed
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -27,7 +26,8 @@ const AdressInput: React.FC = () => {
             return i == self.indexOf(v);
           });
         setItems(newarr);
-        setMisamarti(newarr[0]); // Set default selected address
+        setMisamarti(newarr[0]);
+        setAddress(newarr[0]); // Set default selected address
         console.log("🚀 ~ fetchAddress ~ array:", newarr);
       } catch (error) {
         console.error("Error fetching addresses:", error);
@@ -59,17 +59,16 @@ const AdressInput: React.FC = () => {
 
   return (
     <div className="relative">
-
       <Select
         className="w-full h-[50px] "
         value={address} // Use separate state for the value
         placeholder="Select address"
-        onChange={(value) => setMisamarti(value)} // Update selected address
+        onChange={(value: string) => {
+          setAddress(value);
+          setMisamarti(value);
+        }} // Update selected address
         dropdownRender={(menu) => (
-
           <>
-
-
             {menu}
             <Divider />
             <Space>
@@ -79,22 +78,17 @@ const AdressInput: React.FC = () => {
                 value={name}
                 onChange={onNameChange}
                 onKeyDown={(e) => e.stopPropagation()}
-
               />
               <Button type="text" icon={<PlusOutlined />} onClick={addItem}>
                 Add Address
               </Button>
             </Space>
-
           </>
         )}
         options={items.map((item) => ({ label: item, value: item }))}
       />
-
     </div>
   );
-
 };
-
 
 export default AdressInput;

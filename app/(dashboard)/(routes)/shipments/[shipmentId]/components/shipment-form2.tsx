@@ -240,18 +240,17 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    console.log(address);
-    data.address = address;
     //  const aris = aq iqneba check
     try {
+      console.log(address);
+      data.address = address;
       data.packaging = packagingUsed;
       data.label = range;
       data.city = selectedCity;
       data.whopays = selectedParty;
       data.price = totalPrice.toString();
-      data.itemPrice = itemPrice.toString();
+      data.itemPrice = itemPrice;
       setLoading(true);
-      console.log(data);
       data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
       data.weightPrice = weightPrice;
       data.packagePrice = packagingUsed ? "5" : "0";
@@ -263,7 +262,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
         const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
-        console.log("Shipment created with ID:", shipmentId);
+        console.log("Shipment created with ID:", shipmentId.id);
         setQrText(shipmentId);
       }
 
@@ -299,7 +298,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   useEffect(() => {
     // Check if initialData is true
     if (initialData) {
-      setCity((initialData.city as "თბილისი") || "რუსთავი");
+      setCity(initialData.city);
+      console.log(selectedCity);
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
 
@@ -310,9 +310,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       if (!initialData.weightPrice) return;
       setShipmentCost(parseFloat(initialData?.weightPrice));
       setTotalPrice(parseFloat(initialData.price));
+      setCalculated(true);
     }
-    setCalculated(true);
-
     const weightRanges: WeightRanges[] = [];
     const cityNames = Object.keys(shipmentCosts);
 
@@ -348,7 +347,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     setRanges(weightRanges);
     setCitiesNames(cityNames);
     setShowCalc(true);
-  }, [selectedCity]); // Dependency array ensures that the effect runs when initialData changes
+  }, []); // Dependency array ensures that the effect runs when initialData changes
 
   return (
     <>
@@ -617,16 +616,14 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-                                  value={
-                                    initialData?.mimgebiQalaqi || selectedCity
-                                  }
+                                  value={selectedCity}
                                   onValueChange={(value) => {
                                     setCity(value);
                                     field.onChange(value);
                                   }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
-                                    <SelectValue>{field.value}</SelectValue>
+                                    <SelectValue>{selectedCity}</SelectValue>
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}

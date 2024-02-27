@@ -38,7 +38,6 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
   });
   const shipmentCosts = await db.shippingPrice.findMany({});
   const formattedCosts = shipmentCosts.map((e) => e);
-  console.log("🚀 ~ ShipmentPage ~ formattedCosts:", formattedCosts);
   const groupCostsByCity = (formattedCosts: Cost[]): GroupedCosts => {
     return formattedCosts.reduce<GroupedCosts>((acc, cost) => {
       const { city, village, weightRange, price, villagePrice } = cost;
@@ -73,20 +72,25 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
   };
   // Usage
   const groupedCosts: GroupedCosts = groupCostsByCity(formattedCosts);
-  console.log(groupedCosts, "alo");
   return (
     <>
       <RoleGate allowedRole="ADMIN">
         <div className="flex-col ">
           <div className="flex-1 space-y-4 p-8 pt-6">
-            <ShipmentForm2 shipmentCosts={groupedCosts}  initialData={shipment} />
+            <ShipmentForm2
+              shipmentCosts={groupedCosts}
+              initialData={shipment}
+            />
           </div>
         </div>
       </RoleGate>
       <RoleGate allowedRole="USER">
         <div className="flex-col ">
           <div className="flex-1 space-y-4 p-8 pt-6">
-            <ShipmentForm2 shipmentCosts={groupedCosts} initialData={shipment} />
+            <ShipmentForm2
+              shipmentCosts={groupedCosts}
+              initialData={shipment}
+            />
           </div>
         </div>
       </RoleGate>
@@ -94,7 +98,10 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
       <RoleGate allowedRole="ACCOUNTANT">
         <div className="flex-col ">
           <div className="flex-1 space-y-4 p-8 pt-6">
-            <ShipmentForm2 shipmentCosts={groupedCosts}  initialData={shipment} />
+            <ShipmentForm2
+              shipmentCosts={groupedCosts}
+              initialData={shipment}
+            />
           </div>
         </div>
       </RoleGate>

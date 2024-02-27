@@ -59,8 +59,8 @@ export async function POST(req: Request, { params }: { params: {} }) {
       itemPrice, // Add itemPrice to the destructuring
       gamgzavnisqalaqi,
     } = body;
+
     const userId = await currentUserId();
-    console.log(body);
     if (!userId) {
       return new NextResponse("User ID is required", { status: 400 });
     }
@@ -99,7 +99,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
     if (!mimgebisAddress) {
       return new NextResponse("mimgebisAddress is required", { status: 400 });
     }
-    console.log("aloooooo");
     if (!whopays) {
       return new NextResponse("Who pays is required", { status: 400 });
     }
@@ -110,9 +109,8 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status: 400,
       });
     }
-
+    const modWeightPrice = weightPrice.toString();
     const customId = generateCustomId(trackingId, uuid());
-
     const shipmentId = await db.shipment
       .create({
         data: {
@@ -137,7 +135,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
           whopays, // Add whopays to the data
           itemPrice, // Add itemPrice to the data
           priceDif,
-          weightPrice,
+          weightPrice: modWeightPrice,
           packagePrice,
           gamgzavnisqalaqi,
           mimgebiFullName,
@@ -154,8 +152,6 @@ export async function POST(req: Request, { params }: { params: {} }) {
     });
     const arr = isSaved.map((item) => item.address);
     if (!arr.includes(address)) {
-      console.log(isSaved, arr);
-      console.log("shemovida");
       savedAdress = await db.savedAddress.create({
         data: { userId: userId, address: address, mimgebisadress: address },
       });
@@ -185,10 +181,6 @@ export async function GET(req: Request, { params }: { params: {} }) {
         ShipmentStatusHistory: true,
       },
     });
-
-    console.log(JSON.stringify(shipments, null, 2));
-
-    console.log(JSON.stringify(shipments, null, 2));
 
     return NextResponse.json(shipments);
   } catch (error) {
@@ -232,11 +224,6 @@ export async function PATCH(req: Request) {
         markedByCourier: variable,
       },
     });
-
-    console.log("Updated shipments:", updatedShipments);
-
-    // Log the updated shipment data
-    console.log("Updated shipment data:", updatedShipments);
 
     return NextResponse.json(updatedShipments);
   } catch (error) {

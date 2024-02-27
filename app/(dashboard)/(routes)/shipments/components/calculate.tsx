@@ -68,16 +68,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCitiesNames,
     citiesNames,
   } = useCalculatorStore();
-  console.log("🚀 ~ ranges:", ranges);
-  console.log("🚀 ~ citiesNames:", citiesNames);
 
-  let weightCost;
+  let weightCost: any;
   useEffect(() => {
     // Check if initialData is true
-    if (hasInitialData) {
+    if (hasInitialData || calculated) {
       // Find the WeightRange object with the matching label
       const selectedRange = ranges.find((rang) => rang.label === range) || null;
       setSelectedRange(selectedRange);
+      if (!selectedRange) return;
+      setRange(selectedRange.label);
       setCity(selectedCity);
       weightCost = selectedRange?.prices[selectedCity].toString();
 
@@ -85,7 +85,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       setWeightPrice(weightCost);
       setPackagingUsed(packagingUsed);
     }
-  }, []);
+  }, [selectedCity]);
   const handleCheckboxChange = (range: WeightRange) => {
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
@@ -137,7 +137,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const selectedRange =
       ranges.find((range) => range.label === selectedLabel) || null;
     setSelectedRange(selectedRange);
-    weightCost = weightCost = selectedRange?.prices[selectedCity].toString();
+    weightCost = weightCost = selectedRange?.prices[selectedCity];
 
     if (!weightCost) return;
     setWeightPrice(weightCost);
@@ -160,18 +160,26 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       newItemPrice
     );
   };
-
+  useEffect(() => {
+    const selectedWeightRange = ranges.find((r) => r.label === range) || null;
+    setSelectedRange(selectedWeightRange);
+    weightCost = weightCost = selectedRange?.prices[selectedCity];
+    calculateTotalPrice(
+      selectedWeightRange,
+      packagingUsed,
+      selectedCity,
+      selectedParty,
+      parseFloat(itemPrice)
+    );
+  }, [selectedCity, range, itemPrice]);
   useEffect(() => {
     if (calculated) {
       const initialSelectedRange = ranges.find((r) => r.label === range);
       if (!initialSelectedRange) return;
       // Set the selected range based on the found object or null
-      console.log(
-        "🚀 ~ useEffect ~ initialSelectedRange:",
-        initialSelectedRange
-      );
+
       setSelectedRange(initialSelectedRange);
-      weightCost = weightCost = selectedRange?.prices[selectedCity].toString();
+      weightCost = weightCost = selectedRange?.prices[selectedCity];
 
       if (!weightCost) return;
       setWeightPrice(weightCost);
@@ -232,13 +240,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                     className="w-full self-center sm:self-auto min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white focus:border-transparent focus:outline-none"
                     type="text"
                     id="item-price"
-                    value={itemPrice === "0" ? "" : itemPrice}
+                    value={Number.isNaN(parseFloat(itemPrice)) ? "" : itemPrice}
                     placeholder="COD ნივთის საფასური"
-                    disabled={
-                      selectedParty === "Receiver" || selectedParty === "Sender"
-                        ? false
-                        : true
-                    }
                     onChange={(e) => {
                       handleItemPriceChange(Number(e.target.value));
                     }}
@@ -248,11 +251,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 <div className="flex w-full flex-col sm:flex-row justify-between gap-4">
                   <div className="w-full self-center sm:self-auto min-w-[116px] bg-white">
                     <Select
-                      value={selectedRange?.label || ""}
+                      value={range}
                       onValueChange={handleWeightRangeChange}
                     >
-                      <SelectTrigger>
-                        <SelectValue placeholder="გზავნილის წონა" />
+                      <SelectTrigger value={range}>
+                        <SelectValue placeholder={range} />
                       </SelectTrigger>
                       <SelectContent>
                         {ranges.map((range) => (
@@ -321,7 +324,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         color="gray"
                         className="text-md self-center"
                         status="processing"
-                        count={itemPrice === "" ? 0 : itemPrice}
+                        count={
+                          Number.isNaN(parseFloat(itemPrice)) ? 0 : itemPrice
+                        }
                         showZero
                         overflowCount={99999}
                         style={{
@@ -360,7 +365,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               color="gray"
               className="text-md mt-3"
               status="success"
-              count={`${totalPrice} ₾`}
+              count={`${Number.isNaN(totalPrice) ? 0 : totalPrice} ₾`}
               showZero
               overflowCount={99999}
               style={{
