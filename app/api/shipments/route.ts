@@ -160,6 +160,13 @@ export async function POST(req: Request, { params }: { params: {} }) {
       return new NextResponse("Failed to create shipment", { status: 500 });
     }
 
+    await db.shipmentStatusHistory.create({
+      data: {
+        shipmentId: shipmentId,
+        status: status,
+      },
+    });
+
     return NextResponse.json({ shipmentId, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
