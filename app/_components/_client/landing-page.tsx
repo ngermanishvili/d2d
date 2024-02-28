@@ -104,11 +104,7 @@ export default function Landing() {
                   {description}
                 </p>
 
-                <Link href="/">
-                  <p className="font-bold text-blueGray-700 mt-8">
-                    Check Notus NextJS!
-                  </p>
-                </Link>
+
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">
