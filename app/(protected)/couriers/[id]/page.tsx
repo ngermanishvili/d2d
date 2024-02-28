@@ -9,10 +9,9 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
   });
   const invoices = await db.urlsOfXlsx.findMany({
     where: {
-      userId: user?.id
-
-    }
-  })
+      userId: user?.id,
+    },
+  });
 
   if (!user) return { error: "User ar moidzebna" };
 
@@ -36,8 +35,7 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
               input6: user.input6 || "",
               input7: user.input7 || "",
               input8: user.input8 || "",
-
-
+              userType: user.userType || "",
             }}
           />
         )}

@@ -135,6 +135,7 @@ model Shipment {
   mimgebisAddress       String
   status                String                  @default("მიმდინარე")
   courierComment        String
+  courierComment2       String
   label                 String
   whopays               String
   itemPrice             String?

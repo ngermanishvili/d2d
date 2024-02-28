@@ -15,7 +15,8 @@ export const UsersClient: React.FC<UserClientProps> = ({ data }) => {
       <div className="flex mx-2 w-full justify-between p-8">
         <Heading
           title={`კურიერები / მომხმარებლები (${data.length})`}
-          description="ამ გვერდზე შეძლებთ მომხმარებლების და კურიერების წაშლას."
+          description="ამ გვერდზე შეძლებთ მომხმარებლების და კურიერების წაშლას, ასევე მათი ინფორმაციის და სტატუსების შეცვლას
+          (ბუღალტერის ან კურიერის სტატუსის მინიჭება შეგიძლიათ ამ გვერდიდან)."
         />
       </div>
       <Separator />

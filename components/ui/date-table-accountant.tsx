@@ -45,7 +45,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const gatana = false;
   const shemotana = true;
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -95,21 +94,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
       console.error("Error updating to true:", error);
     } finally {
       router.refresh();
-    }
-  };
-
-  const handleUpdateToFalse = async () => {
-    try {
-      const data = {
-        ids,
-        variable: gatana,
-      };
-
-      await axios.patch("/api/shipments", data);
-      // Handle success or any other logic
-    } catch (error) {
-      // Handle error
-      console.error("Error updating to false:", error);
+      toast.success("წარმატებით შეიცვალა შეკვეთა(ები) დასრულებულად");
     }
   };
 
@@ -202,29 +187,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
           <div className="flex p-4">
             <RoleGate allowedRole="ACCOUNTANT">
               <Button className="m-2" onClick={() => handleUpdateToTrue()}>
-                შეცვალე სტატუსი (გატანილი)
-              </Button>
-            </RoleGate>
-            <RoleGate allowedRole="ADMIN">
-              <Button
-                onClick={() => {
-                  onDelete();
-                  toast.success("შეკვეთები წაიშლა");
-                  router.refresh();
-                }}
-                className="m-2"
-              >
-                წაშლა
-              </Button>
-              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
-                შეცვალე სტატუსი (გატანილი)
-              </Button>
-              <Button className="m-2" onClick={() => handleUpdateToFalse()}>
-                {" "}
-                შეცვალე სტატუსი (საწყობში)
-              </Button>
-              <Button className="m-2" onClick={() => setIsOpen(true)}>
-                მიამაგრე შეკვეთას კურიერი
+                შეცვალე სტატუსი (დასრულებული)
               </Button>
             </RoleGate>
           </div>
@@ -306,7 +269,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            უკან
           </Button>
           <Button
             variant="outline"
@@ -314,7 +277,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            შემდეგი
           </Button>
         </div>
       </div>

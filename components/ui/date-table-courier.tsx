@@ -121,7 +121,7 @@ export function CourierDataTable<TData, TValue>({
       <div>
         <div className="flex items-center py-4 w-full">
           <Input
-            placeholder="Search"
+            placeholder="ძიება"
             value={
               (table.getColumn(searchKeyStore)?.getFilterValue() as string) ??
               ""
@@ -155,15 +155,23 @@ export function CourierDataTable<TData, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 0 || index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
-                      style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                      className={`${
+                        index === 0 || index === 1
+                          ? "sticky left-0 text-white"
+                          : ""
+                      } text-white bg-red-600 text-md border-black`}
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -179,9 +187,14 @@ export function CourierDataTable<TData, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${index === 0 || index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
-                        style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
-
+                        className={`${
+                          index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
+                        } p-2 border font-semibold`}
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,

@@ -27,7 +27,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import ShippingCostGraph from "../../../shipments/components/calculate";
 
 const formSchema = z.object({
-  label: z.string().min(1),
+  label: z.string(),
   imageUrl: z.string().min(1),
 });
 
@@ -38,17 +38,23 @@ interface BillBoardFormProps {
   initialData: Billboard | null;
 }
 
-export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => {
+export const BillBoardForm: React.FC<BillBoardFormProps> = ({
+  initialData,
+}) => {
   const router = useRouter();
   const params = useParams();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const title = initialData ? "Edit billboard" : "Create billboard";
-  const description = initialData ? "Edit a billboard" : "Add a new billboard";
-  const toastMessage = initialData ? "Billboard updated." : "Billboard created";
-  const action = initialData ? "Save changes" : "Create";
+  const title = initialData ? "ბილბორდის შეცვლა" : "ბილბორდის დამატება";
+  const description = initialData
+    ? "შეცვალე ბილბორდი"
+    : "დაამატე ახალი ბილბორდი";
+  const toastMessage = initialData
+    ? "ბილბორდი წარმატებით შეიცვალა"
+    : "ბილბორდი წარმატებით შეიქმნა";
+  const action = initialData ? "შენახვა" : "შექმნა";
 
   const form = useForm<BillBoardFormValues>({
     resolver: zodResolver(formSchema),
@@ -61,6 +67,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
   const onSubmit = async (data: BillBoardFormValues) => {
     try {
       setLoading(true);
+      data.label = "ქავერის ფოტო";
       if (initialData) {
         await axios.patch(`/api/billboards/${params?.billboardId}`, data);
       } else {
@@ -70,7 +77,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
       router.push(`/billboards`);
       toast.success(toastMessage);
     } catch (error) {
-      toast.error("Something went wrong.");
+      toast.error("დაფიქსირდა შეცდომა");
     } finally {
       setLoading(false);
     }
@@ -82,11 +89,9 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
       await axios.delete(`/api/billboards/${params?.billboardId}}`);
       router.refresh();
       router.push(`/billboards`);
-      toast.success("Billboard deleted.");
+      toast.success("ბილბორდი წაიშალა");
     } catch (error) {
-      toast.error(
-        "Make sure you removed all categories using this billboard first."
-      );
+      toast.error("დაფიქსირდა შეცდომა");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -128,7 +133,7 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
             name="imageUrl"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Background Image</FormLabel>
+                <FormLabel>ქავერის ფოტო</FormLabel>
                 <FormControl>
                   <ImageUpload
                     value={field.value ? [field.value] : []}
@@ -141,13 +146,13 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-3 gap-8">
+          <div className="hidden ">
             <FormField
               control={form.control}
               name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Label</FormLabel>
+                  <FormLabel>ტექსტი</FormLabel>
                   <FormControl>
                     <Input
                       disabled={loading}
@@ -164,7 +169,6 @@ export const BillBoardForm: React.FC<BillBoardFormProps> = ({ initialData }) => 
           <Button disabled={loading} className="ml-auto" type="submit">
             {action}
           </Button>
-
         </form>
       </Form>
     </>
