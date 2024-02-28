@@ -18,6 +18,7 @@ export type UsersColumn = {
   input7: string | undefined;
   input8: string | undefined;
   role: UserRole;
+  userType: string;
 };
 
 export const columns: ColumnDef<UsersColumn>[] = [
@@ -38,7 +39,6 @@ export const columns: ColumnDef<UsersColumn>[] = [
     accessorKey: "role",
     header: "ექაუნთის სტატუსი",
   },
-
 
   {
     id: "actions",

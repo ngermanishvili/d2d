@@ -63,6 +63,7 @@ const formSchema = z.object({
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
   courierComment: z.string().min(1),
+  courierComment2: z.string().min(0),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
@@ -170,6 +171,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       markedByCourier: false,
       status: "მიმდინარე",
       courierComment: "",
+      courierComment2: "",
       label: "0-5 kg",
       whopays: "sender",
       agebisDro: "",
@@ -259,6 +261,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
         data.chabarebisDro = chabareba;
+        data.courierComment2 = "";
 
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
@@ -268,6 +271,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       }
 
       if (initialData) {
+        data.courierComment2 = initialData.courierComment2;
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
       }
 

@@ -110,7 +110,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
       input8: "",
     },
   });
-
+  const type = initialData?.userType;
   const [isPending, startTransition] = useState(false);
   const onSubmit = async (data: UserFormValues) => {
     setLoading(true);
@@ -169,12 +169,12 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        nomeri
+                        ნომერი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           disabled={loading}
-                          placeholder="სახელი"
+                          placeholder="ნომერი"
                           {...field}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         />
@@ -192,12 +192,12 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        სახელი
+                        იმეილი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           disabled={loading}
-                          placeholder="სახელი"
+                          placeholder="იმეილი"
                           {...field}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         />
@@ -207,7 +207,6 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   )}
                 />{" "}
               </div>
-
             </div>
           </RoleGate>
           <RoleGate allowedRole="ADMIN">
@@ -241,12 +240,12 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        nomeri
+                        ნომერი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           disabled={loading}
-                          placeholder="სახელი"
+                          placeholder="ნომერი"
                           {...field}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         />
@@ -263,12 +262,12 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        სახელი
+                        იმეილი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           disabled={loading}
-                          placeholder="სახელი"
+                          placeholder="იმეილი"
                           {...field}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                         />
@@ -317,15 +316,21 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input1
+                        {initialData?.userType === "ფიზიკური პირი"
+                          ? "მისამართი"
+                          : "იურიდიული მისამართი"}
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input1"
+                          placeholder={
+                            initialData?.userType === "ფიზიკური პირი"
+                              ? "მისამართი"
+                              : "იურიდიული მისამართი"
+                          }
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -340,15 +345,21 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input1
+                        {initialData?.userType === "ფიზიკური პირი"
+                          ? "პირადი ნომერი"
+                          : "საიდენტიფიკაციო ნომერი"}
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input2"
+                          placeholder={
+                            initialData?.userType === "ფიზიკური პირი"
+                              ? "პირადი ნომერი"
+                              : "საიდენტიფიკაციო ნომერი"
+                          }
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -363,15 +374,15 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input3
+                        კომპანიის დასახელება
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input3"
+                          placeholder="კომპანიის დასახელება"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -386,15 +397,15 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input4
+                        საბანკო ანგარიშის ნომერი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input4"
+                          placeholder="საბანკო ანგარიშის ნომერი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -409,15 +420,15 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input5
+                        კომპანიის დირექტორი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input5"
+                          placeholder="კომპანიის დირექტორი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -432,15 +443,15 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input6
+                        საკონტაქტო ტელეფონი
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input6"
+                          placeholder="საკონტაქტო ტელეფონი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -455,15 +466,15 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   render={({ field }) => (
                     <FormItem className="relative w-full mb-3">
                       <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                        input7
+                        საქმიანობის სფერო
                       </FormLabel>
                       <FormControl className="relative rounded-md shadow-sm">
                         <Input
                           {...field}
-                          placeholder="input7"
+                          placeholder="საქმიანობის სფერო"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -486,7 +497,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="input8"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />

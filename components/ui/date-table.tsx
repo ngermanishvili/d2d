@@ -40,7 +40,6 @@ interface DataTableProps<TData extends ShipmentColumn, TValue> {
 }
 
 export function DataTable<TData extends ShipmentColumn, TValue>({
-
   columns,
   data,
   searchKey,
@@ -204,12 +203,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                 onClick={() => {
                   onDelete();
                   toast.success("შეკვეთები წაიშლა");
-                  router.refresh()
+                  router.refresh();
                 }}
-
                 className="m-2"
               >
-
                 წაშლა
               </Button>
               <Button className="m-2" onClick={() => handleUpdateToTrue()}>
@@ -234,15 +231,21 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
-                      style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                      className={`${
+                        index === 1 ? "sticky left-0 text-white" : ""
+                      } text-white bg-red-600 text-md border-black`}
+                      style={{
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
                     >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -259,10 +262,14 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                          } p-2 border`}
-                        style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
-
+                        className={`${
+                          index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                        } p-2 border`}
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
                       >
                         {flexRender(
                           cell.column.columnDef.cell,
@@ -292,7 +299,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            უკან
           </Button>
           <Button
             variant="outline"
@@ -300,7 +307,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            შემდეგი
           </Button>
         </div>
       </div>

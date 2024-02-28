@@ -22,23 +22,17 @@ export const BillBoardClient: React.FC<BillBoardClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Blogposts(${data.length})`}
-          description="manage your billboards"
+          title={`ბლოგპოსტების ოდენობა - ${data.length}`}
+          description="აკონტროლეთ ბლოგპოსტები ამ გვერდიდან"
         />
-        <Button
-          onClick={() => router.push(`/addblogposts/new`)}
-        >
+        <Button onClick={() => router.push(`/addblogposts/new`)}>
           <Plus className="mr-2 h-4 w-4 " />
-          Add New
+          ბლოგპოსტის დამატება
         </Button>
       </div>
       <Separator />
 
       <DataTable searchKey="title" columns={columns} data={data} />
-
-      <Heading title="API" description="api calls for billboards" />
-      <Separator />
-      <ApiList entityName="blogposts" entityIdName="blogpostsId" />
     </>
   );
 };

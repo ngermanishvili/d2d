@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/select";
 import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
-import AdressInput from "../../../shipments/[shipmentId]/components/adress";
+import AdressInput from "./adress";
 // import AdressInputClient from "./adress-client";
 import useAddressStore from "@/hooks/adress-store";
 import Image from "next/image";
@@ -60,6 +60,7 @@ const formSchema = z.object({
   mimgebiQalaqi: z.string().min(1),
   status: z.string().min(1),
   courierComment: z.string().min(1).optional(),
+  courierComment2: z.string().min(1).optional(),
   label: z.string().min(1),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
@@ -123,6 +124,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       markedByCourier: false,
       status: "მიმდინარე",
       courierComment: "",
+      courierComment2: "",
       label: "0-5 kg",
       whopays: "sender",
       agebisDro: "",
@@ -216,6 +218,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       }
 
       if (initialData) {
+        data.courierComment = initialData.courierComment;
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
       }
 
@@ -297,6 +300,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
           </div>
 
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
+            <p>მომხმარებლის კომენტარი{initialData?.courierComment}</p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -313,6 +317,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           <FormField
                             control={form.control}
                             name="gamgzavniFullName"
+                            disabled
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -339,6 +344,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <FormField
                           control={form.control}
                           name="phoneNumber"
+                          disabled
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3">
                               <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -366,18 +372,24 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           <FormField
                             control={form.control}
                             name="address"
+                            disabled
                             render={({ field }) => (
-                              <>
-                                <FormItem className="relative w-full mb-3 h-[50px]">
-                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold ">
-                                    მისამართი
-                                  </FormLabel>
-                                  <FormControl className="relative rounded-md shadow-sm w-full h-[50px]">
-                                    <AdressInput />
-                                  </FormControl>
-                                  <FormMessage />
-                                </FormItem>
-                              </>
+                              <FormItem className="relative w-full mb-3">
+                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                  მისამართი
+                                </FormLabel>
+                                <FormControl className="relative rounded-md shadow-sm">
+                                  <div className="relative">
+                                    <Input
+                                      placeholder="მისამართი"
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                    />
+                                    <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
+                                  </div>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
                             )}
                           />
                         </div>
@@ -389,10 +401,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <FormField
                           control={form.control}
                           name="gamgzavnisqalaqi"
+                          disabled
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
+                                  disabled
                                   value={field.value}
                                   onValueChange={(newValue) => {
                                     field.onChange(newValue);
@@ -433,6 +447,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           <FormField
                             control={form.control}
                             name="mimgebiFullName"
+                            disabled
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -459,6 +474,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <FormField
                           control={form.control}
                           name="mimgebisAddress"
+                          disabled
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3">
                               <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -488,10 +504,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <FormField
                           control={form.control}
                           name="mimgebiQalaqi"
+                          disabled
                           render={({ field }) => (
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
+                                  disabled
                                   value={field.value}
                                   onValueChange={(newValue) => {
                                     field.onChange(newValue);
@@ -521,6 +539,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           <FormField
                             control={form.control}
                             name="mimgebisNumber"
+                            disabled
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -652,7 +671,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         </div>
                       </div>
                       <div className="w-full lg:w-4/12 px-4">
-                        <div className="relative w-full mb-3">
+                        <div className="hidden relative w-full mb-3">
                           <FormField
                             control={form.control}
                             name="markedByCourier"
@@ -691,7 +710,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                         <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}
-                            name="courierComment"
+                            name="courierComment2"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
@@ -722,7 +741,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                   loading={loading}
                   onConfirm={async () => {
                     await onSubmit(form.getValues());
-                    router.push("/shipments");
+                    router.push("/couriershipments");
                     router.refresh();
                   }}
                   isOpen={isConfirmOpen}

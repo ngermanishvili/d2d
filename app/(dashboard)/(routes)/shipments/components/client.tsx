@@ -1,35 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-
-import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Separator } from "@/components/ui/separator";
-
 import { ShipmentColumn, columns } from "./columns";
 import { DataTable } from "@/components/ui/date-table";
-import { ApiList } from "@/components/ui/api-list";
 import { DatePickerWithRange } from "@/components/ui/date-picker";
 import { DateRange } from "react-day-picker";
 import { useSearchKeyStore } from "@/hooks/search-key-store";
-import { set } from "nprogress";
-import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import ShipmentFormXLSX from "../[shipmentId]/components/shipment-xlsx";
 import useInvoiceStore from "@/hooks/invoice-store";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
-  // formattedCosts: {
-  //   id: string;
-  //   city: string;
-  //   village: string;
-  //   weightRange: string;
-  //   price: string;
-  //   villagePrice: string;
-  //   createdAt: Date;
-  //   updatedAt: Date;
-  // }[];
 }
 interface Cost {
   id: string;
@@ -42,65 +24,7 @@ interface Cost {
   updatedAt: Date;
 }
 
-interface GroupedCosts {
-  [key: string]: {
-    weightRanges: {
-      weightRange: string;
-      price: string;
-      villagePrice: string;
-    }[];
-    villages?: {
-      name: string;
-      weightRanges: {
-        weightRange: string;
-        price: string;
-        villagePrice: string;
-      }[];
-    }[];
-  };
-}
-
-export const ShipmentClient: React.FC<ShipmentClientProps> = ({
-  data,
-  
-}) => {
-  // const groupCostsByCity = (formattedCosts: Cost[]): GroupedCosts => {
-  //   return formattedCosts.reduce<GroupedCosts>((acc, cost) => {
-  //     const { city, village, weightRange, price, villagePrice } = cost;
-  //     const key = city;
-
-  //     if (!acc[key]) {
-  //       acc[key] = { weightRanges: [], villages: [] };
-  //     }
-
-  //     if (village) {
-  //       const existingVillage = acc[key].villages?.find(
-  //         (v) => v.name === village
-  //       );
-  //       if (existingVillage) {
-  //         existingVillage.weightRanges.push({
-  //           weightRange,
-  //           price,
-  //           villagePrice,
-  //         });
-  //       } else {
-  //         acc[key].villages?.push({
-  //           name: village,
-  //           weightRanges: [{ weightRange, price, villagePrice }],
-  //         });
-  //       }
-  //     } else {
-  //       acc[key].weightRanges.push({ weightRange, price, villagePrice });
-  //     }
-
-  //     return acc;
-  //   }, {});
-  // };
-  // // Usage
-  // const groupedCosts: GroupedCosts = groupCostsByCity(formattedCosts);
-  // console.log(groupedCosts);
-  const router = useRouter();
-  const params = useParams();
+export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   const {
     totalDifs,
     setTotalDifs,
@@ -224,16 +148,12 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({
           title={`შეკვეთები (${filteredData.length})`}
           description="შეკვეთების ისტორია"
         />
-        {/* <Button onClick={() => router.push(`/shipments/new`)}>
-          <Plus className="mr-2 h-4 w-4 " />
-          შეკვეთის დამატება
-        </Button> */}
+
         <div>
           <ShipmentFormXLSX />
         </div>
       </div>
 
-      <Separator />
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
       <Heading
         title={`${sumOfTotals},${sumOfDifs},${sumOfPackagePrices},${sumOfWeightPrices} -დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
@@ -243,41 +163,20 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({
       {filteredData.length > 0 ? (
         <>
           <DataTable
-
             searchKey={searchKeyStore}
             columns={columns}
             data={filteredData}
           />
-
-          <Heading title="APIss" description="api calls for shipmensdts" />
-          <Separator />
-          <ApiList entityName="shipments" entityIdName="shipmentId" />
         </>
       ) : (
-        <DataTable
-          searchKey={searchKeyStore}
-          columns={columns}
-          data={filteredData}
-        />
+        <>
+          <DataTable
+            searchKey={searchKeyStore}
+            columns={columns}
+            data={filteredData}
+          />
+        </>
       )}
     </>
   );
 };
-
-// useEffect(() => {
-//   const sumOfDifs = sumOfNumbersInArray(
-//     filteredData
-//       .filter((shipmentsTofilter) => {
-//         return shipmentsTofilter.status === "ჩაბარებული";
-//       })
-//       .map((shipmentToMap) => shipmentToMap.price)
-//   );
-//   // Calculate the sum of totals whenever filteredData or dateRange changes
-//   const sumOfTotals = sumOfNumbersInArray(
-//     filteredData
-//       .filter((shipmentsTofilter) => {
-//         return shipmentsTofilter.status === "ჩაბარებული";
-//       })
-//       .map((shipmentToMap) => shipmentToMap.price)
-//   );
-// }, [filteredData]);
