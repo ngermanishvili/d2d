@@ -61,11 +61,7 @@ export function DataTable<TData, TValue>({
     <div>
       <div className="flex items-center py-4">
         <Input
-<<<<<<< HEAD
-          placeholder="ძებნა - ქალაქის სახელით"
-=======
           placeholder="ძიება"
->>>>>>> 69ad35e9ec9624a37ae253b161ff9ad21bf6399a
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
@@ -81,11 +77,10 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
-                    className={`${
-                      index === 0 || index === 1
-                        ? "sticky left-0 text-white"
-                        : ""
-                    } text-white bg-red-600 text-md border-black`}
+                    className={`${index === 0 || index === 1
+                      ? "sticky left-0 text-white"
+                      : ""
+                      } text-white bg-red-600 text-md border-black`}
                     style={{
                       whiteSpace: "nowrap",
                       overflow: "hidden",
@@ -95,9 +90,9 @@ export function DataTable<TData, TValue>({
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -114,9 +109,8 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell
                       key={cell.id}
-                      className={`${
-                        index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
-                      } p-2 border font-semibold`}
+                      className={`${index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
+                        } p-2 border font-semibold`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
