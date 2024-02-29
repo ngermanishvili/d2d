@@ -57,17 +57,19 @@ export function DataTable<TData, TValue>({
     },
   });
 
+
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="ძიება"
+          placeholder="Search"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
+
       </div>
       <div className="rounded-md border overflow-x-auto">
         <Table className="min-w-full">
@@ -77,15 +79,8 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
-                    className={`${index === 0 || index === 1
-                      ? "sticky left-0 text-white"
-                      : ""
-                      } text-white bg-red-600 text-md border-black`}
-                    style={{
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
+                    className={`${index === 0 || index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
+                    style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                   >
                     {header.isPlaceholder
                       ? null
@@ -148,7 +143,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          შემდეგი
+          შემდეგი გვერდი
         </Button>
       </div>
     </div>
