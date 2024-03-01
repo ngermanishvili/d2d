@@ -11,7 +11,7 @@ const CouriersPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/couriers");
+        const response = await axios.get("/api/couriers");
 
         setUsers(response.data);
       } catch (error) {
