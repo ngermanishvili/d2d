@@ -119,6 +119,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         ids,
         variable: email,
       };
+      console.log(data);
       await axios.patch("/api/shipments/courierupdate", data);
       // Handle success or any other logic
     } catch (error) {
@@ -164,8 +165,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onConfirm={() => {
-          setIsOpen(false);
           onUpdate();
+          setIsOpen(false);
         }}
         loading={false}
       />

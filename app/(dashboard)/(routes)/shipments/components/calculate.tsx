@@ -30,6 +30,7 @@ import {
 import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
 import SpaceImage from "@/assets/images/space.png";
+import { select } from "@material-tailwind/react";
 
 interface WeightRange {
   label: string;
@@ -38,10 +39,12 @@ interface WeightRange {
 
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
+  isCompany: boolean;
 }
 
 const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   hasInitialData,
+  isCompany,
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
@@ -69,7 +72,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCitiesNames,
     citiesNames,
   } = useCalculatorStore();
-
+  let companyPayment: number = 0;
   let weightCost: any;
   useEffect(() => {
     // Check if initialData is true
@@ -195,6 +198,14 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       );
     }
   }, [calculated, setCalculated]);
+  companyPayment = packagingUsed
+    ? parseFloat(itemPrice) - parseFloat(weightPrice) - 5
+    : parseFloat(itemPrice) - parseFloat(weightPrice);
+  useEffect(() => {
+    companyPayment > 0
+      ? (companyPayment = companyPayment - 2 * companyPayment)
+      : (companyPayment = companyPayment);
+  }, [companyPayment]);
 
   return (
     <>
@@ -240,7 +251,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         <SelectContent>
                           <SelectItem value="Sender">გამგზავნი</SelectItem>
                           <SelectItem value="Receiver">მიმღები</SelectItem>
-                          <SelectItem value="Invoice">ინვოისი</SelectItem>
+                          {isCompany ? (
+                            <SelectItem value="Invoice">ინვოისი</SelectItem>
+                          ) : null}
                         </SelectContent>
                       </Select>
                     </div>
@@ -390,6 +403,32 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 fontSize: "16px",
               }}
             />
+            {selectedParty === "Invoice" ? (
+              <>
+                <Typography.Title level={3} style={{ margin: "10px" }}>
+                  ანგარიშსწორება
+                </Typography.Title>
+                <Badge
+                  color="gray"
+                  className="text-md mt-3"
+                  status="success"
+                  count={`${companyPayment > 0 ? "+" : ""}${companyPayment} ₾`}
+                  showZero
+                  overflowCount={99999}
+                  style={{
+                    width: "150px",
+                    height: "35px",
+                    maxWidth: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "16px",
+                  }}
+                />
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

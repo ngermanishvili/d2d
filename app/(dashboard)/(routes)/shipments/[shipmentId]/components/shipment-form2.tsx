@@ -834,6 +834,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                 {showCalc && (
                   <ShippingCostGraph
                     hasInitialData={initialData ? true : false}
+                    isCompany={
+                      user?.userType === "იურიდიული პირი" ? true : false
+                    }
                   />
                 )}
 

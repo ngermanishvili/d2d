@@ -6,7 +6,7 @@ import { NextResponse, NextRequest } from "next/server";
 export async function PATCH(req: Request) {
     try {
         const { ids, variable } = await req.json();
-
+    
         const updatedShipments = await db.shipment.updateMany({
             where: {
                 id: {

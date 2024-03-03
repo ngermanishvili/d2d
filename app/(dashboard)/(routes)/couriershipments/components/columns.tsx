@@ -35,14 +35,10 @@ export type ShipmentColumn = {
   gamgzavniFullName: string;
 };
 
-
-
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
     header: ({ table }) => {
-      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
-
       return (
         <Checkbox
           checked={
@@ -55,15 +51,12 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
               if (filteredRowModel) {
                 const arr = filteredRowModel.rows.map((i) => i.original);
-                setFilteredDataxlsx(arr);
                 table.toggleAllPageRowsSelected(!!value);
 
                 // Do something with arr
               }
             } else {
               table.toggleAllPageRowsSelected(!!value);
-
-              setFilteredDataxlsx([]);
             }
           }}
           aria-label="Select all"
@@ -155,7 +148,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
 
   {
     accessorKey: "mimgebisNumber",

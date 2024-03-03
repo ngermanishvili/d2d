@@ -31,7 +31,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
 
     setFilteredData(filteredData);
   };
-
+  console.log("Sadsdadssad", data);
   return (
     <>
       <div className="flex items-center justify-between">

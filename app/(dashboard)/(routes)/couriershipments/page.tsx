@@ -4,9 +4,8 @@ import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
 import Error404Page from "@/providers/error-page";
 
-const ShipmentPage = async () => {
+const CouriersShipmentsPage = async () => {
   const userRole = await currentRole();
-
   let formattedShipments: ShipmentColumn[] = [];
 
   const userEmail = await currentUserByEmail();
@@ -71,38 +70,34 @@ const ShipmentPage = async () => {
   const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
   console.log(
-    "🚀 ~ ShipmentPage ~ sumofTotal:",
+    "🚀 ~ CouriersShipmentsPage ~ sumofTotal:",
     sumOfTotals,
     "sum of this day",
     sumOfToday
   );
-  formattedShipments = shipments
-    .map((item) => ({
-      id: item.id,
-      mimgebiFullName: item?.mimgebiFullName,
-      gamgzavniFullName: item?.gamgzavniFullName,
-      city: item.city,
-      markedByCourier: item.markedByCourier ? "კი" : "არა",
-      brittle: item.brittle ? "კი" : "არა",
-      packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
-      price: item.price,
-      phoneNumber: item.phoneNumber,
-      address: item.address,
-      mimgebisNumber: item.mimgebisNumber,
-      mimgebisAddress: item.mimgebisAddress,
-      mimgebiQalaqi: item.mimgebiQalaqi,
-      createdAt: item.createdAt.toISOString(), // Convert Date to string
-      updatedAt: item.updatedAt.toISOString(), // Convert Date to string
-      trackingId: item.trackingId,
-      status: item.status,
-      courierComment: item.courierComment,
-      agebisDro: item?.agebisDro,
-      chabarebisDro: item?.chabarebisDro,
-      gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
-    }))
-    .filter(
-      (ship) => ship.status !== "დასრულებული" && ship.status !== "ჩაბარებული"
-    );
+  formattedShipments = shipments.map((item) => ({
+    id: item.id,
+    mimgebiFullName: item?.mimgebiFullName,
+    gamgzavniFullName: item?.gamgzavniFullName,
+    city: item.city,
+    markedByCourier: item.markedByCourier ? "კი" : "არა",
+    brittle: item.brittle ? "კი" : "არა",
+    packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
+    price: item.price,
+    phoneNumber: item.phoneNumber,
+    address: item.address,
+    mimgebisNumber: item.mimgebisNumber,
+    mimgebisAddress: item.mimgebisAddress,
+    mimgebiQalaqi: item.mimgebiQalaqi,
+    createdAt: item.createdAt.toISOString(), // Convert Date to string
+    updatedAt: item.updatedAt.toISOString(), // Convert Date to string
+    trackingId: item.trackingId,
+    status: item.status,
+    courierComment: item.courierComment,
+    agebisDro: item?.agebisDro,
+    chabarebisDro: item?.chabarebisDro,
+    gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
+  }));
 
   if (userRole !== "ADMIN" && userRole !== "COURIER") {
     return <Error404Page />;
@@ -117,4 +112,4 @@ const ShipmentPage = async () => {
   );
 };
 
-export default ShipmentPage;
+export default CouriersShipmentsPage;
