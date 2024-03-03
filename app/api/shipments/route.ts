@@ -59,6 +59,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
       packagePrice,
       itemPrice, // Add itemPrice to the destructuring
       gamgzavnisqalaqi,
+      companyPays,
     } = body;
 
     const userId = await currentUserId();
@@ -142,6 +143,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
           gamgzavnisqalaqi,
           mimgebiFullName,
           gamgzavniFullName,
+          companyPays,
         },
       })
       .then((createdShipment) => {

@@ -140,6 +140,7 @@ model Shipment {
   whopays               String
   itemPrice             String?
   priceDif              String?
+  companyPays           String?
   packagePrice          String?
   weightPrice           String?
   agebisDro             String?

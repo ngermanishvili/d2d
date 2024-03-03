@@ -34,9 +34,12 @@ const ShipmentPage = async () => {
       brittle: item.brittle ? "კი" : "არა",
       packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
       price: item.price,
+      label: item.label,
+      itemPrice: item.itemPrice,
       priceDif: item.priceDif,
       weightPrice: item.weightPrice,
       packagePrice: item.packagePrice,
+      companyPays: item.companyPays,
       phoneNumber: item.phoneNumber,
       address: item.address,
       mimgebisNumber: item.mimgebisNumber,
@@ -49,11 +52,10 @@ const ShipmentPage = async () => {
       courierComment: item.courierComment,
       agebisDro: item?.agebisDro,
       chabarebisDro: item?.chabarebisDro,
+      whopays: item?.whopays,
       gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
     })
   );
-
-
 
   if (userRole !== "ADMIN" && userRole !== "USER") {
     return <Error404Page />;
@@ -64,16 +66,10 @@ const ShipmentPage = async () => {
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
-          <ShipmentClient
-            
-            data={formattedShipments}
-          />
+          <ShipmentClient data={formattedShipments} />
         </RoleGate>
         <RoleGate allowedRole="USER">
-          <ShipmentClient
-            
-            data={formattedShipments}
-          />
+          <ShipmentClient data={formattedShipments} />
         </RoleGate>
         {userRole !== "ADMIN" && userRole !== "USER" && (
           <div className="flex items-center justify-center h-[50vh]"></div>

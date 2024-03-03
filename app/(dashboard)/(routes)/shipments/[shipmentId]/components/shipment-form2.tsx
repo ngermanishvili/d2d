@@ -43,7 +43,8 @@ import Image from "next/image";
 import Logo from "@/assets/images/d2d.jpg";
 import { Alert, Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
-import SpaceImage from "@/assets/images/space.png"
+import SpaceImage from "@/assets/images/space.png";
+import { parse } from "path";
 
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1),
@@ -68,6 +69,7 @@ const formSchema = z.object({
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
   priceDif: z.string().nullable().optional(),
+  companyPays: z.string().nullable().optional(),
   weightPrice: z.string().nullable().optional(),
   packagePrice: z.string().nullable().optional(),
   chabarebisDro: z.string().nullable().optional(),
@@ -245,7 +247,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const onSubmit = async (data: ShipmentFormValues) => {
     //  const aris = aq iqneba check
     try {
-      console.log(address);
       data.address = address;
       data.packaging = packagingUsed;
       data.label = range;
@@ -257,6 +258,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
       data.weightPrice = weightPrice;
       data.packagePrice = packagingUsed ? "5" : "0";
+      selectedParty === "Invoice"
+        ? (data.companyPays = (
+            parseFloat(itemPrice) -
+            (parseFloat(weightPrice) + parseFloat(data.packagePrice))
+          ).toString())
+        : (data.companyPays = itemPrice);
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
@@ -266,7 +273,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
         const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
-        console.log("Shipment created with ID:", shipmentId.id);
         setQrText(shipmentId);
       }
 
@@ -304,7 +310,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     // Check if initialData is true
     if (initialData) {
       setCity(initialData.city);
-      console.log(selectedCity);
       setPackagingUsed(initialData.packaging);
       setSelectedParty((initialData.whopays as "Sender") || "Receiver" || "");
 
@@ -821,9 +826,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                         </div>
                       </RoleGate>
 
-                      <div className="w-full lg:w-4/12 px-4">
-
-                      </div>
+                      <div className="w-full lg:w-4/12 px-4"></div>
                     </div>
                   </div>
                 </div>

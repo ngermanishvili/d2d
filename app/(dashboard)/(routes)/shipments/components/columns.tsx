@@ -1,7 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint no-use-before-define: 0 */ // --> OFF
-
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -17,9 +13,13 @@ export type ShipmentColumn = {
   address: string;
   city: string;
   price: string;
-  priceDif: string|null;
-  weightPrice: string|null;
-  packagePrice: string|null;
+  priceDif: string | null;
+  itemPrice: string | null;
+  whopays: string | null;
+  label: string | null;
+  weightPrice: string | null;
+  packagePrice: string | null;
+  companyPays: string | null;
   brittle: string;
   packaging: string;
   createdAt: string | Date;
@@ -73,7 +73,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     },
     cell: ({ row }) => {
       const { pushId, ids, deleteId } = useidSetStore();
-
       return (
         <Checkbox
           checked={row.getIsSelected()}
@@ -112,12 +111,12 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "სტატუსი",
     cell: ({ row }) => {
       const statusColors: { [key: string]: string } = {
-        "ჩაბარებული": "green",
-        "მიმდინარე": "orange",
+        ჩაბარებული: "green",
+        მიმდინარე: "orange",
         "უარი ჩაბარებაზე": "red",
         "გაუქმებულია გამგზავნის მიერ": "red",
         "ვერ ხერხდება დაკავშირება": "blue",
-        "ასაღები": "orange",
+        ასაღები: "orange",
       };
 
       const color = statusColors[row.original.status] || "blue";
@@ -135,7 +134,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "createdAt",
     header: "შეკვეთის თარიღი",
     cell: ({ row }) => (
-      <div >
+      <div>
         {new Date(row.original.createdAt).toLocaleDateString("en-US", {
           year: "2-digit",
           month: "2-digit",
@@ -172,7 +171,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
     cell: ({ row }) => (
-      <div >
+      <div>
         <p className="text-gray-900 font-semibold">{`+995 ${row.original.mimgebisNumber}`}</p>
       </div>
     ),
@@ -183,7 +182,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <div style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
-
           {row.original.mimgebiQalaqi}
         </p>
       </div>
@@ -195,7 +193,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <div style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
-
           {row.original.mimgebisAddress}
         </p>
       </div>
@@ -215,9 +212,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "phoneNumber",
     header: "ტელეფონის ნომერი",
-    cell: ({ row }) => (
-      <div>{`+995 ${row.original.phoneNumber}`}</div>
-    ),
+    cell: ({ row }) => <div>{`+995 ${row.original.phoneNumber}`}</div>,
   },
   {
     accessorKey: "city",
@@ -236,9 +231,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     accessorKey: "packaging",
     header: "D2D შეფუთვა",
-    cell: ({ row }) => (
-      <div>{`${row.original.packaging}`}</div>
-    ),
+    cell: ({ row }) => <div>{`${row.original.packaging}`}</div>,
   },
   {
     accessorKey: "price",

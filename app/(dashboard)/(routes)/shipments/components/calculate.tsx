@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/select";
 import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
-import SpaceImage from "@/assets/images/space.png"
+import SpaceImage from "@/assets/images/space.png";
 
 interface WeightRange {
   label: string;
@@ -107,7 +107,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     range: WeightRange | null,
     usePackaging: boolean,
     city: string = selectedCity,
-    selectedPartyParam: "Sender" | "Receiver" | "" = selectedParty,
+    selectedPartyParam: "Sender" | "Receiver" | "Invoice" | "" = selectedParty,
     itemPrice: number = useCalculatorStore.getState().itemPrice === ""
       ? 0
       : parseFloat(useCalculatorStore.getState().itemPrice)
@@ -146,7 +146,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setRange(selectedLabel);
   };
 
-  const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+  const handlePartyChange = (newParty: "Sender" | "Receiver" | "Invoice") => {
     setSelectedParty(newParty);
   };
 
@@ -201,7 +201,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
-            <Image className="hidden lg:hidden" src={SpaceImage} alt="space" width={500} height={500} />
+            <Image
+              className="hidden lg:hidden"
+              src={SpaceImage}
+              alt="space"
+              width={500}
+              height={500}
+            />
           </div>
         </div>
         <Divider
@@ -223,7 +229,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       <Select
                         value={selectedParty || ""}
                         onValueChange={(value) =>
-                          handlePartyChange(value as "Sender" | "Receiver")
+                          handlePartyChange(
+                            value as "Sender" | "Receiver" | "Invoice"
+                          )
                         }
                       >
                         <SelectTrigger className=" bg-white">
@@ -232,6 +240,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         <SelectContent>
                           <SelectItem value="Sender">გამგზავნი</SelectItem>
                           <SelectItem value="Receiver">მიმღები</SelectItem>
+                          <SelectItem value="Invoice">ინვოისი</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

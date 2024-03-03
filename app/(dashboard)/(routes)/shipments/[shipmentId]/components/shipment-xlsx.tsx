@@ -7,18 +7,19 @@ import useInvoiceStore from "@/hooks/invoice-store";
 
 export type ShipmentColumn = {
   id: string;
-  name: string;
-  lastName: string;
   phoneNumber: string;
   address: string;
   city: string;
   price: string;
+  priceDif: string | null;
+  weightPrice: string | null;
+  packagePrice: string | null;
+  companyPays: string | null;
   brittle: string;
+  label: string;
   packaging: string;
   createdAt: string | Date;
   updatedAt: string | Date; // Allow both string and Date
-  mimgebisName: string;
-  mimgebisLastname: string;
   mimgebisNumber: string;
   mimgebisAddress: string;
   markedByCourier: string;
@@ -28,13 +29,23 @@ export type ShipmentColumn = {
   courierComment: string;
   agebisDro: string | null;
   chabarebisDro: string | null;
+  gamgzavnisqalaqi: string;
+  mimgebiFullName: string;
+  gamgzavniFullName: string;
 };
 
 const ShipmentFormXLSX = () => {
-  const { totalDifs, totalPackagePrices, totalWeigtPrices, totaloftotals } =
-    useInvoiceStore();
-  console.log(totalDifs, totalPackagePrices, totalWeigtPrices, totaloftotals);
+  const {
+    totalDifs,
+    totalPackagePrices,
+    totalWeigtPrices,
+    totaloftotals,
+    totalCompanyPays,
+    totalItemPrices,
+  } = useInvoiceStore();
   const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
+  console.log("🚀 ~ ShipmentFormXLSX ~ filteredDataxlsx:", filteredDataxlsx);
+
   const renameKeys = (data: any, index: number) => {
     return {
       "თრექინგი ID": data.trackingId,
@@ -48,7 +59,8 @@ const ShipmentFormXLSX = () => {
       ფასი: data.price,
       "მონიშნულია კურიერის მიერ": data.markedByCourier,
       აღწერა: data.courierComment,
-      label: data.label,
+      "წონითი კატეგორია": data.label,
+
       "ვინ იხდის?": data.whopays,
       "პროდუქტის ფასი": data.itemPrice,
       "აღწერის თარიღი": data.updatedAt,
@@ -61,9 +73,11 @@ const ShipmentFormXLSX = () => {
       "მიმღების  ქალაქი": data.mimgebiQalaqi,
       "მიმღების მისამართი": data.mimgebisAddress,
       "სრული ფასების ჯამი": index === 0 ? totaloftotals : "",
+      "ნივთის ფასების ჯამი": index === 0 ? totalItemPrices : "",
       "სრულ ფასს მინუს ნივთის ფასების ჯამი": index === 0 ? totalDifs : "",
       "წონის ფასების ჯამი": index === 0 ? totalWeigtPrices : "",
       "სერვისის ფასების ჯამი": index === 0 ? totalPackagePrices : "",
+      "კომპანიასთან ანგარიშსწორება": index === 0 ? totalCompanyPays : "",
     };
   };
 
