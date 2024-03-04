@@ -1,6 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks /
-/ eslint-disable react-hooks/exhaustive-deps /
-/ eslint no-use-before-define: 0 */ // --> OFF
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint no-use-before-define: 0 */ // --> OFF
+
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
@@ -45,6 +46,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
     header: ({ table }) => {
+      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
       return (
         <Checkbox
           checked={
@@ -52,8 +54,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => {
-            const { filteredDataxlsx, setFilteredDataxlsx } =
-              useShipmentStoreXLSX();
             if (value === true) {
               const filteredRowModel = table.getFilteredRowModel();
 
