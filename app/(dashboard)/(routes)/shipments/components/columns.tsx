@@ -214,7 +214,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
   {
     accessorKey: "phoneNumber",
-    header: "ტელეფონის ნომერი",
+    header: "გამგზავნის ნომერი",
     cell: ({ row }) => <div>{`+995 ${row.original.phoneNumber}`}</div>,
   },
   {

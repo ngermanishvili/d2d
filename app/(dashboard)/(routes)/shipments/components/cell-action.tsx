@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
@@ -21,6 +21,7 @@ import { UserShimpmentModal } from "./user-shipment-modal";
 import { Shipment } from "@prisma/client";
 import { ShipmentStatusHistory } from "@prisma/client";
 import usePhoneStore from "@/hooks/user-shipment-phone";
+import { userModalStore } from "@/hooks/user-modal-store";
 
 interface CellActionProps {
   data: ShipmentColumn;
@@ -90,7 +91,18 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       console.error("Error updating to true:", error);
     }
   };
-  const { phone } = usePhoneStore();
+
+  const { phone, setPhone } = usePhoneStore();
+
+  const { isUserModalOpen, onClose } = userModalStore();
+
+  useEffect(() => {
+    if (isUserModalOpen) {
+      fetchData(data.id);
+    }
+
+  }, [isUserModalOpen])
+
 
   return (
     <>
@@ -101,8 +113,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         loading={loading}
       />
       <UserShimpmentModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        isOpen={isUserModalOpen}
+        onClose={() => onClose()}
         onConfirm={() => {
           setLoading(true);
           handlePhoneChange(data.id, phone);
@@ -131,6 +143,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
+
                 router.push(`/shipments/${data.id}`);
                 router.refresh();
               }}

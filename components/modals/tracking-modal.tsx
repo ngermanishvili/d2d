@@ -95,7 +95,7 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
       {shipmentData ? (
         <ShipmentDetails shipmentData={shipmentData} />
       ) : (
-        <p>Loading...</p>
+        "შეკვეთა ვერ მოიძებნა"
       )}
 
       {statusHistory && statusHistory.length > 0 && (
