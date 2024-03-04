@@ -85,6 +85,12 @@ const ShipmentPage = async () => {
     brittle: item.brittle ? "კი" : "არა",
     packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
     price: item.price,
+    label: item.label,
+    itemPrice: item.itemPrice,
+    priceDif: item.priceDif,
+    weightPrice: item.weightPrice,
+    packagePrice: item.packagePrice,
+    companyPays: item.companyPays,
     phoneNumber: item.phoneNumber,
     address: item.address,
     mimgebisNumber: item.mimgebisNumber,
@@ -97,6 +103,7 @@ const ShipmentPage = async () => {
     courierComment: item.courierComment,
     agebisDro: item?.agebisDro,
     chabarebisDro: item?.chabarebisDro,
+    whopays: item?.whopays,
     gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
   }));
 
