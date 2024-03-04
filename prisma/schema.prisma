@@ -146,10 +146,21 @@ model Shipment {
   agebisDro             String?
   chabarebisDro         String?
   assignedCourier       String?
+  couriers              Courier[] 
   User                  User                    @relation(fields: [userId], references: [id])
   ShipmentStatusHistory ShipmentStatusHistory[]
 
   @@index([userId])
+}
+model Courier {
+  id         String   @id @default(uuid())
+  shipmentId String
+  email      String?
+  timestamp  DateTime @default(now())
+
+  Shipment Shipment @relation(fields: [shipmentId], references: [id])
+
+  @@index([shipmentId])
 }
 
 model ShippingPrice {

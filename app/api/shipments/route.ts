@@ -170,7 +170,11 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status: status,
       },
     });
-
+    await db.courier.create({
+      data: {
+        shipmentId: shipmentId,
+      },
+    });
     return NextResponse.json({ shipmentId, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
@@ -189,6 +193,7 @@ export async function GET(req: Request, { params }: { params: {} }) {
     const shipments = await db.shipment.findMany({
       where: { userId },
       include: {
+        couriers: true,
         ShipmentStatusHistory: true,
       },
     });

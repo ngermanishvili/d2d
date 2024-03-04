@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/rules-of-hooks /
+/ eslint-disable react-hooks/exhaustive-deps /
+/ eslint no-use-before-define: 0 */ // --> OFF
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";

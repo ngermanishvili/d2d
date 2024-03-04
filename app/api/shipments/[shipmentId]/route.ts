@@ -105,6 +105,16 @@ export async function PATCH(
 
     // Create a new entry in ShipmentStatusHistory only if the status is changed
     if (isStatusChanged) {
+      if (status === "აღებული") {
+        await db.shipment.update({
+          where: {
+            id: params.shipmentId,
+          },
+          data: {
+            assignedCourier: null,
+          },
+        });
+      }
       await db.shipmentStatusHistory.create({
         data: {
           shipmentId: params.shipmentId,
@@ -127,7 +137,7 @@ export async function DELETE(
     if (!params.shipmentId) {
       return new NextResponse("Shipment ID is required", { status: 400 });
     }
-    
+
     console.log(params.shipmentId);
 
     // Check if there are any related ShipmentStatusHistory records
@@ -140,6 +150,20 @@ export async function DELETE(
     // If there are related ShipmentStatusHistory records, delete them first
     if (relatedStatusHistory.length > 0) {
       await db.shipmentStatusHistory.deleteMany({
+        where: {
+          shipmentId: params.shipmentId,
+        },
+      });
+    }
+    const relatedCouriers = await db.courier.findMany({
+      where: {
+        shipmentId: params.shipmentId,
+      },
+    });
+
+    // If there are related ShipmentStatusHistory records, delete them first
+    if (relatedCouriers.length > 0) {
+      await db.courier.deleteMany({
         where: {
           shipmentId: params.shipmentId,
         },
