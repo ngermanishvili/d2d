@@ -109,7 +109,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     range: WeightRange | null,
     usePackaging: boolean,
     city: string = selectedCity,
-    selectedPartyParam: "Sender" | "Receiver" | "" = selectedParty,
+    selectedPartyParam: "Sender" | "Receiver" | "Invoice" | "" = selectedParty,
     itemPrice: number = parseInt(useCalculatorStore.getState().itemPrice)
   ) => {
     let shipmentPrice = 0;
@@ -136,7 +136,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setTotalPrice(totalPrice);
   };
 
-  const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+  const handlePartyChange = (newParty:"Sender" | "Receiver"|"Invoice") => {
     setSelectedParty(newParty);
     calculateTotalPrice(selectedRange, packagingUsed, selectedCity, newParty);
   };
@@ -163,7 +163,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           id="party-select"
           value={selectedParty}
           onChange={(e) =>
-            handlePartyChange(e.target.value as "Sender" | "Receiver")
+            handlePartyChange(e.target.value as "Sender" | "Receiver"|"Invoice")
           }
         >
           <option value="Sender">Sender</option>
