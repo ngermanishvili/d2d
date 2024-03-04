@@ -45,8 +45,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
     header: ({ table }) => {
-      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
-
       return (
         <Checkbox
           checked={
@@ -54,6 +52,8 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
           onCheckedChange={(value) => {
+            const { filteredDataxlsx, setFilteredDataxlsx } =
+              useShipmentStoreXLSX();
             if (value === true) {
               const filteredRowModel = table.getFilteredRowModel();
 
