@@ -85,14 +85,13 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     try {
       const data = {
         ids,
-        variable: shemotana,
+        variable: "საწყობში",
       };
 
       await axios.patch("/api/shipments", data);
       // Handle success or any other logic
     } catch (error) {
-      // Handle error
-      console.error("Error updating to true:", error);
+      console.error("Error updating to false:", error);
     }
   };
 
@@ -100,13 +99,12 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     try {
       const data = {
         ids,
-        variable: gatana,
+        variable: "გატანილი ჩასაბარებლად",
       };
 
       await axios.patch("/api/shipments", data);
       // Handle success or any other logic
     } catch (error) {
-      // Handle error
       console.error("Error updating to false:", error);
     }
   };
@@ -210,11 +208,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               >
                 წაშლა
               </Button>
-              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
-                შეცვალე სტატუსი (გატანილი)
-              </Button>
               <Button className="m-2" onClick={() => handleUpdateToFalse()}>
-                {" "}
+                შეცვალე სტატუსი (გატანილი)
+              </Button>{" "}
+              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
                 შეცვალე სტატუსი (საწყობში)
               </Button>
               <Button className="m-2" onClick={() => setIsOpen(true)}>

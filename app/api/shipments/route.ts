@@ -229,7 +229,6 @@ export async function PATCH(req: Request) {
     const { ids, variable } = await req.json();
 
     console.log("Received PATCH request with IDs:", ids);
-    const status = variable ? "დასრულებული" : "";
     const updatedShipments = await db.shipment.updateMany({
       where: {
         id: {
@@ -237,8 +236,7 @@ export async function PATCH(req: Request) {
         },
       },
       data: {
-        markedByCourier: variable,
-        status: status,
+        status: variable,
       },
     });
 
