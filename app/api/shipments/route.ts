@@ -240,6 +240,29 @@ export async function PATCH(req: Request) {
       },
     });
 
+    // Iterate over each shipment ID and create a shipmentStatusHistory entry
+    for (const shipmentId of ids) {
+      await db.shipmentStatusHistory.create({
+        data: {
+          shipmentId: shipmentId,
+          status: variable,
+        },
+      });
+    }
+
+    if (variable === "საწყობში" || variable === "დასრულებული") {
+      await db.shipment.updateMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+        data: {
+          assignedCourier: null,
+        },
+      });
+    }
+
     return NextResponse.json(updatedShipments);
   } catch (error) {
     console.error("[SHIPMENT_UPDATE]", error);

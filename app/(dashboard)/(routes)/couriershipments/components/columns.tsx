@@ -112,18 +112,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "createdAt",
-    header: "შეკვეთის თარიღი",
-    cell: ({ row }) => (
-      <div className="w-[140px]">
-        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
-          year: "2-digit",
-          month: "2-digit",
-          day: "2-digit",
-        })}
-      </div>
-    ),
+    accessorKey: "price",
+    header: "ფასი",
   },
+
   {
     accessorKey: "mimgebiFullName",
     header: "მიმღების სახელი და გვარი",
@@ -133,6 +125,19 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
           {" "}
           {row.original.mimgebiFullName}
         </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "createdAt",
+    header: "შეკვეთის თარიღი",
+    cell: ({ row }) => (
+      <div className="w-[140px]">
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
       </div>
     ),
   },
@@ -200,6 +205,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
     ),
   },
+
   {
     accessorKey: "city",
     header: "ქალაქი",
@@ -220,10 +226,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <div className="w-[100px]">{`${row.original.packaging}`}</div>
     ),
-  },
-  {
-    accessorKey: "price",
-    header: "ფასი",
   },
   {
     accessorKey: "markedByCourier",

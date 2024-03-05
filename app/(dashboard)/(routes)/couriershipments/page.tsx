@@ -16,6 +16,9 @@ const CouriersShipmentsPage = async () => {
     include: {
       ShipmentStatusHistory: true, // Include shipment status history
     },
+    orderBy: {
+      createdAt: "desc",
+    },
   });
   const amountInTotal = shipments
     .filter((shipmentsTofilter) => {
@@ -69,35 +72,75 @@ const CouriersShipmentsPage = async () => {
     .map((shipmentToMap) => shipmentToMap.price);
   const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
-  console.log(
-    "🚀 ~ CouriersShipmentsPage ~ sumofTotal:",
-    sumOfTotals,
-    "sum of this day",
-    sumOfToday
-  );
-  formattedShipments = shipments.map((item) => ({
-    id: item.id,
-    mimgebiFullName: item?.mimgebiFullName,
-    gamgzavniFullName: item?.gamgzavniFullName,
-    city: item.city,
-    markedByCourier: item.markedByCourier ? "კი" : "არა",
-    brittle: item.brittle ? "კი" : "არა",
-    packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
-    price: item.price,
-    phoneNumber: item.phoneNumber,
-    address: item.address,
-    mimgebisNumber: item.mimgebisNumber,
-    mimgebisAddress: item.mimgebisAddress,
-    mimgebiQalaqi: item.mimgebiQalaqi,
-    createdAt: item.createdAt.toISOString(), // Convert Date to string
-    updatedAt: item.updatedAt.toISOString(), // Convert Date to string
-    trackingId: item.trackingId,
-    status: item.status,
-    courierComment: item.courierComment,
-    agebisDro: item?.agebisDro,
-    chabarebisDro: item?.chabarebisDro,
-    gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
-  }));
+
+  formattedShipments = shipments.map((item) => {
+    if (!item.packagePrice || !item.itemPrice) {
+      return {
+        id: item.id,
+        mimgebiFullName: item?.mimgebiFullName,
+        gamgzavniFullName: item?.gamgzavniFullName,
+        city: item.city,
+        markedByCourier: item.markedByCourier ? "კი" : "არა",
+        brittle: item.brittle ? "კი" : "არა",
+        packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
+        price: item.price,
+        phoneNumber: item.phoneNumber,
+        address: item.address,
+        mimgebisNumber: item.mimgebisNumber,
+        mimgebisAddress: item.mimgebisAddress,
+        mimgebiQalaqi: item.mimgebiQalaqi,
+        createdAt: item.createdAt.toISOString(), // Convert Date to string
+        updatedAt: item.updatedAt.toISOString(), // Convert Date to string
+        trackingId: item.trackingId,
+        status: item.status,
+        courierComment: item.courierComment,
+        agebisDro: item?.agebisDro,
+        chabarebisDro: item?.chabarebisDro,
+        gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
+      };
+    } else {
+      return {
+        id: item.id,
+        mimgebiFullName: item?.mimgebiFullName,
+        gamgzavniFullName: item?.gamgzavniFullName,
+        city: item.city,
+        markedByCourier: item.markedByCourier ? "კი" : "არა",
+        brittle: item.brittle ? "კი" : "არა",
+        packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
+        price:
+          item.whopays === "Sender" &&
+          item.status === "მიმდინარე" &&
+          item.weightPrice
+            ? (
+                parseFloat(item.weightPrice) + parseFloat(item.packagePrice)
+              ).toString()
+            : item.whopays === "Receiver" &&
+              item.status !== "აღებული" &&
+              item.weightPrice &&
+              item.status === "გატანილი ჩასაბარებლად" &&
+              item.itemPrice
+            ? (
+                parseFloat(item.weightPrice) +
+                parseFloat(item.packagePrice) +
+                parseFloat(item.itemPrice)
+              ).toString()
+            : "ინვოისით გადახდა",
+        phoneNumber: item.phoneNumber,
+        address: item.address,
+        mimgebisNumber: item.mimgebisNumber,
+        mimgebisAddress: item.mimgebisAddress,
+        mimgebiQalaqi: item.mimgebiQalaqi,
+        createdAt: item.createdAt.toISOString(), // Convert Date to string
+        updatedAt: item.updatedAt.toISOString(), // Convert Date to string
+        trackingId: item.trackingId,
+        status: item.status,
+        courierComment: item.courierComment,
+        agebisDro: item?.agebisDro,
+        chabarebisDro: item?.chabarebisDro,
+        gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
+      };
+    }
+  });
 
   if (userRole !== "ADMIN" && userRole !== "COURIER") {
     return <Error404Page />;

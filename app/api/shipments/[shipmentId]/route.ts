@@ -38,7 +38,7 @@ export async function PATCH(
       packaging,
       price,
       markedByCourier,
-
+      whopays,
       mimgebisNumber,
       mimgebisAddress,
       mimgebiQalaqi,
@@ -93,6 +93,7 @@ export async function PATCH(
         courierComment,
         courierComment2,
         label,
+        whopays,
         chabarebisDro,
         gamgzavnisqalaqi,
         mimgebiFullName,
@@ -105,7 +106,7 @@ export async function PATCH(
 
     // Create a new entry in ShipmentStatusHistory only if the status is changed
     if (isStatusChanged) {
-      if (status === "აღებული") {
+      if (status === "საწყობში") {
         await db.shipment.update({
           where: {
             id: params.shipmentId,

@@ -30,7 +30,7 @@ const ShipmentPage = async () => {
       mimgebiFullName: item?.mimgebiFullName,
       gamgzavniFullName: item?.gamgzavniFullName,
       city: item.city,
-      markedByCourier: item.markedByCourier ? "კი" : "არა",
+      markedByCourier: item.markedByCourier ? "მოინიშნა" : "არმონიშნულა",
       brittle: item.brittle ? "კი" : "არა",
       packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
       price: item.price,

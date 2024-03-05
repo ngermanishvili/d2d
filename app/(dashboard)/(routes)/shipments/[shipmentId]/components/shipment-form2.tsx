@@ -278,6 +278,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
 
       if (initialData) {
         data.courierComment2 = initialData.courierComment2;
+        data.whopays = selectedParty;
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
       }
 

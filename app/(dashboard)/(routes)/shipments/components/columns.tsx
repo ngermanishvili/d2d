@@ -242,7 +242,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
   {
     accessorKey: "markedByCourier",
-    header: "სტატუსი",
+    header: "მონიშვნა",
   },
 
   {
