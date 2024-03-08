@@ -15,6 +15,7 @@ export type InvoiceColumn = {
   sruliPasebisMinusJami: string;
   wonisPasebisJami: string;
   servisisPasebisJami: string;
+  angarishsworeba: string;
   invoiceNumber: string | null;
 };
 

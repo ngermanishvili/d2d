@@ -21,13 +21,11 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-
 interface XlsxUploadProps {
   user: string;
 }
 type UploadXlsxValues = z.infer<typeof formSchema>;
 const formSchema = z.object({
-
   name: z.string().min(1, {
     message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
   }),
@@ -39,17 +37,16 @@ const formSchema = z.object({
   }),
   sruliPasebisMinusJami: z.string().min(1, {
     message: "სრული ფასების მინუს ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
-
   }),
   wonisPasebisJami: z.string().min(1, {
     message: "წონის ფასების ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
-
   }),
   servisisPasebisJami: z.string().min(1, {
     message: "სერვისის ფასების ჯამი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
-
   }),
-
+  angarishsworeba: z.string().min(1, {
+    message: "ანგარიშსწორება უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს ",
+  }),
 });
 const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
   const router = useRouter();
@@ -66,8 +63,7 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
       sruliPasebisMinusJami: "",
       wonisPasebisJami: "",
       servisisPasebisJami: "",
-
-
+      angarishsworeba: "",
     },
   });
   useEffect(() => {
@@ -181,7 +177,6 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="servisisPasebisJami"
@@ -200,8 +195,26 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
                   <FormMessage />
                 </FormItem>
               )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="angarishsworeba"
+              render={({ field }) => (
+                <FormItem className="relative mb-3">
+                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    ანგარიშსწორება
+                  </FormLabel>
+                  <FormControl className="relative rounded-md shadow-sm">
+                    <Input
+                      placeholder="სახელი"
+                      {...field}
+                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-
           </div>
           <CldUploadWidget onUpload={onUpload} uploadPreset="setazgik">
             {({ open }) => {
@@ -221,7 +234,10 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
               );
             }}
           </CldUploadWidget>
-          <Button className="flex justify-center w-full bg-red-400 items-center self-center" type="submit">
+          <Button
+            className="flex justify-center w-full bg-red-400 items-center self-center"
+            type="submit"
+          >
             ატვირთვა
           </Button>
         </form>
