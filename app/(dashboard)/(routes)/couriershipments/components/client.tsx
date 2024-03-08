@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { ShipmentColumn, columns } from "./columns";
 import { CourierDataTable } from "@/components/ui/date-table-courier";
-import { DatePickerWithRange } from "@/components/ui/date-picker";
+import { DatePickerWithRange } from "@/components/ui/date-picker-courier";
 import { DateRange } from "react-day-picker";
 
 interface ShipmentClientProps {
@@ -31,7 +31,6 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
 
     setFilteredData(filteredData);
   };
-
   return (
     <>
       <div className="flex items-center justify-between">

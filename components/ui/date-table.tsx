@@ -33,6 +33,9 @@ import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import { ShipmentColumn } from "@/hooks/xlsx-shipment-store";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { TrackingModal } from "../modals/tracking-modal";
+import { userModalStore } from "@/hooks/user-modal-store";
+
 interface DataTableProps<TData extends ShipmentColumn, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
@@ -85,14 +88,15 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     try {
       const data = {
         ids,
-        variable: shemotana,
+        variable: "საწყობში",
       };
 
       await axios.patch("/api/shipments", data);
       // Handle success or any other logic
     } catch (error) {
-      // Handle error
-      console.error("Error updating to true:", error);
+      console.error("Error updating to false:", error);
+    } finally {
+      router.refresh();
     }
   };
 
@@ -100,14 +104,15 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     try {
       const data = {
         ids,
-        variable: gatana,
+        variable: "გატანილი ჩასაბარებლად",
       };
 
       await axios.patch("/api/shipments", data);
       // Handle success or any other logic
     } catch (error) {
-      // Handle error
       console.error("Error updating to false:", error);
+    } finally {
+      router.refresh();
     }
   };
 
@@ -115,10 +120,12 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
 
   const onUpdate = async () => {
     try {
+      console.log(ids, "onupdateIDan");
       const data = {
         ids,
         variable: email,
       };
+      console.log(data);
       await axios.patch("/api/shipments/courierupdate", data);
       // Handle success or any other logic
     } catch (error) {
@@ -158,14 +165,16 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     table.resetGlobalFilter();
   };
 
+  const { isUserModalOpen, onOpen, onClose } = userModalStore();
+
   return (
     <>
       <AlertModalForRegisterCourier
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onConfirm={() => {
-          setIsOpen(false);
           onUpdate();
+          setIsOpen(false);
         }}
         loading={false}
       />
@@ -209,11 +218,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               >
                 წაშლა
               </Button>
-              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
-                შეცვალე სტატუსი (გატანილი)
-              </Button>
               <Button className="m-2" onClick={() => handleUpdateToFalse()}>
-                {" "}
+                შეცვალე სტატუსი (გატანილი)
+              </Button>{" "}
+              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
                 შეცვალე სტატუსი (საწყობში)
               </Button>
               <Button className="m-2" onClick={() => setIsOpen(true)}>
@@ -258,6 +266,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    onDoubleClick={() => onOpen()}
                   >
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell

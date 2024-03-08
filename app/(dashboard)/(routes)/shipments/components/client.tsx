@@ -9,6 +9,8 @@ import { DateRange } from "react-day-picker";
 import { useSearchKeyStore } from "@/hooks/search-key-store";
 import ShipmentFormXLSX from "../[shipmentId]/components/shipment-xlsx";
 import useInvoiceStore from "@/hooks/invoice-store";
+import { useidSetStore } from "@/hooks/select-store";
+import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -31,10 +33,14 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     setTotalPackagePrices,
     setTotalWeightPrices,
     setTotalOfTotals,
+    settotalCompanyPays,
+    settotalItemPrices,
   } = useInvoiceStore();
+  const { ids } = useidSetStore();
+
   const [initialData, setInitialData] = useState<ShipmentColumn[]>(data);
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
-  useState<ShipmentColumn[]>(data);
+
   const { searchKeyStore, setSearchKeyStore } = useSearchKeyStore();
 
   const handleDateRangeChange = (dateRange: DateRange) => {
@@ -51,29 +57,61 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   };
   const amountInTotal = filteredData
     .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
     })
     .map((shipmentToMap) => shipmentToMap.price);
   const amountInTotalOfDifs = filteredData
     .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
     })
     .map((shipmentToMap) =>
       shipmentToMap.priceDif ? shipmentToMap.priceDif : "0"
     );
   const amountInTotalOfWeightPrices = filteredData
     .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
     })
     .map((shipmentToMap) => {
       return shipmentToMap.weightPrice ? shipmentToMap.weightPrice : "0";
     });
   const amountInTotalOfPackagePrices = filteredData
     .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
     })
     .map((shipmentToMap) => {
       return shipmentToMap.packagePrice ? shipmentToMap.packagePrice : "0";
+    });
+  const amountInTotalOfCompanyPays = filteredData
+    .filter((shipmentsTofilter) => {
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
+    })
+    .map((shipmentToMap) => {
+      return shipmentToMap.companyPays ? shipmentToMap.companyPays : "0";
+    });
+  const amountInTotalOfitemPrices = filteredData
+    .filter((shipmentsTofilter) => {
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" &&
+        ids.includes(shipmentsTofilter.id)
+      );
+    })
+    .map((shipmentToMap) => {
+      return shipmentToMap.itemPrice ? shipmentToMap.itemPrice : "0";
     });
   const sumOfNumbersInArray = (numberStrings: string[]): number => {
     let total = 0;
@@ -125,10 +163,13 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   const sumOfDifs = sumOfNumbersInArray(amountInTotalOfDifs);
   const sumOfWeightPrices = sumOfNumbersInArray(amountInTotalOfWeightPrices);
   const sumOfPackagePrices = sumOfNumbersInArray(amountInTotalOfPackagePrices);
+  const sumOfCompanyPays = sumOfNumbersInArray(amountInTotalOfCompanyPays);
+  const sumOfItemPrices = sumOfNumbersInArray(amountInTotalOfitemPrices);
   const handleSearchKeyChange = () => {
     // Reset the filteredData whenever the searchKey changes
     setFilteredData(initialData);
   };
+  const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
 
   useEffect(() => {
     // Listen for changes in the searchKey and reset filteredData
@@ -139,8 +180,10 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     setTotalPackagePrices(sumOfPackagePrices.toString());
     setTotalWeightPrices(sumOfWeightPrices.toString());
     setTotalOfTotals(sumOfTotals.toString());
-  }, [filteredData]);
-
+    settotalCompanyPays(sumOfCompanyPays.toString());
+    settotalItemPrices(sumOfItemPrices.toString());
+    setFilteredDataxlsx(filteredData.filter((item) => ids.includes(item.id)));
+  }, [ids, filteredData]);
   return (
     <>
       <div className="flex items-center justify-between">

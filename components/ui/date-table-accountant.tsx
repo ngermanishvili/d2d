@@ -84,7 +84,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     try {
       const data = {
         ids,
-        variable: shemotana,
+        variable: "დასრულებული",
       };
 
       await axios.patch("/api/shipments", data);

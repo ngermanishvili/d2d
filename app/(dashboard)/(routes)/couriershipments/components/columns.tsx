@@ -35,14 +35,10 @@ export type ShipmentColumn = {
   gamgzavniFullName: string;
 };
 
-
-
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
     header: ({ table }) => {
-      const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
-
       return (
         <Checkbox
           checked={
@@ -55,15 +51,12 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
               if (filteredRowModel) {
                 const arr = filteredRowModel.rows.map((i) => i.original);
-                setFilteredDataxlsx(arr);
                 table.toggleAllPageRowsSelected(!!value);
 
                 // Do something with arr
               }
             } else {
               table.toggleAllPageRowsSelected(!!value);
-
-              setFilteredDataxlsx([]);
             }
           }}
           aria-label="Select all"
@@ -119,6 +112,23 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
+    accessorKey: "price",
+    header: "ფასი",
+  },
+
+  {
+    accessorKey: "mimgebiFullName",
+    header: "მიმღების სახელი და გვარი",
+    cell: ({ row }) => (
+      <div className="w-[200px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.mimgebiFullName}
+        </p>
+      </div>
+    ),
+  },
+  {
     accessorKey: "createdAt",
     header: "შეკვეთის თარიღი",
     cell: ({ row }) => (
@@ -132,16 +142,8 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "mimgebiFullName",
-    header: "მიმღების სახელი და გვარი",
-    cell: ({ row }) => (
-      <div className="w-[250px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold">
-          {" "}
-          {row.original.mimgebiFullName}
-        </p>
-      </div>
-    ),
+    accessorKey: "markedByCourier",
+    header: "თანხა",
   },
   {
     accessorKey: "gamgzavnisqalaqi",
@@ -155,7 +157,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       </div>
     ),
   },
-
 
   {
     accessorKey: "mimgebisNumber",
@@ -208,6 +209,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
       <div className="w-[150px]">{`+995 ${row.original.phoneNumber}`}</div>
     ),
   },
+
   {
     accessorKey: "city",
     header: "ქალაქი",
@@ -228,14 +230,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <div className="w-[100px]">{`${row.original.packaging}`}</div>
     ),
-  },
-  {
-    accessorKey: "price",
-    header: "ფასი",
-  },
-  {
-    accessorKey: "markedByCourier",
-    header: "სტატუსი",
   },
 
   {

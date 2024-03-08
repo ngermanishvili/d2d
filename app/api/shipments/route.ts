@@ -59,6 +59,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
       packagePrice,
       itemPrice, // Add itemPrice to the destructuring
       gamgzavnisqalaqi,
+      companyPays,
     } = body;
 
     const userId = await currentUserId();
@@ -142,6 +143,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
           gamgzavnisqalaqi,
           mimgebiFullName,
           gamgzavniFullName,
+          companyPays,
         },
       })
       .then((createdShipment) => {
@@ -168,7 +170,11 @@ export async function POST(req: Request, { params }: { params: {} }) {
         status: status,
       },
     });
-
+    await db.courier.create({
+      data: {
+        shipmentId: shipmentId,
+      },
+    });
     return NextResponse.json({ shipmentId, savedAdress });
   } catch (error) {
     console.log("[SHIPMENT_POST]", error);
@@ -187,6 +193,7 @@ export async function GET(req: Request, { params }: { params: {} }) {
     const shipments = await db.shipment.findMany({
       where: { userId },
       include: {
+        couriers: true,
         ShipmentStatusHistory: true,
       },
     });
@@ -200,6 +207,19 @@ export async function GET(req: Request, { params }: { params: {} }) {
 
 export async function DELETE(req: Request) {
   const { ids } = await req.json();
+  console.log(ids);
+  for (const shipmentId of ids) {
+    await db.shipmentStatusHistory.deleteMany({
+      where: {
+        shipmentId: shipmentId,
+      },
+    });
+    await db.courier.deleteMany({
+      where: {
+        shipmentId: shipmentId,
+      },
+    });
+  }
 
   try {
     const deletedShipments = await db.shipment.deleteMany({
@@ -222,7 +242,6 @@ export async function PATCH(req: Request) {
     const { ids, variable } = await req.json();
 
     console.log("Received PATCH request with IDs:", ids);
-    const status = variable ? "დასრულებული" : "";
     const updatedShipments = await db.shipment.updateMany({
       where: {
         id: {
@@ -230,10 +249,32 @@ export async function PATCH(req: Request) {
         },
       },
       data: {
-        markedByCourier: variable,
-        status: status,
+        status: variable,
       },
     });
+
+    // Iterate over each shipment ID and create a shipmentStatusHistory entry
+    for (const shipmentId of ids) {
+      await db.shipmentStatusHistory.create({
+        data: {
+          shipmentId: shipmentId,
+          status: variable,
+        },
+      });
+    }
+
+    if (variable === "საწყობში" || variable === "დასრულებული") {
+      await db.shipment.updateMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+        data: {
+          assignedCourier: null,
+        },
+      });
+    }
 
     return NextResponse.json(updatedShipments);
   } catch (error) {

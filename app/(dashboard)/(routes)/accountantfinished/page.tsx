@@ -78,26 +78,33 @@ const ShipmentPage = async () => {
   // );
   formattedShipments = shipments.map((item) => ({
     id: item.id,
-    mimgebiFullName: item?.mimgebiFullName,
-    gamgzavniFullName: item?.gamgzavniFullName,
-    city: item.city,
-    markedByCourier: item.markedByCourier ? "კი" : "არა",
-    brittle: item.brittle ? "კი" : "არა",
-    packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
-    price: item.price,
-    phoneNumber: item.phoneNumber,
-    address: item.address,
-    mimgebisNumber: item.mimgebisNumber,
-    mimgebisAddress: item.mimgebisAddress,
-    mimgebiQalaqi: item.mimgebiQalaqi,
-    createdAt: item.createdAt.toISOString(), // Convert Date to string
-    updatedAt: item.updatedAt.toISOString(), // Convert Date to string
-    trackingId: item.trackingId,
-    status: item.status,
-    courierComment: item.courierComment,
-    agebisDro: item?.agebisDro,
-    chabarebisDro: item?.chabarebisDro,
-    gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
+      mimgebiFullName: item?.mimgebiFullName,
+      gamgzavniFullName: item?.gamgzavniFullName,
+      city: item.city,
+      markedByCourier: item.markedByCourier ? "კი" : "არა",
+      brittle: item.brittle ? "კი" : "არა",
+      packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
+      price: item.price,
+      label: item.label,
+      itemPrice: item.itemPrice,
+      priceDif: item.priceDif,
+      weightPrice: item.weightPrice,
+      packagePrice: item.packagePrice,
+      companyPays: item.companyPays,
+      phoneNumber: item.phoneNumber,
+      address: item.address,
+      mimgebisNumber: item.mimgebisNumber,
+      mimgebisAddress: item.mimgebisAddress,
+      mimgebiQalaqi: item.mimgebiQalaqi,
+      createdAt: item.createdAt.toISOString(), // Convert Date to string
+      updatedAt: item.updatedAt.toISOString(), // Convert Date to string
+      trackingId: item.trackingId,
+      status: item.status,
+      courierComment: item.courierComment,
+      agebisDro: item?.agebisDro,
+      chabarebisDro: item?.chabarebisDro,
+      whopays: item?.whopays,
+      gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
   }));
 
   return (

@@ -39,7 +39,7 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
         </div>
 
       </div>
-      <div className="flex justify-between mt-5">
+      <div className="flex justify-between mt-5 w-full flex-col sm:flex-row">
         <div className="">
           <Title level={4}>გამგზავნის ინფორმაცია</Title>
           <Paragraph>
@@ -90,7 +90,7 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
   const { phone } = usePhoneStore();
   return (
     <Modal
-      width={1000}
+      className="w-full"
       title={`შეკვეთა: ${shipmentData?.trackingId}`}
       open={isOpen}
       onCancel={onClose}
@@ -103,16 +103,20 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
           <LoadingSpinner />
         </>
       )}
-
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-
         <Button
           disabled={loading}
           variant="destructive"
-          onClick={() => onConfirm(phone)}
+          onClick={() => {
+            onClose()
+
+            onConfirm(phone)
+          }
+          }
         >
           დახურვა
         </Button>
+
       </div>
     </Modal>
   );

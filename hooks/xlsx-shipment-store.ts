@@ -2,12 +2,17 @@ import create from "zustand";
 
 export type ShipmentColumn = {
   id: string;
-  mimgebiFullName: string;
-  gamgzavniFullName: string;
   phoneNumber: string;
   address: string;
   city: string;
   price: string;
+  priceDif: string | null;
+  itemPrice: string | null;
+  whopays: string | null;
+  label: string | null;
+  weightPrice: string | null;
+  packagePrice: string | null;
+  companyPays: string | null;
   brittle: string;
   packaging: string;
   createdAt: string | Date;
@@ -21,6 +26,9 @@ export type ShipmentColumn = {
   courierComment: string;
   agebisDro: string | null;
   chabarebisDro: string | null;
+  gamgzavnisqalaqi: string;
+  mimgebiFullName: string;
+  gamgzavniFullName: string;
 };
 
 interface ShipmentStore {

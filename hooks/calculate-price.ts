@@ -16,8 +16,8 @@ interface CalculatorStore {
   weightPrice: string;
   setWeightPrice: (weightPrice: string) => void;
   setCity: (city: string) => void;
-  selectedParty: "Sender" | "Receiver" | "";
-  setSelectedParty: (party: "Sender" | "Receiver" | "") => void;
+  selectedParty: "Sender" | "Receiver" | "Invoice" | "";
+  setSelectedParty: (party: "Sender" | "Receiver" | "Invoice" | "") => void;
   itemPrice: string;
   setItemPrice: (itemPrice: number) => void;
   totalPrice: number; // New state for the total price (shipment + item price)
@@ -49,7 +49,7 @@ const useCalculatorStore = create<CalculatorStore>((set) => ({
   setRange: (range) => set({ range }),
   selectedParty: "",
   setSelectedParty: (party) => set({ selectedParty: party }),
-  itemPrice: "",
+  itemPrice: "0",
   setItemPrice: (itemPrice) => set({ itemPrice: itemPrice.toString() }),
   totalPrice: 0, // Initialize the total price state
   setTotalPrice: (totalPrice) => set({ totalPrice }), // Implementation for setTotalPrice

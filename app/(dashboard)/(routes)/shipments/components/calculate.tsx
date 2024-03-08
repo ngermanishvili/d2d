@@ -29,7 +29,8 @@ import {
 } from "@/components/ui/select";
 import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
-import SpaceImage from "@/assets/images/space.png"
+import SpaceImage from "@/assets/images/space.png";
+import { select } from "@material-tailwind/react";
 
 interface WeightRange {
   label: string;
@@ -38,10 +39,12 @@ interface WeightRange {
 
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
+  isCompany: boolean;
 }
 
 const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   hasInitialData,
+  isCompany,
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
@@ -69,7 +72,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCitiesNames,
     citiesNames,
   } = useCalculatorStore();
-
+  let companyPayment: number = 0;
   let weightCost: any;
   useEffect(() => {
     // Check if initialData is true
@@ -107,7 +110,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     range: WeightRange | null,
     usePackaging: boolean,
     city: string = selectedCity,
-    selectedPartyParam: "Sender" | "Receiver" | "" = selectedParty,
+    selectedPartyParam: "Sender" | "Receiver" | "Invoice" | "" = selectedParty,
     itemPrice: number = useCalculatorStore.getState().itemPrice === ""
       ? 0
       : parseFloat(useCalculatorStore.getState().itemPrice)
@@ -146,7 +149,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setRange(selectedLabel);
   };
 
-  const handlePartyChange = (newParty: "Sender" | "Receiver") => {
+  const handlePartyChange = (newParty: "Sender" | "Receiver" | "Invoice") => {
     setSelectedParty(newParty);
   };
 
@@ -195,13 +198,27 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       );
     }
   }, [calculated, setCalculated]);
+  companyPayment = packagingUsed
+    ? parseFloat(itemPrice) - parseFloat(weightPrice) - 5
+    : parseFloat(itemPrice) - parseFloat(weightPrice);
+  useEffect(() => {
+    companyPayment > 0
+      ? (companyPayment = companyPayment - 2 * companyPayment)
+      : (companyPayment = companyPayment);
+  }, [companyPayment]);
 
   return (
     <>
       <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
-            <Image className="hidden lg:hidden" src={SpaceImage} alt="space" width={500} height={500} />
+            <Image
+              className="hidden lg:hidden"
+              src={SpaceImage}
+              alt="space"
+              width={500}
+              height={500}
+            />
           </div>
         </div>
         <Divider
@@ -223,7 +240,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       <Select
                         value={selectedParty || ""}
                         onValueChange={(value) =>
-                          handlePartyChange(value as "Sender" | "Receiver")
+                          handlePartyChange(
+                            value as "Sender" | "Receiver" | "Invoice"
+                          )
                         }
                       >
                         <SelectTrigger className=" bg-white">
@@ -232,6 +251,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                         <SelectContent>
                           <SelectItem value="Sender">გამგზავნი</SelectItem>
                           <SelectItem value="Receiver">მიმღები</SelectItem>
+                          {isCompany ? (
+                            <SelectItem value="Invoice">ინვოისი</SelectItem>
+                          ) : null}
                         </SelectContent>
                       </Select>
                     </div>
@@ -381,6 +403,32 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 fontSize: "16px",
               }}
             />
+            {selectedParty === "Invoice" ? (
+              <>
+                <Typography.Title level={3} style={{ margin: "10px" }}>
+                  ანგარიშსწორება
+                </Typography.Title>
+                <Badge
+                  color="gray"
+                  className="text-md mt-3"
+                  status="success"
+                  count={`${companyPayment > 0 ? "+" : ""}${companyPayment} ₾`}
+                  showZero
+                  overflowCount={99999}
+                  style={{
+                    width: "150px",
+                    height: "35px",
+                    maxWidth: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    fontSize: "16px",
+                  }}
+                />
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

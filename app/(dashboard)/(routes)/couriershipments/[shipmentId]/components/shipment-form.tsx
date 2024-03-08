@@ -196,7 +196,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    console.log(address);
+    console.log(data);
     data.address = address;
     //  const aris = aq iqneba check
     try {
@@ -218,8 +218,22 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       }
 
       if (initialData) {
+        let paidToCourier: boolean;
+        if (initialData.whopays === "Invoice") {
+          data.markedByCourier = true;
+        }
+
+        // GASAKETEBELIA TU AVTOMATURAD UNDA SHEICVALOS
+        // RAME SHEMTXVEVASHI TANXIS AGEBIS MACHVENEBELI0
+        if (initialData.whopays === "Sender") {
+        }
+        if (initialData.whopays === "Receiver") {
+        }
         data.courierComment = initialData.courierComment;
-        await axios.patch(`/api/shipments/${params.shipmentId}`, data);
+        data.markedByCourier = await axios.patch(
+          `/api/shipments/${params.shipmentId}`,
+          data
+        );
       }
 
       toast.success(toastMessage);
@@ -470,7 +484,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-6/12 px-4">
+                      <div className="w-full lg:w-6/12">
                         <FormField
                           control={form.control}
                           name="mimgebisAddress"
@@ -534,7 +548,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           )}
                         />
                       </div>
-                      <div className="w-full lg:w-6/12 px-4">
+                      <div className="w-full lg:w-6/12 ">
                         <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}
@@ -564,8 +578,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap">
-                      <div className="w-full lg:w-4/12 px-4">
+                    <div className="w-full flex flex-col md:flex-row px-4">
+                      <div className="w-full md:w-1/2 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}
@@ -670,33 +684,38 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-4/12 px-4">
-                        <div className="hidden relative w-full mb-3">
+                      <div className="w-full md:w-1/2 px-4">
+                        <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}
                             name="markedByCourier"
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  საწყობშია ნივთი?
+                                  თანხის აღება მოხდა?
                                 </FormLabel>
                                 <FormControl>
                                   <Select
-                                    value={field.value ? "Yes" : "No"}
+                                    disabled={
+                                      initialData?.whopays === "Invoice"
+                                        ? true
+                                        : false
+                                    }
+                                    value={field.value ? "კი" : "არა"}
                                     onValueChange={(newValue) => {
                                       const isMarkedByCourier =
-                                        newValue === "Yes";
+                                        newValue === "კი";
                                       field.onChange(isMarkedByCourier);
                                     }}
                                   >
                                     <SelectTrigger>
                                       <SelectValue>
-                                        {field.value ? "Yes" : "No"}
+                                        {field.value ? "კი" : "არა"}
                                       </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
-                                      <SelectItem value="Yes">Yes</SelectItem>
-                                      <SelectItem value="No">No</SelectItem>
+                                      <SelectItem value="კი">კი</SelectItem>
+                                      <SelectItem value="არა">არა</SelectItem>
                                     </SelectContent>
                                   </Select>
                                 </FormControl>
@@ -706,7 +725,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-4/12 px-4">
+                    </div>
+                    <div className="flex flex-wrap">
+                      <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}

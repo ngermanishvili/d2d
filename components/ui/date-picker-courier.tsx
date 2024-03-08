@@ -30,8 +30,8 @@ export function DatePickerWithRange({
   const [date, setDate] = React.useState<DateRange | undefined>(() => {
     const today = new Date();
     return {
-      from: undefined,
-      to: undefined,
+      from: today,
+      to: addDays(today, 1),
     };
   });
   return (
