@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
@@ -18,10 +18,11 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   const params = useParams();
 
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handleDateRangeChange = (dateRange: DateRange) => {
     const filteredData = data.filter((shipment) => {
-      const shipmentDate = new Date(shipment.createdAt);
+      const shipmentDate = shipment.updatedAt;
 
       return (
         (!dateRange.from || shipmentDate >= dateRange.from) &&
@@ -31,6 +32,22 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
 
     setFilteredData(filteredData);
   };
+  const calculateTotalPrice = (data: ShipmentColumn[]) => {
+    let sum = 0;
+    data.forEach((shipment) => {
+      if (shipment.status === "აღებული" || shipment.status === "ჩაბარებული") {
+        const price = parseFloat(shipment.price);
+        if (!isNaN(price)) {
+          sum += price;
+        }
+      }
+    });
+    setTotalPrice(sum);
+  };
+  useEffect(() => {
+    calculateTotalPrice(filteredData);
+  }, [filteredData]);
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -40,6 +57,8 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
         />
       </div>
       <Separator />
+      <p className="text-md">აღებული თანხა: {totalPrice}</p>
+
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
       {filteredData.length > 0 ? (
         <>

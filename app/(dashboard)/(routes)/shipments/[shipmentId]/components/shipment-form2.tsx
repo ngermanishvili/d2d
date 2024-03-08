@@ -283,6 +283,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       }
 
       toast.success(toastMessage);
+      setAddress("");
+      setCalculated(false);
+      setRange("");
+      setShipmentCost(0);
+      setItemPrice(0);
+      setTotalPrice(0);
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
