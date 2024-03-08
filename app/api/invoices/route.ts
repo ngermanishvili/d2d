@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 
-
-
 function generateTrackingNumber(): string {
-  const randomNumber = Math.floor(Math.random() * 9999).toString().padStart(4, '0');
+  const randomNumber = Math.floor(Math.random() * 9999)
+    .toString()
+    .padStart(4, "0");
   return `INV-${randomNumber}`;
 }
-
 
 export async function POST(req: Request) {
   try {
@@ -19,6 +18,7 @@ export async function POST(req: Request) {
       userId,
       createdAt,
       updatedAt,
+      angarishsworeba,
       sruliPasebisjami,
       sruliPasebisMinusJami,
       wonisPasebisJami,
@@ -28,7 +28,6 @@ export async function POST(req: Request) {
 
     const invoiceNumber = generateTrackingNumber();
 
-
     const urlsOfXlsx = await db.urlsOfXlsx.create({
       data: {
         invoiceNumber,
@@ -36,6 +35,7 @@ export async function POST(req: Request) {
         url,
         userId,
         createdAt,
+        angarishsworeba,
         updatedAt,
         sruliPasebisjami,
         sruliPasebisMinusJami,
@@ -64,7 +64,6 @@ export async function GET(req: Request) {
   }
 }
 
-
 export async function PATCH(req: Request) {
   try {
     const body = await req.json();
@@ -76,6 +75,8 @@ export async function PATCH(req: Request) {
       createdAt,
       updatedAt,
       sruliPasebisjami,
+      angarishsworeba,
+
       sruliPasebisMinusJami,
       wonisPasebisJami,
       servisisPasebisJami,
@@ -83,7 +84,6 @@ export async function PATCH(req: Request) {
     console.log("🚀 ~ PATCH ~ body:", body);
 
     const urlsOfXlsx = await db.urlsOfXlsx.updateMany({
-
       where: {
         id: body.id,
       },
@@ -93,6 +93,8 @@ export async function PATCH(req: Request) {
         url,
         userId,
         createdAt,
+        angarishsworeba,
+
         updatedAt,
         sruliPasebisjami,
         sruliPasebisMinusJami,
@@ -107,5 +109,3 @@ export async function PATCH(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
-
-
