@@ -24,8 +24,6 @@ interface NavItemProps {
   href: string;
 }
 
-
-
 function NavItem({ children, href }: NavItemProps) {
   return (
     <li>
@@ -51,8 +49,6 @@ export function PanelNavbar() {
       () => window.innerWidth >= 960 && setOpen(false)
     );
   }, []);
-
-
 
   return (
     <div className=" sticky top-4 z-0 mt-[100px]">
@@ -125,9 +121,11 @@ export function PanelNavbar() {
           <Collapse open={open}>
             <div className=" flex items-start justify-start">
               <div>
-                <Button placeholder="w-[200px]" color="gray">
-                  კაბინეტი
-                </Button>
+                <Link href="/settings">
+                  <Button placeholder="" color="gray">
+                    კაბინეტი
+                  </Button>
+                </Link>
               </div>
             </div>
             <div className="mt-3 border-t border-gray-200 mx-auto pt-4">

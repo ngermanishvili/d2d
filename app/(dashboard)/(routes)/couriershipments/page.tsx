@@ -3,6 +3,7 @@ import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
 import Error404Page from "@/providers/error-page";
+import { string } from "zod";
 
 const CouriersShipmentsPage = async () => {
   const userRole = await currentRole();
@@ -72,6 +73,7 @@ const CouriersShipmentsPage = async () => {
     .map((shipmentToMap) => shipmentToMap.price);
   const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
+  let price: string;
 
   formattedShipments = shipments.map((item) => {
     if (!item.packagePrice || !item.itemPrice) {
@@ -80,7 +82,7 @@ const CouriersShipmentsPage = async () => {
         mimgebiFullName: item?.mimgebiFullName,
         gamgzavniFullName: item?.gamgzavniFullName,
         city: item.city,
-        markedByCourier: item.markedByCourier ? "კი" : "არა",
+        markedByCourier: item.markedByCourier ? "აღებულია" : "ასაღებია",
         brittle: item.brittle ? "კი" : "არა",
         packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
         price: item.price,
@@ -99,32 +101,61 @@ const CouriersShipmentsPage = async () => {
         gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
       };
     } else {
+      if (item.status && item.weightPrice && item.itemPrice) {
+        if (item.whopays === "Receiver") {
+          if (
+            item.status === "გატანილი ჩასაბარებლად" ||
+            item.status === "ჩაბარებული"
+          ) {
+            price = (
+              parseFloat(item.weightPrice) +
+              parseFloat(item.packagePrice) +
+              parseFloat(item.itemPrice)
+            ).toString();
+          }
+          if (
+            item.status !== "გატანილი ჩასაბარებლად" &&
+            item.status !== "ჩაბარებული"
+          ) {
+            price = "იხდის მიმღები";
+          }
+        }
+        if (item.whopays === "Invoice") {
+          price = "ინვოისით გადახდა";
+          if (
+            (item.status === "გატანილი ჩასაბარებლად" ||
+              item.status === "ჩაბარებული") &&
+            item.itemPrice !== "0"
+          ) {
+            price = parseFloat(item.itemPrice).toString();
+          }
+        }
+        if (item.whopays === "Sender") {
+          if (item.status === "მიმდინარე" || item.status === "აღებული") {
+            price = (
+              parseFloat(item.weightPrice) + parseFloat(item.packagePrice)
+            ).toString();
+          } else {
+            price =
+              Number.isInteger(parseFloat(item.itemPrice)) &&
+              parseFloat(item.itemPrice).toString() !== "0"
+                ? parseFloat(item.itemPrice).toString()
+                : parseFloat(item.itemPrice).toString() === "0"
+                ? "გადაიხადა გამგზავმა"
+                : "";
+          }
+        }
+      }
+
       return {
         id: item.id,
         mimgebiFullName: item?.mimgebiFullName,
         gamgzavniFullName: item?.gamgzavniFullName,
         city: item.city,
-        markedByCourier: item.markedByCourier ? "კი" : "არა",
+        markedByCourier: item.markedByCourier ? "აღებულია" : "ასაღებია",
         brittle: item.brittle ? "კი" : "არა",
         packaging: item.packaging ? "შეფუთვით" : "შეფუთვის გარეშე",
-        price:
-          item.whopays === "Sender" &&
-          item.status === "მიმდინარე" &&
-          item.weightPrice
-            ? (
-                parseFloat(item.weightPrice) + parseFloat(item.packagePrice)
-              ).toString()
-            : item.whopays === "Receiver" &&
-              item.status !== "აღებული" &&
-              item.weightPrice &&
-              item.status === "გატანილი ჩასაბარებლად" &&
-              item.itemPrice
-            ? (
-                parseFloat(item.weightPrice) +
-                parseFloat(item.packagePrice) +
-                parseFloat(item.itemPrice)
-              ).toString()
-            : "ინვოისით გადახდა",
+        price: price,
         phoneNumber: item.phoneNumber,
         address: item.address,
         mimgebisNumber: item.mimgebisNumber,

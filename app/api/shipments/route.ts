@@ -207,6 +207,19 @@ export async function GET(req: Request, { params }: { params: {} }) {
 
 export async function DELETE(req: Request) {
   const { ids } = await req.json();
+  console.log(ids);
+  for (const shipmentId of ids) {
+    await db.shipmentStatusHistory.deleteMany({
+      where: {
+        shipmentId: shipmentId,
+      },
+    });
+    await db.courier.deleteMany({
+      where: {
+        shipmentId: shipmentId,
+      },
+    });
+  }
 
   try {
     const deletedShipments = await db.shipment.deleteMany({

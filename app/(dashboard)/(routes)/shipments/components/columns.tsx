@@ -47,6 +47,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     id: "select",
     header: ({ table }) => {
       const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
+      const { pushId, emptyId } = useidSetStore();
       return (
         <Checkbox
           checked={
@@ -58,7 +59,11 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
               const filteredRowModel = table.getFilteredRowModel();
 
               if (filteredRowModel) {
-                const arr = filteredRowModel.rows.map((i) => i.original);
+                const arr = filteredRowModel.rows.map((i) => {
+                  pushId(i.original.id);
+                  return i.original;
+                });
+
                 setFilteredDataxlsx(arr);
                 table.toggleAllPageRowsSelected(!!value);
 
@@ -66,7 +71,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
               }
             } else {
               table.toggleAllPageRowsSelected(!!value);
-
+              emptyId();
               setFilteredDataxlsx([]);
             }
           }}

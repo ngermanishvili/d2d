@@ -5,6 +5,7 @@ interface IdStore {
   ids: string[];
   pushId: (id: string) => void;
   deleteId: (id: string) => void;
+  emptyId: () => void;
 }
 
 // Create the Zustand store
@@ -16,5 +17,9 @@ export const useidSetStore = create<IdStore>((set) => ({
   pushId: (id) => set((state) => ({ ids: [...state.ids, id] })),
 
   // Function to delete an ID from the array
-  deleteId: (id) => set((state) => ({ ids: state.ids.filter((existingId) => existingId !== id) })),
+  deleteId: (id) =>
+    set((state) => ({
+      ids: state.ids.filter((existingId) => existingId !== id),
+    })),
+  emptyId: () => set((state) => ({ ids: [] })),
 }));

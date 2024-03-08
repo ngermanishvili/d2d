@@ -196,7 +196,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    console.log(address);
+    console.log(data);
     data.address = address;
     //  const aris = aq iqneba check
     try {
@@ -218,8 +218,22 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       }
 
       if (initialData) {
+        let paidToCourier: boolean;
+        if (initialData.whopays === "Invoice") {
+          data.markedByCourier = true;
+        }
+
+        // GASAKETEBELIA TU AVTOMATURAD UNDA SHEICVALOS
+        // RAME SHEMTXVEVASHI TANXIS AGEBIS MACHVENEBELI0
+        if (initialData.whopays === "Sender") {
+        }
+        if (initialData.whopays === "Receiver") {
+        }
         data.courierComment = initialData.courierComment;
-        await axios.patch(`/api/shipments/${params.shipmentId}`, data);
+        data.markedByCourier = await axios.patch(
+          `/api/shipments/${params.shipmentId}`,
+          data
+        );
       }
 
       toast.success(toastMessage);
@@ -678,10 +692,15 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             render={({ field }) => (
                               <FormItem className="relative w-full mb-3">
                                 <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  ჩაბარდა/აღებულია
+                                  თანხის აღება მოხდა?
                                 </FormLabel>
                                 <FormControl>
                                   <Select
+                                    disabled={
+                                      initialData?.whopays === "Invoice"
+                                        ? true
+                                        : false
+                                    }
                                     value={field.value ? "კი" : "არა"}
                                     onValueChange={(newValue) => {
                                       const isMarkedByCourier =

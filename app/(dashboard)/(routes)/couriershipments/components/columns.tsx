@@ -120,7 +120,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "mimgebiFullName",
     header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
-      <div className="w-[250px]" style={{ display: "flex" }}>
+      <div className="w-[200px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
           {row.original.mimgebiFullName}
@@ -140,6 +140,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         })}
       </div>
     ),
+  },
+  {
+    accessorKey: "markedByCourier",
+    header: "თანხა",
   },
   {
     accessorKey: "gamgzavnisqalaqi",
@@ -226,10 +230,6 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <div className="w-[100px]">{`${row.original.packaging}`}</div>
     ),
-  },
-  {
-    accessorKey: "markedByCourier",
-    header: "სტატუსი",
   },
 
   {

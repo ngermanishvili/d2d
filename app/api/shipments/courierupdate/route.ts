@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 export async function PATCH(req: Request) {
   try {
     const { ids, variable } = await req.json();
-    console.log(ids);
+    console.log(ids, "patch courierupdate");
     const updatedShipments = await db.shipment.updateMany({
       where: {
         id: {
