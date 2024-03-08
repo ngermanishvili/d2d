@@ -140,15 +140,28 @@ model Shipment {
   whopays               String
   itemPrice             String?
   priceDif              String?
+  companyPays           String?
   packagePrice          String?
   weightPrice           String?
   agebisDro             String?
   chabarebisDro         String?
   assignedCourier       String?
+  couriers              Courier[]
   User                  User                    @relation(fields: [userId], references: [id])
   ShipmentStatusHistory ShipmentStatusHistory[]
 
   @@index([userId])
+}
+
+model Courier {
+  id         String   @id @default(uuid())
+  shipmentId String
+  email      String?
+  timestamp  DateTime @default(now())
+
+  Shipment Shipment @relation(fields: [shipmentId], references: [id])
+
+  @@index([shipmentId])
 }
 
 model ShippingPrice {
@@ -156,8 +169,8 @@ model ShippingPrice {
   city         String
   village      String
   weightRange  String
-  price        String    // Adjust the data type as needed
-  villagePrice String   // Optional village-specific price
+  price        String // Adjust the data type as needed
+  villagePrice String // Optional village-specific price
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
