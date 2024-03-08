@@ -8,8 +8,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useidSetStore } from "@/hooks/select-store";
-import { Badge, Alert, Tag } from "antd";
-import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import { Tag } from "antd";
 
 export type ShipmentColumn = {
   id: string;
@@ -242,9 +241,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
+
   {
     accessorKey: "courierComment",
-    header: "კურიერის კომენტარი",
+    header: "მომხმარებლის კომენტარი",
     cell: ({ row }) => (
       <Tag className="p-2" color="geekblue">
         {row.original.courierComment}

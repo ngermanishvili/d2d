@@ -138,11 +138,11 @@ const CouriersShipmentsPage = async () => {
           } else {
             price =
               Number.isInteger(parseFloat(item.itemPrice)) &&
-              parseFloat(item.itemPrice).toString() !== "0"
+                parseFloat(item.itemPrice).toString() !== "0"
                 ? parseFloat(item.itemPrice).toString()
                 : parseFloat(item.itemPrice).toString() === "0"
-                ? "გადაიხადა გამგზავმა"
-                : "";
+                  ? "გადაიხადა გამგზავმა"
+                  : "";
           }
         }
       }

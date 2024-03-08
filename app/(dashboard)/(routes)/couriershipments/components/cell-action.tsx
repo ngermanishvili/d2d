@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ShipmentColumn } from "./columns"
 import { AlertModal } from "@/components/modals/alert-modal"
+import Link from "next/link"
 
 interface CellActionProps {
     data: ShipmentColumn
@@ -62,33 +63,13 @@ export const CellAction: React.FC<CellActionProps> = ({
                 onConfirm={onDelete}
                 loading={loading}
             />
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant='ghost' className="h-8 w-8 p-0">
-                        <span className="sr-only">
-                            გახსენი მენიუ
-                        </span>
-                        <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>
-                        Actions
-                    </DropdownMenuLabel>
-                    <DropdownMenuItem onClick={() => onCopy(data.id)}>
-                        <Copy className="mr-2 h-4 w-4" />
-                        დააკოპირე ID
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/couriershipments/${data.id}`)}>
-                        <Edit className="mr-2 h-4 w-4" />
-                        შეცვლა
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setOpen(true)}>
-                        <Trash className="mr-2 h-4 w-4" />
-                        წაშლა
-                    </DropdownMenuItem>
-                </DropdownMenuContent>
-            </DropdownMenu >
+            <div className="p-2">
+                <Link className="bg-black text-white w-full p-2 rounded-sm" href={`/couriershipments/${data.id}`}> შეცვალე სტატუსი </Link>
+
+            </div>
+
         </>
     )
 }
+
+

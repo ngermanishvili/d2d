@@ -24,6 +24,9 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { CreateModal } from "@/components/modals/shipment-create-modal";
+import { RocketIcon } from "@radix-ui/react-icons";
+import { Alert, AlertTitle } from "@/components/ui/alert";
+
 
 import {
   Select,
@@ -32,14 +35,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import ShippingCostGraph from "../../components/calculate";
 import { RoleGate } from "@/components/auth/role-gate";
-import AdressInput from "./adress";
 // import AdressInputClient from "./adress-client";
 import useAddressStore from "@/hooks/adress-store";
 import Image from "next/image";
 import Logo from "@/assets/images/d2d.jpg";
-import { Alert, Divider } from "antd";
+import { Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 
 const formSchema = z.object({
@@ -83,7 +84,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const { address, setAddress } = useAddressStore();
 
-  const title = initialData ? "შეცვალე შეკვეთა" : "შეკვეთის განთავსება";
+  const title = initialData ? "შეცვალე შეკვეთის სტატუსი" : "შეკვეთის განთავსება";
   const description = initialData
     ? "შეცვალე შეკვეთა"
     : "ახალი შეკვეთის დამატება";
@@ -283,18 +284,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       />
       <div className="flex items-center justify-between">
         <Heading title={title} description={description} />
-        {initialData && (
-          <Button
-            disabled={loading}
-            variant="destructive"
-            size="icon"
-            onClick={() => {
-              setOpen(true);
-            }}
-          >
-            <Trash className="h-4 w-4" />
-          </Button>
-        )}
       </div>
       <Separator />
 
@@ -314,7 +303,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
           </div>
 
           <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-            <p>მომხმარებლის კომენტარი{initialData?.courierComment}</p>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -408,7 +396,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           />
                         </div>
                       </div>
-                      <div className="w-full lg:w-6/12 px-4 mt-6 relative mb-3">
+
+                      <div className="w-full lg:w-6/12 px-4 relative mb-3">
                         <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
                           ქალაქი
                         </FormLabel>
@@ -444,9 +433,19 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
+                        <div className="w-full">
+                          <span className="block uppercase text-blueGray-600 text-md font-bold mb-2 bg-transparent text-purple-400">მომხმარებლის კომენტარი</span>
+                          <Alert>
+                            <RocketIcon className="h-4 w-4" />
+                            <AlertTitle className="mt-1">
+                              <p>{initialData?.courierComment}</p>
+                            </AlertTitle>
+                          </Alert>
+                        </div>
                       </div>
                     </div>
                   </div>
+
                   <Divider
                     type="vertical"
                     className="h-auto bg-red-600 w-1.5 rounded-sm mt-4"
@@ -483,32 +482,33 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             )}
                           />
                         </div>
-                      </div>
-                      <div className="w-full lg:w-6/12">
-                        <FormField
-                          control={form.control}
-                          name="mimgebisAddress"
-                          disabled
-                          render={({ field }) => (
-                            <FormItem className="relative w-full mb-3">
-                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                მისამართი
-                              </FormLabel>
-                              <FormControl className="relative rounded-md shadow-sm">
-                                <div className="relative">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="მისამართი"
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
-                                  />
-                                  <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+                        <div className="w-full lg:w-6/12">
+                          <FormField
+                            control={form.control}
+                            name="mimgebisAddress"
+                            disabled
+                            render={({ field }) => (
+                              <FormItem className="relative w-full mb-3">
+                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                  მისამართი
+                                </FormLabel>
+                                <FormControl className="relative rounded-md shadow-sm">
+                                  <div className="relative">
+                                    <Input
+                                      disabled={loading}
+                                      placeholder="მისამართი"
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                    />
+                                    <FaAddressCard className="absolute top-[17px] right-[10px] w-5 h-5" />
+                                  </div>
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+
                       </div>
 
                       <div className="w-full lg:w-6/12 px-4 relative mb-3">
@@ -547,8 +547,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
-                      </div>
-                      <div className="w-full lg:w-6/12 ">
                         <div className="relative w-full mb-3">
                           <FormField
                             control={form.control}
@@ -578,181 +576,181 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       </div>
                     </div>
 
-                    <div className="w-full flex flex-col md:flex-row px-4">
-                      <div className="w-full md:w-1/2 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            control={form.control}
-                            name="status"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  სტატუსი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <Select
-                                    value={field.value}
-                                    onValueChange={(newValue) => {
-                                      field.onChange(newValue);
-                                    }}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue>{field.value}</SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      {/* {ADMIN როლგეითი} */}
-                                      <RoleGate allowedRole="ADMIN">
-                                        <SelectItem value="მიმდინარე">
-                                          მიმდინარე
-                                        </SelectItem>
-                                        <SelectItem value="ჩაბარებული">
-                                          ჩაბარებული
-                                        </SelectItem>
-                                        <SelectItem value="უარი ჩაბარებაზე">
-                                          უარი ჩაბარებაზე
-                                        </SelectItem>
-                                        <SelectItem value="არ არის მისამართზე">
-                                          არ არის მისამართზე
-                                        </SelectItem>
-                                        <SelectItem value="არ იღებს ყურმილს ">
-                                          არ იღებს ყურმილს{" "}
-                                        </SelectItem>
-                                        <SelectItem value="აღებული">
-                                          აღებული{" "}
-                                        </SelectItem>
-                                        <SelectItem value="ვერ ხდება დაკავშირება">
-                                          ვერ ხდება დაკავშირება
-                                        </SelectItem>
-                                        <SelectItem value="მეორედ გატანა">
-                                          მეორედ გატანა
-                                        </SelectItem>
-                                        <SelectItem value="უბრუნდება გამგზავნს">
-                                          უბრუნდება გამგზავნს
-                                        </SelectItem>
-                                        <SelectItem value="გაუქმებულია გამგზავნის მიერ ">
-                                          გაუქმებულია გამგზავნის მიერ{" "}
-                                        </SelectItem>
-                                        <SelectItem value="ასაღები">
-                                          ასაღები{" "}
-                                        </SelectItem>
-                                        <SelectItem value="საწყობში">
-                                          საწყობში
-                                        </SelectItem>
-                                        <SelectItem value="ფილიალიდან გაცემა ">
-                                          ფილიალიდან გაცემა{" "}
-                                        </SelectItem>
-                                        <SelectItem value="გატანილი ჩასაბარებლად">
-                                          გატანილი ჩასაბარებლად{" "}
-                                        </SelectItem>
-                                        <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">
-                                          დაუბრუნდა გამგზავნს, დასრულება
-                                        </SelectItem>
-                                        <SelectItem value="ვერ მოხერხდა დაკავშირება">
-                                          ვერ მოხერხდა დაკავშირება{" "}
-                                        </SelectItem>
-                                      </RoleGate>
-                                      {/* {USER როლგეითი} */}
-                                      <RoleGate allowedRole="COURIER">
-                                        <SelectItem value="მიმდინარე">
-                                          მიმდინარე
-                                        </SelectItem>
-                                        <SelectItem value="ჩაბარებული">
-                                          ჩაბარებული
-                                        </SelectItem>
-                                        <SelectItem value="უარი ჩაბარებაზე">
-                                          უარი ჩაბარებაზე
-                                        </SelectItem>
-                                        <SelectItem value="არ არის მისამართზე">
-                                          არ არის მისამართზე
-                                        </SelectItem>
-                                        <SelectItem value="არ იღებს ყურმილს ">
-                                          არ იღებს ყურმილს{" "}
-                                        </SelectItem>
-                                        <SelectItem value="აღებული">
-                                          აღებული{" "}
-                                        </SelectItem>
-                                        <SelectItem value="ვერ ხდება დაკავშირება">
-                                          ვერ ხდება დაკავშირება
-                                        </SelectItem>
-                                      </RoleGate>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      </div>
-                      <div className="w-full md:w-1/2 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            control={form.control}
-                            name="markedByCourier"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                    <h2 className="font-bold  p-4">დაწერე კომენტარი ან შეცვალე შეკვეთის სტატუსები </h2>
+                    <div className="border-2 border-black p-4">
+                      <div className="flex flex-wrap">
+                        <div className="w-full lg:w-6/12 px-4">
+                          <div className="relative w-full mb-3">
+                            <FormField
+                              control={form.control}
+                              name="courierComment2"
+                              render={({ field }) => (
+                                <FormItem className="relative w-full mb-3">
+                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                    დაუტოვე კომენტარი მომხმარებელს
+                                  </FormLabel>
+                                  <FormControl className="relative rounded-md shadow-sm">
+                                    <Input
+                                      disabled={loading}
+                                      placeholder="კომენტარი.."
+                                      {...field}
+                                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            <div className="relative w-full mb-3">
+                              <FormLabel className=" block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                სტატუსი
+                              </FormLabel>
+                              <FormField
+                                control={form.control}
+                                name="status"
+                                render={({ field }) => (
+                                  <FormItem className="relative w-full mb-3 bg-white">
+                                    <FormControl className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none">
+                                      <Select
+                                        value={field.value}
+                                        onValueChange={(newValue) => {
+                                          field.onChange(newValue);
+                                        }}
+                                      >
+                                        <SelectTrigger>
+                                          <SelectValue>{field.value}</SelectValue>
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                          {/* {ADMIN როლგეითი} */}
+                                          <RoleGate allowedRole="ADMIN">
+                                            <SelectItem value="მიმდინარე">
+                                              მიმდინარე
+                                            </SelectItem>
+                                            <SelectItem value="ჩაბარებული">
+                                              ჩაბარებული
+                                            </SelectItem>
+                                            <SelectItem value="უარი ჩაბარებაზე">
+                                              უარი ჩაბარებაზე
+                                            </SelectItem>
+                                            <SelectItem value="არ არის მისამართზე">
+                                              არ არის მისამართზე
+                                            </SelectItem>
+                                            <SelectItem value="არ იღებს ყურმილს ">
+                                              არ იღებს ყურმილს{" "}
+                                            </SelectItem>
+                                            <SelectItem value="აღებული">
+                                              აღებული{" "}
+                                            </SelectItem>
+                                            <SelectItem value="ვერ ხდება დაკავშირება">
+                                              ვერ ხდება დაკავშირება
+                                            </SelectItem>
+                                            <SelectItem value="მეორედ გატანა">
+                                              მეორედ გატანა
+                                            </SelectItem>
+                                            <SelectItem value="უბრუნდება გამგზავნს">
+                                              უბრუნდება გამგზავნს
+                                            </SelectItem>
+                                            <SelectItem value="გაუქმებულია გამგზავნის მიერ ">
+                                              გაუქმებულია გამგზავნის მიერ{" "}
+                                            </SelectItem>
+                                            <SelectItem value="ასაღები">
+                                              ასაღები{" "}
+                                            </SelectItem>
+                                            <SelectItem value="საწყობში">
+                                              საწყობში
+                                            </SelectItem>
+                                            <SelectItem value="ფილიალიდან გაცემა ">
+                                              ფილიალიდან გაცემა{" "}
+                                            </SelectItem>
+                                            <SelectItem value="გატანილი ჩასაბარებლად">
+                                              გატანილი ჩასაბარებლად{" "}
+                                            </SelectItem>
+                                            <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">
+                                              დაუბრუნდა გამგზავნს, დასრულება
+                                            </SelectItem>
+                                            <SelectItem value="ვერ მოხერხდა დაკავშირება">
+                                              ვერ მოხერხდა დაკავშირება{" "}
+                                            </SelectItem>
+                                          </RoleGate>
+                                          {/* {USER როლგეითი} */}
+                                          <RoleGate allowedRole="COURIER">
+                                            <SelectItem value="მიმდინარე">
+                                              მიმდინარე
+                                            </SelectItem>
+                                            <SelectItem value="ჩაბარებული">
+                                              ჩაბარებული
+                                            </SelectItem>
+                                            <SelectItem value="უარი ჩაბარებაზე">
+                                              უარი ჩაბარებაზე
+                                            </SelectItem>
+                                            <SelectItem value="არ არის მისამართზე">
+                                              არ არის მისამართზე
+                                            </SelectItem>
+                                            <SelectItem value="არ იღებს ყურმილს ">
+                                              არ იღებს ყურმილს{" "}
+                                            </SelectItem>
+                                            <SelectItem value="აღებული">
+                                              აღებული{" "}
+                                            </SelectItem>
+                                            <SelectItem value="ვერ ხდება დაკავშირება">
+                                              ვერ ხდება დაკავშირება
+                                            </SelectItem>
+                                          </RoleGate>
+                                        </SelectContent>
+                                      </Select>
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <div className="relative w-full mb-3">
+                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2 bg-transparent">
                                   თანხის აღება მოხდა?
                                 </FormLabel>
-                                <FormControl>
-                                  <Select
-                                    disabled={
-                                      initialData?.whopays === "Invoice"
-                                        ? true
-                                        : false
-                                    }
-                                    value={field.value ? "კი" : "არა"}
-                                    onValueChange={(newValue) => {
-                                      const isMarkedByCourier =
-                                        newValue === "კი";
-                                      field.onChange(isMarkedByCourier);
-                                    }}
-                                  >
-                                    <SelectTrigger>
-                                      <SelectValue>
-                                        {field.value ? "კი" : "არა"}
-                                      </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="კი">კი</SelectItem>
-                                      <SelectItem value="არა">არა</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                                <FormField
+                                  control={form.control}
+                                  name="markedByCourier"
+                                  render={({ field }) => (
+                                    <FormItem className=" w-full mb-3 bg-white">
+
+                                      <FormControl className="bg-white">
+                                        <Select
+                                          disabled={
+                                            initialData?.whopays === "Invoice"
+                                              ? true
+                                              : false
+                                          }
+                                          value={field.value ? "კი" : "არა"}
+                                          onValueChange={(newValue) => {
+                                            const isMarkedByCourier =
+                                              newValue === "კი";
+                                            field.onChange(isMarkedByCourier);
+                                          }}
+                                        >
+                                          <SelectTrigger>
+                                            <SelectValue>
+                                              {field.value ? "კი" : "არა"}
+                                            </SelectValue>
+                                          </SelectTrigger>
+                                          <SelectContent>
+                                            <SelectItem value="კი">კი</SelectItem>
+                                            <SelectItem value="არა">არა</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap">
-                      <div className="w-full lg:w-6/12 px-4">
-                        <div className="relative w-full mb-3">
-                          <FormField
-                            control={form.control}
-                            name="courierComment2"
-                            render={({ field }) => (
-                              <FormItem className="relative w-full mb-3">
-                                <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                  კომენტარი
-                                </FormLabel>
-                                <FormControl className="relative rounded-md shadow-sm">
-                                  <Input
-                                    disabled={loading}
-                                    placeholder="დაწერე კომენტარი.."
-                                    {...field}
-                                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:ring w-full ease-linear transition-all duration-150 focus:border-transparent focus:outline-none"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
+
                       </div>
                     </div>
                   </div>
+
                 </div>
 
                 <CreateModal
@@ -771,8 +769,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
                 <Button
                   type="button"
+
                   disabled={loading}
-                  className="ml-auto self-end"
+                  className="ml-auto self-end w-full"
                   onClick={() => setIsConfirmOpen(true)}
                 >
                   დადასტურება

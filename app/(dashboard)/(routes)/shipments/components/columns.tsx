@@ -40,6 +40,7 @@ export type ShipmentColumn = {
   gamgzavnisqalaqi: string;
   mimgebiFullName: string;
   gamgzavniFullName: string;
+  courierComment2: string;
 };
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
@@ -262,10 +263,19 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
   {
     accessorKey: "courierComment",
-    header: "კურიერის კომენტარი",
+    header: "ჩემი კომენტარი",
     cell: ({ row }) => (
       <Tag className="p-2 w-full" color="orange">
         {row.original.courierComment}
+      </Tag>
+    ),
+  },
+  {
+    accessorKey: "courierComment2",
+    header: "კურიერის კომენტარი",
+    cell: ({ row }) => (
+      <Tag className="p-2" color="geekblue">
+        {row.original.courierComment2}
       </Tag>
     ),
   },

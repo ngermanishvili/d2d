@@ -11,6 +11,7 @@ import ShipmentFormXLSX from "../[shipmentId]/components/shipment-xlsx";
 import useInvoiceStore from "@/hooks/invoice-store";
 import { useidSetStore } from "@/hooks/select-store";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import { Alert } from "antd";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -198,9 +199,12 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
       </div>
 
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-      <Heading
-        title={`${sumOfTotals},${sumOfDifs},${sumOfPackagePrices},${sumOfWeightPrices} -დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
+
+      <Alert
+        message={` დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
         description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
+        type="info"
+        showIcon
       />
 
       {filteredData.length > 0 ? (

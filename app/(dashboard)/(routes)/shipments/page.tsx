@@ -20,8 +20,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-          return item.userId === userId;
-        })
+        return item.userId === userId;
+      })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -54,6 +54,7 @@ const ShipmentPage = async () => {
       chabarebisDro: item?.chabarebisDro,
       whopays: item?.whopays,
       gamgzavnisqalaqi: item?.gamgzavnisqalaqi,
+      courierComment2: item?.courierComment2,
     })
   );
 
