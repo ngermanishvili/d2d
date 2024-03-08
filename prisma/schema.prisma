@@ -60,6 +60,7 @@ model UrlsOfXlsx {
   sruliPasebisMinusJami String
   wonisPasebisJami      String
   servisisPasebisJami   String
+  angarishsworeba       String
   url                   String
   user                  User     @relation(fields: [userId], references: [id])
   userId                String
