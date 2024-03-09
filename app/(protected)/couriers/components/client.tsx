@@ -12,7 +12,7 @@ interface UserClientProps {
 export const UsersClient: React.FC<UserClientProps> = ({ data }) => {
   return (
     <>
-      <div className="flex mx-2 w-full justify-between p-8">
+      <div className="flex w-full justify-between p-8">
         <Heading
           title={`კურიერები და მომხმარებლები (${data.length})`}
           description="ამ გვერდზე შეძლებთ მომხმარებლების და კურიერების წაშლას, ასევე მათი ინფორმაციის და სტატუსების შეცვლას
