@@ -1,10 +1,14 @@
-import  db  from "@/lib/db";
+import db from "@/lib/db";
 import { UserRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const users = await db.user.findMany();
+    const users = await db.user.findMany({
+      where: {
+        role: "COURIER" || "USER",
+      },
+    });
 
     return NextResponse.json(users);
   } catch (error) {
