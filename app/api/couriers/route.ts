@@ -4,9 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const users = await db.user.findMany({
-      where: { role: UserRole.COURIER || UserRole.USER },
-    });
+    const users = await db.user.findMany({});
 
     return NextResponse.json(users);
   } catch (error) {
