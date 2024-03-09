@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import  db  from "@/lib/db";
 import { UserRole } from "@prisma/client";
 import { NextResponse } from "next/server";
 
