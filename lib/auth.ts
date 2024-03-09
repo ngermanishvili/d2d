@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth";
-import { db } from "./db";
+import db from "./db";
 
 export const currentUser = async () => {
   const session = await auth();

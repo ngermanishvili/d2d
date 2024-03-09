@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/select";
 import { NextURL } from "next/dist/server/web/next-url";
 import { UsersColumn } from "./columns";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { error } from "console";
 import ImageUpload from "@/components/ui/image-upload";
 import Image from "next/image";

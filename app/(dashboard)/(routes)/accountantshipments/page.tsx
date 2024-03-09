@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
@@ -110,8 +110,7 @@ const ShipmentPage = async () => {
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        {userRole === "ADMIN" ||
-          userRole === "ACCOUNTANT" ? (
+        {userRole === "ADMIN" || userRole === "ACCOUNTANT" ? (
           <ShipmentClient data={formattedShipments} />
         ) : (
           <Error404Page />

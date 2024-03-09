@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { UserForm } from "../components/user-form";
 import { InvoiceTable } from "@/components/ui/invoice-table";
 import { InvoiceClient } from "./components/client";

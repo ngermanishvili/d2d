@@ -1,14 +1,22 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { title,
+    const {
+      title,
       description,
-      imageUrl, panjara1Title, panjara1Description, panjara2Title, panjara2Description, panjara3Title, panjara3Description, InformationText } = body;
-
+      imageUrl,
+      panjara1Title,
+      panjara1Description,
+      panjara2Title,
+      panjara2Description,
+      panjara3Title,
+      panjara3Description,
+      InformationText,
+    } = body;
 
     const landingPageInfo = await db.landingPageInfo.create({
       data: {
@@ -21,7 +29,7 @@ export async function POST(req: Request) {
         panjara2Description,
         panjara3Title,
         panjara3Description,
-        InformationText
+        InformationText,
       },
     });
 
@@ -31,8 +39,6 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
-
-
 
 export async function GET() {
   try {

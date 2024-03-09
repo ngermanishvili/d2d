@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 import { generateCustomId } from "@/hooks/uuid";
 import { v4 as uuid } from "uuid";

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Divider, Input, Select, Space, Button } from "antd";
 import type { InputRef } from "antd";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { currentUserId } from "@/lib/auth";
 import axios from "axios";
 import useAddressStore from "@/hooks/adress-store";

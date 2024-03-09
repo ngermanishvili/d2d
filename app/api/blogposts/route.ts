@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { title, imageUrl, content, excerpt, slug, qvesatauri, qvesatauri2 } = body;
-
+    const { title, imageUrl, content, excerpt, slug, qvesatauri, qvesatauri2 } =
+      body;
 
     const billboard = await db.blogPosts.create({
       data: {
@@ -26,7 +26,6 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error BROJ", { status: 500 });
   }
 }
-
 
 export async function GET() {
   try {

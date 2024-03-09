@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const { title,
+    const {
+      title,
       description,
       coverImageUrl,
       boxImageUrl,
@@ -27,9 +28,8 @@ export async function POST(req: Request) {
       whatWeOffer3Title,
       whatWeOffer3Description,
       whatWeOfferToCourierTitle,
-      whatWeOfferToCourierDescription
+      whatWeOfferToCourierDescription,
     } = body;
-
 
     const aboutPageInfo = await db.aboutPageInfo.create({
       data: {
@@ -55,8 +55,7 @@ export async function POST(req: Request) {
         whatWeOffer3Title,
         whatWeOffer3Description,
         whatWeOfferToCourierTitle,
-        whatWeOfferToCourierDescription
-
+        whatWeOfferToCourierDescription,
       },
     });
 
@@ -66,8 +65,6 @@ export async function POST(req: Request) {
     return new NextResponse("Internal error ", { status: 500 });
   }
 }
-
-
 
 export async function GET() {
   try {

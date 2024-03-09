@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function GET(
   req: Request,
@@ -29,14 +29,8 @@ export async function PATCH(
   try {
     const body = await req.json();
 
-    const { title,
-      imageUrl,
-      content,
-      excerpt,
-      slug,
-      qvesatauri,
-      qvesatauri2,
-    } = body;
+    const { title, imageUrl, content, excerpt, slug, qvesatauri, qvesatauri2 } =
+      body;
 
     const blogposts = await db.blogPosts.updateMany({
       where: {
@@ -49,7 +43,7 @@ export async function PATCH(
         excerpt,
         slug,
         qvesatauri,
-        qvesatauri2
+        qvesatauri2,
       },
     });
 
@@ -65,7 +59,6 @@ export async function DELETE(
   { params }: { params: { blogpostsId: string } }
 ) {
   try {
-
     const blogposts = await db.blogPosts.deleteMany({
       where: {
         id: params.blogpostsId,

@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { ShipmentClient } from "./components/client";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId } from "@/lib/auth";
@@ -20,8 +20,8 @@ const ShipmentPage = async () => {
   const filteredShipments =
     userRole !== "ADMIN"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(

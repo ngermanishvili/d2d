@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 import { BlogPostForm } from "./components/landing-form";
 
