@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   try {
-    const users = await db.user.findMany({});
+    const users = await db.user.findMany();
 
     return NextResponse.json(users);
   } catch (error) {
