@@ -12,7 +12,7 @@ const CouriersPage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("/api/couriers");
-
+        console.log(response.data);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

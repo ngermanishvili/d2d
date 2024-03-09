@@ -23,20 +23,7 @@ export async function PATCH(
       input6,
       input7,
       input8,
-
     } = body;
-
-    if (!number) {
-      return new NextResponse("phoneNumber is required", { status: 400 });
-    }
-
-    if (!email) {
-      return new NextResponse("address is required", { status: 400 });
-    }
-
-    if (!image) {
-      return new NextResponse("city is required", { status: 400 });
-    }
 
     if (!role) {
       return new NextResponse("price is required", { status: 400 });
@@ -63,7 +50,6 @@ export async function PATCH(
         input6,
         input7,
         input8,
-
       },
     });
 
