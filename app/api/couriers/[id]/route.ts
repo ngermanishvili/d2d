@@ -59,3 +59,22 @@ export async function PATCH(
     return new NextResponse("Internal error", { status: 500 });
   }
 }
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    if (!params.id) {
+      return new NextResponse("billboardId ID is required", { status: 400 });
+    }
+    const shipment = await db.user.findUnique({
+      where: {
+        id: params.id,
+      },
+    });
+    return NextResponse.json(shipment);
+  } catch (error) {
+    console.log("[SHIPMENT_GET]", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
