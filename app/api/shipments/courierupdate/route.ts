@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { NextResponse, NextRequest } from "next/server";
 import { v4 as uuid } from "uuid";
 

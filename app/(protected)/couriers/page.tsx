@@ -1,27 +1,12 @@
-"use client";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { UsersClient } from "./components/client";
 import { UsersColumn } from "./components/columns";
 import Image from "next/image";
+import db from "@/lib/db";
+import { fetchUserForAdmin } from "@/hooks/fetch-user-data";
 
-const CouriersPage = () => {
-  const [users, setUsers] = useState<UsersColumn[]>([]); // Fix the initialization of state
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/api/couriers");
-
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  console.log("🚀 ~ CouriersPage ~ users:", users);
+const CouriersPage = async () => {
+  const users = await db.user.findMany();
 
   const formattedUsers = users.map((item) => ({
     id: item.id,

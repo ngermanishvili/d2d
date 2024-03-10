@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 function generateTrackingNumber(): string {
   const randomNumber = Math.floor(Math.random() * 9999)

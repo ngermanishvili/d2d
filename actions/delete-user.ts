@@ -1,11 +1,11 @@
 "use server";
 
-import {db} from "@/lib/db";
+import db from "@/lib/db";
 
 export const DeleteUser = async (id: string) => {
   try {
-    await db.user.delete({
-      where: {id},
+    await db.user.deleteMany({
+      where: { id: id },
     });
   } catch (error) {
     console.error("Failed to Delete user role:", error);
@@ -15,7 +15,7 @@ export const DeleteUser = async (id: string) => {
 export const DeleteUserByEmail = async (email: string) => {
   try {
     await db.user.delete({
-      where: {email},
+      where: { email },
     });
   } catch (error) {
     console.error("Failed to Delete user role:", error);

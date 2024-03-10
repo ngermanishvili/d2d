@@ -1,8 +1,12 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 import { BlogPostForm } from "./components/blogpost-form";
 
-const BillboardPage = async ({ params }: { params: { blogpostsId: string } }) => {
+const BillboardPage = async ({
+  params,
+}: {
+  params: { blogpostsId: string };
+}) => {
   const blogposts = await db.blogPosts.findUnique({
     where: {
       id: params.blogpostsId,

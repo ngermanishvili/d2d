@@ -1,6 +1,6 @@
 import SettingsPage from "./_components/settings-body";
 import SettingsPage2 from "./_components/settings-body2";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { currentRole, currentUserId } from "@/lib/auth";
 import { RoleGate } from "@/components/auth/role-gate";
 const Settings = async () => {

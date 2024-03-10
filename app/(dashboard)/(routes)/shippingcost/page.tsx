@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { RoleGate } from "@/components/auth/role-gate";
 import { ShippingCostClient } from "./components/client";
 

@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 import { ShippingCostForm } from "./components/shipping-cost-form";
 

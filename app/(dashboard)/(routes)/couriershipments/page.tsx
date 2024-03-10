@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { ShipmentColumn } from "./components/columns";
 import { currentRole, currentUserId, currentUserByEmail } from "@/lib/auth";
 import { ShipmentClient } from "./components/client";
@@ -138,11 +138,11 @@ const CouriersShipmentsPage = async () => {
           } else {
             price =
               Number.isInteger(parseFloat(item.itemPrice)) &&
-                parseFloat(item.itemPrice).toString() !== "0"
+              parseFloat(item.itemPrice).toString() !== "0"
                 ? parseFloat(item.itemPrice).toString()
                 : parseFloat(item.itemPrice).toString() === "0"
-                  ? "გადაიხადა გამგზავმა"
-                  : "";
+                ? "გადაიხადა გამგზავმა"
+                : "";
           }
         }
       }

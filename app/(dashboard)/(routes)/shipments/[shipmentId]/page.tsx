@@ -1,4 +1,4 @@
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { ShipmentForm2 } from "./components/shipment-form2";
 import { RoleGate } from "@/components/auth/role-gate";
 interface Cost {

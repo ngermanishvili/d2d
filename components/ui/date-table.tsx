@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useidSetStore } from "@/hooks/select-store";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";
@@ -193,8 +193,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             }}
             className="max-w-md"
           />
-          <p className="p-2 flex justify-center items-center bg-green-400">
-            გაფილტრე{" "}
+          <p className="p-2 flex rounded-md justify-center items-center bg-green-400">
+            გაფილტრე
           </p>
           <select
             value={searchKeyStore}
@@ -245,6 +245,9 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                       className={`${
                         index === 1 ? "sticky left-0 text-white" : ""
                       } text-white bg-red-600 text-md border-black`}
+                      className={`${
+                        index === 1 ? "sticky left-0 text-white" : ""
+                      } text-white bg-red-600 text-md border-black`}
                       style={{
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -254,6 +257,9 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                             header.column.columnDef.header,
                             header.getContext()
                           )}

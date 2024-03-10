@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 
 export async function GET(
   req: Request,
@@ -51,7 +51,7 @@ export async function PATCH(
       whatWeOffer3Title,
       whatWeOffer3Description,
       whatWeOfferToCourierTitle,
-      whatWeOfferToCourierDescription
+      whatWeOfferToCourierDescription,
     } = body;
 
     const aboutUs = await db.aboutPageInfo.updateMany({
@@ -81,7 +81,7 @@ export async function PATCH(
         whatWeOffer3Title,
         whatWeOffer3Description,
         whatWeOfferToCourierTitle,
-        whatWeOfferToCourierDescription
+        whatWeOfferToCourierDescription,
       },
     });
 
@@ -97,7 +97,6 @@ export async function DELETE(
   { params }: { params: { aboutId: string } }
 ) {
   try {
-
     const AboutPageInfo = await db.aboutPageInfo.deleteMany({
       where: {
         id: params.aboutId,

@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/select";
 import { NextURL } from "next/dist/server/web/next-url";
 import { UsersColumn } from "./columns";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { error } from "console";
 import ImageUpload from "@/components/ui/image-upload";
 import Image from "next/image";
@@ -120,7 +120,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
       router.refresh();
       router.push(`/couriers`);
-      toast.success("sagol daupdateda");
+      toast.success("მომხმარებლის ინფორმაცია წარმატებით შეიცვალა");
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {

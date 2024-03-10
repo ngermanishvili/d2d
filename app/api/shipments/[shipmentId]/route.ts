@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import { NextURL } from "next/dist/server/web/next-url";
 
 export async function GET(

@@ -23,7 +23,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useidSetStore } from "@/hooks/select-store";
-import { db } from "@/lib/db";
+import db from "@/lib/db";
 import axios from "axios";
 import { AlertModalForRegisterCourier } from "../modals/register-courier-modal";
 import useEmailStore from "@/hooks/set-courier-for-shipment";

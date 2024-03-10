@@ -87,7 +87,7 @@ const ImageUpload: React.FC<XlsxUploadProps> = ({ user }) => {
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
-      toast.success("xlsx atvirtulia");
+      toast.success("ინვოისი წარმატებით აიტვირთა");
     }
   };
   return (
