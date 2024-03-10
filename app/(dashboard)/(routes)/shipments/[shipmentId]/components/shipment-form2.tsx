@@ -47,25 +47,48 @@ import SpaceImage from "@/assets/images/space.png";
 import { parse } from "path";
 
 const formSchema = z.object({
-  mimgebiFullName: z.string().min(1),
-  gamgzavniFullName: z.string().min(1),
-  city: z.string().min(1),
-  whopays: z.string().min(1),
-  address: z.string().min(1),
-  phoneNumber: z.string().min(5),
-  price: z.string().min(1),
+  mimgebiFullName: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ მიმღების სახელი და გვარი ",
+  }),
+  gamgzavniFullName: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ თქვენი სახელი და გვარი ",
+  }),
+  city: z.string().optional(),
+  whopays: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ გადამხდელი მხარე ",
+  }),
+  address: z.string().min(0, {
+    message: "გთხოვთ მიუთითოთ მისამართი ",
+  }),
+  phoneNumber: z.string().min(5, {
+    message: "გთხოვთ მიუთითოთ თქვენი ტელეფონის ნომერი",
+  }),
+  price: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ ფასი ",
+  }),
   brittle: z.boolean().default(false),
   packaging: z.boolean().default(false),
   markedByCourier: z.boolean().default(false),
-  mimgebisName: z.string().min(1),
-  mimgebisLastname: z.string().min(1),
-  mimgebisNumber: z.string().min(5),
-  mimgebisAddress: z.string().min(1),
-  mimgebiQalaqi: z.string().min(1),
+
+  mimgebisNumber: z.string().min(5, {
+    message: "გთხოვთ მიუთითოთ მიმღების ტელეფონის ნომერი ",
+  }),
+  mimgebisAddress: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ მიმღების ზუსტი მისამართი ",
+  }),
+  mimgebiQalaqi: z.string().min(2, {
+    message: "გთხოვთ მიუთითოთ მიმღების ქალაქი ",
+  }),
   status: z.string().min(1),
-  courierComment: z.string().min(1),
-  courierComment2: z.string().min(0),
-  label: z.string().min(1),
+  courierComment: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ მიუთითოთ კომენტარი ",
+  }),
+  courierComment2: z.string().min(0, {
+    message: "გთხოვთ მიუთითოთ ",
+  }),
+  label: z.string().min(1, {
+    message: "გთხოვთ მიუთითოთ წონითი კატეგორია ",
+  }),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
   priceDif: z.string().nullable().optional(),
@@ -160,7 +183,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       mimgebiFullName: "",
       gamgzavniFullName:
         user?.userType === "იურიდიული პირი" ? user?.input3 : "",
-      city: selectedCity,
+      city: "თბილისი",
       address: "",
       phoneNumber: "",
       price: "0",
@@ -293,6 +316,35 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const validateForm = async (data: ShipmentFormValues) => {
+    try {
+      formSchema.parse(data);
+      return true; // Form is valid
+    } catch (error) {
+      return false; // Form is invalid
+    }
+  };
+
+  const handleButtonClick = async () => {
+    // Check if form is valid before opening the modal
+    try {
+      const isValid = await validateForm(form.getValues());
+      console.log(
+        "🚀 ~ handleButtonClick ~ isValid:",
+        isValid,
+        form.getValues()
+      );
+
+      if (isValid) {
+        setIsCreateOpen(true);
+      } else {
+      }
+    } catch (error) {
+      console.error("Error occurred while validating form:", error);
+      // Handle error appropriately
     }
   };
 
@@ -799,29 +851,29 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                           <div className="relative w-full mb-3">
                             <FormField
                               control={form.control}
-                              name="markedByCourier"
+                              name="brittle"
                               render={({ field }) => (
                                 <FormItem className="relative w-full mb-3">
                                   <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                    საწყობშია ნივთი?
+                                    მსხვრევადია ნივთი?
                                   </FormLabel>
                                   <FormControl>
                                     <Select
-                                      value={field.value ? "Yes" : "No"}
+                                      value={field.value ? "კი" : "არა"}
                                       onValueChange={(newValue) => {
                                         const isMarkedByCourier =
-                                          newValue === "Yes";
+                                          newValue === "კი";
                                         field.onChange(isMarkedByCourier);
                                       }}
                                     >
                                       <SelectTrigger>
                                         <SelectValue>
-                                          {field.value ? "Yes" : "No"}
+                                          {field.value ? "კი" : "არა"}
                                         </SelectValue>
                                       </SelectTrigger>
                                       <SelectContent>
-                                        <SelectItem value="Yes">Yes</SelectItem>
-                                        <SelectItem value="No">No</SelectItem>
+                                        <SelectItem value="კი">კი</SelectItem>
+                                        <SelectItem value="არა">არა</SelectItem>
                                       </SelectContent>
                                     </Select>
                                   </FormControl>
@@ -879,7 +931,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                   type="button"
                   disabled={loading}
                   className="ml-auto self-end w-full h-[50px]"
-                  onClick={() => setIsCreateOpen(true)}
+                  onClick={() => handleButtonClick()}
                 >
                   დადასტურება
                 </Button>

@@ -375,7 +375,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
             <div className="w-full text-center flex justify-center">
               <Alert
                 className="w-[600px] max-w-[100%] px-4 my-8 self-center"
-                message="თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს"
+                message="მომსახურების თანხის გადახდა უნდა მოხდეს შეკვეთის აღების დროს"
                 type="error"
               />
             </div>
@@ -406,7 +406,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
             {selectedParty === "Invoice" ? (
               <>
                 <Typography.Title level={3} style={{ margin: "10px" }}>
-                  ანგარიშსწორება
+                  {companyPayment > 0
+                    ? "კომმპანიას ერიცხება"
+                    : "კომპანია რიცხავს"}
                 </Typography.Title>
                 <Badge
                   color="gray"

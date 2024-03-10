@@ -12,6 +12,7 @@ import useInvoiceStore from "@/hooks/invoice-store";
 import { useidSetStore } from "@/hooks/select-store";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import { Alert } from "antd";
+import { RoleGate } from "@/components/auth/role-gate";
 
 interface ShipmentClientProps {
   data: ShipmentColumn[];
@@ -199,13 +200,14 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
       </div>
 
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-
-      <Alert
-        message={` დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
-        description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
-        type="info"
-        showIcon
-      />
+      <RoleGate allowedRole="ADMIN">
+        <Alert
+          message={` დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
+          description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"
+          type="info"
+          showIcon
+        />
+      </RoleGate>
 
       {filteredData.length > 0 ? (
         <>

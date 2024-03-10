@@ -75,6 +75,7 @@ export default function CardSettings() {
 
   const router = useRouter();
   useEffect(() => {
+    console.log("🚀 ~ useEffect ~ user:", user);
     if (
       user?.input1 &&
       user?.input2 &&
@@ -124,19 +125,22 @@ export default function CardSettings() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex flex-wrap">
-                <h6 className="text-blueGray-400 text-sm mt-3 mb-6 font-bold uppercase">
-                  {isActive ? (
-                    <div className="bg-blueGray-700 active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                      ანგარიში აქტიურია
-                    </div>
-                  ) : (
-                    <div className="bg-blueGray-700 active:bg-blueGray-600 text-white bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                      ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული
-                      ყველა ველი.
-                    </div>
-                  )}
-                </h6>
+              <div className="flex flex-wrap justify-center">
+                {" "}
+                <div className="w-full">
+                  <h6 className="text-blueGray-400 text-sm mt-3 w-[150px] self-center mb-6 font-bold uppercase">
+                    {isActive ? (
+                      <div className="bg-blueGray-700 text-center active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                        ანგარიში აქტიურია
+                      </div>
+                    ) : (
+                      <div className="bg-blueGray-700 active:bg-blueGray-600 text-white bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
+                        ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული
+                        ყველა ველი.
+                      </div>
+                    )}
+                  </h6>
+                </div>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -144,7 +148,7 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          სახელი
+                          სახელი და გვარი
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
@@ -182,7 +186,6 @@ export default function CardSettings() {
                     )}
                   />
                 </div>
-
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -190,7 +193,7 @@ export default function CardSettings() {
                     render={({ field }) => (
                       <FormItem className="relative w-full mb-3">
                         <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                          number
+                          ტელეფონის ნომერი
                         </FormLabel>
                         <FormControl className="relative rounded-md shadow-sm">
                           <Input
@@ -210,7 +213,9 @@ export default function CardSettings() {
               <hr className="mt-6 border-b-1 border-blueGray-300" />
               <div className="flex flex-wrap">
                 <RoleGate allowedRole="USER">
-                  {user?.input1 === null || user?.input1.length === 0 ? (
+                  {user?.input1 === null ||
+                  user?.input1.length === 0 ||
+                  user?.input1.length === 1 ? (
                     <>
                       <div className="w-full lg:w-6/12 px-4">
                         <FormField
@@ -226,7 +231,11 @@ export default function CardSettings() {
                               <FormControl className="relative rounded-md shadow-sm">
                                 <Input
                                   {...field}
-                                  placeholder="input1"
+                                  placeholder={
+                                    user?.userType === "ფიზიკური პირი"
+                                      ? "მისამართი"
+                                      : "იურიდიული მისამართი"
+                                  }
                                   disabled={isPending}
                                   className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 />
@@ -244,8 +253,9 @@ export default function CardSettings() {
                           ? "მისამართი"
                           : "იურიდიული მისამართი"}
                       </FormLabel>
-                      <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-between">
-                        {user?.input1}
+
+                      <div className="border-0 text-center flex-col sm:flex-row px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-center sm:justify-between">
+                        <p>{user?.input1}</p>
                         <Badge
                           text={
                             user?.userType === "ფიზიკური პირი"
@@ -257,7 +267,9 @@ export default function CardSettings() {
                       </div>
                     </div>
                   )}
-                  {user?.input2 === null || user?.input2.length === 0 ? (
+                  {user?.input2 === null ||
+                  user?.input2.length === 0 ||
+                  user?.input1.length === 1 ? (
                     <div className="w-full lg:w-6/12 px-4">
                       <FormField
                         control={form.control}
@@ -272,7 +284,11 @@ export default function CardSettings() {
                             <FormControl className="relative rounded-md shadow-sm">
                               <Input
                                 {...field}
-                                placeholder="input2"
+                                placeholder={
+                                  user?.userType === "ფიზიკური პირი"
+                                    ? "პირადი ნომერი"
+                                    : "საიდენტიფიკაციო ნომერი"
+                                }
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                                 // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
@@ -290,8 +306,11 @@ export default function CardSettings() {
                           ? "პირადი ნომერი"
                           : "საიდენტიფიკაციო ნომერი"}
                       </FormLabel>
-                      <div className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-between">
-                        <p className="w-1/5">{user?.input2}</p>
+                      <div className="border-0 text-center flex-col sm:flex-row px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-center sm:justify-between">
+                        <p>
+                          <Badge />
+                          {user?.input2}
+                        </p>
                         <Badge
                           text={
                             user?.userType === "ფიზიკური პირი"
