@@ -43,9 +43,6 @@ export function CourierDataTable<TData, TValue>({
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [gatana, setGatana] = useState(false); // Add state for the action
-  const [shemotana, setShemotana] = useState(true); // Add state for the action
-  const [isOpen, setIsOpen] = useState(false);
 
   const table = useReactTable({
     data,
@@ -63,20 +60,6 @@ export function CourierDataTable<TData, TValue>({
 
   const email = useEmailStore((state: any) => state.email);
 
-  const onUpdate = async () => {
-    try {
-      const data = {
-        ids,
-        variable: email,
-      };
-      await axios.patch("/api/shipments/courierupdate", data);
-      toast.success("Courier has been updated");
-      // Handle success or any other logic
-    } catch (error) {
-      // Handle error
-      console.error("Error updating to true:", error);
-    }
-  };
   const shipmentColumnsWithLabels = [
     { value: "id", label: "აიდი" },
     { value: "mimgebiFullName", label: "მიმღების სახელი" },
@@ -109,15 +92,6 @@ export function CourierDataTable<TData, TValue>({
 
   return (
     <>
-      <AlertModalForRegisterCourier
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onConfirm={() => {
-          setIsOpen(false);
-          onUpdate();
-        }}
-        loading={false}
-      />
       <div>
         <div className="flex items-center py-4 w-full">
           <Input

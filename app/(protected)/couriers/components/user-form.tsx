@@ -120,7 +120,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
       router.refresh();
       router.push(`/couriers`);
-      toast.success("sagol daupdateda");
+      toast.success("მომხმარებლის ინფორმაცია წარმატებით შეიცვალა");
     } catch (error) {
       toast.error("Something went wrong.");
     } finally {
