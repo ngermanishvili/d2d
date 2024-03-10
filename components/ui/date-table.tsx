@@ -245,9 +245,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                       className={`${
                         index === 1 ? "sticky left-0 text-white" : ""
                       } text-white bg-red-600 text-md border-black`}
-                      className={`${
-                        index === 1 ? "sticky left-0 text-white" : ""
-                      } text-white bg-red-600 text-md border-black`}
                       style={{
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -260,9 +257,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                             header.column.columnDef.header,
                             header.getContext()
                           )}
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -272,62 +266,30 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <>
-                    <RoleGate allowedRole="USER">
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && "selected"}
-                        onDoubleClick={() => onOpen()}
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                    onDoubleClick={() => onOpen()}
+                  >
+                    {row.getVisibleCells().map((cell, index) => (
+                      <TableCell
+                        key={cell.id}
+                        className={`${
+                          index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                        } p-2 border`}
+                        style={{
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
                       >
-                        {row.getVisibleCells().map((cell, index) => (
-                          <TableCell
-                            key={cell.id}
-                            className={`${
-                              index === 1
-                                ? "w-full sticky left-0 bg-white p-"
-                                : "" // Apply sticky style to the first column
-                            } p-2 border`}
-                            style={{
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    </RoleGate>
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && "selected"}
-                      // onDoubleClick={() => onOpen()}  GASAKETEBELIA ADMINIS MXAREZE DA BUGALTERZE SXVA RO GAIXSNAS
-                    >
-                      {row.getVisibleCells().map((cell, index) => (
-                        <TableCell
-                          key={cell.id}
-                          className={`${
-                            index === 1
-                              ? "w-full sticky left-0 bg-white p-"
-                              : "" // Apply sticky style to the first column
-                          } p-2 border`}
-                          style={{
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
                 ))
               ) : (
                 <TableRow>

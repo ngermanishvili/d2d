@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { TbTruckDelivery } from "react-icons/tb";
@@ -13,22 +13,33 @@ import LatestBlogPosts from "./blog-posts";
 import useLandingPageData from "@/hooks/use-landing-info";
 
 export default function Landing() {
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { imageUrl, loading, label, } = useBillboardData();
-  const { title, loading2, description, imageUrl2, panjara1Title, panjara1Description, panjara2Title, panjara2Description, panjara3Title, panjara3Description, InformationText } = useLandingPageData();
+  const { imageUrl, loading, label } = useBillboardData();
+  const {
+    title,
+    loading2,
+    description,
+    imageUrl2,
+    panjara1Title,
+    panjara1Description,
+    panjara2Title,
+    panjara2Description,
+    panjara3Title,
+    panjara3Description,
+    InformationText,
+  } = useLandingPageData();
 
   return (
     <>
       <div>
-        <div className="relative pt-16 pb-32  content-center items-center justify-center min-h-screen-75">
+        {/* <div className="relative pt-16 pb-32  content-center items-center justify-center min-h-screen-75">
           <div className="mt-[20px] max-w-[1500px] mx-auto w-full bg-center ">
             <BillBoardUi label={label} imageUrl={imageUrl} loading={loading} />
           </div>
-          <div className="container relative mx-auto">
+          <div className="relative mx-auto">
             <div className="items-center flex flex-wrap">
               <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
                 <div className="pr-12">
@@ -38,12 +49,12 @@ export default function Landing() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <TopText />
 
         <section className="pb-20 bg-blueGray-200 -mt-24">
-          <div className="container mx-auto px-4">
+          <div className="mx-auto ">
             <div className="flex flex-wrap">
               <div className="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
@@ -77,20 +88,16 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
                       <TbTruckDelivery />
                     </div>
-                    <h6 className="text-xl font-semibold">
-                      {panjara3Title}
-                    </h6>
+                    <h6 className="text-xl font-semibold">{panjara3Title}</h6>
                     <div>
                       <p className="mt-2 mb-4 text-blueGray-500">
                         {panjara3Description}
                       </p>
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
 
             <div className="flex flex-wrap items-center mt-32">
               <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
@@ -103,8 +110,6 @@ export default function Landing() {
                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
                   {description}
                 </p>
-
-
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">

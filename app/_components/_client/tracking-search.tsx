@@ -21,11 +21,10 @@ const TrackingSearchContainer: React.FC = () => {
   >(null);
   const [showNoShipmentAlert, setShowNoShipmentAlert] = useState(false);
 
-
   const router = useRouter();
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       fetchData();
     }
   };
@@ -85,7 +84,6 @@ const TrackingSearchContainer: React.FC = () => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleInputKeyDown}
-
           />
           <SearchIcon
             onClick={handleSearchClick}
@@ -94,11 +92,28 @@ const TrackingSearchContainer: React.FC = () => {
         </div>
 
         {showNoShipmentAlert && (
-          <div className="z-[99] transition  bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative h-[100px] flex justify-center items-center" role="alert">
-            <strong className="font-bold flex items-center justify-center">სამწუხაროდ ამ თრექინგით ამანათი ვერ მოიძებნა... </strong>
-            <span className="absolute top-0 bottom-0 right-0 px-4 py-3" onClick={() => setShowNoShipmentAlert(false)}>
-              <svg className="fill-current h-7 w-7 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.929 2.93a1 1 0 1 1-1.414-1.415L8.586 10 5.657 7.071a1 1 0 0 1 1.414-1.415L10 8.586l2.929-2.93a1 1 0 0 1 1.414 1.415L11.414 10l2.93 2.929a1 1 0 0 1 0 1.42z" clipRule="evenodd" />
+          <div
+            className="z-[99] transition  bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative h-[100px] flex justify-center items-center"
+            role="alert"
+          >
+            <strong className="font-bold flex items-center justify-center">
+              სამწუხაროდ ამ თრექინგით ამანათი ვერ მოიძებნა...{" "}
+            </strong>
+            <span
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
+              onClick={() => setShowNoShipmentAlert(false)}
+            >
+              <svg
+                className="fill-current h-7 w-7 text-red-500"
+                role="button"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M14.348 14.849a1 1 0 0 1-1.414 0L10 11.414l-2.929 2.93a1 1 0 1 1-1.414-1.415L8.586 10 5.657 7.071a1 1 0 0 1 1.414-1.415L10 8.586l2.929-2.93a1 1 0 0 1 1.414 1.415L11.414 10l2.93 2.929a1 1 0 0 1 0 1.42z"
+                  clipRule="evenodd"
+                />
               </svg>
             </span>
           </div>

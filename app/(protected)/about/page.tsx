@@ -42,7 +42,7 @@ const AboutUs = () => {
 
   return (
     <>
-      <div className="container mx-[4px] overflow-hidden pb-20 ">
+      <div className="container overflow-hidden pb-20 ">
         <div className="flex flex-wrap items-center">
           <div className="w-full  px-12 md:px-4 ml-auto mr-auto">
             <div className="mt-[20px] w-full bg-center ">
