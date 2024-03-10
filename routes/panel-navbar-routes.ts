@@ -6,24 +6,24 @@ import { IoIosAddCircle } from "react-icons/io";
 
 export const NAV_MENU_ADMIN = [
   {
-    name: "ბილბორის დამატება",
+    name: "ბილბორდი",
     icon: GiTatteredBanner,
     to: "/billboards",
   },
 
   {
-    name: "ჩემი კურიერები",
+    name: "მომხმარებლები",
     icon: CiDeliveryTruck,
     to: "/couriers",
   },
   {
-    name: "ბლოგპოსტების დამატება",
+    name: "ბლოგპოსტები",
     icon: GiTatteredBanner,
     to: "/addblogposts",
   },
 
   {
-    name: "შეკვეთების ისტორია",
+    name: "შეკვეთები",
     icon: MdWorkHistory,
     to: "/shipments",
   },
@@ -34,17 +34,17 @@ export const NAV_MENU_ADMIN = [
     to: "/shipments/new",
   },
   {
-    name: "1",
+    name: "მთავარი",
     icon: IoIosAddCircle,
     to: "/addlandinginfo",
   },
   {
-    name: "2",
+    name: "ჩვენს შესახებ",
     to: "/addaboutinfo",
     icon: IoIosAddCircle,
   },
   {
-    name: "3",
+    name: "ფასები",
     to: "/shippingcost",
     icon: IoIosAddCircle,
   },

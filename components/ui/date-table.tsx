@@ -193,8 +193,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             }}
             className="max-w-md"
           />
-          <p className="p-2 flex justify-center items-center bg-green-400">
-            გაფილტრე{" "}
+          <p className="p-2 flex rounded-md justify-center items-center bg-green-400">
+            გაფილტრე
           </p>
           <select
             value={searchKeyStore}
