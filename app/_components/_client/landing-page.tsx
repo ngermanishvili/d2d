@@ -35,7 +35,7 @@ export default function Landing() {
   return (
     <>
       <div>
-        {/* <div className="relative pt-16 pb-32  content-center items-center justify-center min-h-screen-75">
+        <div className="relative pt-16 pb-32  content-center items-center justify-center min-h-screen-75">
           <div className="mt-[20px] max-w-[1500px] mx-auto w-full bg-center ">
             <BillBoardUi label={label} imageUrl={imageUrl} loading={loading} />
           </div>
@@ -49,7 +49,7 @@ export default function Landing() {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <TopText />
 
