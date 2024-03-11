@@ -17,6 +17,11 @@ export const NAV_MENU_ADMIN = [
     to: "/couriers",
   },
   {
+    name: "ბონუსები",
+    to: "/couriersbonuses",
+    icon: CiDeliveryTruck,
+  },
+  {
     name: "ბლოგპოსტები",
     icon: GiTatteredBanner,
     to: "/addblogposts",

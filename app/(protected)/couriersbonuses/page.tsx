@@ -1,9 +1,5 @@
-import axios from "axios";
 import { UsersClient } from "./components/client";
-import { UsersColumn } from "./components/columns";
-import Image from "next/image";
 import db from "@/lib/db";
-import { fetchUserForAdmin } from "@/hooks/fetch-user-data";
 
 const CouriersPage = async () => {
   const users = await db.user.findMany({

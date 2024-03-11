@@ -5,6 +5,7 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
   const user = await db.user.findUnique({
     where: { id: params.id },
   });
+
   const shipments = await db.shipment.findMany({
     where: {
       assignedCourier: user?.email,
@@ -38,7 +39,6 @@ const UserEditPage = async ({ params }: { params: { id: string } }) => {
     })
     .filter((i) => i.status === "ჩაბარებული" || i.status === "დასრულებული");
   if (!user) return { error: "User ar moidzebna" };
-
   return (
     <div className="flex-col ">
       <div className="flex-1 space-y-4 p-8 pt-6">

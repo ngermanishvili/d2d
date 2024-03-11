@@ -13,9 +13,7 @@ interface UserClientProps {
 }
 
 export const CourierShipmentsClient: React.FC<UserClientProps> = ({ data }) => {
-  
   const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
-  const [totalPrice, setTotalPrice] = useState<number>(0);
 
   const handleDateRangeChange = (dateRange: DateRange) => {
     const filteredData = data.filter((shipment) => {
@@ -29,7 +27,7 @@ export const CourierShipmentsClient: React.FC<UserClientProps> = ({ data }) => {
 
     setFilteredData(filteredData);
   };
-  
+
   return (
     <>
       <div className="flex  w-full justify-between">
@@ -41,7 +39,7 @@ export const CourierShipmentsClient: React.FC<UserClientProps> = ({ data }) => {
       <Separator />
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
 
-      <DataTable searchKey="name" columns={columns} data={data} />
+      <DataTable searchKey="address" columns={columns} data={filteredData} />
     </>
   );
 };
