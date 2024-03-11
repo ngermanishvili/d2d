@@ -15,7 +15,7 @@ const BillBoardUi: React.FC<BillboardProps> = ({
   loading,
   label,
 }) => {
-  const imageWidth = 100;
+  const imageWidth = 1500;
   const imageHeight = 400;
 
   return (
