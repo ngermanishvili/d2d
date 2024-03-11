@@ -5,7 +5,7 @@ import { ShipmentClient } from "./components/client";
 import Error404Page from "@/providers/error-page";
 import { string } from "zod";
 
-const CouriersShipmentsPage = async () => {
+const CourierBonusPage = async () => {
   const userRole = await currentRole();
   let formattedShipments: ShipmentColumn[] = [];
 
@@ -13,6 +13,7 @@ const CouriersShipmentsPage = async () => {
   const shipments = await db.shipment.findMany({
     where: {
       assignedCourier: userEmail,
+      status: "ჩაბარებული" || "დასრულებული",
     },
     include: {
       ShipmentStatusHistory: true, // Include shipment status history
@@ -23,7 +24,10 @@ const CouriersShipmentsPage = async () => {
   });
   const amountInTotal = shipments
     .filter((shipmentsTofilter) => {
-      return shipmentsTofilter.status === "ჩაბარებული";
+      return (
+        shipmentsTofilter.status === "ჩაბარებული" ||
+        shipmentsTofilter.status === "დასრულებული"
+      );
     })
     .map((shipmentToMap) => shipmentToMap.price);
   const sumOfNumbersInArray = (numberStrings: string[]): number => {
@@ -186,4 +190,4 @@ const CouriersShipmentsPage = async () => {
   );
 };
 
-export default CouriersShipmentsPage;
+export default CourierBonusPage;

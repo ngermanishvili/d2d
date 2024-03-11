@@ -92,4 +92,9 @@ export const NAV_MENU_COURIER = [
     icon: MdWorkHistory,
     to: "/couriershipments",
   },
+  {
+    name: "ბონუსები",
+    icon: MdWorkHistory,
+    to: "/bonus",
+  },
 ];
