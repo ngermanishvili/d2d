@@ -3,7 +3,6 @@ import { format } from "date-fns";
 import { FormattedLandingPageInfoClient } from "./components/client";
 import { BillboardColumn } from "./components/columns";
 import db from "@/lib/db";
-import { RoleGate } from "@/components/auth/role-gate";
 import { currentRole } from "@/lib/auth";
 import Error404Page from "@/providers/error-page";
 

@@ -99,14 +99,17 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center mt-32">
-              <div className="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                <div className="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
-                  <TbTruckDelivery />
+            <div className="flex flex-wrap items-center mt-28">
+              <div className="w-full md:w-5/12 px-4 mb-[100px]  ml-auto">
+
+                <div className="flex gap-4 mb-4">
+                  <h3 className="text-3xl mb-2 font-semibold leading-normal">
+                    {title}
+                  </h3>
+                  <div className="text-blueGray-500  text-center inline-flex items-center justify-center w-12 h-12 mb-6 shadow-lg rounded-full bg-white">
+                    <TbTruckDelivery />
+                  </div>
                 </div>
-                <h3 className="text-3xl mb-2 font-semibold leading-normal">
-                  {title}
-                </h3>
                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
                   {description}
                 </p>

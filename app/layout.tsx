@@ -68,13 +68,10 @@ export default async function RootLayout({
           />
           <body className="bg-slate-50">
             <Providers>
-
-
               <Header isSession={isSession} />
               <div className="p-2 w-full ">
                 {session ? <PanelNavbar /> : null}
               </div>
-
               {children}
               <ToasterProvider />
               <Footer />

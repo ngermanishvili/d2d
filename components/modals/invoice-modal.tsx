@@ -7,7 +7,7 @@ import { InvoiceColumn } from "@/app/(protected)/couriers/[id]/components/column
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { FaPrint } from "react-icons/fa";
-import StampImage from "@/assets/images/stamp.png";
+import StampImage from "@/assets/images/stamp-d2d.png";
 import Image from "next/image";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
@@ -219,7 +219,7 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
                 onChange={handleInputChange}
               />{" "}
               <div className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                ანგარიშსწორება
+                კომპანიას ერიცხება
               </div>
               <Input
                 type="text"

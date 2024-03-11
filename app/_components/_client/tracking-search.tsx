@@ -93,7 +93,7 @@ const TrackingSearchContainer: React.FC = () => {
 
         {showNoShipmentAlert && (
           <div
-            className="z-[99] transition  bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative h-[100px] flex justify-center items-center"
+            className="z-[99] transition  bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative h-[100px] flex justify-center items-center mt-[50px]"
             role="alert"
           >
             <strong className="font-bold flex items-center justify-center">

@@ -9,7 +9,6 @@ export const Hero = () => {
       <div className="relative min-h-screen w-full">
         <div className="grid !min-h-[30rem] px-8">
           <Landing />
-          <Banner />
         </div>
       </div>
     </>

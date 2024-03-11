@@ -10,6 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useidSetStore } from "@/hooks/select-store";
 import { Badge, Alert, Tag } from "antd";
 import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
+import { RoleGate } from "@/components/auth/role-gate";
+import { getUserByEmail } from "@/data/user";
 
 export type ShipmentColumn = {
   id: string;
@@ -41,7 +43,10 @@ export type ShipmentColumn = {
   mimgebiFullName: string;
   gamgzavniFullName: string;
   courierComment2: string;
+  assignedCourier: string;
 };
+
+
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
@@ -266,7 +271,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "ჩემი კომენტარი",
     cell: ({ row }) => (
       <Tag className="p-2 w-full" color="orange">
-        {row.original.courierComment}
+        {row.original.courierComment === "" ? "კომენტარის გარეშე" : row.original.courierComment}
       </Tag>
     ),
   },
@@ -275,10 +280,31 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "კურიერის კომენტარი",
     cell: ({ row }) => (
       <Tag className="p-2" color="geekblue">
-        {row.original.courierComment2}
+        {row.original.courierComment2 === "" ? "არ მოიძებნა" : row.original.courierComment2}
       </Tag>
     ),
   },
+
+  {
+    accessorKey: "assignedCourier",
+    header: "მომსახურე კურიერი",
+
+    cell: ({ row }) => (
+      <>
+        <RoleGate allowedRole="USER">
+          <Tag className="p-2" color="geekblue">
+            {row.original.assignedCourier}
+          </Tag>
+        </RoleGate>
+        <RoleGate allowedRole="ADMIN">
+          <Tag className="p-2" color="geekblue">
+            D2D კურიერი
+          </Tag>
+        </RoleGate>
+      </>
+    ),
+  },
+
 
   {
     id: "actions",

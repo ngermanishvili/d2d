@@ -33,7 +33,7 @@ const BillBoardUi: React.FC<BillboardProps> = ({
           />
         )}
         {/* <h2 className='flex justify-center items-center mt-4'>ადევნე თვალი შენს ამანათს</h2> */}
-        <div className="absolute top-[280px] w-full max-w-[1200px]">
+        <div className="absolute top-[280px] w-full max-w-[1500px] ">
           <TrackingSearchContainer />
         </div>
       </div>
