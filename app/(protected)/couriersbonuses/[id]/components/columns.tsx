@@ -5,7 +5,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useidSetStore } from "@/hooks/select-store";
 import { Tag } from "antd";
@@ -252,8 +251,5 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
-  },
+ 
 ];
