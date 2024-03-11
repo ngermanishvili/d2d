@@ -44,7 +44,6 @@ const ShipmentFormXLSX = () => {
     totalItemPrices,
   } = useInvoiceStore();
   const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
-  console.log("🚀 ~ ShipmentFormXLSX ~ filteredDataxlsx:", filteredDataxlsx);
 
   const renameKeys = (data: any, index: number) => {
     return {

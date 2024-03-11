@@ -68,14 +68,8 @@ const ShipmentPage = async () => {
       return shipmentToFilter.status === "ჩაბარებული" && updatedWithinToday;
     })
     .map((shipmentToMap) => shipmentToMap.price);
-  // const sumOfTotals = sumOfNumbersInArray(amountInTotal);
   const sumOfToday = sumOfNumbersInArray(amount);
-  // console.log(
-  //   "🚀 ~ ShipmentPage ~ sumofTotal:",
-  //   sumOfTotals,
-  //   "sum of this day",
-  //   sumOfToday
-  // );
+
   formattedShipments = shipments.map((item) => ({
     id: item.id,
     mimgebiFullName: item?.mimgebiFullName,

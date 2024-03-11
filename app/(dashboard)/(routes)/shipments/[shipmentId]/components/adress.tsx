@@ -28,7 +28,6 @@ const AdressInput: React.FC = () => {
         setItems(newarr);
         setMisamarti(newarr[0]);
         setAddress(newarr[0]); // Set default selected address
-        console.log("🚀 ~ fetchAddress ~ array:", newarr);
       } catch (error) {
         console.error("Error fetching addresses:", error);
       }
@@ -54,7 +53,6 @@ const AdressInput: React.FC = () => {
     setTimeout(() => {
       inputRef.current?.focus();
     }, 0);
-    console.log(inputRef.current?.input);
   };
 
   return (

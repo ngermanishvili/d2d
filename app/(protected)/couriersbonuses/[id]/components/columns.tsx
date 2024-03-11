@@ -5,7 +5,6 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { CellAction } from "./cell-action";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useidSetStore } from "@/hooks/select-store";
 import { Tag } from "antd";
@@ -35,6 +34,59 @@ export type ShipmentColumn = {
 };
 
 export const columns: ColumnDef<ShipmentColumn>[] = [
+  {
+    id: "select",
+    header: ({ table }) => {
+      return (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => {
+            if (value === true) {
+              const filteredRowModel = table.getFilteredRowModel();
+
+              if (filteredRowModel) {
+                const arr = filteredRowModel.rows.map((i) => i.original);
+                table.toggleAllPageRowsSelected(!!value);
+
+                // Do something with arr
+              }
+            } else {
+              table.toggleAllPageRowsSelected(!!value);
+            }
+          }}
+          aria-label="Select all"
+        />
+      );
+    },
+    cell: ({ row }) => {
+      const { pushId, ids, deleteId } = useidSetStore();
+
+      return (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              const id = row.original.id;
+              if (!ids.includes(id)) {
+                pushId(id);
+              }
+            }
+            if (!value) {
+              const id = row.original.id;
+
+              deleteId(id);
+            }
+            return row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      );
+    },
+  },
+
   {
     accessorKey: "trackingId",
     header: "თრექინგი",
@@ -188,6 +240,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
+
   {
     accessorKey: "courierComment",
     header: "მომხმარებლის კომენტარი",
@@ -198,8 +251,5 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
 
-  {
-    id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />,
-  },
+ 
 ];

@@ -67,7 +67,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
       const response = await axios.get(`/api/shipments/${data}`);
       setShipmentData(response.data);
-      console.log("🚀 ~ fetchData ~ res:", response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {

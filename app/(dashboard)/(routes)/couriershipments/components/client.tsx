@@ -17,21 +17,8 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
-  const [filteredData, setFilteredData] = useState<ShipmentColumn[]>(data);
   const [totalPrice, setTotalPrice] = useState<number>(0);
 
-  const handleDateRangeChange = (dateRange: DateRange) => {
-    const filteredData = data.filter((shipment) => {
-      const shipmentDate = shipment.updatedAt;
-
-      return (
-        (!dateRange.from || shipmentDate >= dateRange.from) &&
-        (!dateRange.to || shipmentDate <= dateRange.to)
-      );
-    });
-
-    setFilteredData(filteredData);
-  };
   const calculateTotalPrice = (data: ShipmentColumn[]) => {
     let sum = 0;
     data.forEach((shipment) => {
@@ -45,8 +32,8 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     setTotalPrice(sum);
   };
   useEffect(() => {
-    calculateTotalPrice(filteredData);
-  }, [filteredData]);
+    calculateTotalPrice(data);
+  }, [data]);
 
   return (
     <>
@@ -59,21 +46,13 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
       <Separator />
       <p className="text-md">აღებული თანხა: {totalPrice}</p>
 
-      <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-      {filteredData.length > 0 ? (
+      <DatePickerWithRange onDateRangeChange={() => {}} />
+      {data.length > 0 ? (
         <>
-          <CourierDataTable
-            searchKey="name"
-            columns={columns}
-            data={filteredData}
-          />
+          <CourierDataTable searchKey="name" columns={columns} data={data} />
         </>
       ) : (
-        <CourierDataTable
-          searchKey="name"
-          columns={columns}
-          data={filteredData}
-        />
+        <CourierDataTable searchKey="name" columns={columns} data={data} />
       )}
     </>
   );

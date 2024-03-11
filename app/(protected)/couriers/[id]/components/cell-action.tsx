@@ -29,7 +29,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open2, set2Open] = useState(false);
 
   const onUpdate = async (id: string | null) => {
-    console.log(id);
   };
 
   const onDelete = async () => {
@@ -52,7 +51,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onClose={() => setOpen(false)}
         onConfirm={() => {
           if (!data.id) {
-            console.log("araris id");
             return;
           }
           onUpdate(data.id);

@@ -333,11 +333,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     // Check if form is valid before opening the modal
     try {
       const isValid = await validateForm(form.getValues());
-      console.log(
-        "🚀 ~ handleButtonClick ~ isValid:",
-        isValid,
-        form.getValues()
-      );
+ 
 
       if (isValid) {
         setIsCreateOpen(true);

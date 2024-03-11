@@ -57,19 +57,17 @@ export function DataTable<TData, TValue>({
     },
   });
 
-
   return (
     <div>
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search"
+          placeholder="მოძებნე"
           value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
-
       </div>
       <div className="rounded-md border overflow-x-auto">
         <Table className="min-w-full">
@@ -79,15 +77,23 @@ export function DataTable<TData, TValue>({
                 {headerGroup.headers.map((header, index) => (
                   <TableHead
                     key={header.id}
-                    className={`${index === 0 || index === 1 ? "sticky left-0 text-white" : ""} text-white bg-red-600 text-md border-black`}
-                    style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                    className={`${
+                      index === 0 || index === 1
+                        ? "sticky left-0 text-white"
+                        : ""
+                    } text-white bg-red-600 text-md border-black`}
+                    style={{
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
                   >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </TableHead>
                 ))}
               </TableRow>
@@ -104,8 +110,9 @@ export function DataTable<TData, TValue>({
                   {row.getVisibleCells().map((cell, index) => (
                     <TableCell
                       key={cell.id}
-                      className={`${index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
-                        } p-2 border font-semibold`}
+                      className={`${
+                        index === 0 ? "sticky left-0" : "" // Apply sticky style to the first column
+                      } p-2 border font-semibold`}
                     >
                       {flexRender(
                         cell.column.columnDef.cell,

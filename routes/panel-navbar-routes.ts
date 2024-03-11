@@ -17,6 +17,11 @@ export const NAV_MENU_ADMIN = [
     to: "/couriers",
   },
   {
+    name: "ბონუსები",
+    to: "/couriersbonuses",
+    icon: CiDeliveryTruck,
+  },
+  {
     name: "ბლოგპოსტები",
     icon: GiTatteredBanner,
     to: "/addblogposts",
@@ -91,5 +96,10 @@ export const NAV_MENU_COURIER = [
     name: "ჩემი შეკვეთები",
     icon: MdWorkHistory,
     to: "/couriershipments",
+  },
+  {
+    name: "ბონუსები",
+    icon: MdWorkHistory,
+    to: "/bonus",
   },
 ];

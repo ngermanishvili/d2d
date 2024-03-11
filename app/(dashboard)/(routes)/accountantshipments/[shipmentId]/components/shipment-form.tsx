@@ -195,9 +195,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    console.log(address);
     data.address = address;
-    //  const aris = aq iqneba check
     try {
       data.packaging = packagingUsed;
       data.label = range;
@@ -206,7 +204,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
       data.price = totalPrice.toString();
       if (selectedParty === "Receiver") data.itemPrice = itemPrice.toString();
       setLoading(true);
-      console.log(data);
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
