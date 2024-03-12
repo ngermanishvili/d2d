@@ -17,7 +17,7 @@ export const CourierShipmentsClient: React.FC<UserClientProps> = ({ data }) => {
 
   const handleDateRangeChange = (dateRange: DateRange) => {
     const filteredData = data.filter((shipment) => {
-      const shipmentDate = shipment.updatedAt;
+      const shipmentDate = new Date(shipment.updatedAt);
 
       return (
         (!dateRange.from || shipmentDate >= dateRange.from) &&
@@ -27,13 +27,25 @@ export const CourierShipmentsClient: React.FC<UserClientProps> = ({ data }) => {
 
     setFilteredData(filteredData);
   };
+  let bonus = filteredData.filter(
+    (i) => i.status === "ჩაბარებული" || i.status === "დასრულებული"
+  );
 
   return (
     <>
-      <div className="flex  w-full justify-between">
+      <div className="flex  w-full justify-start flex-col">
+        {" "}
         <Heading
-          title={`კურიერის ბონუსი : ${data.length * 0.5} ლარი`}
-          description={`კურიერის შეკვეთების ოდენობა(${data.length})`}
+          title={`კურიერის ბონუსი : ${bonus.length * 0.5} ₾`}
+          description={`კურიერის შეკვეთების ოდენობა(${filteredData.length})`}
+        />
+        <Heading
+          title={``}
+          description={`კურიერის შესრულებული შეკვეთების ოდენობა ოდენობა(${bonus.length})`}
+        />
+        <Heading
+          title=""
+          description={`კურიერის ბონუსის დასათვლელად დააყენეთ ფილტრი ამ თვის პირველი რიცხვიდან შემდეგი თვის პირველ რიცხვამდე`}
         />
       </div>
       <Separator />
