@@ -31,6 +31,8 @@ import { Alert, Badge, Card, Divider, Typography } from "antd";
 import Image from "next/image";
 import SpaceImage from "@/assets/images/space.png";
 import { select } from "@material-tailwind/react";
+import useAssignedCouriersStore from "@/hooks/assigned-couriers-store";
+import { RoleGate } from "@/components/auth/role-gate";
 
 interface WeightRange {
   label: string;
@@ -206,20 +208,27 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       ? (companyPayment = companyPayment - 2 * companyPayment)
       : (companyPayment = companyPayment);
   }, [companyPayment]);
-
+  const { assignedCouriers } = useAssignedCouriersStore();
+  console.log("🚀 ~ assignedCouriers:", assignedCouriers);
   return (
     <>
       <div className="w-full self-center flex flex-row xl:gap-2 mx-4 rounded-sm justify-center">
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
-            <Image
+            {/* <Image
               className="hidden lg:hidden"
               src={SpaceImage}
               alt="space"
               width={500}
               height={500}
-            />
-            {}
+            /> */}
+            <RoleGate allowedRole="ADMIN">
+              <div className="flex flex-col">
+                {assignedCouriers.map((item: any) => {
+                  return <p>{item}</p>;
+                })}
+              </div>
+            </RoleGate>
           </div>
         </div>
         <Divider

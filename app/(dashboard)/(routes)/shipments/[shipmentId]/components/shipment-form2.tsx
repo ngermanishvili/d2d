@@ -43,6 +43,7 @@ import useAddressStore from "@/hooks/adress-store";
 import { Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 import { error } from "console";
+import useAssignedCouriersStore from "@/hooks/assigned-couriers-store";
 
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1, {
@@ -353,6 +354,22 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       // Handle error appropriately
     }
   };
+  const { setassignedCouriers } = useAssignedCouriersStore();
+  useEffect(() => {
+    if (initialData) {
+      let arr: string[];
+
+      const couriers = async () => {
+        const response = await axios.get(`/api/shipments/${initialData.id}`);
+        console.log("🚀 ~ couriers ~ response:", response.data);
+        arr = response.data?.couriers
+          .filter((item: any) => item.email !== null)
+          .map((i: any) => i.email);
+        setassignedCouriers(arr);
+      };
+      couriers();
+    }
+  }, []);
 
   const onDelete = async () => {
     try {

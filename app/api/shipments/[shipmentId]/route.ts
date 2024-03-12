@@ -15,6 +15,9 @@ export async function GET(
       where: {
         id: params.shipmentId,
       },
+      include: {
+        couriers: true,
+      },
     });
     return NextResponse.json(shipment);
   } catch (error) {
