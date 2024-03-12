@@ -361,7 +361,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
 
       const couriers = async () => {
         const response = await axios.get(`/api/shipments/${initialData.id}`);
-        console.log("🚀 ~ couriers ~ response:", response.data);
         arr = response.data?.couriers
           .filter((item: any) => item.email !== null)
           .map((i: any) => i.email);
@@ -921,20 +920,21 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                           </div>
                         </div>
                       </RoleGate>
-
-                      <div className="relative w-full mb-3 p-4">
-                        <div>
-                          {initialData && (
-                            <div>
-                              {initialData?.assignedCourier ? (
-                                <p> {initialData?.assignedCourier}</p>
-                              ) : (
-                                <p>არ არის კურიერი მიმაგრებული</p>
-                              )}
-                            </div>
-                          )}
+                      <RoleGate allowedRole="ADMIN">
+                        <div className="relative w-full mb-3 p-4">
+                          <div>
+                            {initialData && (
+                              <div>
+                                {initialData?.assignedCourier ? (
+                                  <p> {initialData?.assignedCourier}</p>
+                                ) : (
+                                  <p>არ არის კურიერი მიმაგრებული</p>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      </RoleGate>
                     </div>
                   </div>
                 </div>

@@ -209,7 +209,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       : (companyPayment = companyPayment);
   }, [companyPayment]);
   const { assignedCouriers } = useAssignedCouriersStore();
-  console.log("🚀 ~ assignedCouriers:", assignedCouriers);
   return (
     <>
       <div className="w-full self-center flex flex-row xl:gap-2 mx-4 rounded-sm justify-center">
