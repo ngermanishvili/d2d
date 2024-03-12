@@ -29,7 +29,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     <>
       <div className="flex items-center justify-start">
         <Tag color="blue" className="p-2 text-md">
-          ასაღები ბონუსი: {data.length} ₾
+          ასაღები ბონუსი: {data.length * 0.5} ₾
         </Tag>
       </div>
       <Separator />
