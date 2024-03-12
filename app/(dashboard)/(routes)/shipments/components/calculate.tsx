@@ -219,6 +219,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               width={500}
               height={500}
             />
+            {}
           </div>
         </div>
         <Divider

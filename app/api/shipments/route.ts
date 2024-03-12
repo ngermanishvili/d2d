@@ -61,6 +61,7 @@ export async function POST(req: Request, { params }: { params: {} }) {
       gamgzavnisqalaqi,
       companyPays,
     } = body;
+    console.log("🚀 ~ POST ~ body:", body);
 
     const userId = await currentUserId();
     if (!userId) {

@@ -43,7 +43,6 @@ export const ConfirmModal: React.FC<AlertModalProps> = ({
     <>
       <div>
         <Modal
-
           title="ინფორმაცია"
           description="გთხოვთ თრექინგი და ქიუ არ კოდი გადაიტანოთ გზავნილზე"
           isOpen={isOpen}
@@ -57,7 +56,12 @@ export const ConfirmModal: React.FC<AlertModalProps> = ({
 
               <QRCodeGenerator text={text} />
 
-              <Button className="absolute bottom-0 w-full" disabled={loading} variant="destructive" onClick={onConfirm}>
+              <Button
+                className="absolute bottom-0 w-full"
+                disabled={loading}
+                variant="destructive"
+                onClick={onConfirm}
+              >
                 <Link href="/shipments">დახურვა</Link>
               </Button>
             </div>

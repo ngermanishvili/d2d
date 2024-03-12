@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { Shipment } from "@prisma/client";
 import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormContext } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useCalculatorStore from "@/hooks/calculate-price";
@@ -42,6 +42,7 @@ import useAddressStore from "@/hooks/adress-store";
 
 import { Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
+import { error } from "console";
 
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1, {
@@ -54,9 +55,7 @@ const formSchema = z.object({
   whopays: z.string().min(1, {
     message: "გთხოვთ მიუთითოთ გადამხდელი მხარე ",
   }),
-  address: z.string().min(0, {
-    message: "გთხოვთ მიუთითოთ მისამართი ",
-  }),
+  address: z.string().optional(),
   phoneNumber: z.string().min(5, {
     message: "გთხოვთ მიუთითოთ თქვენი ტელეფონის ნომერი",
   }),
@@ -86,7 +85,6 @@ const formSchema = z.object({
   label: z.string().min(1, {
     message: "გთხოვთ მიუთითოთ წონითი კატეგორია ",
   }),
-  assignedCourier: z.string().nullable().optional(),
   agebisDro: z.string().nullable().optional(),
   itemPrice: z.string().nullable().optional(),
   priceDif: z.string().nullable().optional(),
@@ -139,7 +137,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const [loading, setLoading] = useState(false);
   const [qrText, setQrText] = useState("");
   const { address, setAddress } = useAddressStore();
-
   const title = initialData ? "შეცვალე შეკვეთა" : "შეკვეთის განთავსება";
   const description = initialData
     ? "შეცვალე შეკვეთა"
@@ -182,7 +179,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       gamgzavniFullName:
         user?.userType === "იურიდიული პირი" ? user?.input3 : "",
       city: "თბილისი",
-      address: "",
+      address: address,
       phoneNumber: "",
       price: "0",
       itemPrice: null,
@@ -200,7 +197,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       agebisDro: "",
       chabarebisDro: "",
       gamgzavnisqalaqi: "თბილისი",
-      assignedCourier: "",
     },
   });
 
@@ -278,7 +274,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.itemPrice = itemPrice;
       setLoading(true);
       data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
-      data.weightPrice = weightPrice;
+      data.weightPrice = weightPrice.toString();
       data.packagePrice = packagingUsed ? "5" : "0";
       selectedParty === "Invoice"
         ? (data.companyPays = (
@@ -295,6 +291,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
         const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
+        console.log("🚀 ~ onSubmit ~ shipmentId:", shipmentId);
         setQrText(shipmentId);
       }
 
@@ -305,7 +302,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       }
 
       toast.success(toastMessage);
-      setAddress("");
+
       setCalculated(false);
       setRange("");
       setShipmentCost(0);
@@ -321,6 +318,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const validateForm = async (data: ShipmentFormValues) => {
     try {
       formSchema.parse(data);
+
       return true; // Form is valid
     } catch (error) {
       return false; // Form is invalid
@@ -330,11 +328,25 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const handleButtonClick = async () => {
     // Check if form is valid before opening the modal
     try {
-      const isValid = await validateForm(form.getValues());
+      // Trigger form validation
+      const isValid = await form.trigger();
+      console.log("🚀 ~ handleButtonClick ~ isValid:", isValid);
 
       if (isValid) {
+        // If form is valid, open the confirmation modal
         setIsCreateOpen(true);
       } else {
+        // If form is invalid, display errors
+        // You can access errors from the form object
+        // and handle them as you wish (e.g., displaying a toast message)
+        const errors = form.formState.errors;
+        console.log(errors);
+        if (address === "") {
+        }
+        // Example: Displaying error messages in a toast
+        for (const [fieldName, fieldErrors] of Object.entries(errors)) {
+          const errorMessage = fieldErrors?.message || "Validation error";
+        }
       }
     } catch (error) {
       console.error("Error occurred while validating form:", error);
@@ -410,6 +422,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     setRanges(weightRanges);
     setCitiesNames(cityNames);
     setShowCalc(true);
+    setCity("თბილისი");
   }, []); // Dependency array ensures that the effect runs when initialData changes
 
   return (
@@ -487,14 +500,26 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                         disabled={loading}
                                         placeholder="სახელი"
                                         {...field}
-                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0"
+                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${
+                                          form.formState.errors
+                                            .gamgzavniFullName
+                                            ? "border-red-500"
+                                            : "" // Apply red border if there's an error
+                                        }`}
                                       />
                                     )}
-
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
                                   </div>
                                 </FormControl>
-                                <FormMessage />
+                                {/* Display error message if there's an error */}
+                                {form.formState.errors.gamgzavniFullName && (
+                                  <FormMessage className="text-red-500">
+                                    {
+                                      form.formState.errors.gamgzavniFullName
+                                        ?.message
+                                    }
+                                  </FormMessage>
+                                )}
                               </FormItem>
                             )}
                           />
@@ -881,26 +906,17 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                       </RoleGate>
 
                       <div className="relative w-full mb-3 p-4">
-                        <FormField
-                          disabled
-                          control={form.control}
-                          name="assignedCourier"
-                          render={({ field }) => (
-                            <FormItem className="relative w-full mb-3">
-                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
-                                მიმაგრებული კურიერი
-                              </FormLabel>
-                              <Input
-                                disabled={loading}
-                                placeholder="სახელი"
-                                {...field}
-                                value={field.value ?? ""}
-                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
-                              />
-                              <FormMessage />
-                            </FormItem>
+                        <div>
+                          {initialData && (
+                            <div>
+                              {initialData?.assignedCourier ? (
+                                <p> {initialData?.assignedCourier}</p>
+                              ) : (
+                                <p>არ არის კურიერი მიმაგრებული</p>
+                              )}
+                            </div>
                           )}
-                        />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -944,10 +960,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                   onClose={() => setIsConfirmOpen(false)}
                 />
                 <Button
-                  type="button"
+                  type="submit"
                   disabled={loading}
                   className="w-4/5 self-center h-[50px]"
-                  onClick={() => handleButtonClick()}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    handleButtonClick();
+                  }}
                 >
                   დადასტურება
                 </Button>
