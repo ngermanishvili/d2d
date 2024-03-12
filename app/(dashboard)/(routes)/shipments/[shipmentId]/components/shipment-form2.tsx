@@ -43,7 +43,6 @@ import useAddressStore from "@/hooks/adress-store";
 import { Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 
-
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1, {
     message: "გთხოვთ მიუთითოთ მიმღების სახელი და გვარი ",
@@ -96,7 +95,6 @@ const formSchema = z.object({
   packagePrice: z.string().nullable().optional(),
   chabarebisDro: z.string().nullable().optional(),
   gamgzavnisqalaqi: z.string().min(1),
-
 });
 
 // This ShipmentFormValues is for the formik form values type definition.
@@ -284,9 +282,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.packagePrice = packagingUsed ? "5" : "0";
       selectedParty === "Invoice"
         ? (data.companyPays = (
-          parseFloat(itemPrice) -
-          (parseFloat(weightPrice) + parseFloat(data.packagePrice))
-        ).toString())
+            parseFloat(itemPrice) -
+            (parseFloat(weightPrice) + parseFloat(data.packagePrice))
+          ).toString())
         : (data.companyPays = itemPrice);
       if (!initialData) {
         // Calculate pickup and delivery dates using current date and time
@@ -333,7 +331,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     // Check if form is valid before opening the modal
     try {
       const isValid = await validateForm(form.getValues());
- 
 
       if (isValid) {
         setIsCreateOpen(true);
@@ -644,7 +641,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                             )}
                           />
                         </div>
-
                       </div>
                       <div className="w-full lg:w-6/12 px-4">
                         <FormField
@@ -884,7 +880,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                         </div>
                       </RoleGate>
 
-
                       <div className="relative w-full mb-3 p-4">
                         <FormField
                           disabled
@@ -899,7 +894,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                 disabled={loading}
                                 placeholder="სახელი"
                                 {...field}
-                                value={field.value ?? ''}
+                                value={field.value ?? ""}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
                               />
                               <FormMessage />
@@ -909,7 +904,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                       </div>
                     </div>
                   </div>
-
                 </div>
 
                 {showCalc && (
@@ -920,7 +914,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                     }
                   />
                 )}
-
 
                 <CreateModal
                   initialData={initialData ? true : false}
@@ -953,7 +946,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                 <Button
                   type="button"
                   disabled={loading}
-                  className="ml-auto self-end w-full h-[50px]"
+                  className="w-4/5 self-center h-[50px]"
                   onClick={() => handleButtonClick()}
                 >
                   დადასტურება

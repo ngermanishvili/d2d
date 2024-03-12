@@ -209,7 +209,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
   return (
     <>
-      <div className="w-full self-center flex flex-row gap-2 mx-4 rounded-sm justify-center">
+      <div className="w-full self-center flex flex-row xl:gap-2 mx-4 rounded-sm justify-center">
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
             <Image
@@ -223,7 +223,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         </div>
         <Divider
           type="vertical"
-          className="h-auto bg-transparent w-1.5 mt-4 border-none"
+          className="h-auto bg-transparent w-1.5 mt-4 border-none hidden xl:block"
         />
         <div className="w-4/5 self-center max-[410px]:w-full md:w-full md:self-auto rounded-2xl flex flex-col xl:w-1/2 xl:self-end md:p-2 xl:pb-2 bg-slate-200 mt-2 ">
           <div>
