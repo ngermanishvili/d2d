@@ -179,7 +179,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         loading={false}
       />
       <div>
-        <div className="flex items-center py-4 w-full gap-4">
+        <div className="flex flex-col sm:flex-row items-center py-4 w-full gap-4">
           <Input
             placeholder="ძებნა"
             value={
@@ -199,9 +199,9 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
           <select
             value={searchKeyStore}
             onChange={(e) => handleChange(e.target.value)}
-            className="border p-2 rounded-md outline-none"
+            className=" max-sm:w-10/12 p-2 rounded-md outline-none"
           >
-            <option value="">Select Search Key</option>
+            <option value="">აირჩიეთ რითი გსურთ მოძებნა/გაფილტრ</option>
             {shipmentColumnsWithLabels.map((column) => (
               <option key={column.value} value={column.value}>
                 {column.label}
@@ -209,8 +209,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             ))}
           </select>
 
-          <div className="flex p-4">
-            <RoleGate allowedRole="ADMIN">
+          <RoleGate allowedRole="ADMIN">
+            <div className="flex p-4">
               <Button
                 onClick={() => {
                   onDelete();
@@ -230,8 +230,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               <Button className="m-2" onClick={() => setIsOpen(true)}>
                 მიამაგრე შეკვეთას კურიერი
               </Button>
-            </RoleGate>
-          </div>
+            </div>
+          </RoleGate>
         </div>
 
         <div className="rounded-md border overflow-x-auto">

@@ -188,7 +188,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
   }, [ids, filteredData]);
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-center justify-between">
         <Heading
           title={`შეკვეთები (${filteredData.length})`}
           description="შეკვეთების ისტორია"
