@@ -27,6 +27,7 @@ export const privateRoutes = [
   "/shipments",
   "shipments/new",
   "shipments/:id",
+  "/settings",
 ];
 /**
  * An array of routes that require authentication

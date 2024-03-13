@@ -14,6 +14,7 @@ enum UserRole {
   COURIER
   ACCOUNTANT
   MODERATOR
+  INACTIVEUSER
 }
 
 model SavedAddress {
@@ -46,7 +47,7 @@ model User {
   input6         String?
   input7         String?
   input8         String?
-  role           UserRole       @default(USER)
+  role           UserRole       @default(INACTIVEUSER)
   accounts       Account[]
   shipments      Shipment[] // Back-reference to Shipment
   savedAddresses SavedAddress[]

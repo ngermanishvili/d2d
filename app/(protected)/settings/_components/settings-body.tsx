@@ -67,6 +67,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
 
   const isActive = user?.email && user?.number;
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+
     startTransition(() => {
       settings(values)
         .then((data) => {
@@ -337,6 +338,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                                     Courier
                                   </SelectItem>
                                   <SelectItem value={UserRole.MODERATOR}>
+                                    Administrator
+                                  </SelectItem>
+                                  <SelectItem value={UserRole.INACTIVEUSER}>
                                     Administrator
                                   </SelectItem>
                                 </SelectContent>

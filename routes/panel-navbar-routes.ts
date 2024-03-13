@@ -70,6 +70,18 @@ export const NAV_MENU_MODERATOR = [
 
 ];
 
+export const NAV_MENU_INACTIVEUSER = [
+
+  {
+    name: "ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ყველა ველი პირად კაბინეტში",
+    icon: MdWorkHistory,
+    to: "/inactive",
+  },
+
+
+
+];
+
 
 export const NAV_MENU_ACCOUNTANT = [
   {

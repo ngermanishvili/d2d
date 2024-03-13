@@ -58,7 +58,8 @@ const formSchema = z.object({
     UserRole.USER,
     UserRole.COURIER,
     UserRole.ACCOUNTANT,
-    UserRole.MODERATOR
+    UserRole.MODERATOR,
+    UserRole.INACTIVEUSER
   ]),
   email: z.optional(z.string().email()),
   number: z.optional(z.string()),

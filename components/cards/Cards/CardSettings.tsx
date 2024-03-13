@@ -89,6 +89,15 @@ export default function CardSettings() {
     }
   }, [user, setPhotoUrl]);
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
+    if (values.input1 &&
+      values.input2 &&
+      values.input3 &&
+      values.input4 &&
+      values.input5 &&
+      values.input6 &&
+      values.input7) {
+      values.role = UserRole.USER
+    }
     values.image = photoUrl;
     console.log(values);
     startTransition(() => {
@@ -198,7 +207,7 @@ export default function CardSettings() {
               </div>
               <hr className="mt-6 border-b-1 border-blueGray-300" />
               <div className="flex flex-wrap">
-                <RoleGate allowedRole="USER">
+                <RoleGate allowedRole="INACTIVEUSER">
                   {user?.input1 === null ||
                     user?.input1.length === 0 ||
                     user?.input1.length === 1 ? (
@@ -309,6 +318,7 @@ export default function CardSettings() {
                     </div>
                   )}
                 </RoleGate>
+
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -502,6 +512,9 @@ export default function CardSettings() {
                             </SelectItem>
                             <SelectItem value={UserRole.MODERATOR}>
                               ადმინისტრატორი
+                            </SelectItem>
+                            <SelectItem value={UserRole.INACTIVEUSER}>
+                              ara qtiuri
                             </SelectItem>
                           </SelectContent>
                         </Select>

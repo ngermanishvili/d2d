@@ -69,7 +69,7 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
       return acc;
     }, {});
   };
-  // Usage
+
   const groupedCosts: GroupedCosts = groupCostsByCity(formattedCosts);
   return (
     <>
@@ -93,7 +93,6 @@ const ShipmentPage = async ({ params }: { params: { shipmentId: string } }) => {
           </div>
         </div>
       </RoleGate>
-
       <RoleGate allowedRole="ACCOUNTANT">
         <div className="flex-col ">
           <div className="flex-1 space-y-4 p-8 pt-6">
