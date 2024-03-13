@@ -47,7 +47,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
   },
   {
     accessorKey: "status",
-    header: "სტატუსიიიი",
+    header: "სტატუსი",
     cell: ({ row }) => (
       <div>
         {/* <Alert message={row.original.status} type="success" /> */}

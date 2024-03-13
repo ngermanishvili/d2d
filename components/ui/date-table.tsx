@@ -114,6 +114,21 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
       router.refresh();
     }
   };
+  const handleUpdateToFalse2 = async () => {
+    try {
+      const data = {
+        ids,
+        variable: "გაგზავნილი ფილიალში",
+      };
+
+      await axios.patch("/api/shipments", data);
+      // Handle success or any other logic
+    } catch (error) {
+      console.error("Error updating to false:", error);
+    } finally {
+      router.refresh();
+    }
+  };
 
   const email = useEmailStore((state: any) => state.email);
 
@@ -179,47 +194,52 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
       />
       <div>
         <div className="flex flex-col sm:flex-row items-center py-4 w-full gap-4">
-          <Input
-            placeholder="ძებნა"
-            value={
-              (table.getColumn(searchKeyStore)?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(event) => {
-              return table
-                .getColumn(searchKeyStore)
-                ?.setFilterValue(event.target.value);
-            }}
-            className="max-w-md"
-          />
-          <p className="p-2 flex rounded-md justify-center items-center bg-green-400">
-            გაფილტრე
-          </p>
-          <select
-            value={searchKeyStore}
-            onChange={(e) => handleChange(e.target.value)}
-            className=" max-sm:w-10/12 p-2 rounded-md outline-none"
-          >
-            <option value="">აირჩიეთ რითი გსურთ მოძებნა/გაფილტრ</option>
-            {shipmentColumnsWithLabels.map((column) => (
-              <option key={column.value} value={column.value}>
-                {column.label}
-              </option>
-            ))}
-          </select>
+          <div className="flex flex-col">
+            <Input
+              placeholder="ძებნა"
+              value={
+                (table.getColumn(searchKeyStore)?.getFilterValue() as string) ??
+                ""
+              }
+              onChange={(event) => {
+                return table
+                  .getColumn(searchKeyStore)
+                  ?.setFilterValue(event.target.value);
+              }}
+              className="max-w-md"
+            />
+            <p className="p-2 w-1/3 self-center flex rounded-md justify-center items-center bg-green-400">
+              გაფილტრე
+            </p>
+            <select
+              value={searchKeyStore}
+              onChange={(e) => handleChange(e.target.value)}
+              className=" max-sm:w-10/12 p-2 rounded-md outline-none"
+            >
+              <option value="">აირჩიეთ რითი გსურთ მოძებნა/გაფილტრ</option>
+              {shipmentColumnsWithLabels.map((column) => (
+                <option key={column.value} value={column.value}>
+                  {column.label}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <RoleGate allowedRole="ADMIN">
-            <div className="flex p-4">
+            <div className="flex flex-wrap p-4">
               <Button
                 onClick={() => {
                   onDelete();
                   toast.success("შეკვეთები წაიშლა");
                   router.refresh();
                 }}
-                className="m-2"
+                className="m-2 hidden"
               >
                 წაშლა
               </Button>
+              <Button className="m-2" onClick={() => handleUpdateToFalse2()}>
+                შეცვალე სტატუსი (გაგზავნილი ფილიალში)
+              </Button>{" "}
               <Button className="m-2" onClick={() => handleUpdateToFalse()}>
                 შეცვალე სტატუსი (გატანილი)
               </Button>{" "}
