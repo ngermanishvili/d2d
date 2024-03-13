@@ -51,14 +51,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       router.refresh();
       toast.success("შეკვეთა წაშლილია");
     } catch (error) {
-      toast.error(
-        "დაფიქსირდა შეცდომა შეკვეთის წაშლისას"
-      );
+      toast.error("დაფიქსირდა შეცდომა შეკვეთის წაშლისას");
     } finally {
       setLoading(false);
       setOpen(false);
     }
   };
+  const { isUserModalOpen, onClose, id, setId } = userModalStore();
 
   const fetchData = async (data: string) => {
     try {
@@ -67,6 +66,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
       const response = await axios.get(`/api/shipments/${data}`);
       setShipmentData(response.data);
+      if (shipmentData) setId(shipmentData?.id);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -77,13 +77,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  const handlePhoneChange = async (id: string, phone: string) => {
+  const handlePhoneChange = async (phone: string) => {
     try {
       const data = {
         phoneNumber: phone,
       };
-
-      await axios.patch(`/api/shipments/${id}`, data);
+      if (shipmentData)
+        await axios.patch(`/api/shipments/${shipmentData.id}`, data);
       // Handle success or any other logic
     } catch (error) {
       // Handle error
@@ -93,15 +93,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
   const { phone, setPhone } = usePhoneStore();
 
-  const { isUserModalOpen, onClose } = userModalStore();
-
   useEffect(() => {
-    if (isUserModalOpen) {
-      fetchData(data.id);
-    }
-
-  }, [isUserModalOpen])
-
+    if (isUserModalOpen) fetchData(id);
+  }, [isUserModalOpen]);
 
   return (
     <>
@@ -113,10 +107,13 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       />
       <UserShimpmentModal
         isOpen={isUserModalOpen}
-        onClose={() => onClose()}
+        onClose={() => {
+          setShipmentData(null);
+          onClose();
+        }}
         onConfirm={() => {
           setLoading(true);
-          handlePhoneChange(data.id, phone);
+          handlePhoneChange(phone);
           setTimeout(() => {
             setLoading(false);
             setIsModalOpen(false);
@@ -142,7 +139,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => {
-
                 router.push(`/shipments/${data.id}`);
                 router.refresh();
               }}

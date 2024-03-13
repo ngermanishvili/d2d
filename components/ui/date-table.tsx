@@ -165,7 +165,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     table.resetGlobalFilter();
   };
 
-  const { isUserModalOpen, onOpen, onClose } = userModalStore();
+  const { onOpen, onClose, setId } = userModalStore();
 
   return (
     <>
@@ -266,30 +266,69 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                    onDoubleClick={() => onOpen()}
-                  >
-                    {row.getVisibleCells().map((cell, index) => (
-                      <TableCell
-                        key={cell.id}
-                        className={`${
-                          index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                        } p-2 border`}
-                        style={{
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
+                  <>
+                    <RoleGate allowedRole="USER">
+                      <TableRow
+                        key={row.id + "u"}
+                        data-state={row.getIsSelected() && "selected"}
+                        onDoubleClick={() => {
+                          setId(row.original.id);
+                          onOpen();
                         }}
                       >
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
+                        {row.getVisibleCells().map((cell, index) => (
+                          <TableCell
+                            key={cell.id}
+                            className={`${
+                              index === 1
+                                ? "w-full sticky left-0 bg-white p-"
+                                : "" // Apply sticky style to the first column
+                            } p-2 border`}
+                            style={{
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </RoleGate>
+                    <RoleGate allowedRole="ADMIN">
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        onDoubleClick={() => {
+                          router.push(`/shipments/${row.original.id}`);
+                        }}
+                      >
+                        {row.getVisibleCells().map((cell, index) => (
+                          <TableCell
+                            key={cell.id}
+                            className={`${
+                              index === 1
+                                ? "w-full sticky left-0 bg-white p-"
+                                : "" // Apply sticky style to the first column
+                            } p-2 border`}
+                            style={{
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </RoleGate>
+                  </>
                 ))
               ) : (
                 <TableRow>

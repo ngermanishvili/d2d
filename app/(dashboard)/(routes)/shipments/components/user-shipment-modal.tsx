@@ -37,14 +37,15 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
             alt="Logo"
           />
         </div>
-
       </div>
       <div className="flex justify-between mt-5 w-full flex-col sm:flex-row">
         <div className="">
           <Title level={4}>გამგზავნის ინფორმაცია</Title>
           <Paragraph>
             <ul>
-              <li>სახელი: {capitalizeFirstLetter(shipmentData.gamgzavniFullName)}</li>
+              <li>
+                სახელი: {capitalizeFirstLetter(shipmentData.gamgzavniFullName)}
+              </li>
               <li>
                 <input
                   type="text"
@@ -106,17 +107,23 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
       <div className="pt-6 space-x-2 flex items-center justify-end w-full">
         <Button
           disabled={loading}
-          variant="destructive"
+          variant="default"
           onClick={() => {
-            onClose()
-
-            onConfirm(phone)
-          }
-          }
+            onClose();
+          }}
         >
           დახურვა
+        </Button>{" "}
+        <Button
+          disabled={loading}
+          variant="destructive"
+          onClick={() => {
+            onConfirm(phone);
+            onClose();
+          }}
+        >
+          შენახვა
         </Button>
-
       </div>
     </Modal>
   );

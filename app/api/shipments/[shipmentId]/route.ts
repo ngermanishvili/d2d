@@ -31,7 +31,22 @@ export async function PATCH(
   { params }: { params: { shipmentId: string } }
 ) {
   try {
+    console.log(params.shipmentId);
     const body = await req.json();
+    if (Object.keys(body).length === 1 && "phoneNumber" in body) {
+      // Perform the patch operation on phoneNumber
+      const { phoneNumber } = body;
+      const updatedShipment = await db.shipment.update({
+        where: {
+          id: params.shipmentId,
+        },
+        data: {
+          phoneNumber,
+        },
+      });
+      console.log("🚀 ~ updatedShipment:", updatedShipment);
+      return NextResponse.json(updatedShipment);
+    }
     // Extract variables from the request body
     const {
       phoneNumber,
