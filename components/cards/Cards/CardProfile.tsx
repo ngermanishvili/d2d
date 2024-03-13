@@ -6,16 +6,19 @@ import usePhotoStore from "@/hooks/photo-store";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import useAccountActiveStore from "@/hooks/is-account-active";
 // components
 interface SettingsPageProps {
   amountOfShipments: number;
 }
 
 const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
-
   const user = useCurrentUser();
   const { photoUrl, setPhotoUrl } = usePhotoStore();
-  const capitalizedFirstName = user?.name ? user.name.charAt(0).toUpperCase() + user.name.slice(1) : '';
+  const capitalizedFirstName = user?.name
+    ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+    : "";
+  const { active, setActive } = useAccountActiveStore();
 
   return (
     <>
@@ -23,7 +26,6 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
         <div className="px-6">
           <div className="flex flex-wrap justify-center">
             <div className="w-full px-4 flex justify-center relative ">
-
               {photoUrl.length > 0 ? (
                 <>
                   <Image
@@ -46,7 +48,6 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
               ) : (
                 ""
               )}
-
             </div>
             <div className="w-full px-4 text-center mt-20">
               <div className="flex justify-center py-4 lg:pt-4 pt-8">
@@ -54,18 +55,23 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                     {amountOfShipments}
                   </span>
-                  <span className="text-sm text-blueGray-400">სულ შეკვეთები</span>
+                  <span className="text-sm text-blueGray-400">
+                    სულ შეკვეთები
+                  </span>
                 </div>
                 <div className="mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                     10
                   </span>
-                  <span className="text-sm text-blueGray-400">აქტიური შეკვეთები</span>
+                  <span className="text-sm text-blueGray-400">
+                    აქტიური შეკვეთები
+                  </span>
                 </div>
                 <div className="lg:mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600 ">
-                    ✅
+                    {active ? <>✅</> : <>❌</>}
                   </span>
+                  <div className="w-full"></div>
                   <span className="text-sm text-blueGray-400">სტატუსი</span>
                 </div>
               </div>
@@ -89,8 +95,7 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
             </div> */}
           </div>
           <div className="mt-10 py-10 border-t border-blueGray-200 text-center">
-            <div className="flex flex-wrap justify-center">
-            </div>
+            <div className="flex flex-wrap justify-center"></div>
           </div>
         </div>
       </div>

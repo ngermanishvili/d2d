@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import usePhotoStore from "@/hooks/photo-store";
 import { RoleGate } from "@/components/auth/role-gate";
 import { Badge, Divider } from "antd";
+import useAccountActiveStore from "@/hooks/is-account-active";
 
 // components
 
@@ -40,12 +41,11 @@ export default function CardSettings() {
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
-  const [isActive, setIsActive] = useState(false);
   const { update } = useSession();
   const [isPending, startTransition] = useTransition();
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [showForm, setShowForm] = useState(false);
-
+  const { active, setActive } = useAccountActiveStore();
   const handleClick = () => {
     setShowForm(true);
   };
@@ -85,7 +85,7 @@ export default function CardSettings() {
       user?.input6 &&
       user?.input7
     ) {
-      setIsActive(true);
+      setActive(true);
     }
   }, [user, setPhotoUrl]);
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -127,20 +127,6 @@ export default function CardSettings() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-wrap justify-start">
                 {" "}
-                <div className="w-full">
-                  <h6 className="text-blueGray-400 text-sm mt-3 w-[150px] self-center mb-6 font-bold uppercase">
-                    {isActive ? (
-                      <div className="bg-blueGray-700 text-center active:bg-blueGray-600 text-black bg-lime-200 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                        ანგარიში აქტიურია
-                      </div>
-                    ) : (
-                      <div className="bg-blueGray-700 active:bg-blueGray-600 text-white bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded shadow hover:shadow-md outline-none focus:outline-none mr-1 ease-linear transition-all duration-150">
-                        ანგარიშის გასააქტიურებლად გთხოვთ შეავსოთ ქვემოთ მოცემული
-                        ყველა ველი.
-                      </div>
-                    )}
-                  </h6>
-                </div>
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
