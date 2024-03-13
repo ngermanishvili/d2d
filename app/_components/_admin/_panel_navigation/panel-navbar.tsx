@@ -19,6 +19,7 @@ import {
   NAV_MENU_ACCOUNTANT,
   NAV_MENU_MODERATOR,
 } from "@/routes/panel-navbar-routes";
+import useAccountActiveStore from "@/hooks/is-account-active";
 
 interface NavItemProps {
   children: React.ReactNode;
@@ -50,6 +51,7 @@ export function PanelNavbar() {
       () => window.innerWidth >= 960 && setOpen(false)
     );
   }, []);
+  const { active, setActive } = useAccountActiveStore();
 
   return (
     <div className=" sticky top-4 z-0 mt-[100px]">
@@ -71,12 +73,18 @@ export function PanelNavbar() {
                 ))}
               </RoleGate>
               <RoleGate allowedRole="USER">
-                {NAV_MENU_USER.map(({ name, icon: Icon, to }) => (
-                  <NavItem key={name} href={to}>
-                    <Icon className="h-2 w-2" />
-                    {name}
+                {active ? (
+                  NAV_MENU_USER.map(({ name, icon: Icon, to }) => (
+                    <NavItem key={name} href={to}>
+                      <Icon className="h-2 w-2" />
+                      {name}
+                    </NavItem>
+                  ))
+                ) : (
+                  <NavItem href="/settings" key={"1"}>
+                    გთხოვთ შეავსოთ ყველა ველი და გააქტიუროთ ანგარიში
                   </NavItem>
-                ))}
+                )}
               </RoleGate>
               <RoleGate allowedRole="COURIER">
                 {NAV_MENU_COURIER.map(({ name, icon: Icon, to }) => (
