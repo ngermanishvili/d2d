@@ -27,7 +27,7 @@ interface XlsxUploadProps {
 type UploadXlsxValues = z.infer<typeof formSchema>;
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
+    message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს  ",
   }),
 
   url: z.string(),

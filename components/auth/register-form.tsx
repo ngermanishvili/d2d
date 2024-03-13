@@ -22,7 +22,7 @@ import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { register } from "@/actions/register";
 import { cn } from "@/lib/utils";
-import { Poppins } from 'next/font/google'
+import { Poppins } from "next/font/google";
 
 import {
   Select,
@@ -32,17 +32,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
 const font = Poppins({
-  subsets: ['latin'],
-  weight: ['600']
-})
+  subsets: ["latin"],
+  weight: ["600"],
+});
 
 export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
-  const [type, setType] = useState("ფიზიკური პირი")
+  const [type, setType] = useState("ფიზიკური პირი");
 
   const [isPending, startTransition] = useTransition();
 
@@ -81,7 +80,6 @@ export const RegisterForm = () => {
 
   return (
     <>
-
       <div className=" mt-5 flex items-center justify-center p-[60px]">
         <CardWrapper
           headerLabel="რეგისტრაცია"
@@ -99,11 +97,7 @@ export const RegisterForm = () => {
                     <FormItem>
                       <FormLabel htmlFor="email">ელ-ფოსტა</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          type="email"
-                          placeholder="ელ-ფოსტა"
-                        />
+                        <Input {...field} type="email" placeholder="ელ-ფოსტა" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -115,9 +109,9 @@ export const RegisterForm = () => {
                   disabled={isPending}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel htmlFor="name">სახელი</FormLabel>
+                      <FormLabel htmlFor="name">სახელი და გვარი</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="სახელი" />
+                        <Input {...field} placeholder="სახელი და გვარი" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -145,7 +139,11 @@ export const RegisterForm = () => {
                     <FormItem>
                       <FormLabel htmlFor="password">პაროლი</FormLabel>
                       <FormControl>
-                        <Input {...field} type="password" placeholder="********" />
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="********"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -157,18 +155,18 @@ export const RegisterForm = () => {
                   disabled={isPending}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel htmlFor="confirm">
-                        გაიმეორეთ პაროლი
-                      </FormLabel>
+                      <FormLabel htmlFor="confirm">გაიმეორეთ პაროლი</FormLabel>
                       <FormControl>
-                        <Input {...field} type="password" placeholder="********" />
+                        <Input
+                          {...field}
+                          type="password"
+                          placeholder="********"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-
-
                 <FormField
                   control={form.control}
                   name="userType"
@@ -183,7 +181,6 @@ export const RegisterForm = () => {
                           onValueChange={(newValue) => {
                             field.onChange(newValue);
                             setType(newValue);
-
                           }}
                         >
                           <SelectTrigger className="h-[50px]">

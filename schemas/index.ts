@@ -12,7 +12,7 @@ export const LoginSchema = z.object({
     message: "არასწორი ელ-ფოსტა",
   }),
   password: z.string().min(1, {
-    message: "პაროლი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
+    message: "პაროლი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს  ",
   }),
 });
 
@@ -28,22 +28,21 @@ export const RegisterSchema = z
       message: "არასწორი ელ-ფოსტა",
     }),
     password: z.string().min(6, {
-      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს კოკეხ",
+      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს  ",
     }),
     confirm: z.string().min(6, {
-      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს კოკეხ",
+      message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს  ",
     }),
 
-    name: z.string().min(1, {
-      message: "სახელი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს კოკეხ",
+    name: z.string().min(6, {
+      message: "სახელი და გვარი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს",
     }),
-    number: z.string().min(1, {
-      message: "min 1 nomriani ",
+    number: z.string().min(9, {
+      message: "ნომერი მინიმუმ უნდა შეიცავდეს 9 სიმბოლოს ",
     }),
     userType: z.string().min(1, {
       message: "გთხოვთ აირჩიოთ ანგარიშის ტიპი ",
     }),
-
   })
   .refine((data) => data.password === data.confirm, {
     message: "Passwords don't match",
@@ -63,7 +62,12 @@ export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
     isTwoFactorEnabled: z.optional(z.boolean()),
-    role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.COURIER, UserRole.ACCOUNTANT]),
+    role: z.enum([
+      UserRole.ADMIN,
+      UserRole.USER,
+      UserRole.COURIER,
+      UserRole.ACCOUNTANT,
+    ]),
     email: z.optional(z.string().email()),
     number: z.optional(z.string()),
     password: z.optional(z.string().min(6)),
@@ -82,9 +86,6 @@ export const SettingsSchema = z
     input6: z.optional(z.string()),
     input7: z.optional(z.string()),
     input8: z.optional(z.string()),
-
-
-
   })
   .refine(
     (data) => {
