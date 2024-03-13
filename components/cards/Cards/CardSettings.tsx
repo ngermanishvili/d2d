@@ -125,7 +125,7 @@ export default function CardSettings() {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="flex flex-wrap justify-center">
+              <div className="flex flex-wrap justify-start">
                 {" "}
                 <div className="w-full">
                   <h6 className="text-blueGray-400 text-sm mt-3 w-[150px] self-center mb-6 font-bold uppercase">

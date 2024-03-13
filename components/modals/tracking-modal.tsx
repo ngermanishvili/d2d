@@ -26,7 +26,10 @@ const ShipmentDetails: React.FC<ShipmentDetailsProps> = ({ shipmentData }) => {
   return (
     <>
       <div className="flex justify-between mt-5 ">
-        <div>
+        <div className="w-full flex flex-col gap-4">
+          <p className="text-md font-bold p-2">
+            შეკვეთა : {shipmentData.trackingId}
+          </p>
           <Image
             className="hidden md:block cursor-pointer rounded-full"
             src={D2DLogo}
@@ -85,13 +88,7 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
   loading,
 }) => {
   return (
-    <Modal
-      width={1000}
-      title={`შეკვეთა:`}
-      open={isOpen}
-      onCancel={onClose}
-      footer={null}
-    >
+    <Modal width={1000} open={isOpen} onCancel={onClose} footer={null}>
       {shipmentData ? (
         <ShipmentDetails shipmentData={shipmentData} />
       ) : (
@@ -103,18 +100,18 @@ export const TrackingModal: React.FC<TrackingModalProps> = ({
           <Divider />
           <Title level={5}>ადევნე თვალი შეკვეთას</Title>
           <Steps direction="horizontal" current={statusHistory.length - 1}>
-            {statusHistory.map((status, index) => (
-              <Step
-                key={status.id}
-                title={status.status}
-                description={moment(status.timestamp).format(
-                  "MMMM Do YYYY, h:mm:ss a"
-                )}
-                status={
-                  index === statusHistory.length - 1 ? "process" : "finish"
-                }
-              />
-            ))}
+            {statusHistory
+              .map((status, index) => (
+                <Step
+                  key={status.id}
+                  title={status.status}
+                  description={moment(status.timestamp).format("MMMM Do YYYY")}
+                  status={
+                    index === statusHistory.length - 1 ? "process" : "finish"
+                  }
+                />
+              ))
+              .reverse()}
           </Steps>
         </div>
       )}
