@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Divider, Typography } from "antd";
 import { Modal, Steps, Tag } from "antd";
 import { Button } from "@/components/ui/button";
-import { Shipment } from "@prisma/client";
+import { Shipment, ShipmentStatusHistory } from "@prisma/client";
 
 import D2DLogo from "@/assets/images/d2d.jpg";
 import Image from "next/image";
 import usePhoneStore from "@/hooks/user-shipment-phone";
 import LoadingSpinner from "@/app/_components/_client/loading-spinner";
+import { TrackingModalForHistory } from "@/components/modals/tracking-modal-history";
 
 const { Title, Paragraph } = Typography;
 
@@ -79,6 +80,7 @@ interface TrackingModalProps {
   shipmentData: Shipment | null;
   onConfirm: (phone: string) => void;
   loading: boolean;
+  statusHistory: ShipmentStatusHistory[];
 }
 
 export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
@@ -87,43 +89,43 @@ export const UserShimpmentModal: React.FC<TrackingModalProps> = ({
   shipmentData,
   onConfirm,
   loading,
+  statusHistory,
 }) => {
   const { phone } = usePhoneStore();
   return (
-    <Modal
-      className="w-full"
-      title={`შეკვეთა: ${shipmentData?.trackingId}`}
-      open={isOpen}
-      onCancel={onClose}
-      footer={null}
-    >
-      {shipmentData ? (
-        <ShipmentDetails shipmentData={shipmentData} />
-      ) : (
-        <>
-          <LoadingSpinner />
-        </>
-      )}
-      <div className="pt-6 space-x-2 flex items-center justify-end w-full">
-        <Button
-          disabled={loading}
-          variant="default"
-          onClick={() => {
-            onClose();
-          }}
-        >
-          დახურვა
-        </Button>{" "}
-        <Button
-          disabled={loading}
-          variant="destructive"
-          onClick={() => {
-            onConfirm(phone);
-            onClose();
-          }}
-        >
-          შენახვა
-        </Button>
+    <Modal className="w-full" open={isOpen} onCancel={onClose} footer={null}>
+      <div className="w-full">
+        {shipmentData ? (
+          <>
+            <ShipmentDetails shipmentData={shipmentData} />
+            <TrackingModalForHistory statusHistory={statusHistory} />
+          </>
+        ) : (
+          <>
+            <LoadingSpinner />
+          </>
+        )}
+        <div className="pt-6 space-x-2 flex items-center justify-end w-full">
+          <Button
+            disabled={loading}
+            variant="default"
+            onClick={() => {
+              onClose();
+            }}
+          >
+            დახურვა
+          </Button>{" "}
+          <Button
+            disabled={loading}
+            variant="destructive"
+            onClick={() => {
+              onConfirm(phone);
+              onClose();
+            }}
+          >
+            შენახვა
+          </Button>
+        </div>
       </div>
     </Modal>
   );

@@ -66,6 +66,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
       const response = await axios.get(`/api/shipments/${data}`);
       setShipmentData(response.data);
+      setStatusHistory(response.data.ShipmentStatusHistory);
+      console.log(statusHistory);
       if (shipmentData) setId(shipmentData?.id);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -105,24 +107,28 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
         onConfirm={onDelete}
         loading={loading}
       />
-      <UserShimpmentModal
-        isOpen={isUserModalOpen}
-        onClose={() => {
-          setShipmentData(null);
-          onClose();
-        }}
-        onConfirm={() => {
-          setLoading(true);
-          handlePhoneChange(phone);
-          setTimeout(() => {
-            setLoading(false);
-            setIsModalOpen(false);
-            router.refresh();
-          }, 2000);
-        }}
-        shipmentData={shipmentData}
-        loading={false}
-      />
+      {statusHistory && (
+        <UserShimpmentModal
+          isOpen={isUserModalOpen}
+          onClose={() => {
+            setShipmentData(null);
+            onClose();
+          }}
+          onConfirm={() => {
+            setLoading(true);
+            handlePhoneChange(phone);
+            setTimeout(() => {
+              setLoading(false);
+              setIsModalOpen(false);
+              router.refresh();
+            }, 2000);
+          }}
+          shipmentData={shipmentData}
+          statusHistory={statusHistory}
+          loading={false}
+        />
+      )}
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">

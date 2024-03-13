@@ -17,6 +17,7 @@ export async function GET(
       },
       include: {
         couriers: true,
+        ShipmentStatusHistory: true,
       },
     });
     return NextResponse.json(shipment);

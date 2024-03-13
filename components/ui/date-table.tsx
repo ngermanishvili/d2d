@@ -33,7 +33,6 @@ import { useShipmentStoreXLSX } from "@/hooks/xlsx-shipment-store";
 import { ShipmentColumn } from "@/hooks/xlsx-shipment-store";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { TrackingModal } from "../modals/tracking-modal";
 import { userModalStore } from "@/hooks/user-modal-store";
 
 interface DataTableProps<TData extends ShipmentColumn, TValue> {
