@@ -17,6 +17,7 @@ import {
   NAV_MENU_USER,
   NAV_MENU_COURIER,
   NAV_MENU_ACCOUNTANT,
+  NAV_MENU_MODERATOR,
 } from "@/routes/panel-navbar-routes";
 
 interface NavItemProps {
@@ -94,6 +95,14 @@ export function PanelNavbar() {
                   </NavItem>
                 ))}
               </RoleGate>
+              <RoleGate allowedRole="MODERATOR">
+                {NAV_MENU_MODERATOR.map(({ name, icon: Icon, to }) => (
+                  <NavItem key={name} href={to}>
+                    <Icon className="h-5 w-5" />
+                    {name}
+                  </NavItem>
+                ))}
+              </RoleGate>
             </ul>
             <div className="hidden items-center gap-4 lg:flex">
               <div>
@@ -151,6 +160,14 @@ export function PanelNavbar() {
                 </RoleGate>
                 <RoleGate allowedRole="COURIER">
                   {NAV_MENU_COURIER.map(({ name, icon: Icon, to }) => (
+                    <NavItem key={name} href={to}>
+                      {name}
+                      <Icon className="h-5 w-5" />
+                    </NavItem>
+                  ))}
+                </RoleGate>
+                <RoleGate allowedRole="MODERATOR">
+                  {NAV_MENU_MODERATOR.map(({ name, icon: Icon, to }) => (
                     <NavItem key={name} href={to}>
                       {name}
                       <Icon className="h-5 w-5" />

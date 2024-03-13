@@ -43,6 +43,7 @@ import ImageUpload from "@/components/ui/image-upload";
 import Image from "next/image";
 import XlsxUpload from "@/components/ui/xlsx-upload";
 import { RoleGate } from "@/components/auth/role-gate";
+import { User } from "lucide-react";
 const isValidUrl = (url: string): boolean => {
   try {
     new URL(url);
@@ -58,6 +59,7 @@ const formSchema = z.object({
     UserRole.USER,
     UserRole.COURIER,
     UserRole.ACCOUNTANT,
+    UserRole.MODERATOR,
   ]),
   email: z.optional(z.string().email()),
   number: z.optional(z.string()),
@@ -330,7 +332,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           }
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -359,7 +361,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           }
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -382,7 +384,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="კომპანიის დასახელება"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -405,7 +407,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="საბანკო ანგარიშის ნომერი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -428,7 +430,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="კომპანიის დირექტორი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -451,7 +453,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="საკონტაქტო ტელეფონი"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -474,7 +476,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="საქმიანობის სფერო"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />
@@ -497,7 +499,7 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           placeholder="input8"
                           disabled={isPending}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                        // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                         />
                       </FormControl>
                       <FormMessage className="mt-1 text-xs text-red-500" />

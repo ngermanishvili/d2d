@@ -336,6 +336,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                                   <SelectItem value={UserRole.COURIER}>
                                     Courier
                                   </SelectItem>
+                                  <SelectItem value={UserRole.MODERATOR}>
+                                    Administrator
+                                  </SelectItem>
                                 </SelectContent>
                               </Select>
                               <FormMessage />

@@ -18,11 +18,7 @@ const ShipmentPage = async () => {
       ShipmentStatusHistory: true, // Include shipment status history
     },
   });
-  // const amountInTotal = shipments
-  //   .filter((shipmentsTofilter) => {
-  //     return shipmentsTofilter.status === "ჩაბარებული";
-  //   })
-  //   .map((shipmentToMap) => shipmentToMap.price);
+
   const sumOfNumbersInArray = (numberStrings: string[]): number => {
     let total = 0;
 
