@@ -18,10 +18,10 @@ const ShipmentPage = async () => {
   const userId = await currentUserId();
 
   const filteredShipments =
-    userRole !== "ADMIN"
+    userRole !== "ADMIN" && userRole !== "MODERATOR"
       ? shipments.filter((item) => {
-        return item.userId === userId;
-      })
+          return item.userId === userId;
+        })
       : shipments;
 
   const formattedShipments: ShipmentColumn[] = filteredShipments.map(
@@ -59,7 +59,7 @@ const ShipmentPage = async () => {
     })
   );
 
-  if (userRole !== "ADMIN" && userRole !== "USER") {
+  if (userRole !== "ADMIN" && userRole !== "USER" && userRole !== "MODERATOR") {
     return <Error404Page />;
   }
   const shipmentCosts = await db.shippingPrice.findMany({});
@@ -68,6 +68,9 @@ const ShipmentPage = async () => {
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <RoleGate allowedRole="ADMIN">
+          <ShipmentClient data={formattedShipments} />
+        </RoleGate>{" "}
+        <RoleGate allowedRole="MODERATOR">
           <ShipmentClient data={formattedShipments} />
         </RoleGate>
         <RoleGate allowedRole="USER">

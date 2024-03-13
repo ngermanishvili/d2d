@@ -13,13 +13,13 @@ export const newPassword = async (
   token?: string | null
 ) => {
   if (!token) {
-    return { error: "Missing token!" };
+    return { error: "დაფიქსირდა შეცდომა" };
   }
 
   const validatedFields = NewPasswordSchema.safeParse(values);
 
   if (!validatedFields.success) {
-    return { error: "Invalid fields!" };
+    return { error: "გთხოვთ სწორად შეავსოთ ველები" };
   }
 
   const { password } = validatedFields.data;
@@ -27,19 +27,19 @@ export const newPassword = async (
   const existingToken = await getPasswordResetTokenByToken(token);
 
   if (!existingToken) {
-    return { error: "Invalid token!" };
+    return { error: "დაფიქსირდა შეცდომა" };
   }
 
   const hasExpired = new Date(existingToken.expires) < new Date();
 
   if (hasExpired) {
-    return { error: "Token has expired!" };
+    return { error: "აღსადგენი დრო ამოიწურა" };
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
 
   if (!existingUser) {
-    return { error: "Email does not exist!" };
+    return { error: "ელ-ფოსტა ვერ მოიძებნა" };
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -53,5 +53,5 @@ export const newPassword = async (
     where: { id: existingToken.id },
   });
 
-  return { success: "Password updated!" };
+  return { success: "თქვენი პაროლი განახლდა!" };
 };

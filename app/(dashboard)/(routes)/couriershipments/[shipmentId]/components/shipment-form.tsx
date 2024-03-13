@@ -27,7 +27,6 @@ import { CreateModal } from "@/components/modals/shipment-create-modal";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
-
 import {
   Select,
   SelectContent,
@@ -84,7 +83,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const { address, setAddress } = useAddressStore();
 
-  const title = initialData ? "შეცვალე შეკვეთის სტატუსი" : "შეკვეთის განთავსება";
+  const title = initialData
+    ? "შეცვალე შეკვეთის სტატუსი"
+    : "შეკვეთის განთავსება";
   const description = initialData
     ? "შეცვალე შეკვეთა"
     : "ახალი შეკვეთის დამატება";
@@ -432,7 +433,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                           )}
                         />
                         <div className="w-full">
-                          <span className="block uppercase text-blueGray-600 text-md font-bold mb-2 bg-transparent text-purple-400">მომხმარებლის კომენტარი</span>
+                          <span className="block uppercase text-blueGray-600 text-md font-bold mb-2 bg-transparent text-purple-400">
+                            მომხმარებლის კომენტარი
+                          </span>
                           <Alert>
                             <RocketIcon className="h-4 w-4" />
                             <AlertTitle className="mt-1">
@@ -506,7 +509,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             )}
                           />
                         </div>
-
                       </div>
 
                       <div className="w-full lg:w-6/12 px-4 relative mb-3">
@@ -574,7 +576,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                       </div>
                     </div>
 
-                    <h2 className="font-bold  p-4">დაწერე კომენტარი ან შეცვალე შეკვეთის სტატუსები </h2>
+                    <h2 className="font-bold  p-4">
+                      დაწერე კომენტარი ან შეცვალე შეკვეთის სტატუსები{" "}
+                    </h2>
                     <div className="border-2 border-black p-4">
                       <div className="flex flex-wrap">
                         <div className="w-full lg:w-6/12 px-4">
@@ -616,11 +620,63 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                         }}
                                       >
                                         <SelectTrigger>
-                                          <SelectValue>{field.value}</SelectValue>
+                                          <SelectValue>
+                                            {field.value}
+                                          </SelectValue>
                                         </SelectTrigger>
                                         <SelectContent>
                                           {/* {ADMIN როლგეითი} */}
                                           <RoleGate allowedRole="ADMIN">
+                                            <SelectItem value="მიმდინარე">
+                                              მიმდინარე
+                                            </SelectItem>
+                                            <SelectItem value="ჩაბარებული">
+                                              ჩაბარებული
+                                            </SelectItem>
+                                            <SelectItem value="უარი ჩაბარებაზე">
+                                              უარი ჩაბარებაზე
+                                            </SelectItem>
+                                            <SelectItem value="არ არის მისამართზე">
+                                              არ არის მისამართზე
+                                            </SelectItem>
+                                            <SelectItem value="არ იღებს ყურმილს ">
+                                              არ იღებს ყურმილს{" "}
+                                            </SelectItem>
+                                            <SelectItem value="აღებული">
+                                              აღებული{" "}
+                                            </SelectItem>
+                                            <SelectItem value="ვერ ხდება დაკავშირება">
+                                              ვერ ხდება დაკავშირება
+                                            </SelectItem>
+                                            <SelectItem value="მეორედ გატანა">
+                                              მეორედ გატანა
+                                            </SelectItem>
+                                            <SelectItem value="უბრუნდება გამგზავნს">
+                                              უბრუნდება გამგზავნს
+                                            </SelectItem>
+                                            <SelectItem value="გაუქმებულია გამგზავნის მიერ ">
+                                              გაუქმებულია გამგზავნის მიერ{" "}
+                                            </SelectItem>
+                                            <SelectItem value="ასაღები">
+                                              ასაღები{" "}
+                                            </SelectItem>
+                                            <SelectItem value="საწყობში">
+                                              საწყობში
+                                            </SelectItem>
+                                            <SelectItem value="ფილიალიდან გაცემა ">
+                                              ფილიალიდან გაცემა{" "}
+                                            </SelectItem>
+                                            <SelectItem value="გატანილი ჩასაბარებლად">
+                                              გატანილი ჩასაბარებლად{" "}
+                                            </SelectItem>
+                                            <SelectItem value="დაუბრუნდა გამგზავნს, დასრულება">
+                                              დაუბრუნდა გამგზავნს, დასრულება
+                                            </SelectItem>
+                                            <SelectItem value="ვერ მოხერხდა დაკავშირება">
+                                              ვერ მოხერხდა დაკავშირება{" "}
+                                            </SelectItem>
+                                          </RoleGate>{" "}
+                                          <RoleGate allowedRole="MODERATOR">
                                             <SelectItem value="მიმდინარე">
                                               მიმდინარე
                                             </SelectItem>
@@ -710,7 +766,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                   name="markedByCourier"
                                   render={({ field }) => (
                                     <FormItem className=" w-full mb-3 bg-white">
-
                                       <FormControl className="bg-white">
                                         <Select
                                           disabled={
@@ -731,8 +786,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                                             </SelectValue>
                                           </SelectTrigger>
                                           <SelectContent>
-                                            <SelectItem value="კი">კი</SelectItem>
-                                            <SelectItem value="არა">არა</SelectItem>
+                                            <SelectItem value="კი">
+                                              კი
+                                            </SelectItem>
+                                            <SelectItem value="არა">
+                                              არა
+                                            </SelectItem>
                                           </SelectContent>
                                         </Select>
                                       </FormControl>
@@ -744,11 +803,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
                             </div>
                           </div>
                         </div>
-
                       </div>
                     </div>
                   </div>
-
                 </div>
 
                 <CreateModal
@@ -767,7 +824,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({ initialData }) => {
 
                 <Button
                   type="button"
-
                   disabled={loading}
                   className="ml-auto self-end w-full"
                   onClick={() => setIsConfirmOpen(true)}

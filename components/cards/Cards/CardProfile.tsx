@@ -59,14 +59,7 @@ const CardProfile: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
                     სულ შეკვეთები
                   </span>
                 </div>
-                <div className="mr-4 p-3 text-center">
-                  <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
-                    10
-                  </span>
-                  <span className="text-sm text-blueGray-400">
-                    აქტიური შეკვეთები
-                  </span>
-                </div>
+
                 <div className="lg:mr-4 p-3 text-center">
                   <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600 ">
                     {active ? <>✅</> : <>❌</>}

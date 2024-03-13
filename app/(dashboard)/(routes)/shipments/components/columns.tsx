@@ -46,8 +46,6 @@ export type ShipmentColumn = {
   assignedCourier: string;
 };
 
-
-
 export const columns: ColumnDef<ShipmentColumn>[] = [
   {
     id: "select",
@@ -115,7 +113,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     header: "თრექინგი",
 
     cell: ({ row }) => (
-      <Tag className="p-2  text-md w-[88px]" color="purple">
+      <Tag className="p-2 -z-10  text-md w-[88px]" color="purple">
         {row.original.trackingId}
       </Tag>
     ),
@@ -137,7 +135,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
 
       return (
         <div>
-          <Tag className="p-2" color={color}>
+          <Tag className="p-2 -z-10 -z-10" color={color}>
             {row.original.status}
           </Tag>
         </div>
@@ -260,7 +258,7 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "agebisDro",
     header: "ამანათის აღების დრო",
     cell: ({ row }) => (
-      <Tag className="p-2 w-full" color="green">
+      <Tag className="p-2 -z-10 w-full" color="green">
         {row.original.agebisDro}
       </Tag>
     ),
@@ -270,8 +268,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "courierComment",
     header: "ჩემი კომენტარი",
     cell: ({ row }) => (
-      <Tag className="p-2 w-full" color="orange">
-        {row.original.courierComment === "" ? "კომენტარის გარეშე" : row.original.courierComment}
+      <Tag className="p-2 -z-10 w-full" color="orange">
+        {row.original.courierComment === ""
+          ? "კომენტარის გარეშე"
+          : row.original.courierComment}
       </Tag>
     ),
   },
@@ -279,8 +279,10 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     accessorKey: "courierComment2",
     header: "კურიერის კომენტარი",
     cell: ({ row }) => (
-      <Tag className="p-2" color="geekblue">
-        {row.original.courierComment2 === "" ? "არ მოიძებნა" : row.original.courierComment2}
+      <Tag className="p-2 -z-10" color="geekblue">
+        {row.original.courierComment2 === ""
+          ? "არ მოიძებნა"
+          : row.original.courierComment2}
       </Tag>
     ),
   },
@@ -292,19 +294,18 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     cell: ({ row }) => (
       <>
         <RoleGate allowedRole="USER">
-          <Tag className="p-2" color="geekblue">
+          <Tag className="p-2 -z-10" color="geekblue">
             {row.original.assignedCourier}
           </Tag>
         </RoleGate>
         <RoleGate allowedRole="ADMIN">
-          <Tag className="p-2" color="geekblue">
+          <Tag className="p-2 -z-10" color="geekblue">
             D2D კურიერი
           </Tag>
         </RoleGate>
       </>
     ),
   },
-
 
   {
     id: "actions",

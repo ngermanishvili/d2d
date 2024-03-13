@@ -200,7 +200,7 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
       </div>
 
       <DatePickerWithRange onDateRangeChange={handleDateRangeChange} />
-      <RoleGate allowedRole="ADMIN">
+      <RoleGate allowedRole={"ADMIN"}>
         <Alert
           message={` დროის ამ მონაკვეთში  სრული საფასურის ჯამია:${sumOfTotals}, სრულ საფასურს მინუს ნივთის საფასურების ჯამია: ${sumOfDifs}, წონის საფასურის ჯამი: ${sumOfWeightPrices}, შეფუთვის სერვისის საფასურის ჯამია: ${sumOfPackagePrices} `}
           description="დროის მონაკვეთის შეცვლით იხილავთ ამ მონაკვეთში დაგროვებულ თანხას"

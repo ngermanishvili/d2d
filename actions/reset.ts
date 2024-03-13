@@ -8,25 +8,25 @@ import { sendPasswordResetEmail } from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
 
 export const reset = async (values: z.infer<typeof ResetSchema>) => {
-    const validatedFields = ResetSchema.safeParse(values);
+  const validatedFields = ResetSchema.safeParse(values);
 
-    if (!validatedFields.success) {
-        return { error: "Invalid emaiL!" };
-    }
+  if (!validatedFields.success) {
+    return { error: "ელ-ფოსტა არასწორია!" };
+  }
 
-    const { email } = validatedFields.data;
+  const { email } = validatedFields.data;
 
-    const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserByEmail(email);
 
-    if (!existingUser) {
-        return { error: "Email not found!" };
-    }
+  if (!existingUser) {
+    return { error: "ელ-ფოსტა ვერ მოიძებნა!" };
+  }
 
-    const passwordResetToken = await generatePasswordResetToken(email);
-    await sendPasswordResetEmail(
-        passwordResetToken.email,
-        passwordResetToken.token,
-    );
+  const passwordResetToken = await generatePasswordResetToken(email);
+  await sendPasswordResetEmail(
+    passwordResetToken.email,
+    passwordResetToken.token
+  );
 
-    return { success: "Reset email sent!" };
-}
+  return { success: "გთხოვთ შეამოწმოთ ელ-ფოსტა" };
+};

@@ -193,8 +193,11 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         loading={false}
       />
       <div>
-        <div className="flex flex-col sm:flex-row items-center py-4 w-full gap-4">
-          <div className="flex flex-col">
+        <div className="flex flex-col md:flex-row items-center py-4 w-full gap-4">
+          <div className="flex flex-col xl:flex-row gap-4">
+            <p className="p-2 w-2/3 self-center flex rounded-md justify-center items-center bg-green-400">
+              გაფილტრე
+            </p>
             <Input
               placeholder="ძებნა"
               value={
@@ -208,9 +211,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               }}
               className="max-w-md"
             />
-            <p className="p-2 w-1/3 self-center flex rounded-md justify-center items-center bg-green-400">
-              გაფილტრე
-            </p>
             <select
               value={searchKeyStore}
               onChange={(e) => handleChange(e.target.value)}
@@ -246,6 +246,13 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               <Button className="m-2" onClick={() => handleUpdateToTrue()}>
                 შეცვალე სტატუსი (საწყობში)
               </Button>
+              <Button className="m-2" onClick={() => setIsOpen(true)}>
+                მიამაგრე შეკვეთას კურიერი
+              </Button>
+            </div>
+          </RoleGate>
+          <RoleGate allowedRole="MODERATOR">
+            <div className=" self-start">
               <Button className="m-2" onClick={() => setIsOpen(true)}>
                 მიამაგრე შეკვეთას კურიერი
               </Button>
@@ -300,7 +307,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                             key={cell.id}
                             className={`${
                               index === 1
-                                ? "w-full sticky left-0 bg-white p-"
+                                ? "w-full sticky left-0 bg-white z-99"
                                 : "" // Apply sticky style to the first column
                             } p-2 border`}
                             style={{
@@ -323,6 +330,36 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                         data-state={row.getIsSelected() && "selected"}
                         onDoubleClick={() => {
                           router.push(`/shipments/${row.original.id}`);
+                        }}
+                      >
+                        {row.getVisibleCells().map((cell, index) => (
+                          <TableCell
+                            key={cell.id}
+                            className={`${
+                              index === 1
+                                ? "w-full sticky left-0 bg-white p-"
+                                : "" // Apply sticky style to the first column
+                            } p-2 border`}
+                            style={{
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    </RoleGate>{" "}
+                    <RoleGate allowedRole="MODERATOR">
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                        onDoubleClick={() => {
+                          router.push(`/couriershipments/${row.original.id}`);
                         }}
                       >
                         {row.getVisibleCells().map((cell, index) => (
