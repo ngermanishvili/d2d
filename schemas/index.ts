@@ -62,12 +62,7 @@ export const SettingsSchema = z
   .object({
     name: z.optional(z.string()),
     isTwoFactorEnabled: z.optional(z.boolean()),
-    role: z.enum([
-      UserRole.ADMIN,
-      UserRole.USER,
-      UserRole.COURIER,
-      UserRole.ACCOUNTANT,
-    ]),
+    role: z.enum([UserRole.ADMIN, UserRole.USER, UserRole.COURIER, UserRole.ACCOUNTANT, UserRole.MODERATOR]),
     email: z.optional(z.string().email()),
     number: z.optional(z.string()),
     password: z.optional(z.string().min(6)),

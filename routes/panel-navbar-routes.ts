@@ -1,5 +1,4 @@
 import { GiTatteredBanner } from "react-icons/gi";
-import { MdAddchart } from "react-icons/md";
 import { CiDeliveryTruck } from "react-icons/ci";
 import { MdWorkHistory } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
@@ -54,6 +53,23 @@ export const NAV_MENU_ADMIN = [
     icon: IoIosAddCircle,
   },
 ];
+
+export const NAV_MENU_MODERATOR = [
+
+  {
+    name: "შეკვეთები",
+    icon: MdWorkHistory,
+    to: "/shipments",
+  },
+
+  {
+    name: "შეკვეთის განთავსება",
+    icon: IoIosAddCircle,
+    to: "/shipments/new",
+  },
+
+];
+
 
 export const NAV_MENU_ACCOUNTANT = [
   {

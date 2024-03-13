@@ -13,6 +13,7 @@ enum UserRole {
   ADMIN
   COURIER
   ACCOUNTANT
+  MODERATOR
 }
 
 model SavedAddress {

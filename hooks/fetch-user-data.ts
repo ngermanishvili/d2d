@@ -1,6 +1,5 @@
 // In use-global-user.ts
-import {PrismaClient, UserRole} from "@prisma/client";
-import {User} from "lucide-react";
+import { PrismaClient, UserRole } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
