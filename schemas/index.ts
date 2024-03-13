@@ -11,8 +11,8 @@ export const LoginSchema = z.object({
   email: z.string().email({
     message: "არასწორი ელ-ფოსტა",
   }),
-  password: z.string().min(1, {
-    message: "პაროლი უნდა შეიცავდეს მინიმუმ 1 სიმბოლოს  ",
+  password: z.string().min(6, {
+    message: "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს  ",
   }),
 });
 
