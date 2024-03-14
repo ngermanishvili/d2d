@@ -1,15 +1,35 @@
+import { update } from '@/auth';
 import { MetadataRoute } from 'next'
 
 const generateBlogPostsSitemapObjects = async () => {
     return [
         {
-            slug: "blog-post-1",
+            slug: "blogposts",
+            priority: 0.8,
             updatedAt: new Date(),
         },
         {
-            slug: "blog-post-2",
+            slug: "about",
+            priority: 0.8,
             updatedAt: new Date(),
         },
+        {
+            slug: "info/contact",
+            priority: 0.8,
+
+            updatedAt: new Date(),
+        },
+        {
+            slug: "info/privacy-policy",
+            priority: 0.8,
+            updatedAt: new Date(),
+        },
+        {
+            slug: "/",
+            updatedAt: new Date(),
+            priority: 1,
+
+        }
     ];
 };
 
