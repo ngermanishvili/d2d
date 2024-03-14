@@ -71,26 +71,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.8,
         },
         {
-            url: "blogposts/cde70d96-1aa2-45b0-a8df-090ce8eef7f6",
+            url: "https://d2d.ge/blogposts/cde70d96-1aa2-45b0-a8df-090ce8eef7f6",
             priority: 0.5,
             changeFrequency: "weekly",
 
         },
         {
-            url: "blogposts/297f3418-4d49-4ce0-9a10-2f966e39c31d",
+            url: "https://d2d.ge/blogposts/297f3418-4d49-4ce0-9a10-2f966e39c31d",
             priority: 0.5,
             changeFrequency: "weekly",
 
 
         },
         {
-            url: "blogposts/7691621a-f44c-4b49-8e23-d1641563713c",
+            url: "https://d2d.ge/blogposts/7691621a-f44c-4b49-8e23-d1641563713c",
             priority: 0.5,
             changeFrequency: "weekly",
 
         },
         {
-            url: "blogposts/b9811b30-f470-48b7-9e9b-f1e1033937ef",
+            url: "https://d2d.ge/blogposts/b9811b30-f470-48b7-9e9b-f1e1033937ef",
             priority: 0.5,
             changeFrequency: "weekly",
         },
