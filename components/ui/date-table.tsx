@@ -194,8 +194,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
       />
       <div>
         <div className="flex flex-col md:flex-row items-center py-4 w-full gap-4">
-          <div className="flex flex-col xl:flex-row gap-4">
-            <p className="p-2 w-2/3 self-center flex rounded-md justify-center items-center bg-green-400">
+          <div className="flex flex-col justify-center xl:flex-row gap-4">
+            <p className="p-2 w-4/5 xl:w-2/5 self-center flex rounded-md justify-center items-center bg-green-400">
               გაფილტრე
             </p>
             <Input
@@ -209,12 +209,12 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   .getColumn(searchKeyStore)
                   ?.setFilterValue(event.target.value);
               }}
-              className="max-w-md"
+              className="max-w-md self-center"
             />
             <select
               value={searchKeyStore}
               onChange={(e) => handleChange(e.target.value)}
-              className=" max-sm:w-10/12 p-2 rounded-md outline-none"
+              className=" max-sm:w-10/12 p-2 w-4/5 self-center rounded-md outline-none"
             >
               <option value="">აირჩიეთ რითი გსურთ მოძებნა/გაფილტრ</option>
               {shipmentColumnsWithLabels.map((column) => (
@@ -226,7 +226,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
           </div>
 
           <RoleGate allowedRole="ADMIN">
-            <div className="flex flex-wrap p-4">
+            <div className="flex flex-wrap justify-center md:w-2/3 max-sm:w-full">
               <Button
                 onClick={() => {
                   onDelete();
@@ -237,16 +237,28 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
               >
                 წაშლა
               </Button>
-              <Button className="m-2" onClick={() => handleUpdateToFalse2()}>
+              <Button
+                className="m-2 h-auto text-wrap w-6/12 max-sm:w-4/6 self-center"
+                onClick={() => handleUpdateToFalse2()}
+              >
                 შეცვალე სტატუსი (გაგზავნილი ფილიალში)
               </Button>{" "}
-              <Button className="m-2" onClick={() => handleUpdateToFalse()}>
+              <Button
+                className="m-2 h-auto text-wrap w-6/12 max-sm:w-4/6 self-center"
+                onClick={() => handleUpdateToFalse()}
+              >
                 შეცვალე სტატუსი (გატანილი)
               </Button>{" "}
-              <Button className="m-2" onClick={() => handleUpdateToTrue()}>
+              <Button
+                className="m-2 h-auto text-wrap w-6/12 max-sm:w-4/6 self-center"
+                onClick={() => handleUpdateToTrue()}
+              >
                 შეცვალე სტატუსი (საწყობში)
               </Button>
-              <Button className="m-2" onClick={() => setIsOpen(true)}>
+              <Button
+                className="m-2 h-auto text-wrap w-6/12 max-sm:w-4/6 self-center"
+                onClick={() => setIsOpen(true)}
+              >
                 მიამაგრე შეკვეთას კურიერი
               </Button>
             </div>

@@ -89,14 +89,17 @@ export default function CardSettings() {
     }
   }, [user, setPhotoUrl]);
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
-    if (values.input1 &&
+    if (
+      values.input1 &&
       values.input2 &&
       values.input3 &&
       values.input4 &&
       values.input5 &&
       values.input6 &&
-      values.input7) {
-      values.role = UserRole.USER
+      values.input7 &&
+      user?.role === "INACTIVEUSER"
+    ) {
+      values.role = UserRole.USER;
     }
     values.image = photoUrl;
     console.log(values);
@@ -105,6 +108,7 @@ export default function CardSettings() {
         .then((data) => {
           if (data.error) {
             setError(data.error);
+            console.log(data);
             console.log(data.error);
           }
 
@@ -151,7 +155,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -209,8 +213,8 @@ export default function CardSettings() {
               <div className="flex flex-wrap">
                 <RoleGate allowedRole="INACTIVEUSER">
                   {user?.input1 === null ||
-                    user?.input1.length === 0 ||
-                    user?.input1.length === 1 ? (
+                  user?.input1.length === 0 ||
+                  user?.input1.length === 1 ? (
                     <>
                       <div className="w-full lg:w-6/12 px-4">
                         <FormField
@@ -263,8 +267,8 @@ export default function CardSettings() {
                     </div>
                   )}
                   {user?.input2 === null ||
-                    user?.input2.length === 0 ||
-                    user?.input1.length === 1 ? (
+                  user?.input2.length === 0 ||
+                  user?.input1.length === 1 ? (
                     <div className="w-full lg:w-6/12 px-4">
                       <FormField
                         control={form.control}
@@ -286,7 +290,118 @@ export default function CardSettings() {
                                 }
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                              // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                              />
+                            </FormControl>
+                            <FormMessage className="mt-1 text-xs text-red-500" />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  ) : (
+                    <div className="p-2 relative w-full mb-3">
+                      <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                        {user?.userType === "ფიზიკური პირი"
+                          ? "პირადი ნომერი"
+                          : "საიდენტიფიკაციო ნომერი"}
+                      </FormLabel>
+                      <div className="border-0 text-center flex-col sm:flex-row px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-center sm:justify-between">
+                        <p>
+                          <Badge />
+                          {user?.input2}
+                        </p>
+                        <Badge
+                          text={
+                            user?.userType === "ფიზიკური პირი"
+                              ? "პირადი ნომრის შესაცვლელად დაუკავშირდით ადმინისტრაციას"
+                              : "საიდენთიფიკაციო ნომრის შესაცვლელად დაუკავშირდით ადმინისტრაციას"
+                          }
+                          color="red"
+                        ></Badge>
+                      </div>
+                    </div>
+                  )}
+                </RoleGate>{" "}
+                <RoleGate allowedRole="USER">
+                  {user?.input1 === null ||
+                  user?.input1.length === 0 ||
+                  user?.input1.length === 1 ? (
+                    <>
+                      <div className="w-full lg:w-6/12 px-4">
+                        <FormField
+                          control={form.control}
+                          name="input1"
+                          render={({ field }) => (
+                            <FormItem className="relative w-full mb-3">
+                              <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                                {user?.userType === "ფიზიკური პირი"
+                                  ? "მისამართი"
+                                  : "იურიდიული მისამართი"}
+                              </FormLabel>
+                              <FormControl className="relative rounded-md shadow-sm">
+                                <Input
+                                  {...field}
+                                  placeholder={
+                                    user?.userType === "ფიზიკური პირი"
+                                      ? "მისამართი"
+                                      : "იურიდიული მისამართი"
+                                  }
+                                  disabled={isPending}
+                                  className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                />
+                              </FormControl>
+                              <FormMessage className="mt-1 text-xs text-red-500" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <div className="p-2 relative w-full mb-3">
+                      <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                        {user?.userType === "ფიზიკური პირი"
+                          ? "მისამართი"
+                          : "იურიდიული მისამართი"}
+                      </FormLabel>
+
+                      <div className="border-0 text-center flex-col sm:flex-row px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 flex justify-center sm:justify-between">
+                        <p>{user?.input1}</p>
+                        <Badge
+                          text={
+                            user?.userType === "ფიზიკური პირი"
+                              ? "მისამართის შესაცვლელად დაუკავშირდით ადმინისტრაციას"
+                              : "იურიდიული მისამართის შესაცვლელად დაუკავშირდით ადმინისტრაციას"
+                          }
+                          color="red"
+                        ></Badge>
+                      </div>
+                    </div>
+                  )}
+                  {user?.input2 === null ||
+                  user?.input2.length === 0 ||
+                  user?.input1.length === 1 ? (
+                    <div className="w-full lg:w-6/12 px-4">
+                      <FormField
+                        control={form.control}
+                        name="input2"
+                        render={({ field }) => (
+                          <FormItem className="relative w-full mb-3">
+                            <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
+                              {user?.userType === "ფიზიკური პირი"
+                                ? "პირადი ნომერი"
+                                : "საიდენტიფიკაციო ნომერი"}
+                            </FormLabel>
+                            <FormControl className="relative rounded-md shadow-sm">
+                              <Input
+                                {...field}
+                                placeholder={
+                                  user?.userType === "ფიზიკური პირი"
+                                    ? "პირადი ნომერი"
+                                    : "საიდენტიფიკაციო ნომერი"
+                                }
+                                disabled={isPending}
+                                className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                               />
                             </FormControl>
                             <FormMessage className="mt-1 text-xs text-red-500" />
@@ -318,7 +433,6 @@ export default function CardSettings() {
                     </div>
                   )}
                 </RoleGate>
-
                 <div className="w-full lg:w-6/12 px-4">
                   <FormField
                     control={form.control}
@@ -334,7 +448,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დასახელება"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -357,7 +471,7 @@ export default function CardSettings() {
                             placeholder="საბანკო ანგარიშის ნომერი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -380,7 +494,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დირექტორი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -403,7 +517,7 @@ export default function CardSettings() {
                             placeholder="საკონტაქტო ტელეფონი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -426,7 +540,7 @@ export default function CardSettings() {
                             placeholder="საქმიანობის სფერო"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -449,7 +563,7 @@ export default function CardSettings() {
                             placeholder="input8"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
