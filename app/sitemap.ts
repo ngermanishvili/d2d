@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { useParams } from 'next/navigation';
 // Function to generate objects for blog posts sitemap
-const generateBlogPostsSitemapObjects = async () => {
+const GenerateBlogPostsSitemapObjects = async () => {
     return [
         { slug: "", priority: 1, updatedAt: new Date() },
         { slug: "blogposts", priority: 0.8, updatedAt: new Date() },
@@ -17,7 +17,7 @@ const generateBlogPostsSitemapObjects = async () => {
 };
 
 // Function to generate main sitemap
-export default async function generateSitemap(): Promise<MetadataRoute.Sitemap> {
+export default async function GenerateSitemap(): Promise<MetadataRoute.Sitemap> {
     const params = useParams();
     try {
         const baseSitemap = [
@@ -26,7 +26,7 @@ export default async function generateSitemap(): Promise<MetadataRoute.Sitemap> 
             { url: "https://d2d.ge/about", changeFrequency: "weekly" as const, priority: 0.8 }
         ];
 
-        const blogPostsSitemap = (await generateBlogPostsSitemapObjects()).map((o) => ({
+        const blogPostsSitemap = (await GenerateBlogPostsSitemapObjects()).map((o) => ({
             url: `https://d2d.ge/blogposts/${params.blogpostId}`,
             lastModified: o.updatedAt,
             priority: o.priority
