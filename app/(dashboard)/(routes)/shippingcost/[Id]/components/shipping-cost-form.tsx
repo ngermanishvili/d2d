@@ -67,7 +67,7 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const [weight, setWeight] = useState("0-5 კგ");
-  const title = initialData ? "ჩეცვალე ბლოგ პოსტი" : "შექმენი ბლოგ პოსტი";
+  const title = initialData ? "შეცვალე ბლოგ პოსტი" : "შექმენი ბლოგ პოსტი";
   const description = initialData
     ? "შეცვალე ბლოგ-პოსტი"
     : "დაამატე ახალი ბლოგ-პოსტი";
@@ -89,6 +89,7 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
   });
 
   const onSubmit = async (data: ShippingCostFormValues) => {
+    console.log("🚀 ~ onSubmit ~ data:", data);
     try {
       setLoading(true);
       if (initialData) {

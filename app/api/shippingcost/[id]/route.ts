@@ -30,11 +30,12 @@ export async function PATCH(
     const body = await req.json();
     console.log(body);
 
-    const { city, village, price, weightRange, villagePrice } = body;
+    const { id, city, village, price, weightRange, villagePrice } = body;
+    console.log("🚀 ~ id:", id);
 
-    const shippingPrice = await db.shippingPrice.updateMany({
+    const shippingPrice = await db.shippingPrice.update({
       where: {
-        id: params.id,
+        id: id,
       },
       data: {
         city,
