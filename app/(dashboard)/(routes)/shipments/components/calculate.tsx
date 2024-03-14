@@ -85,7 +85,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       if (!selectedRange) return;
       setRange(selectedRange.label);
       setCity(selectedCity);
-      weightCost = selectedRange?.prices[selectedCity].toString();
+      weightCost = selectedRange?.prices[selectedCity]?.toString();
 
       if (!weightCost) return;
       setWeightPrice(weightCost);
@@ -96,7 +96,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     const newRange =
       selectedRange && selectedRange.label === range.label ? null : range;
     setSelectedRange(newRange);
-    weightCost = weightCost = selectedRange?.prices[selectedCity].toString();
+    weightCost = weightCost = selectedRange?.prices[selectedCity]?.toString();
     if (!weightCost) return;
     setWeightPrice(weightCost);
     calculateTotalPrice(newRange, packagingUsed);

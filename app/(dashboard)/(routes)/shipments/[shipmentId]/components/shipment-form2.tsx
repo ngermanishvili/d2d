@@ -369,6 +369,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       couriers();
     }
   }, []);
+  useEffect(() => {
+    if (initialData) {
+      setCity(initialData.mimgebiQalaqi);
+    }
+  }, [showCalc]);
 
   const onDelete = async () => {
     try {
