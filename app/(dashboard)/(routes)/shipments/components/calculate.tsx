@@ -227,6 +227,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                   return <p key={item}>{item}</p>;
                 })}
               </div>
+            </RoleGate>{" "}
+            <RoleGate allowedRole="MODERATOR">
+              <div className="flex flex-col">
+                {assignedCouriers.map((item: any) => {
+                  return <p key={item}>{item}</p>;
+                })}
+              </div>
             </RoleGate>
           </div>
         </div>
