@@ -1,8 +1,13 @@
-import { update } from '@/auth';
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
 
+// Function to generate objects for blog posts sitemap
 const generateBlogPostsSitemapObjects = async () => {
     return [
+        {
+            slug: "",
+            priority: 1,
+            updatedAt: new Date(),
+        },
         {
             slug: "blogposts",
             priority: 0.8,
@@ -16,24 +21,17 @@ const generateBlogPostsSitemapObjects = async () => {
         {
             slug: "info/contact",
             priority: 0.8,
-
             updatedAt: new Date(),
         },
         {
             slug: "info/privacy-policy",
             priority: 0.8,
             updatedAt: new Date(),
-        },
-        {
-            slug: "/",
-            updatedAt: new Date(),
-            priority: 1,
-
         }
     ];
 };
 
-
+// Function to generate sitemap
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
         {
@@ -50,10 +48,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             changeFrequency: "weekly",
             priority: 0.8,
         },
-
+        // Include generated blog posts URLs
         ...(await generateBlogPostsSitemapObjects()).map((o) => ({
-            url: `https://d2d.ge/blogposts/${o.slug}`,
+            url: `https://d2d.ge/${o.slug}`,
             lastModified: o.updatedAt,
+            priority: o.priority,
         })),
     ];
 }
