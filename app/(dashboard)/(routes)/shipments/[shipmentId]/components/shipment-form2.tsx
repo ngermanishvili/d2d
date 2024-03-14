@@ -266,7 +266,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const onSubmit = async (data: ShipmentFormValues) => {
     //  const aris = aq iqneba check
     try {
-      data.address = address;
       data.packaging = packagingUsed;
       data.label = range;
       data.city = selectedCity;
@@ -279,11 +278,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.packagePrice = packagingUsed ? "5" : "0";
       selectedParty === "Invoice"
         ? (data.companyPays = (
-          parseFloat(itemPrice) -
-          (parseFloat(weightPrice) + parseFloat(data.packagePrice))
-        ).toString())
+            parseFloat(itemPrice) -
+            (parseFloat(weightPrice) + parseFloat(data.packagePrice))
+          ).toString())
         : (data.companyPays = itemPrice);
       if (!initialData) {
+        data.address = address;
         // Calculate pickup and delivery dates using current date and time
         data.agebisDro = agebis;
         data.chabarebisDro = chabareba;
@@ -521,11 +521,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                         disabled={loading}
                                         placeholder="სახელი"
                                         {...field}
-                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${form.formState.errors
-                                          .gamgzavniFullName
-                                          ? "border-red-500"
-                                          : "" // Apply red border if there's an error
-                                          }`}
+                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${
+                                          form.formState.errors
+                                            .gamgzavniFullName
+                                            ? "border-red-500"
+                                            : "" // Apply red border if there's an error
+                                        }`}
                                       />
                                     )}
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
@@ -573,23 +574,49 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
 
                       <div className="w-full lg:w-6/12 px-4">
                         <div className="relative w-full mb-8">
-                          <FormField
-                            control={form.control}
-                            name="address"
-                            render={({ field }) => (
-                              <>
-                                <FormItem className="relative w-full mb-3 h-[50px]">
-                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold ">
+                          <RoleGate allowedRole="ADMIN">
+                            <FormField
+                              control={form.control}
+                              name="address"
+                              render={({ field }) => (
+                                <FormItem className="relative w-full mb-3">
+                                  <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold mb-2">
                                     მისამართი
                                   </FormLabel>
-                                  <FormControl className="relative rounded-md shadow-sm w-full h-[50px]">
-                                    <AdressInput />
+                                  <FormControl className="relative rounded-md shadow-sm">
+                                    <div className="relative">
+                                      <Input
+                                        disabled={loading}
+                                        placeholder="გამგზავნის მისამართი"
+                                        {...field}
+                                        className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
+                                      />
+                                    </div>
                                   </FormControl>
                                   <FormMessage />
                                 </FormItem>
-                              </>
-                            )}
-                          />
+                              )}
+                            />
+                          </RoleGate>
+                          <RoleGate allowedRole="USER">
+                            <FormField
+                              control={form.control}
+                              name="address"
+                              render={({ field }) => (
+                                <>
+                                  <FormItem className="relative w-full mb-3 h-[50px]">
+                                    <FormLabel className="block uppercase text-blueGray-600 text-xs font-bold ">
+                                      მისამართი
+                                    </FormLabel>
+                                    <FormControl className="relative rounded-md shadow-sm w-full h-[50px]">
+                                      <AdressInput />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                </>
+                              )}
+                            />
+                          </RoleGate>
                         </div>
                       </div>
                       <div className="w-full lg:w-6/12 px-4 relative mb-3">
@@ -724,7 +751,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-
                                   value={selectedCity}
                                   onValueChange={(value) => {
                                     setCity(value);
@@ -732,7 +758,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                   }}
                                 >
                                   <SelectTrigger className="h-[50px] bg-white">
-                                    <SelectValue className="bg-gray-300 text-sm " placeholder=" მიმღების ქალაქი">{selectedCity}</SelectValue>
+                                    <SelectValue
+                                      className="bg-gray-300 text-sm "
+                                      placeholder=" მიმღების ქალაქი"
+                                    >
+                                      {selectedCity}
+                                    </SelectValue>
                                   </SelectTrigger>
                                   <SelectContent>
                                     {/* {ADMIN როლგეითი} */}
