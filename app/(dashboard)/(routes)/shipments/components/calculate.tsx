@@ -42,11 +42,13 @@ interface WeightRange {
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
   isCompany: boolean;
+  senderCity: string;
 }
 
 const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   hasInitialData,
   isCompany,
+  senderCity,
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
@@ -74,6 +76,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCitiesNames,
     citiesNames,
   } = useCalculatorStore();
+
   let companyPayment: number = 0;
   let weightCost: any;
   useEffect(() => {
@@ -121,6 +124,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
     if (range) {
       shipmentPrice += range.prices[city];
+    }
+    if (
+      selectedCity !== "თბილისი" &&
+      selectedCity !== "რუსთავი" &&
+      senderCity === "რუსთავი"
+    ) {
+      shipmentPrice += 2;
     }
 
     if (usePackaging) {

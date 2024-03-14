@@ -73,7 +73,7 @@ const formSchema = z.object({
   mimgebisAddress: z.string().min(1, {
     message: "გთხოვთ მიუთითოთ მიმღების ზუსტი მისამართი ",
   }),
-  mimgebiQalaqi: z.string().min(2, {
+  mimgebiQalaqi: z.string().min(0, {
     message: "გთხოვთ მიუთითოთ მიმღების ქალაქი ",
   }),
   status: z.string().min(1),
@@ -186,7 +186,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       itemPrice: null,
       mimgebisNumber: "",
       mimgebisAddress: "",
-      mimgebiQalaqi: "თბილისი",
+      mimgebiQalaqi: "",
       brittle: false,
       packaging: false,
       markedByCourier: false,
@@ -268,7 +268,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     try {
       data.packaging = packagingUsed;
       data.label = range;
-      data.city = selectedCity;
       data.whopays = selectedParty;
       data.price = totalPrice.toString();
       data.itemPrice = itemPrice;
@@ -751,7 +750,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                             <FormItem className="relative w-full mb-3 bg-white  border-none outline-none">
                               <FormControl className="relative rounded-md shadow-sm outline-0 border-none">
                                 <Select
-                                  value={selectedCity}
+                                  value={field.value}
                                   onValueChange={(value) => {
                                     setCity(value);
                                     field.onChange(value);
@@ -977,6 +976,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
 
                 {showCalc && (
                   <ShippingCostGraph
+                    senderCity={
+                      initialData
+                        ? initialData.gamgzavnisqalaqi
+                        : form.getValues().gamgzavnisqalaqi
+                    }
                     hasInitialData={initialData ? true : false}
                     isCompany={
                       user?.userType === "იურიდიული პირი" ? true : false
