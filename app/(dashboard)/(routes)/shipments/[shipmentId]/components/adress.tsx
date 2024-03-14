@@ -60,7 +60,7 @@ const AdressInput: React.FC = () => {
       <Select
         className="w-full h-[50px] "
         value={address} // Use separate state for the value
-        placeholder="Select address"
+        placeholder="დაამატეთ მისამართი ან აირჩიეთ უკვე დამახსოვრებული"
         onChange={(value: string) => {
           setAddress(value);
           setMisamarti(value);
@@ -71,7 +71,7 @@ const AdressInput: React.FC = () => {
             <Divider />
             <Space>
               <Input
-                placeholder="Please enter address"
+                placeholder="დაამატეთ მისამართი"
                 ref={inputRef}
                 value={name}
                 onChange={onNameChange}
