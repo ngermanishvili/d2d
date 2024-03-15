@@ -779,7 +779,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                         </div>
                       </div>
                     </div>
-
                     <div className="flex flex-wrap">
                       <RoleGate allowedRole="ADMIN">
                         <div className="w-full lg:w-4/12 px-4">

@@ -36,7 +36,7 @@ export default function Features() {
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
             <p className="text-xl text-gray-600 mt-4">
-              ჩვენ ვქნით მარტივ და მოხერხებულ სერვის მომხმარებლისთვის, გაზრდილი
+              ჩვენ ვქმნით მარტივ და მოხერხებულ სერვის მომხმარებლისთვის, გაზრდილი
               ეფექტურობით და კომფორტით.
             </p>
           </div>
@@ -51,11 +51,10 @@ export default function Features() {
               {/* Tabs buttons */}
               <div className="mb-8 md:mb-0">
                 <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 1
+                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 1
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
-                  }`}
+                    }`}
                   href="#0"
                   onClick={(e) => {
                     e.preventDefault();
@@ -82,11 +81,10 @@ export default function Features() {
                   </div>
                 </a>
                 <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 2
+                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 2
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
-                  }`}
+                    }`}
                   href="#0"
                   onClick={(e) => {
                     e.preventDefault();
@@ -104,11 +102,10 @@ export default function Features() {
                   </div>
                 </a>
                 <a
-                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${
-                    tab !== 3
+                  className={`flex items-center text-lg p-5 rounded border transition duration-300 ease-in-out mb-3 ${tab !== 3
                       ? "bg-white shadow-md border-gray-200 hover:shadow-lg"
                       : "bg-gray-200 border-transparent"
-                  }`}
+                    }`}
                   href="#0"
                   onClick={(e) => {
                     e.preventDefault();

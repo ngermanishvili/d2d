@@ -214,13 +214,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
       <div className="w-full self-center flex flex-row xl:gap-2 mx-4 rounded-sm justify-center">
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
-            {/* <Image
-              className="hidden lg:hidden"
-              src={SpaceImage}
-              alt="space"
-              width={500}
-              height={500}
-            /> */}
             <RoleGate allowedRole="ADMIN">
               <div className="flex flex-col">
                 {assignedCouriers.map((item: any) => {
@@ -245,6 +238,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               <div className="w-full flex gap-4 md:gap-8 flex-col">
                 <div>
                   <div className="flex w-full flex-col sm:flex-row justify-between gap-4 mt-4">
+                    <div className="text-sm text-gray-600 mr-4 block sm:hidden">
+                      <p>აირჩიეთ გადამხდელი მხარე</p>
+                    </div>
                     <div className="w-full self-center sm:self-auto rounded-md">
                       <Select
                         value={selectedParty || ""}
@@ -270,6 +266,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
 
                 <div className="flex w-full flex-col sm:flex-row justify-between align-middle gap-4">
+                  <div className="text-sm text-gray-600 mr-4 block sm:hidden">
+                    <p>ნივთის საფასური</p>
+                  </div>
                   <input
                     className="w-full self-center sm:self-auto min-w-[116px] h-[36px] bg-transparent rounded-md border text-popover-foreground shadow-md text-md md:text-base bg-white focus:border-transparent focus:outline-none"
                     type="text"
@@ -283,13 +282,16 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 </div>
 
                 <div className="flex w-full flex-col sm:flex-row justify-between gap-4">
+                  <div className="text-sm text-gray-600 mr-4 block sm:hidden">
+                    <p>აირჩიეთ ნივთის წონა</p>
+                  </div>
                   <div className="w-full self-center sm:self-auto min-w-[116px] bg-white">
                     <Select
                       value={range}
                       onValueChange={handleWeightRangeChange}
                     >
                       <SelectTrigger value={range}>
-                        <SelectValue placeholder={range} />
+                        <SelectValue placeholder="აირჩიეთ ნივთის წონა" />
                       </SelectTrigger>
                       <SelectContent>
                         {ranges.map((range) => (
@@ -308,16 +310,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
               <div className="w-full flex flex-col justify-between">
                 <div className="flex w-full text-center md:text-start flex-col gap-10 text-wh md:ml-4">
                   <div className="flex md:justify-start text-center mt-4">
-                    <div className=" text-base md:text-lg xl:text-xl  leading-5 text-black text-primary">
-                      <Typography.Title
-                        level={5}
-                        style={{ marginTop: "4px", marginRight: "10px" }}
-                      >
-                        შეფუთვის სერვისი +5 ლარი
-                      </Typography.Title>
+                    <div className=" text-base md:text-lg xl:text-xl  leading-5 text-black text-primary gap-4 ">
+                      <p className="text-md mr-[10px] mb-[4px]">შეფუთვის სერვისი +5 ლარი</p>
                     </div>
                     <input
-                      className="w-5 h-5 mt-2 "
+                      className="w-5 h-5 mt-2 mr-2 "
                       type="checkbox"
                       id="packaging-service"
                       checked={packagingUsed}
@@ -326,10 +323,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       }
                     />
                   </div>
-                  <div className="flex gap-2">
-                    <Typography.Title level={5} style={{ margin: 0 }}>
-                      ფასი წონის მიხედვით -
-                    </Typography.Title>
+                  <div className="flex gap-2  flex-col sm:flex-row">
+                    <p className="text-md">ფასი წონის მიხედვით - </p>
                     <Badge
                       color="gray"
                       className="text-md self-center"
@@ -350,10 +345,8 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                     />
                   </div>
                   <>
-                    <div className="flex gap-2">
-                      <Typography.Title level={5} style={{ margin: 0 }}>
-                        ნივთის საფასური -
-                      </Typography.Title>
+                    <div className="flex gap-2 flex-col sm:flex-row">
+                      <p className="text-md ">ნივთის საფასური - </p>
                       <Badge
                         color="gray"
                         className="text-md self-center"
@@ -391,13 +384,11 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           ) : (
             ""
           )}
-          <div className="flex gap-4 self-end text-sm sm:text-2xl">
-            <Typography.Title level={3} style={{ margin: "10px" }}>
-              ჯამი
-            </Typography.Title>
+          <div className="flex gap-4 text-sm sm:text-2xl flex-col sm:flex-row  p-2 xl:self-end  ">
+            <p className="font-bold text-md mt-2 self-center max-md:text-xl">ჯამი</p>
             <Badge
               color="gray"
-              className="text-md mt-3"
+              className="text-md mt-3 ml-4 self-center"
               status="success"
               count={`${Number.isNaN(totalPrice) ? 0 : totalPrice} ₾`}
               showZero
