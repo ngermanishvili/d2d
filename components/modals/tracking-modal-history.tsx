@@ -26,6 +26,7 @@ interface TrackingModalProps {
 export const TrackingModalForHistory: React.FC<TrackingModalProps> = ({
   statusHistory,
 }) => {
+  console.log("🚀 ~ statusHistory:", statusHistory);
   return (
     <>
       {statusHistory && statusHistory.length > 0 && (
@@ -33,20 +34,35 @@ export const TrackingModalForHistory: React.FC<TrackingModalProps> = ({
           <Divider />
           <Title level={5}>ადევნე თვალი შეკვეთას</Title>
           <Steps direction="horizontal" current={statusHistory.length - 1}>
-            {statusHistory
-              .map((status, index) => (
-                <Step
-                  key={status.id}
-                  title={status.status}
-                  description={moment(status.timestamp).format(
-                    "MMMM Do YYYY, "
-                  )}
-                  status={
-                    index === statusHistory.length - 1 ? "process" : "finish"
-                  }
-                />
-              ))
-              .reverse()}
+            {statusHistory.length === 2
+              ? statusHistory
+                  .reverse()
+                  .map((status, index) => (
+                    <Step
+                      key={status.id}
+                      title={status.status}
+                      description={moment(status.timestamp).format(
+                        "MMMM Do YYYY, "
+                      )}
+                      status={
+                        index === statusHistory.length - 1
+                          ? "process"
+                          : "finish"
+                      }
+                    />
+                  ))
+              : statusHistory.map((status, index) => (
+                  <Step
+                    key={status.id}
+                    title={status.status}
+                    description={moment(status.timestamp).format(
+                      "MMMM Do YYYY, "
+                    )}
+                    status={
+                      index === statusHistory.length - 1 ? "process" : "finish"
+                    }
+                  />
+                ))}
           </Steps>
         </div>
       )}

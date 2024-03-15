@@ -42,11 +42,13 @@ interface WeightRange {
 interface ShippingCostGraphProps {
   hasInitialData: boolean;
   isCompany: boolean;
+  senderCity: string;
 }
 
 const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
   hasInitialData,
   isCompany,
+  senderCity,
 }) => {
   const [selectedRange, setSelectedRange] = useState<WeightRange | null>(null);
 
@@ -74,6 +76,7 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
     setCitiesNames,
     citiesNames,
   } = useCalculatorStore();
+
   let companyPayment: number = 0;
   let weightCost: any;
   useEffect(() => {
@@ -121,6 +124,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
 
     if (range) {
       shipmentPrice += range.prices[city];
+    }
+    if (
+      selectedCity !== "თბილისი" &&
+      selectedCity !== "რუსთავი" &&
+      senderCity === "რუსთავი"
+    ) {
+      shipmentPrice += 2;
     }
 
     if (usePackaging) {
@@ -215,6 +225,13 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
         <div className="  xl:flex xl:w-1/2 justify-center xl:p-6 rounded-s-md">
           <div className="w-11/12 flex justify-center items-center ">
             <RoleGate allowedRole="ADMIN">
+              <div className="flex flex-col">
+                {assignedCouriers.map((item: any) => {
+                  return <p key={item}>{item}</p>;
+                })}
+              </div>
+            </RoleGate>{" "}
+            <RoleGate allowedRole="MODERATOR">
               <div className="flex flex-col">
                 {assignedCouriers.map((item: any) => {
                   return <p key={item}>{item}</p>;
