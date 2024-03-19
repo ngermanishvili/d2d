@@ -627,7 +627,7 @@ export default function CardSettings() {
                                 ადმინისტრატორი
                               </SelectItem>
                               <SelectItem value={UserRole.INACTIVEUSER}>
-                                ara qtiuri
+                                არა აქტიური
                               </SelectItem>
                             </SelectContent>
                           </Select>
