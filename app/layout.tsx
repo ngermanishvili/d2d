@@ -61,6 +61,20 @@ export default async function RootLayout({
     <>
       <SessionProvider session={session}>
         <html lang="en">
+          <head>
+            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-1609WJF57Q"></Script>
+            <Script id="google-analytics">
+              {
+                `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-1609WJF57Q');
+                `
+              }
+
+            </Script>
+          </head>
           {/* Tawk.to Chat code */}
           <Script
             src="https://embed.tawk.to/65d09dc78d261e1b5f61cb53/1hmregl4e"

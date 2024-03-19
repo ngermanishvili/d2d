@@ -755,7 +755,7 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                   <SelectTrigger className="h-[50px] bg-white">
                                     <SelectValue
                                       className="bg-gray-300 text-sm "
-                                      placeholder=" მიმღების ქალაქი"
+                                      placeholder="მიმღების ქალაქი"
                                     >
                                       {selectedCity}
                                     </SelectValue>
