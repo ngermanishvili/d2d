@@ -47,7 +47,6 @@ const TrackingSearchContainer: React.FC = () => {
       }
 
       const { ShipmentStatusHistory, ...cleanedData } = data;
-      console.log("🚀 ~ fetchData ~ cleanedData:", cleanedData);
 
       // Fetch the status history separately
 
@@ -55,7 +54,6 @@ const TrackingSearchContainer: React.FC = () => {
       setShipmentData({
         ...cleanedData,
       });
-      console.log("🚀 ~ fetchData ~ shipmentData:", shipmentData);
       setStatusHistory(tosethistory);
 
       setIsModalOpen(true);

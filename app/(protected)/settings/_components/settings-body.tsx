@@ -73,7 +73,6 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ amountOfShipments }) => {
         .then((data) => {
           if (data.error) {
             setError(data.error);
-            console.log(data.error);
           }
 
           if (data.success) {

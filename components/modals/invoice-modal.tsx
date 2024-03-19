@@ -51,7 +51,6 @@ export const InvoiceModal: React.FC<InvoiceModalProps> = ({
       toast.success("ინვოისი შენახულია");
       onClose();
     } catch (error) {
-      console.log("InvoiceModal", error);
     }
   };
 

@@ -89,7 +89,6 @@ export const ShippingCostForm: React.FC<ShippingCostFormProps> = ({
   });
 
   const onSubmit = async (data: ShippingCostFormValues) => {
-    console.log("🚀 ~ onSubmit ~ data:", data);
     try {
       setLoading(true);
       if (initialData) {

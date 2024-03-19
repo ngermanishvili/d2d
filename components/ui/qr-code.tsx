@@ -41,7 +41,6 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ text }) => {
     }
   };
 
-  console.log(text);
 
   return (
     <div>

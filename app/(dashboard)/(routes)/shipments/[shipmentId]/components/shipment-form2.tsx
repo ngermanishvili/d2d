@@ -277,9 +277,9 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.packagePrice = packagingUsed ? "5" : "0";
       selectedParty === "Invoice"
         ? (data.companyPays = (
-            parseFloat(itemPrice) -
-            (parseFloat(weightPrice) + parseFloat(data.packagePrice))
-          ).toString())
+          parseFloat(itemPrice) -
+          (parseFloat(weightPrice) + parseFloat(data.packagePrice))
+        ).toString())
         : (data.companyPays = itemPrice);
       if (!initialData) {
         data.address = address;
@@ -291,7 +291,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // Execute the post request
         const response = await axios.post(`/api/shipments`, data);
         const shipmentId = response.data.shipmentId; // Accessing the shipmentId from the response
-        console.log("🚀 ~ onSubmit ~ shipmentId:", shipmentId);
         setQrText(shipmentId);
       }
 
@@ -330,7 +329,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
     try {
       // Trigger form validation
       const isValid = await form.trigger();
-      console.log("🚀 ~ handleButtonClick ~ isValid:", isValid);
 
       if (isValid) {
         // If form is valid, open the confirmation modal
@@ -340,7 +338,6 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
         // You can access errors from the form object
         // and handle them as you wish (e.g., displaying a toast message)
         const errors = form.formState.errors;
-        console.log(errors);
         if (address === "") {
         }
         // Example: Displaying error messages in a toast
@@ -520,12 +517,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                         disabled={loading}
                                         placeholder="სახელი"
                                         {...field}
-                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${
-                                          form.formState.errors
-                                            .gamgzavniFullName
-                                            ? "border-red-500"
-                                            : "" // Apply red border if there's an error
-                                        }`}
+                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${form.formState.errors
+                                          .gamgzavniFullName
+                                          ? "border-red-500"
+                                          : "" // Apply red border if there's an error
+                                          }`}
                                       />
                                     )}
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />

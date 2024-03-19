@@ -84,7 +84,6 @@ const useAboutPageData = (): AboutPageData => {
         async function fetchData() {
             try {
                 const response = await axios.get('/api/aboutinfo');
-                console.log('Response:', response.data);
                 const data = response.data;
                 if (data) {
                     dispatch({ type: 'FETCH_SUCCESS', payload: data[0] });

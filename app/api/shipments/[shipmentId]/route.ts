@@ -32,7 +32,6 @@ export async function PATCH(
   { params }: { params: { shipmentId: string } }
 ) {
   try {
-    console.log(params.shipmentId);
     const body = await req.json();
     if (Object.keys(body).length === 1 && "phoneNumber" in body) {
       // Perform the patch operation on phoneNumber
@@ -45,7 +44,6 @@ export async function PATCH(
           phoneNumber,
         },
       });
-      console.log("🚀 ~ updatedShipment:", updatedShipment);
       return NextResponse.json(updatedShipment);
     }
     // Extract variables from the request body
@@ -158,7 +156,6 @@ export async function DELETE(
       return new NextResponse("Shipment ID is required", { status: 400 });
     }
 
-    console.log(params.shipmentId);
 
     // Check if there are any related ShipmentStatusHistory records
     const relatedStatusHistory = await db.shipmentStatusHistory.findMany({
@@ -196,8 +193,6 @@ export async function DELETE(
         id: params.shipmentId,
       },
     });
-
-    console.log(deletedShipment);
 
     return NextResponse.json(deletedShipment);
   } catch (error) {

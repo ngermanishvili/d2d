@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -95,7 +95,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     } catch (error) {
       console.error("Error updating to false:", error);
     } finally {
-      router.refresh();
+      window.location.reload();
     }
   };
 
@@ -111,7 +111,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     } catch (error) {
       console.error("Error updating to false:", error);
     } finally {
-      router.refresh();
+      window.location.reload();
     }
   };
   const handleUpdateToFalse2 = async () => {
@@ -126,7 +126,22 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
     } catch (error) {
       console.error("Error updating to false:", error);
     } finally {
-      router.refresh();
+      window.location.reload();
+    }
+  };
+  const handleUpdateToFalse3 = async () => {
+    try {
+      const data = {
+        ids,
+        variable: "მეორედ გატანა",
+      };
+
+      await axios.patch("/api/shipments", data);
+      // Handle success or any other logic
+    } catch (error) {
+      console.error("Error updating to false:", error);
+    } finally {
+      window.location.reload();
     }
   };
 
@@ -193,7 +208,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         loading={false}
       />
       <div>
-        <div className="flex flex-col md:flex-row items-center py-4 w-full gap-4">
+        <div
+          key={"12"}
+          className="flex flex-col md:flex-row items-center py-4 w-full gap-4"
+        >
           <div className="flex flex-col justify-center xl:flex-row gap-4">
             <p className="p-2 w-4/5 xl:w-2/5 self-center flex rounded-md justify-center items-center bg-green-400">
               გაფილტრე
@@ -260,6 +278,12 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                 onClick={() => setIsOpen(true)}
               >
                 მიამაგრე შეკვეთას კურიერი
+              </Button>{" "}
+              <Button
+                className="m-2 h-auto text-wrap w-6/12 max-sm:w-4/6 self-center"
+                onClick={() => handleUpdateToFalse3()}
+              >
+                მეორედ გატანა
               </Button>
             </div>
           </RoleGate>
@@ -272,7 +296,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
           </RoleGate>
         </div>
 
-        <div className="rounded-md border overflow-x-auto">
+        <div key={"43"} className="rounded-md border overflow-x-auto">
           <Table className="min-w-full">
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -280,9 +304,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${
-                        index === 1 ? "sticky left-0 text-white" : ""
-                      } text-white bg-red-600 text-md border-black`}
+                      className={`${index === 1 ? "sticky left-0 text-white" : ""
+                        } text-white bg-red-600 text-md border-black`}
                       style={{
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -292,19 +315,19 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
               ))}
             </TableHeader>
 
-            <TableBody>
+            <TableBody key={data.toString()}>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <>
+                  <React.Fragment key={row.id}>
                     <RoleGate allowedRole="USER">
                       <TableRow
                         key={row.id + "u"}
@@ -317,11 +340,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                         {row.getVisibleCells().map((cell, index) => (
                           <TableCell
                             key={cell.id}
-                            className={`${
-                              index === 1
-                                ? "w-full sticky left-0 bg-white z-99"
-                                : "" // Apply sticky style to the first column
-                            } p-2 border`}
+                            className={`${index === 1
+                              ? "w-full sticky left-0 bg-white z-99"
+                              : "" // Apply sticky style to the first column
+                              } p-2 border`}
                             style={{
                               whiteSpace: "nowrap",
                               overflow: "hidden",
@@ -338,7 +360,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     </RoleGate>
                     <RoleGate allowedRole="ADMIN">
                       <TableRow
-                        key={row.id}
+                        key={row.id + "p"}
                         data-state={row.getIsSelected() && "selected"}
                         onDoubleClick={() => {
                           router.push(`/shipments/${row.original.id}`);
@@ -347,11 +369,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                         {row.getVisibleCells().map((cell, index) => (
                           <TableCell
                             key={cell.id}
-                            className={`${
-                              index === 1
-                                ? "w-full sticky left-0 bg-white p-"
-                                : "" // Apply sticky style to the first column
-                            } p-2 border`}
+                            className={`${index === 1
+                              ? "w-full sticky left-0 bg-white p-"
+                              : "" // Apply sticky style to the first column
+                              } p-2 border`}
                             style={{
                               whiteSpace: "nowrap",
                               overflow: "hidden",
@@ -368,7 +389,7 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     </RoleGate>{" "}
                     <RoleGate allowedRole="MODERATOR">
                       <TableRow
-                        key={row.id}
+                        key={row.id + "s"}
                         data-state={row.getIsSelected() && "selected"}
                         onDoubleClick={() => {
                           router.push(`/couriershipments/${row.original.id}`);
@@ -377,11 +398,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                         {row.getVisibleCells().map((cell, index) => (
                           <TableCell
                             key={cell.id}
-                            className={`${
-                              index === 1
-                                ? "w-full sticky left-0 bg-white p-"
-                                : "" // Apply sticky style to the first column
-                            } p-2 border`}
+                            className={`${index === 1
+                              ? "w-full sticky left-0 bg-white p-"
+                              : "" // Apply sticky style to the first column
+                              } p-2 border`}
                             style={{
                               whiteSpace: "nowrap",
                               overflow: "hidden",
@@ -396,10 +416,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                         ))}
                       </TableRow>
                     </RoleGate>
-                  </>
+                  </React.Fragment>
                 ))
               ) : (
-                <TableRow>
+                <TableRow key={searchKey}>
                   <TableCell
                     colSpan={columns.length}
                     className="h-24 text-center"
@@ -411,7 +431,10 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
             </TableBody>
           </Table>
         </div>
-        <div className="flex items-center justify-end space-x-2 py-4">
+        <div
+          key={"54"}
+          className="flex items-center justify-end space-x-2 py-4"
+        >
           <Button
             variant="outline"
             size="sm"

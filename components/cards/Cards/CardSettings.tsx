@@ -38,6 +38,7 @@ import useAccountActiveStore from "@/hooks/is-account-active";
 
 export default function CardSettings() {
   const user = useCurrentUser();
+  const isAdmin = UserRole.ADMIN;
 
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -75,7 +76,6 @@ export default function CardSettings() {
 
   const router = useRouter();
   useEffect(() => {
-    console.log("🚀 ~ useEffect ~ user:", user);
     if (
       user?.input1 &&
       user?.input2 &&
@@ -102,14 +102,12 @@ export default function CardSettings() {
       values.role = UserRole.USER;
     }
     values.image = photoUrl;
-    console.log(values);
     startTransition(() => {
       settings(values)
         .then((data) => {
           if (data.error) {
             setError(data.error);
-            console.log(data);
-            console.log(data.error);
+
           }
 
           if (data.success) {
@@ -155,7 +153,7 @@ export default function CardSettings() {
                             placeholder="John Doe"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -213,8 +211,8 @@ export default function CardSettings() {
               <div className="flex flex-wrap">
                 <RoleGate allowedRole="INACTIVEUSER">
                   {user?.input1 === null ||
-                  user?.input1.length === 0 ||
-                  user?.input1.length === 1 ? (
+                    user?.input1.length === 0 ||
+                    user?.input1.length === 1 ? (
                     <>
                       <div className="w-full lg:w-6/12 px-4">
                         <FormField
@@ -267,8 +265,8 @@ export default function CardSettings() {
                     </div>
                   )}
                   {user?.input2 === null ||
-                  user?.input2.length === 0 ||
-                  user?.input1.length === 1 ? (
+                    user?.input2.length === 0 ||
+                    user?.input1.length === 1 ? (
                     <div className="w-full lg:w-6/12 px-4">
                       <FormField
                         control={form.control}
@@ -290,7 +288,7 @@ export default function CardSettings() {
                                 }
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                              // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                               />
                             </FormControl>
                             <FormMessage className="mt-1 text-xs text-red-500" />
@@ -324,8 +322,8 @@ export default function CardSettings() {
                 </RoleGate>{" "}
                 <RoleGate allowedRole="USER">
                   {user?.input1 === null ||
-                  user?.input1.length === 0 ||
-                  user?.input1.length === 1 ? (
+                    user?.input1.length === 0 ||
+                    user?.input1.length === 1 ? (
                     <>
                       <div className="w-full lg:w-6/12 px-4">
                         <FormField
@@ -378,8 +376,8 @@ export default function CardSettings() {
                     </div>
                   )}
                   {user?.input2 === null ||
-                  user?.input2.length === 0 ||
-                  user?.input1.length === 1 ? (
+                    user?.input2.length === 0 ||
+                    user?.input1.length === 1 ? (
                     <div className="w-full lg:w-6/12 px-4">
                       <FormField
                         control={form.control}
@@ -401,7 +399,7 @@ export default function CardSettings() {
                                 }
                                 disabled={isPending}
                                 className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                                // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                              // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                               />
                             </FormControl>
                             <FormMessage className="mt-1 text-xs text-red-500" />
@@ -448,7 +446,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დასახელება"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -471,7 +469,7 @@ export default function CardSettings() {
                             placeholder="საბანკო ანგარიშის ნომერი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -494,7 +492,7 @@ export default function CardSettings() {
                             placeholder="კომპანიის დირექტორი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -517,7 +515,7 @@ export default function CardSettings() {
                             placeholder="საკონტაქტო ტელეფონი"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -540,7 +538,7 @@ export default function CardSettings() {
                             placeholder="საქმიანობის სფერო"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -563,7 +561,7 @@ export default function CardSettings() {
                             placeholder="input8"
                             disabled={isPending}
                             className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                            // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
+                          // className="block  px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:border-blue-500 transition duration-150 ease-in-out text-sm"
                           />
                         </FormControl>
                         <FormMessage className="mt-1 text-xs text-red-500" />
@@ -592,51 +590,53 @@ export default function CardSettings() {
                     )}
                   />
                 </div>
-                <div className="w-full lg:w-6/12 px-4">
-                  <FormField
-                    control={form.control}
-                    name="role"
-                    render={({ field }) => (
-                      <FormItem className="mb-4">
-                        <FormLabel className="block mb-1 text-sm font-bold">
-                          სტატუსი
-                        </FormLabel>
-                        <Select
-                          disabled={isPending}
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
-                        >
-                          <FormControl className="">
-                            <SelectTrigger>
-                              <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            <SelectItem value={UserRole.ADMIN}>
-                              ადმინი
-                            </SelectItem>
-                            <SelectItem value={UserRole.USER}>
-                              მომხმარებელი
-                            </SelectItem>
-                            <SelectItem value={UserRole.COURIER}>
-                              კურიერი
-                            </SelectItem>
-                            <SelectItem value={UserRole.ACCOUNTANT}>
-                              ბუღალტერი
-                            </SelectItem>
-                            <SelectItem value={UserRole.MODERATOR}>
-                              ადმინისტრატორი
-                            </SelectItem>
-                            <SelectItem value={UserRole.INACTIVEUSER}>
-                              ara qtiuri
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <RoleGate allowedRole="ADMIN">
+                  <div className="w-full lg:w-6/12 px-4">
+                    <FormField
+                      control={form.control}
+                      name="role"
+                      render={({ field }) => (
+                        <FormItem className="mb-4">
+                          <FormLabel className="block mb-1 text-sm font-bold">
+                            სტატუსი
+                          </FormLabel>
+                          <Select
+                            disabled={isPending}
+                            onValueChange={field.onChange}
+                            defaultValue={field.value}
+                          >
+                            <FormControl className="">
+                              <SelectTrigger>
+                                <SelectValue placeholder="აირჩიეთ თქვენი სტატუსი" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value={UserRole.ADMIN}>
+                                ადმინი
+                              </SelectItem>
+                              <SelectItem value={UserRole.USER}>
+                                მომხმარებელი
+                              </SelectItem>
+                              <SelectItem value={UserRole.COURIER}>
+                                კურიერი
+                              </SelectItem>
+                              <SelectItem value={UserRole.ACCOUNTANT}>
+                                ბუღალტერი
+                              </SelectItem>
+                              <SelectItem value={UserRole.MODERATOR}>
+                                ადმინისტრატორი
+                              </SelectItem>
+                              <SelectItem value={UserRole.INACTIVEUSER}>
+                                ara qtiuri
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </RoleGate>
               </div>
               <Divider />
               <div className="w-full lg:w-6/12 px-4 gap-10">
@@ -691,13 +691,12 @@ export default function CardSettings() {
               <Button
                 disabled={isPending}
                 type="submit"
-                className="aling-center"
+                className="aling-center mt-4 w-full"
               >
-                Save
+                შენახვა
               </Button>
             </form>
           </Form>
-
           <hr className="mt-6 border-b-1 border-blueGray-300" />
         </div>
       </div>

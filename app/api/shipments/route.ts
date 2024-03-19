@@ -241,19 +241,48 @@ export async function DELETE(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const { ids, variable } = await req.json();
+    let updatedShipments;
 
-    console.log("Received PATCH request with IDs:", ids);
-    const updatedShipments = await db.shipment.updateMany({
-      where: {
-        id: {
-          in: ids,
+    if (variable === "მეორედ გატანა") {
+      for (const shipmentId of ids) {
+        const shipment = await db.shipment.findUnique({
+          where: {
+            id: shipmentId,
+          },
+          select: {
+            weightPrice: true,
+          },
+        });
+
+        // Convert string weightPrice to a number and double it
+        if (shipment?.weightPrice) {
+          const newWeightPrice = (
+            parseFloat(shipment?.weightPrice) * 2
+          ).toString();
+
+          await db.shipment.update({
+            where: {
+              id: shipmentId,
+            },
+            data: {
+              status: variable,
+              weightPrice: newWeightPrice, // Convert back to string for database update
+            },
+          });
+        }
+      }
+    } else {
+      updatedShipments = await db.shipment.updateMany({
+        where: {
+          id: {
+            in: ids,
+          },
         },
-      },
-      data: {
-        status: variable,
-      },
-    });
-
+        data: {
+          status: variable,
+        },
+      });
+    }
     // Iterate over each shipment ID and create a shipmentStatusHistory entry
     for (const shipmentId of ids) {
       await db.shipmentStatusHistory.create({

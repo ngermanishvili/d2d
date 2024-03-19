@@ -10,9 +10,7 @@ const useBlogPostsData = () => {
         async function fetchData() {
             try {
                 const response = await axios.get('/api/blogposts');
-                console.log('Response:', response.data);
                 const data = response.data;
-                console.log(data);
 
                 // Set the data in the state variable
                 setBlogPostsData(data);

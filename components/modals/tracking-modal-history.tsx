@@ -26,7 +26,6 @@ interface TrackingModalProps {
 export const TrackingModalForHistory: React.FC<TrackingModalProps> = ({
   statusHistory,
 }) => {
-  console.log("🚀 ~ statusHistory:", statusHistory);
   return (
     <>
       {statusHistory && statusHistory.length > 0 && (
@@ -36,22 +35,8 @@ export const TrackingModalForHistory: React.FC<TrackingModalProps> = ({
           <Steps direction="horizontal" current={statusHistory.length - 1}>
             {statusHistory.length === 2
               ? statusHistory
-                  .reverse()
-                  .map((status, index) => (
-                    <Step
-                      key={status.id}
-                      title={status.status}
-                      description={moment(status.timestamp).format(
-                        "MMMM Do YYYY, "
-                      )}
-                      status={
-                        index === statusHistory.length - 1
-                          ? "process"
-                          : "finish"
-                      }
-                    />
-                  ))
-              : statusHistory.map((status, index) => (
+                .reverse()
+                .map((status, index) => (
                   <Step
                     key={status.id}
                     title={status.status}
@@ -59,10 +44,24 @@ export const TrackingModalForHistory: React.FC<TrackingModalProps> = ({
                       "MMMM Do YYYY, "
                     )}
                     status={
-                      index === statusHistory.length - 1 ? "process" : "finish"
+                      index === statusHistory.length - 1
+                        ? "process"
+                        : "finish"
                     }
                   />
-                ))}
+                ))
+              : statusHistory.map((status, index) => (
+                <Step
+                  key={status.id}
+                  title={status.status}
+                  description={moment(status.timestamp).format(
+                    "MMMM Do YYYY, "
+                  )}
+                  status={
+                    index === statusHistory.length - 1 ? "process" : "finish"
+                  }
+                />
+              ))}
           </Steps>
         </div>
       )}

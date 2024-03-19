@@ -24,7 +24,6 @@ export async function POST(req: Request) {
       wonisPasebisJami,
       servisisPasebisJami,
     } = body;
-    console.log("🚀 ~ POST ~ body:", body);
 
     const invoiceNumber = generateTrackingNumber();
 
@@ -81,7 +80,6 @@ export async function PATCH(req: Request) {
       wonisPasebisJami,
       servisisPasebisJami,
     } = body;
-    console.log("🚀 ~ PATCH ~ body:", body);
 
     const urlsOfXlsx = await db.urlsOfXlsx.updateMany({
       where: {

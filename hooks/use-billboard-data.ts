@@ -12,7 +12,6 @@ const useBillboardData = (): { imageUrl: string; loading: boolean, label: string
         async function fetchData() {
             try {
                 const response = await axios.get('/api/billboards');
-                console.log('Response:', response.data);
                 const data = response.data;
                 if (data) {
                     setImageUrl(data[0].imageUrl);

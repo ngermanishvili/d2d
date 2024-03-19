@@ -27,7 +27,6 @@ const useLandingPageData = (): {
         async function fetchData() {
             try {
                 const response = await axios.get('/api/landinginfo');
-                console.log('Response:', response.data);
                 const data = response.data;
                 if (data) {
                     setImageUrl2(data[0].imageUrl);

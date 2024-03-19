@@ -77,7 +77,6 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
         data: { ids },
       });
     } catch (error) {
-      console.log(error);
     }
   };
   const handleUpdateToTrue = async () => {
@@ -201,9 +200,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                   {headerGroup.headers.map((header, index) => (
                     <TableHead
                       key={header.id}
-                      className={`${
-                        index === 1 ? "sticky left-0 text-white" : ""
-                      } text-white bg-red-600 text-md border-black`}
+                      className={`${index === 1 ? "sticky left-0 text-white" : ""
+                        } text-white bg-red-600 text-md border-black`}
                       style={{
                         whiteSpace: "nowrap",
                         overflow: "hidden",
@@ -213,9 +211,9 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -232,9 +230,8 @@ export function DataTable<TData extends ShipmentColumn, TValue>({
                     {row.getVisibleCells().map((cell, index) => (
                       <TableCell
                         key={cell.id}
-                        className={`${
-                          index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
-                        } p-2 border`}
+                        className={`${index === 1 ? "w-full sticky left-0 bg-white p-" : "" // Apply sticky style to the first column
+                          } p-2 border`}
                         style={{
                           whiteSpace: "nowrap",
                           overflow: "hidden",

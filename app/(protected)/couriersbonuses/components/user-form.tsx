@@ -118,7 +118,6 @@ export const UserForm: React.FC<ShipmentFormProps> = ({ initialData }) => {
   const [isPending, startTransition] = useState(false);
   const onSubmit = async (data: UserFormValues) => {
     setLoading(true);
-    console.log(data);
     try {
       await axios.patch(`/api/couriers/${params.id}`, data);
 
