@@ -34,29 +34,41 @@ export const ShipmentClient: React.FC<ShipmentClientProps> = ({ data }) => {
     setTotalPrice(sum);
   };
 
-  const handleDateRangeChange = (dateRange: DateRange) => {
-    const filteredData = data.filter((shipment) => {
-      const shipmentDate = new Date(shipment.createdAt);
+  useEffect(() => {
+    function addDays(date: any, days: any) {
+      var result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
+    // Get today's date
+    const today = new Date();
+    // Set time to 00:00:00 for today
+    today.setHours(0, 0, 0, 0);
+
+    // Get tomorrow's date
+    const tomorrow = addDays(today, 1);
+
+    // Create the 'fromto' object
+    const fromto = {
+      from: today,
+      to: tomorrow,
+    };
+
+    console.log(fromto);
+
+    const filterData = data.filter((shipment) => {
+      let shipmentDate = new Date(shipment.createdAt);
 
       return (
-        (!dateRange.from || shipmentDate >= dateRange.from) &&
-        (!dateRange.to || shipmentDate <= dateRange.to)
+        (!fromto.from || shipmentDate >= fromto.from) &&
+        (!fromto.to || shipmentDate <= fromto.to)
       );
     });
+    console.log("🚀 ~ filterData ~ filterData:", filterData);
 
-    setFilteredData(filteredData);
+    setFilteredData(filterData);
     calculateTotalPrice(filteredData);
-  };
-
-  useEffect(() => {}, [filteredData]);
-  const today = new Date();
-  const fromto = {
-    from: today,
-    to: addDays(today, 1),
-  };
-
-  useEffect(() => {
-    handleDateRangeChange(fromto);
   }, []);
   return (
     <>

@@ -1,15 +1,15 @@
-"use server"
+"use server";
 
-import { signOut } from "@/auth"
-
+import { signOut } from "@/auth";
 
 export const logout = async () => {
-    await signOut();
+  await signOut();
+  window.location.reload();
 
-    return {
-        redirect: {
-            destination: "/auth/login",
-            permanent: false,
-        },
-    }
-}
+  return {
+    redirect: {
+      destination: "/auth/login",
+      permanent: false,
+    },
+  };
+};
