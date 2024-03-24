@@ -69,7 +69,11 @@ const CourierInput: React.FC = () => {
         </SelectTrigger>
         <SelectContent>
           {items.map((element) => {
-            return <SelectItem value={element}>{element}</SelectItem>;
+            return (
+              <SelectItem key={element} value={element}>
+                {element}
+              </SelectItem>
+            );
           })}
         </SelectContent>
       </Select>
