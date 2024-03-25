@@ -48,34 +48,39 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     id: "select",
     header: ({ table }) => {
       const { filteredDataxlsx, setFilteredDataxlsx } = useShipmentStoreXLSX();
+      const { pushId, emptyId } = useidSetStore();
 
       return (
         <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && "indeterminate")
-          }
-          onCheckedChange={(value) => {
-            if (value === true) {
-              const filteredRowModel = table.getFilteredRowModel();
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => {
+          if (value === true) {
+            const filteredRowModel = table.getFilteredRowModel();
 
-              if (filteredRowModel) {
-                const arr = filteredRowModel.rows.map((i) => i.original);
-                setFilteredDataxlsx(arr);
-                table.toggleAllPageRowsSelected(!!value);
+            if (filteredRowModel) {
+              const arr = filteredRowModel.rows.map((i) => {
+                pushId(i.original.id);
+                return i.original;
+              });
 
-                // Do something with arr
-              }
-            } else {
+              setFilteredDataxlsx(arr);
               table.toggleAllPageRowsSelected(!!value);
 
-              setFilteredDataxlsx([]);
+              // Do something with arr
             }
-          }}
-          aria-label="Select all"
-        />
-      );
-    },
+          } else {
+            table.toggleAllPageRowsSelected(!!value);
+            emptyId();
+            setFilteredDataxlsx([]);
+          }
+        }}
+        aria-label="Select all"
+      />
+    );
+  },
     cell: ({ row }) => {
       const { pushId, ids, deleteId } = useidSetStore();
 
