@@ -44,6 +44,7 @@ import { Divider } from "antd";
 import { FaUserTag, FaPhoneVolume, FaAddressCard } from "react-icons/fa6";
 import { error } from "console";
 import useAssignedCouriersStore from "@/hooks/assigned-couriers-store";
+import { select } from "@material-tailwind/react";
 
 const formSchema = z.object({
   mimgebiFullName: z.string().min(1, {
@@ -264,12 +265,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
   const agebis = formatDateInGeorgian(formatDate(pickupDate));
   const chabareba = formatDateInGeorgian(formatDate(deliveryDate));
   const onSubmit = async (data: ShipmentFormValues) => {
-    //  const aris = aq iqneba check
+    console.log("first");
     try {
       data.packaging = packagingUsed;
       data.label = range;
       data.whopays = selectedParty;
-      data.price = totalPrice.toString();
+      // data.price = totalPrice.toString();
       data.itemPrice = itemPrice;
       setLoading(true);
       data.priceDif = (totalPrice - parseFloat(itemPrice)).toString();
@@ -277,10 +278,13 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       data.packagePrice = packagingUsed ? "5" : "0";
       selectedParty === "Invoice"
         ? (data.companyPays = (
-          parseFloat(itemPrice) -
-          (parseFloat(weightPrice) + parseFloat(data.packagePrice))
-        ).toString())
+            parseFloat(itemPrice) -
+            (parseFloat(weightPrice) + parseFloat(data.packagePrice))
+          ).toString())
         : (data.companyPays = itemPrice);
+      selectedParty === "Invoice" || selectedParty === "Sender"
+        ? (data.price = itemPrice)
+        : totalPrice.toString();
       if (!initialData) {
         data.address = address;
         // Calculate pickup and delivery dates using current date and time
@@ -295,6 +299,8 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
       }
 
       if (initialData) {
+        console.log(address);
+        data.address = address;
         data.courierComment2 = initialData.courierComment2;
         data.whopays = selectedParty;
         await axios.patch(`/api/shipments/${params.shipmentId}`, data);
@@ -517,11 +523,12 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                         disabled={loading}
                                         placeholder="სახელი"
                                         {...field}
-                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${form.formState.errors
-                                          .gamgzavniFullName
-                                          ? "border-red-500"
-                                          : "" // Apply red border if there's an error
-                                          }`}
+                                        className={`border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring max-w-full  h-[50px] ease-linear transition-all duration-150 outline-0 ${
+                                          form.formState.errors
+                                            .gamgzavniFullName
+                                            ? "border-red-500"
+                                            : "" // Apply red border if there's an error
+                                        }`}
                                       />
                                     )}
                                     <FaUserTag className="absolute top-[17px] right-[10px] w-5 h-5" />
@@ -582,8 +589,11 @@ export const ShipmentForm2: React.FC<ShipmentFormProps> = ({
                                     <div className="relative">
                                       <Input
                                         disabled={loading}
+                                        defaultValue={initialData?.address}
+                                        onChange={(e) =>
+                                          setAddress(e.target.value)
+                                        }
                                         placeholder="გამგზავნის მისამართი"
-                                        {...field}
                                         className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 h-[50px]"
                                       />
                                     </div>

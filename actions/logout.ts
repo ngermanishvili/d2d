@@ -4,11 +4,10 @@ import { signOut } from "@/auth";
 
 export const logout = async () => {
   await signOut();
-  window.location.reload();
 
   return {
     redirect: {
-      destination: "/auth/login",
+      destination: "/",
       permanent: false,
     },
   };

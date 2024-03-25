@@ -328,7 +328,9 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                 <div className="flex w-full text-center md:text-start flex-col gap-10 text-wh md:ml-4">
                   <div className="flex md:justify-start text-center mt-4">
                     <div className=" text-base md:text-lg xl:text-xl  leading-5 text-black text-primary gap-4 ">
-                      <p className="text-md mr-[10px] mb-[4px]">შეფუთვის სერვისი +5 ლარი</p>
+                      <p className="text-md mr-[10px] mb-[4px]">
+                        შეფუთვის სერვისი +5 ლარი
+                      </p>
                     </div>
                     <input
                       className="w-5 h-5 mt-2 mr-2 "
@@ -338,27 +340,6 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       onChange={(e) =>
                         handlePackagingServiceChange(e.target.checked)
                       }
-                    />
-                  </div>
-                  <div className="flex gap-2  flex-col sm:flex-row">
-                    <p className="text-md">ფასი წონის მიხედვით - </p>
-                    <Badge
-                      color="gray"
-                      className="text-md self-center"
-                      status="processing"
-                      count={shipmentCost}
-                      showZero
-                      overflowCount={99999}
-                      style={{
-                        width: "70px",
-                        height: "25px",
-                        maxWidth: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "16px",
-                        margin: "0 auto",
-                      }}
                     />
                   </div>
                   <>
@@ -385,6 +366,27 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
                       />
                     </div>
                   </>
+                  <div className="flex gap-2  flex-col sm:flex-row">
+                    <p className="text-md">ფასი წონის მიხედვით - </p>
+                    <Badge
+                      color="gray"
+                      className="text-md self-center"
+                      status="processing"
+                      count={shipmentCost}
+                      showZero
+                      overflowCount={99999}
+                      style={{
+                        width: "70px",
+                        height: "25px",
+                        maxWidth: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: "16px",
+                        margin: "0 auto",
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -401,13 +403,23 @@ const ShippingCostGraph: React.FC<ShippingCostGraphProps> = ({
           ) : (
             ""
           )}
-          <div className="flex gap-4 text-sm sm:text-2xl flex-col sm:flex-row  p-2 xl:self-end  ">
-            <p className="font-bold text-md mt-2 self-center max-md:text-xl">ჯამი</p>
+          <div className="flex gap-4 text-sm sm:text-2xl flex-col sm:flex-row align-middle  p-2 xl:self-end  ">
+            <p className="font-bold text-md mt-2 self-center max-md:text-xl">
+              ჯამი
+            </p>
             <Badge
               color="gray"
               className="text-md mt-3 ml-4 self-center"
               status="success"
-              count={`${Number.isNaN(totalPrice) ? 0 : totalPrice} ₾`}
+              count={`${
+                selectedParty === "Sender"
+                  ? itemPrice
+                  : selectedParty === "Invoice"
+                  ? itemPrice
+                  : Number.isNaN(totalPrice)
+                  ? 0
+                  : totalPrice
+              } ₾`}
               showZero
               overflowCount={99999}
               style={{

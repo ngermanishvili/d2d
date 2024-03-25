@@ -74,10 +74,6 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Edit className="mr-2 h-4 w-4" />
             დეტალების ნახვა
           </DropdownMenuItem>
-          <DropdownMenuItem hidden onClick={() => setOpen(true)}>
-            <Trash className="mr-2 h-4 w-4" />
-            წაშლა
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>

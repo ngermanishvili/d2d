@@ -10,7 +10,9 @@ interface LogoutButtonProps {
 export const LogoutButton = ({ children }: LogoutButtonProps) => {
   const router = useRouter();
   const onClick = () => {
-    logout();
+    logout().finally(() => {
+      window.location.reload();
+    });
     router.push("/");
   };
 
