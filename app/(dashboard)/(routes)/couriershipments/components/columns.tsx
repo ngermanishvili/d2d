@@ -58,52 +58,21 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "price",
-    header: "ფასი",
-  },
-
-  {
-    accessorKey: "mimgebiFullName",
-    header: "მიმღების სახელი და გვარი",
+    accessorKey: "mimgebisAddress",
+    header: "მიმღების მისამართი",
     cell: ({ row }) => (
       <div className="w-[200px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
-          {row.original.mimgebiFullName}
+          {row.original.mimgebisAddress}
         </p>
       </div>
     ),
   },
   {
-    accessorKey: "createdAt",
-    header: "შეკვეთის თარიღი",
-    cell: ({ row }) => (
-      <div className="w-[140px]">
-        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
-          year: "2-digit",
-          month: "2-digit",
-          day: "2-digit",
-        })}
-      </div>
-    ),
+    accessorKey: "price",
+    header: "ასაღები თანხა",
   },
-  {
-    accessorKey: "markedByCourier",
-    header: "თანხა",
-  },
-  {
-    accessorKey: "gamgzavnisqalaqi",
-    header: "გამგზავნის ქალაქი",
-    cell: ({ row }) => (
-      <div className="w-[140px]" style={{ display: "flex" }}>
-        <p className="text-gray-900 font-semibold">
-          {" "}
-          {row.original.gamgzavnisqalaqi}
-        </p>
-      </div>
-    ),
-  },
-
   {
     accessorKey: "mimgebisNumber",
     header: "მიმღების ნომერი",
@@ -126,13 +95,25 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
     ),
   },
   {
-    accessorKey: "mimgebisAddress",
-    header: "მიმღების მისამართი",
+    accessorKey: "mimgebiFullName",
+    header: "მიმღების სახელი და გვარი",
     cell: ({ row }) => (
       <div className="w-[200px]" style={{ display: "flex" }}>
         <p className="text-gray-900 font-semibold">
           {" "}
-          {row.original.mimgebisAddress}
+          {row.original.mimgebiFullName}
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "gamgzavnisqalaqi",
+    header: "გამგზავნის ქალაქი",
+    cell: ({ row }) => (
+      <div className="w-[140px]" style={{ display: "flex" }}>
+        <p className="text-gray-900 font-semibold">
+          {" "}
+          {row.original.gamgzavnisqalaqi}
         </p>
       </div>
     ),
@@ -146,6 +127,23 @@ export const columns: ColumnDef<ShipmentColumn>[] = [
         <p> {row.original.gamgzavniFullName}</p>
       </div>
     ),
+  },
+  {
+    accessorKey: "createdAt",
+    header: "შეკვეთის თარიღი",
+    cell: ({ row }) => (
+      <div className="w-[140px]">
+        {new Date(row.original.createdAt).toLocaleDateString("en-US", {
+          year: "2-digit",
+          month: "2-digit",
+          day: "2-digit",
+        })}
+      </div>
+    ),
+  },
+  {
+    accessorKey: "markedByCourier",
+    header: "თანხა",
   },
 
   {
