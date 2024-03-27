@@ -257,3 +257,8 @@ model AboutPageInfo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model ExcelData {
+  id      Int  @id @default(autoincrement())
+  rawData Json // Store raw Excel data as JSON
+}
